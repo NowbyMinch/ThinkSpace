@@ -32,7 +32,7 @@ export const Sidebar  = () => {
     
     return (
 
-        <nav className="bg-white min-w-[120px] h-[97vh] flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
+        <nav className="bg-white min-w-[120px] h-[calc(100vh-24px)] min-h-fit pb- flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
             <Link className="relative" href="/">
                 <img src="light Bulb.png" alt="" onMouseEnter={ () => {setOpen(true); console.log("TRUE!")} } onMouseLeave={() => setOpen(false)} className=" w-16 h-min mt-5 mb-[150px] cursor-pointer "/>
                 

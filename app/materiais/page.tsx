@@ -18,7 +18,7 @@ export default function() {
     return( 
         <>
 
-        <div className="grid grid-cols-[1fr_415px] mt-[12px] h-[calc(100vh-24px)] w-full ml-[20px] mr-[20px] gap-[20px] overflow-hidden">
+        <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] overflow-hidden">
             
             <div className="bg-white border rounded-[40px] h-[100%] overflow-y-auto">
                 
@@ -27,9 +27,13 @@ export default function() {
                     <h1 className="text-[#1E2351] font-medium text-[50px] ">Olá, Maria</h1>
                     <h1 className="font-medium text-[30px] text-[#A19797] ">Qual matéria será revisada hoje? </h1>
                     <div className="w-full h-[82px] mt-12 flex justify-center relative" >
-                        <input type="text" id="search_bar" className="w-[85%] z-10 text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)]  rounded-[25px] outline-[#9767F8]" />
-                        <Search className="absolute right-[116px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] z-20"/>
-                        <div className="w-[83%] rounded-[20px] mt-5 mr-6 h-[50px] bg-[#D9D9D9] absolute"></div>
+                    
+                    <div className="w-[980px] rounded-[20px] mt-5 mr-12 h-[50px] bg-[#D9D9D9] absolute"></div>
+                        <div className="relative mr-[30px]">
+                            <input type="text" id="search_bar" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)]  rounded-[25px] outline-[#9767F8]" />
+                            <Search className="absolute right-[50px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
+                        </div>
+                        
                     </div>
                 </div>
                 
@@ -191,15 +195,18 @@ export default function() {
 
                     </div>
 
-                    <div className="w-full h-full flex justify-center mt-[20px]">
-                        <div className=" w-[355px] h-[250px] border border-black rounded-[26px]">
+                    <div className="w-full h-full flex  justify-center mt-[20px] mb-[20px]">
+                        <div className=" w-[90%] h-[250px]  border border-black rounded-[26px] overflow-hidden">
 
-                            <div className="m-3">
+                            <div className="m-3 flex flex-col origin-left">
                                 <p className="text-[21px] leading-8 mb-[5px]">Você já viu todos os resumos disponíveis!🎉</p>
 
                                 <p className="text-[21px] leading-8">Que tal enriquecer ainda mais seu aprendizado? Adicione novos materiais e fortaleça seu conhecimento.</p>
                                 
-                                <button className="flex justify-center gap-1 items-center border border-black rounded-[50px] w-full pt-[5px] pb-[5px] mt-[14px] bg-[#9B79E0] text-white text-[20px]" > <Plus className=""/> Adicionar novo material</button>
+                                <div className=" flex justify-center">
+                                    <button className="flex justify-center gap-1 items-center border border-black rounded-[50px] w-[310px] full pt-[5px] pb-[5px] mt-[14px] bg-[#9B79E0] text-white text-[20px]" > <Plus className=""/> Adicionar novo material</button>
+
+                                </div>
                             </div>
 
                         </div>
