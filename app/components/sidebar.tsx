@@ -10,21 +10,6 @@ import { LogOut } from "lucide-react";
 import { useState, useEffect, Children } from "react";
 // className={  pathname === "/products/1" ? "font-bold mr-4" : "text-blue-500 mr-4"  }
 
-   
-const test = () => {
-    return (
-        <div className=" h-16 bg-[#FFFF] border border-[rgba(0,0,0,0.69)] absolute top-5 left-[80px] z-20 rounded-[15px] w-[115px] flex justify-center items-center text-black text-[20px] ">
-                Main Page
-        </div>       
-    );
-};
-
-const fuck = () => {
-    return (
-        <div className="">aaaaaaaaaaaaaaaaaaaaaaaa</div>
-    );
-};
-
 
 export const Sidebar  = () => {
     const pathname = usePathname();
@@ -32,9 +17,9 @@ export const Sidebar  = () => {
     
     return (
 
-        <nav className="bg-white min-w-[120px] h-[calc(100vh-24px)] min-h-fit pb- flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
+        <nav className="bg-white min-w-[118px] h-[calc(100vh-24px)] min-h-fit pb- flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
             <Link className="relative" href="/">
-                <img src="light Bulb.png" alt="" onMouseEnter={ () => {setOpen(true); console.log("TRUE!")} } onMouseLeave={() => setOpen(false)} className=" w-16 h-min mt-5 mb-[150px] cursor-pointer "/>
+                <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5 mb-[150px] cursor-pointer "/>
                 
             </Link>
 

@@ -6,11 +6,12 @@ import { Bell } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import { Ellipsis } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 export default function Home() {
     return(
         <>
-            <div className=" w-[90%] mx-auto">
+            <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden">
 
                 <div className="h-[82px] mt-[15px] flex justify-between ">
 
@@ -29,17 +30,17 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className=" grid grid-cols-[54%_1fr] gap-[30px] justify-between mt-6">
+                <div className=" grid grid-cols-[60%_1fr] gap-[30px] justify-between mt-3 l overflow-hidden ">
 
                     <div className="">
-                        <div className="w-[100%] h-[240px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center ">
+                        <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center ">
                             <div className=" w-[90%] h-[80%] flex justify-between">
 
                                 <div className=" flex flex-col justify-between w-[65%]">
-                                    <h1 className="text-[34px]  font-medium">Bom dia, Maria! Veja o relatório das
+                                    <h1 className="text-[32px] font-medium line-clamp-2 overflow-hidden text-ellipsis">Bom dia, Maria! Veja o relatório das
                                     suas metas de estudo semanais</h1>
 
-                                    <button className="w-[250px] h-[60px] bg-[#1E2351] rounded-full text-white text-[24px]">Saiba mais!</button>
+                                    <button className="w-[250px] h-[55px] bg-[#1E2351] rounded-full text-white text-[22px]">Saiba mais!</button>
                                 </div>
             
                                 <div className="flex justify-center items-center w-[250px] h-[200px]">
@@ -48,17 +49,18 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <h1 className="text-[38px] mt-[20px]">Seu progresso semanal:</h1>
-                        <div className="w-full grid grid-cols-[1fr_1fr_1fr] gap-[10px]">
-                            
-                            <div className="h-[200px] bg-[#CAC5FF] rounded-[25px] flex justify-center items-center">
+                        <h1 className="text-[32px] mt-4 mb-4">Seu progresso semanal:</h1>
+                        
+                        <div className="w-full grid grid-cols-[1fr_1fr_1fr] gap-[10px] relative ">
+                             
+                            <div className="h-[200px] bg-[#CAC5FF] rounded-[25px] flex justify-center items-center overflow-ellipsis relative shadow-md">
+                                <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
-                                <div className="grid grid-rows-[1fr_1fr] w-[85%] h-[80%]">
+                                <div className="flex flex-col w-[85%] h-[60%] relative ">
 
-                                    <div className=" flex gap-[6px] items-center relative">
-                                        <Ellipsis className="absolute top-0 right-0 cursor-pointer"/>
-                                        <div className="w-[60px] h-[60px] rounded-full bg-white"></div>
-                                        <h1 className="text-[28px] w-min leading-7 font-medium">Rede de computadores</h1>
+                                    <div className=" flex gap-[6px] items-center relative ">
+                                        <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white"></div>
+                                        <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">Rede de computadores</h1>
                                     </div>
 
                                     <div className="">
@@ -77,14 +79,14 @@ export default function Home() {
 
                             </div>
                             
-                            <div className="h-[200px] bg-[#FFA6F1] rounded-[25px] flex justify-center items-center">
+                            <div className="h-[200px] bg-[#FFA6F1] rounded-[25px] flex justify-center items-center relative shadow-md">
+                                <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
-                                <div className="grid grid-rows-[1fr_1fr] w-[85%] h-[80%]">
+                                <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
 
                                     <div className=" flex gap-[6px] items-center relative">
-                                        <Ellipsis className="absolute top-0 right-0 cursor-pointer"/>
-                                        <div className="w-[60px] h-[60px] rounded-full bg-white"></div>
-                                        <h1 className="text-[28px] w-min leading-7 font-medium">Ciência da computação </h1>
+                                        <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white"></div>
+                                        <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">Ciência da computação </h1>
                                     </div>
 
                                     <div className="">
@@ -103,14 +105,14 @@ export default function Home() {
 
                             </div>
                             
-                            <div className="h-[200px] bg-[#FF9F93] rounded-[25px] flex justify-center items-center">
+                            <div className="h-[200px] bg-[#FF9F93] rounded-[25px] flex justify-center items-center relative shadow-md">
+                                <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
-                                <div className="grid grid-rows-[1fr_1fr] w-[85%] h-[80%]">
+                                <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
 
-                                    <div className=" flex gap-[6px] items-center relative">
-                                        <Ellipsis className="absolute top-0 right-0 cursor-pointer"/>
+                                    <div className=" flex gap-[6px] items-center relative ">
                                         <div className="w-[60px] h-[60px] rounded-full bg-white"></div>
-                                        <h1 className="text-[28px] w-min leading-7 font-medium">Enfermagem</h1>
+                                        <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">Enfermagem</h1>
                                     </div>
 
                                     <div className="">
@@ -125,24 +127,54 @@ export default function Home() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="w-[55px] h-[55px] rounded-full bg-[#1E2351] shadow-md absolute right-[-25px] top-[35%] flex justify-center items-center cursor-pointer">
+                            <ChevronRight className="text-white"/>
+                            </div>
+
                         </div>
+
+                        <h1 className="text-[32px] mt-4 mb-4">Links úteis:</h1>
+                        
+                        <div className="grid grid-cols-[1fr_1fr] h-[350px] gap-[20px] ">
+
+                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md ">
+                                
+                                <div className=" w-[96%] h-[65%] bg-red-50 rounded-tl-[25px] rounded-tr-[25px] mt-[8px] "></div>
+
+                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
+
+                            </div>
+
+                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md">
+                                
+                                <div className=" w-[96%] h-[65%] bg-red-50 rounded-tl-[25px] rounded-tr-[25px] mt-[8px] "></div>
+
+                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
+
+                            </div>
+                            
+                            
+
+                        </div>
+
                     </div>
 
-                    <div className="">
 
-                        <div className="bg-white h-[240px] rounded-[35px] shadow-md">
+                    <div className=" ">
+
+                        <div className="bg-white h-[230px] rounded-[35px] shadow-md ">
                             
                             <div className=" w-full grid grid-cols-[1fr_1fr_1fr] h-[50%] text-center items-center">
                                 
                                 <div className="flex justify-center items-center">
-                                    <ArrowLeft className="p-3 size-[75px] rounded-full cursor-pointer border border-[#1E2351] "/>
+                                    <ArrowLeft className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351] "/>
 
                                 </div>
 
-                                <h1 className="text-[45px] font-bold ">FEV 2025</h1>
+                                <h1 className="text-[42px] font-bold ">FEV 2025</h1>
                                 
                                 <div className="flex justify-center items-center">
-                                    <ArrowRight className="p-3 size-[75px] rounded-full cursor-pointer border border-[#1E2351]" />
+                                    <ArrowRight className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351]" />
                                 </div>
 
                             </div>
@@ -151,56 +183,123 @@ export default function Home() {
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className=" translate-y-[-10px] flex justify-center">
                                     <div className="w-[65px] rounded-[15px] py-2 justify-center bg-[#CCB2FF] shadow-md">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                                 
                                 <div className="  flex justify-center">
                                     <div className="w-[65px] rounded-[15px]  justify-center  ">
-                                        <h2 className="text-[18px]">DOM.</h2>
-                                        <h1 className="font-bold text-[45px]">22</h1>
+                                        <h2 className="text-[16px]">DOM.</h2>
+                                        <h1 className="font-bold text-[44px]">22</h1>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h1>BRUH</h1>
+                        <h1 className="text-[32px] mt-4 mb-4 ">Salas de estudo recentes:</h1>
+
+                        <div className=" h-[630px] overflow-y-scroll">
+                            
+                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
+
+                                <div className="w-[90%] ">
+                                    <div className="flex gap-[8px]">
+                                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">Idiomas</h2>
+                                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">Espanhol</h2>
+                                    </div>
+                                    
+                                    <div className="w-full leading-[55px]">
+                                        <h1 className="font-medium text-[40px]">ImaginAcción</h1>
+                                        <div className="w-full h-[200px] rounded-[25px] bg-blue-950 shadow-md "></div>
+                                        <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <div className="relative w-[160px] h-[50px] flex">
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[72px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[48px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[24px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px]"></div>
+                                        </div>
+                                        
+                                        <div className="flex justify-between  items-center h-[44px] w-full  ">
+                                            <h2 className="text-[20px]">+50 estudantes</h2>
+                                            <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">Visitar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
+
+                                <div className="w-[90%] ">
+                                    <div className="flex gap-[8px]">
+                                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">Idiomas</h2>
+                                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">Espanhol</h2>
+                                    </div>
+                                    
+                                    <div className="w-full leading-[55px]">
+                                        <h1 className="font-medium text-[40px]">ImaginAcción</h1>
+                                        <div className="w-full h-[200px] rounded-[25px] bg-blue-950 shadow-md "></div>
+                                        <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <div className="relative w-[160px] h-[50px] flex">
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[72px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[48px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[24px]"></div>
+                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px]"></div>
+                                        </div>
+                                        
+                                        <div className="flex justify-between  items-center h-[44px] w-full  ">
+                                            <h2 className="text-[20px]">+50 estudantes</h2>
+                                            <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">Visitar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+
+
                     </div>
 
 

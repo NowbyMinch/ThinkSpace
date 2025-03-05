@@ -24,29 +24,32 @@ export default function() {
                 
                 <div className="mt-[25px] ml-[30px] overflow-hidden">
 
-                    <h1 className="text-[#1E2351] font-medium text-[50px] ">Olá, Maria</h1>
-                    <h1 className="font-medium text-[30px] text-[#A19797] ">Qual matéria será revisada hoje? </h1>
-                    <div className="w-full h-[82px] mt-12 flex justify-center relative" >
-                    
-                    <div className="w-[980px] rounded-[20px] mt-5 mr-12 h-[50px] bg-[#D9D9D9] absolute"></div>
-                        <div className="relative mr-[30px]">
-                            <input type="text" id="search_bar" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)]  rounded-[25px] outline-[#9767F8]" />
-                            <Search className="absolute right-[50px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
+                    <h1 className="text-[#1E2351] font-medium text-[50px] "> Olá, Maria </h1>
+                    <h1 className="font-medium text-[30px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
+
+                    <div className="w-full h-[82px] mt-16 flex justify-center relative " >
+                        <div className="w-[980px] rounded-[20px] mt-4 mr-11 h-[50px] bg-[#D9D9D9] absolute "></div>
+
+                        <div className="relative mr-[30px] ">
+                                <input type="text" id="search_bar" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)]  rounded-[25px] outline-[#9767F8]" />
+                                <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                         </div>
-                        
+
                     </div>
+                    
+                   
                 </div>
                 
-                <div className="flex justify-center w-full mt-12">
+                <div className="flex justify-center w-full  mt-12">
 
-                    <div className="w-[1190px] grid grid-cols-[1fr_1fr_1fr] gap-[20px] ">
+                    <div className="w-[1180px] grid grid-cols-[1fr_1fr_1fr] gap-[20px] ">
 
                         <div className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col">
                             <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
                             <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar um material</h2>
                         </div>
 
-                        <div className="bg-[#CAC5FF] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5">
+                        <div className="bg-[#CAC5FF] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
                                 
                             <div className="max-w-[80%] h-[50%] overflow-hidden">
                                 <h2 className="text-[35px] leading-[40px] text-[rgb(48,38,42,87%)] font-medium w-fit ">Geografia</h2>
@@ -59,7 +62,7 @@ export default function() {
 
                         </div>
 
-                        <div className="bg-[#8B81F3] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5">
+                        <div className="bg-[#8B81F3] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
                                 
                             <div className="max-w-[80%] h-[78%] overflow-hidden">
                                 <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Rede de Computadores</h2>
@@ -72,7 +75,7 @@ export default function() {
 
                         </div>
 
-                        <div className="bg-[#FFA6F1] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5">
+                        <div className="bg-[#FFA6F1] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
                                 
                             <div className="max-w-[80%] h-[78%] overflow-hidden">
                                 <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Ciência da computação</h2>
@@ -85,7 +88,7 @@ export default function() {
 
                         </div>
 
-                        <div className="bg-[#FF9F93] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5">
+                        <div className="bg-[#FF9F93] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
                                 
                             <div className="max-w-[80%] h-[50%] overflow-hidden">
                                 <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Enfermagem</h2>
@@ -98,7 +101,7 @@ export default function() {
 
                         </div>
                         
-                        <div className="bg-[#FFE89B] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5">
+                        <div className="bg-[#FFE89B] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
                                 
                             <div className="max-w-[80%] h-[50%] overflow-hidden">
                                 <h2 className="text-[35px] w-min leading-[40px] text-[rgb(4,38,42,87%)] font-medium ">Matemática</h2>
