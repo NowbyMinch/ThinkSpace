@@ -10,3 +10,13 @@ body {
 h1{
   font-size: 40px;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #D9D9D9;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: #1E2351;
+}

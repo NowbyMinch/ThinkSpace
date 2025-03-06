@@ -242,7 +242,7 @@ export default function Home() {
 
                         <h1 className="text-[32px] mt-4 mb-4 ">Salas de estudo recentes:</h1>
 
-                        <div className=" h-[630px] overflow-y-scroll ">
+                        <div  id="scroll" className=" h-[630px] overflow-y-scroll ">
                             
                             <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
 
