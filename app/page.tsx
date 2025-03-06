@@ -30,10 +30,10 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className=" grid grid-cols-[60%_1fr] gap-[30px] justify-between mt-3 l overflow-hidden ">
+                <div className=" grid grid-cols-[62%_1fr] gap-[30px] justify-between mt-3 l overflow-hidden ">
 
                     <div className="">
-                        <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center ">
+                        <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center relative">
                             <div className=" w-[90%] h-[80%] flex justify-between">
 
                                 <div className=" flex flex-col justify-between w-[65%]">
@@ -42,11 +42,11 @@ export default function Home() {
 
                                     <button className="w-[250px] h-[55px] bg-[#1E2351] rounded-full text-white text-[22px]">Saiba mais!</button>
                                 </div>
-            
-                                <div className="flex justify-center items-center w-[250px] h-[200px]">
-                                    Image
-                                </div>
+                                
                             </div>
+
+                            <img src="meta.svg" alt="" className=" absolute w-[350px] h-[230px] object-cover right-5 "/>
+
                         </div>
 
                         <h1 className="text-[32px] mt-4 mb-4">Seu progresso semanal:</h1>
@@ -127,7 +127,7 @@ export default function Home() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-[55px] h-[55px] rounded-full bg-[#1E2351] shadow-md absolute right-[-25px] top-[35%] flex justify-center items-center cursor-pointer">
+                            <div className="w-[50px] h-[50px] rounded-full bg-[#1E2351] shadow-md absolute right-[-25px] top-[38%] flex justify-center items-center cursor-pointer">
                             <ChevronRight className="text-white"/>
                             </div>
 
@@ -139,17 +139,25 @@ export default function Home() {
 
                             <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md ">
                                 
-                                <div className=" w-[96%] h-[65%] bg-red-50 rounded-tl-[25px] rounded-tr-[25px] mt-[8px] "></div>
+                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[25px] rounded-tr-[25px] mt-[8px] flex justify-center">
+                                    <div className=" w-fit h-[100%]">
+                                        <img src="trajetoria.svg" alt="" className="h-full "/>
+                                    </div>
+                                </div>
 
-                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
+                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis line-clamp-2 leading-8 mt-2 flex items-center ">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
 
                             </div>
 
                             <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md">
                                 
-                                <div className=" w-[96%] h-[65%] bg-red-50 rounded-tl-[25px] rounded-tr-[25px] mt-[8px] "></div>
+                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[25px] rounded-tr-[25px] mt-[8px] flex justify-center">
+                                    <div className=" w-fit h-[100%]">
+                                        <img src="eficiente.svg" alt="" className="h-full "/>
+                                    </div>
+                                </div>
 
-                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
+                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como posso estudar de forma eficiente? </h2>
 
                             </div>
                             
@@ -234,7 +242,7 @@ export default function Home() {
 
                         <h1 className="text-[32px] mt-4 mb-4 ">Salas de estudo recentes:</h1>
 
-                        <div className=" h-[630px] overflow-y-scroll">
+                        <div className=" h-[630px] overflow-y-scroll ">
                             
                             <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
 
@@ -244,18 +252,18 @@ export default function Home() {
                                         <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">Espanhol</h2>
                                     </div>
                                     
-                                    <div className="w-full leading-[55px]">
-                                        <h1 className="font-medium text-[40px]">ImaginAcción</h1>
-                                        <div className="w-full h-[200px] rounded-[25px] bg-blue-950 shadow-md "></div>
+                                    <div className="w-full leading-[55px] ">
+                                        <h1 className="font-medium text-[40px]"  >ImaginAcción</h1>
+                                        <img src="imaginaccion.svg" alt="" className="w-full rounded-[25px] shadow-md"/>
                                         <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
                                     </div>
 
                                     <div className="flex items-center">
-                                        <div className="relative w-[160px] h-[50px] flex">
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[72px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[48px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[24px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px]"></div>
+                                        <div className="relative w-[160px] h-[50px] flex cursor-pointer">
+                                            <img src="imaginuser4.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"></img>
+                                            <img src="imaginuser3.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"></img>
+                                            <img src="imaginuser2.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"></img>
+                                            <img src="imaginuser1.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] "></img>
                                         </div>
                                         
                                         <div className="flex justify-between  items-center h-[44px] w-full  ">
@@ -275,20 +283,20 @@ export default function Home() {
                                     </div>
                                     
                                     <div className="w-full leading-[55px]">
-                                        <h1 className="font-medium text-[40px]">ImaginAcción</h1>
-                                        <div className="w-full h-[200px] rounded-[25px] bg-blue-950 shadow-md "></div>
+                                        <h1 className="font-medium text-[40px]">Gramaticando</h1>
+                                        <img src="gramaticando.svg" alt="" className="w-full rounded-[25px] shadow-md"/>
                                         <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
                                     </div>
 
-                                    <div className="flex items-center">
-                                        <div className="relative w-[160px] h-[50px] flex">
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[72px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[48px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px] left-[24px]"></div>
-                                            <div className="w-[50px] h-[50px] rounded-full bg-blue-950 absolute border-white border-[5px]"></div>
+                                    <div className="flex items-center ">
+                                        <div className="relative w-[160px] h-[50px] flex cursor-pointer">
+                                            <img src="gramatiuser4.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"></img>
+                                            <img src="gramatiuser3.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"></img>
+                                            <img src="gramatiuser2.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"></img>
+                                            <img src="gramatiuser1.svg" className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] "></img>
                                         </div>
                                         
-                                        <div className="flex justify-between  items-center h-[44px] w-full  ">
+                                        <div className="flex justify-between  items-center h-[44px] w-full ">
                                             <h2 className="text-[20px]">+50 estudantes</h2>
                                             <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">Visitar</button>
                                         </div>

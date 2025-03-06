@@ -16,35 +16,41 @@ export const Sidebar  = () => {
     const [open, setOpen] = useState(false)
     
     return (
-
-        <nav className="bg-white min-w-[118px] h-[calc(100vh-24px)] min-h-fit pb- flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
-            <Link className="relative" href="/">
-                <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5 mb-[150px] cursor-pointer "/>
+        
+        <div className=" min-w-[118px] h-[calc(100vh-24px)] min-h-fit flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
+            <nav className="bg-white min-w-[118px] min-h-fit h-[calc(100vh-24px)] flex flex-col  items-center border rounded-[70px] fixed">
                 
-            </Link>
+                <div className=" h-[92%] max-h-[1000px] flex flex-col justify-between items-center overflow-hidden">
 
-            <div className="flex flex-col gap-[45px]">
-                <Link href="/materiais">
-                    <NotebookPen className= "size-[45px] cursor-pointer  text-black"/>
-                </Link>
-                <Link href="/">
-                    <User className= "size-[45px] cursor-pointer  text-black"/>
-                </Link>
-                <Link href="/">
-                    <ChartLine className= "size-[45px] cursor-pointer  text-black"/>
-                </Link>
-                <Link href="/">
-                    <CalendarDays className= "size-[45px] cursor-pointer  text-black"/>
-                </Link>
-                <Link href="/">
-                    <Cog className= "size-[45px] cursor-pointer  text-black"/>
-                </Link>
+                    <Link className="relative" href="/">
+                        <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                    </Link>
 
+                    <div className="flex flex-col gap-[45px]">
+                        <Link href="/materiais">
+                            <NotebookPen className= "size-[45px]  cursor-pointer  text-black"/>
+                        </Link>
+                        <Link href="/">
+                            <User className= "size-[45px] cursor-pointer  text-black"/>
+                        </Link>
+                        <Link href="/">
+                            <ChartLine className= "size-[45px] cursor-pointer  text-black"/>
+                        </Link>
+                        <Link href="/">
+                            <CalendarDays className= "size-[45px] cursor-pointer  text-black"/>
+                        </Link>
+                        <Link href="/">
+                            <Cog className= "size-[45px] cursor-pointer  text-black"/>
+                        </Link>
 
-                <Link href="/">
-                    <LogOut className= "size-[45px] cursor-pointer mt-[150px] text-black"/>
-                </Link>
-            </div>
-        </nav>
+                    </div>
+                        
+                    <Link href="/">
+                        <LogOut className= "size-[45px] cursor-pointer  text-black"/>
+                    </Link>
+                </div>
+
+            </nav>
+        </div>
     );
 };
