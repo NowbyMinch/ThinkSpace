@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {  Search, Flame, CircleHelp, Bell, ArrowLeft, ArrowRight, Ellipsis, ChevronRight  } from "lucide-react";
+import {  Search, Flame, CircleHelp, Bell, ArrowLeft, ArrowRight, Ellipsis, ChevronRight, HeartPulse, MonitorCog, BrainCircuit  } from "lucide-react";
 
 export default function Home() {
     return(
@@ -9,7 +9,7 @@ export default function Home() {
                 <div className="h-[82px] mt-[15px] flex justify-between ">
 
                     <div className="w-[55%] h-fit relative rounded-[60px]">
-                        <input type="text" id="search_bar" className=" w-full z-10 text-[25px] pl-5 h-[65px] border-2 shadow-md border-[rgba(0,0,0,0.19)]  rounded-[60px] outline-[#9767F8]" />
+                        <input type="text" id="search_bar" className=" w-full z-10 text-[25px] pl-5 h-[65px] border-2 shadow-md border-[rgba(0,0,0,0.19)] rounded-[60px] outline-[#9767F8]" />
                         <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[25%] size-[30px] z-20"/>
                     </div>
                     
@@ -52,7 +52,8 @@ export default function Home() {
                                 <div className="flex flex-col w-[85%] h-[60%] relative ">
 
                                     <div className=" flex gap-[6px] items-center relative ">
-                                        <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white"></div>
+                                    <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center "><MonitorCog className="size-[40px] text-[#757575]"/> </div>
+
                                         <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">Rede de computadores</h1>
                                     </div>
 
@@ -78,7 +79,7 @@ export default function Home() {
                                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
 
                                     <div className=" flex gap-[6px] items-center relative">
-                                        <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white"></div>
+                                        <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center "><BrainCircuit className="size-[40px] text-[#757575]"/> </div>
                                         <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">Ciência da computação </h1>
                                     </div>
 
@@ -104,7 +105,7 @@ export default function Home() {
                                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
 
                                     <div className=" flex gap-[6px] items-center relative ">
-                                        <div className="w-[60px] h-[60px] rounded-full bg-white"></div>
+                                        <div className="w-[60px] h-[60px] rounded-full bg-white flex justify-center items-center "><HeartPulse className="size-[40px] text-[#757575]"/> </div>
                                         <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">Enfermagem</h1>
                                     </div>
 

@@ -1,4 +1,4 @@
-import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X } from 'lucide-react';
+import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Star, Earth } from 'lucide-react';
 
 export default function Metricas() {
     return(
@@ -51,7 +51,77 @@ export default function Metricas() {
                         </div>
 
                         <div className=" grid grid-rows-[1fr_1fr] gap-4 ">
-                            <div className="bg-white rounded-[35px] shadow-md border border-[#00000031]">Habilidades adquiridas</div>
+                            <div className="bg-white rounded-[35px] shadow-md border border-[#00000031] flex justify-center items-center">
+                                <div className="w-[90%] h-[90%] flex flex-col ">
+                                    <h1 className='text-[35px] font-medium '>Habilidades adquiridas</h1>
+
+                                    <div className="">
+                                        <h2 className='text-[20px]'>Raciocínio Lógico</h2>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
+                                                <div className="w-[60%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
+                                            </div>
+                                            <div className="flex gap-[1px]">
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star />
+                                                <Star />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="">
+                                        <h2 className='text-[20px]'>Interpretação de texto</h2>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
+                                                <div className="w-[27%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
+                                            </div>
+                                            <div className="flex gap-[1px]">
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star />
+                                                <Star />
+                                                <Star />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="">
+                                        <h2 className='text-[20px]'>Planejamento estratégico</h2>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
+                                                <div className="w-[75%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
+                                            </div>
+                                            <div className="flex gap-[1px]">
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="">
+                                        <h2 className='text-[20px]'>Design thinking</h2>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
+                                                <div className="w-[35%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
+                                            </div>
+                                            <div className="flex gap-[1px]">
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star className='fill-[#1E2351]'/>
+                                                <Star />
+                                                <Star />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>    
+
+                            </div>
 
                             <div className="bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
                                 <div className="w-[90%] h-[92%] ">
@@ -110,11 +180,12 @@ export default function Metricas() {
                             </div>
                             
                             <div className="grid grid-flow-col gap-5 items-end ">
-                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031]">
+
                                     <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center">
                                         <div className=" grid grid-cols-2 gap-1 w-fit justify-center items-center">
                                             <Plus className="size-[25px] text-[#757575] "/>
-                                            <Minus className="size-[25px] text-[#757575]"/>
+                                            <Minus className="size-[25px] text-[#757575] "/>
                                             <Divide className="size-[25px] text-[#757575] "/>
                                             <X className="size-[25px] text-[#757575] "/>
                                         </div>
@@ -131,8 +202,8 @@ export default function Metricas() {
                                     </div>
                                 </div>
                                 
-                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
-                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] "></div>
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031]">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <Earth className='size-[50px] text-[#757575]'/> </div>
                                     <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
 
                                         <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
@@ -144,8 +215,8 @@ export default function Metricas() {
                                     </div>
                                 </div>
                                 
-                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
-                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <HeartPulse className='size-[50px] text-[#757575]'/> </div>
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031]">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <HeartPulse className='size-[50px] text-[#757575]'/></div>
                                     <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
 
                                         <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
@@ -157,7 +228,7 @@ export default function Metricas() {
                                     </div>
                                 </div>
                                 
-                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031]">
                                     <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <CodeXml className='size-[50px] text-[#757575]'/></div>
                                     <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
 
@@ -170,7 +241,7 @@ export default function Metricas() {
                                     </div>
                                 </div>
                                 
-                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031]">
                                     <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <Cable className='size-[50px] 
                                      text-[#757575]'/></div>
                                     <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
