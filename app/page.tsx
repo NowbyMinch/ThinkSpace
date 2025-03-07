@@ -170,9 +170,9 @@ export default function Home() {
 
                     <div className=" ">
 
-                        <div className="bg-white h-[230px] rounded-[35px] shadow-md ">
+                        <div className="bg-white h-[230px] rounded-[35px] shadow-md bg">
                             
-                            <div className=" w-full grid grid-cols-[1fr_1fr_1fr] h-[50%] text-center items-center">
+                            <div className=" w-full grid grid-cols-[1fr_1fr_1fr] h-[50%] text-center items-center ">
                                 
                                 <div className="flex justify-center items-center">
                                     <ArrowLeft className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351] "/>

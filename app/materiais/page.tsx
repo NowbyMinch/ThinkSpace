@@ -20,7 +20,7 @@ export default function() {
 
         <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] ">
             
-            <div className="bg-white border rounded-[40px] h-[100%] overflow-y-auto flex justify-center ">
+            <div className="bg-white rounded-[35px] h-[100%] overflow-y-auto flex justify-center shadow-md">
                 
                 <div className="w-[1200px] ">
                     <div className="">
@@ -132,7 +132,7 @@ export default function() {
 
             </div>
 
-            <div className="bg-white border rounded-[40px] flex justify-center">
+            <div className="bg-white rounded-[35px] flex justify-center shadow-md">
                 
                 <div className="w-[100%] ">
                     <div className="w-full ml-[10px] ">

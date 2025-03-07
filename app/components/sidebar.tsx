@@ -15,6 +15,14 @@ export const Sidebar  = () => {
     const pathname = usePathname();
     const [open, setOpen] = useState(false)
     
+    
+    // {(() => {
+    //     if (pathname == "/") {
+    //         return <div className="bg-red-500 w-[100px] h-[100px] mt-5 flex justify-center items-center rounded-full "><img src="light Bulb.png" alt="" className=" w-[70%] h-[754%] cursor-pointer "/></div>    
+    //     }
+    //     <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+    // })()}
+   
     return (
         
         <div className=" min-w-[118px] h-[calc(100vh-24px)] min-h-fit flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
@@ -23,18 +31,37 @@ export const Sidebar  = () => {
                 <div className=" h-[92%] max-h-[1000px] flex flex-col justify-between items-center overflow-hidden">
 
                     <Link className="relative" href="/">
-                        <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                        {(() => {
+                            if (pathname == "/") {
+                                return <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                            }
+                            return <img src="light Bulb-off.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                       
+                       })()}
+                        
                     </Link>
 
-                    <div className="flex flex-col gap-[45px]">
-                        <Link href="/materiais">
-                            <NotebookPen className= "size-[45px]  cursor-pointer  text-black"/>
+                    <div className="flex flex-col items-center gap-[45px]">
+                        <Link href="/materiais" >
+                            {(() => {
+                                if (pathname == "/materiais") {
+                                    return <div className="bg-[#A39CEC] p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-white"/></div>
+                                }
+
+                                return <div className=" p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-black"/></div>
+                            })()}
+
                         </Link>
                         <Link href="/">
                             <User className= "size-[45px] cursor-pointer  text-black"/>
                         </Link>
-                        <Link href="/">
-                            <ChartLine className= "size-[45px] cursor-pointer  text-black"/>
+                        <Link href="/metricas">
+                            {(() => {
+                                if (pathname == "/metricas") {
+                                    return <div className="bg-[#A39CEC] p-[15px] rounded-full"><ChartLine className= "size-[45px] cursor-pointer text-white"/></div>
+                                }
+                                return <div className=" p-[15px] rounded-full"><ChartLine className= "size-[45px] cursor-pointer text-black"/></div>
+                            })()}
                         </Link>
                         <Link href="/">
                             <CalendarDays className= "size-[45px] cursor-pointer  text-black"/>
