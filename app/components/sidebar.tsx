@@ -26,7 +26,7 @@ export const Sidebar  = () => {
     return (
         
         <div className=" min-w-[118px] h-[calc(100vh-24px)] min-h-fit flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
-            <nav className="bg-white min-w-[118px] min-h-fit h-[calc(100vh-24px)] flex flex-col  items-center border rounded-[70px] fixed">
+            <nav className="bg-white min-w-[118px] min-h-fit h-[calc(100vh-24px)] flex flex-col  items-center border rounded-[70px] fixed ">
                 
                 <div className=" h-[92%] max-h-[1000px] flex flex-col justify-between items-center overflow-hidden">
 

@@ -1,22 +1,15 @@
 import Image from "next/image";
-import {  Search  } from "lucide-react";
-import { Flame } from 'lucide-react';
-import { CircleHelp } from 'lucide-react';
-import { Bell } from 'lucide-react';
-import { ArrowLeft } from 'lucide-react';
-import { ArrowRight } from 'lucide-react';
-import { Ellipsis } from 'lucide-react';
-import { ChevronRight } from 'lucide-react';
+import {  Search, Flame, CircleHelp, Bell, ArrowLeft, ArrowRight, Ellipsis, ChevronRight  } from "lucide-react";
 
 export default function Home() {
     return(
         <>
-            <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden">
+            <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden ">
 
                 <div className="h-[82px] mt-[15px] flex justify-between ">
 
                     <div className="w-[55%] h-fit relative rounded-[60px]">
-                        <input type="text" id="search_bar" className=" w-full z-10 text-[25px] pl-5 h-[65px] border-2 border-[rgba(0,0,0,0.19)] rounded-[60px] outline-[#9767F8]" />
+                        <input type="text" id="search_bar" className=" w-full z-10 text-[25px] pl-5 h-[65px] border-2 shadow-md border-[rgba(0,0,0,0.19)]  rounded-[60px] outline-[#9767F8]" />
                         <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[25%] size-[30px] z-20"/>
                     </div>
                     
@@ -30,17 +23,17 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className=" grid grid-cols-[62%_1fr] gap-[30px] justify-between mt-3 l overflow-hidden ">
+                <div className=" grid grid-cols-[62%_1fr] gap-[30px] justify-between mt-3 pb-3 overflow-hidden ">
 
                     <div className="">
-                        <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center relative">
+                        <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center relative border border-[#00000031]">
                             <div className=" w-[90%] h-[80%] flex justify-between">
 
                                 <div className=" flex flex-col justify-between w-[65%]">
                                     <h1 className="text-[32px] font-medium line-clamp-2 overflow-hidden text-ellipsis">Bom dia, Maria! Veja o relatório das
                                     suas metas de estudo semanais</h1>
 
-                                    <button className="w-[250px] h-[55px] bg-[#1E2351] rounded-full text-white text-[22px]">Saiba mais!</button>
+                                    <button className="w-[250px] h-[55px] bg-[#1E2351] rounded-full text-white text-[22px] shadow-md">Saiba mais!</button>
                                 </div>
                                 
                             </div>
@@ -53,7 +46,7 @@ export default function Home() {
                         
                         <div className="w-full grid grid-cols-[1fr_1fr_1fr] gap-[10px] relative ">
                              
-                            <div className="h-[200px] bg-[#CAC5FF] rounded-[25px] flex justify-center items-center overflow-ellipsis relative shadow-md">
+                            <div className="h-[200px] bg-[#CAC5FF] rounded-[25px] flex justify-center items-center overflow-ellipsis relative shadow-md border border-[#00000031]">
                                 <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
                                 <div className="flex flex-col w-[85%] h-[60%] relative ">
@@ -79,7 +72,7 @@ export default function Home() {
 
                             </div>
                             
-                            <div className="h-[200px] bg-[#FFA6F1] rounded-[25px] flex justify-center items-center relative shadow-md">
+                            <div className="h-[200px] bg-[#FFA6F1] rounded-[25px] flex justify-center items-center relative shadow-md border border-[#00000031]">
                                 <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
                                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
@@ -105,7 +98,7 @@ export default function Home() {
 
                             </div>
                             
-                            <div className="h-[200px] bg-[#FF9F93] rounded-[25px] flex justify-center items-center relative shadow-md">
+                            <div className="h-[200px] bg-[#FF9F93] rounded-[25px] flex justify-center items-center relative shadow-md border border-[#00000031]">
                                 <Ellipsis className="absolute top-1 right-3 cursor-pointer"/>
 
                                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
@@ -137,27 +130,27 @@ export default function Home() {
                         
                         <div className="grid grid-cols-[1fr_1fr] h-[350px] gap-[20px] ">
 
-                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md ">
+                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md border border-[#00000031]">
                                 
-                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[25px] rounded-tr-[25px] mt-[8px] flex justify-center">
+                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[15px] rounded-tr-[15px] mt-[8px] flex justify-center">
                                     <div className=" w-fit h-[100%]">
                                         <img src="trajetoria.svg" alt="" className="h-full "/>
                                     </div>
                                 </div>
 
-                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis line-clamp-2 leading-8 mt-2 flex items-center ">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </h2>
+                                <p className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis line-clamp-2 leading-8 mt-2 flex items-center ">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica? </p>
 
                             </div>
 
-                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md">
+                            <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md border border-[#00000031]">
                                 
-                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[25px] rounded-tr-[25px] mt-[8px] flex justify-center">
+                                <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[15px] rounded-tr-[15px] mt-[8px] flex justify-center">
                                     <div className=" w-fit h-[100%]">
                                         <img src="eficiente.svg" alt="" className="h-full "/>
                                     </div>
                                 </div>
 
-                                <h2 className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como posso estudar de forma eficiente? </h2>
+                                <p className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">Como posso estudar de forma eficiente? </p>
 
                             </div>
                             
@@ -170,7 +163,7 @@ export default function Home() {
 
                     <div className=" ">
 
-                        <div className="bg-white h-[230px] rounded-[35px] shadow-md bg">
+                        <div className="bg-white h-[230px] rounded-[35px] shadow-md bg border border-[#00000031]">
                             
                             <div className=" w-full grid grid-cols-[1fr_1fr_1fr] h-[50%] text-center items-center ">
                                 
@@ -244,7 +237,7 @@ export default function Home() {
 
                         <div  id="scroll" className=" h-[630px] overflow-y-scroll ">
                             
-                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
+                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
 
                                 <div className="w-[90%] ">
                                     <div className="flex gap-[8px]">
@@ -274,7 +267,7 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 ">
+                            <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
 
                                 <div className="w-[90%] ">
                                     <div className="flex gap-[8px]">

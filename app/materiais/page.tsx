@@ -1,13 +1,4 @@
-import {  CirclePlus, Heart  } from "lucide-react";
-import {  Globe  } from "lucide-react";
-import {  Monitor  } from "lucide-react";
-import {  CodeXml  } from "lucide-react";
-import {  HeartPulse  } from "lucide-react";
-import {  Minus  } from "lucide-react";
-import {  Divide  } from "lucide-react";
-import {  X  } from "lucide-react";
-import {  Plus  } from "lucide-react";
-import {  Search  } from "lucide-react";
+import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search  } from "lucide-react";
 import {  useEffect, useState  } from 'react';
 
 // blue_text = 1E2351;
@@ -20,7 +11,7 @@ export default function() {
 
         <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] ">
             
-            <div className="bg-white rounded-[35px] h-[100%] overflow-y-auto flex justify-center shadow-md">
+            <div className="bg-white rounded-[35px] h-[100%] overflow-y-auto flex justify-center shadow-md border border-[#00000031]">
                 
                 <div className="w-[1200px] ">
                     <div className="">
@@ -49,12 +40,12 @@ export default function() {
 
                         <div className="w-[1180px] grid grid-cols-[1fr_1fr_1fr] gap-[20px] ">
 
-                            <div className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col">
+                            <div className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
                                 <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
                                 <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar um material</h2>
                             </div>
 
-                            <div className="bg-[#CAC5FF] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
+                            <div className="bg-[#CAC5FF] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
                                     <h2 className="text-[35px] leading-[40px] text-[rgb(48,38,42,87%)] font-medium w-fit ">Geografia</h2>
@@ -67,7 +58,7 @@ export default function() {
 
                             </div>
 
-                            <div className="bg-[#8B81F3] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
+                            <div className="bg-[#8B81F3] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Rede de Computadores</h2>
@@ -80,7 +71,7 @@ export default function() {
 
                             </div>
 
-                            <div className="bg-[#FFA6F1] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
+                            <div className="bg-[#FFA6F1] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Ciência da computação</h2>
@@ -93,7 +84,7 @@ export default function() {
 
                             </div>
 
-                            <div className="bg-[#FF9F93] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
+                            <div className="bg-[#FF9F93] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Enfermagem</h2>
@@ -106,7 +97,7 @@ export default function() {
 
                             </div>
                             
-                            <div className="bg-[#FFE89B] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md">
+                            <div className="bg-[#FFE89B] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(4,38,42,87%)] font-medium ">Matemática</h2>
@@ -132,7 +123,7 @@ export default function() {
 
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md">
+            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
                 
                 <div className="w-[100%] ">
                     <div className="w-full ml-[10px] ">

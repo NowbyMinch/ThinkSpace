@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X } from 'lucide-react';
 
 export default function Metricas() {
     return(
@@ -7,7 +7,7 @@ export default function Metricas() {
                 <div className=" mt-[12px] h-[965px] w-[1580px] grid grid-rows-[65%_1fr] gap-4 ml-[20px] mr-[20px]">
                     <div className=" grid grid-cols-[55%_1fr] gap-4 ">
                         
-                        <div className=" bg-white flex justify-center items-center rounded-[35px] shadow-md">
+                        <div className=" bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
                             <div className=" w-[90%] h-[90%]">
                                 <h1 className="text-[58px] font-medium leading-[60px]">Métricas</h1>
                                 <h2 className="text-[22px] leading-[28px] ">Seu desempenho da semana está aqui! 💡</h2>
@@ -51,9 +51,9 @@ export default function Metricas() {
                         </div>
 
                         <div className=" grid grid-rows-[1fr_1fr] gap-4 ">
-                            <div className="bg-white rounded-[35px] shadow-md">Habilidades adquiridas</div>
+                            <div className="bg-white rounded-[35px] shadow-md border border-[#00000031]">Habilidades adquiridas</div>
 
-                            <div className="bg-white rounded-[35px] shadow-md flex justify-center items-center ">
+                            <div className="bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
                                 <div className="w-[90%] h-[92%] ">
                                     <h1 className='leading-[50px] font-medium flex justify-between items-end'>Ranking
                                         <div className="flex gap-2">
@@ -102,8 +102,91 @@ export default function Metricas() {
 
                     </div>
 
-                    <div className="bg-[#C3A7FA] rounded-[35px] shadow-md">
-                        
+                    <div className="bg-[#C3A7FA] rounded-[35px] flex justify-center items-center shadow-md border border-[#00000031]">
+                        <div className=" grid grid-cols-[1fr_4fr] gap-4 w-[95%] h-[80%]">
+                            <div className=" ">
+                                <h1 className='font-medium '>Matérias:</h1>
+                                <p className='text-[20px] '>Veja a evolução das suas 5 principais matérias, com atualização semanal para acompanhar seu desempenho. 🚀</p>
+                            </div>
+                            
+                            <div className="grid grid-flow-col gap-5 items-end ">
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center">
+                                        <div className=" grid grid-cols-2 gap-1 w-fit justify-center items-center">
+                                            <Plus className="size-[25px] text-[#757575] "/>
+                                            <Minus className="size-[25px] text-[#757575]"/>
+                                            <Divide className="size-[25px] text-[#757575] "/>
+                                            <X className="size-[25px] text-[#757575] "/>
+                                        </div>
+                                    </div>
+
+                                    <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
+
+                                        <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
+                                            <h1 className='text-[32px] max-w-full font-medium leading-9  overflow-hidden text-ellipsis line-clamp-2'>Matemática</h1>
+                                        </div>
+
+                                        <h1 className='text-[35px] font-medium text-center text-[#757575]'>+5%</h1>
+
+                                    </div>
+                                </div>
+                                
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] "></div>
+                                    <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
+
+                                        <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
+                                            <h1 className='text-[32px] max-w-full font-medium leading-9  overflow-hidden text-ellipsis line-clamp-2'>Geografia</h1>
+                                        </div>
+
+                                        <h1 className='text-[35px] font-medium text-center text-[#757575]'>-7%</h1>
+
+                                    </div>
+                                </div>
+                                
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <HeartPulse className='size-[50px] text-[#757575]'/> </div>
+                                    <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
+
+                                        <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
+                                            <h1 className='text-[32px] max-w-full font-medium leading-9  overflow-hidden text-ellipsis line-clamp-2'>Enfermagem</h1>
+                                        </div>
+
+                                        <h1 className='text-[35px] font-medium text-center text-[#757575]'>+10%</h1>
+
+                                    </div>
+                                </div>
+                                
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <CodeXml className='size-[50px] text-[#757575]'/></div>
+                                    <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
+
+                                        <div className="flex justify-center items-center text-center w-[100%] overflow-hidden">
+                                            <h1 className='text-[32px] max-w-full font-medium leading-9  overflow-hidden text-ellipsis line-clamp-2'>Ciência da Computação</h1>
+                                        </div>
+
+                                        <h1 className='text-[35px] font-medium text-center text-[#757575]'>+12%</h1>
+
+                                    </div>
+                                </div>
+                                
+                                <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center">
+                                    <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full mt-[-40px] flex justify-center items-center"> <Cable className='size-[50px] 
+                                     text-[#757575]'/></div>
+                                    <div className=" w-[80%] h-[65%] grid grid-rows-[1fr_1fr] ">
+
+                                        <div className="flex justify-center items-center text-center w-[100%] overflow-hidden ">
+                                            <h1 className='text-[32px] max-w-full  font-medium leading-9 overflow-hidden text-ellipsis line-clamp-2'>Engenharia da computação</h1>
+                                        </div>
+
+                                        <h1 className='text-[35px] font-medium text-center text-[#757575]'>-9%</h1>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
