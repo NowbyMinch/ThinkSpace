@@ -15,10 +15,10 @@ export default function Home() {
                     
                     <div className="flex gap-[40px]">
                         
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center"> <Flame className="size-[45px] text-[#C8837A] fill-[#E9B28B]"/> </div>
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center"> <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center"> <Bell className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
-                        <img src="Profile.png" className="rounded-full cursor-pointer transition-all w-[75px] h-[75px]" alt="" />
+                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Flame className="size-[45px] text-[#C8837A] fill-[#E9B28B]"/> </div>
+                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
+                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Bell className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
+                        <img src="Profile.png" className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md" alt="" />
 
                     </div>
                 </div>
