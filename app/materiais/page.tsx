@@ -26,7 +26,7 @@ export default function() {
                             <div className="w-[980px] rounded-[20px] mt-4 mr-11 h-[50px] bg-[#D9D9D9] absolute "></div>
 
                             <div className="relative mr-[30px] ">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 text-[#A78CDC] border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
+                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                             </div>
 

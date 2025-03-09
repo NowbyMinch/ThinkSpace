@@ -21,3 +21,35 @@ h1{
   border-radius: 30px;
   background: #1E2351;
 }
+
+#underline{
+  animation: grow 0.1s ;
+}
+#underline2{
+  animation: grow 0.1s ;
+}
+#underline3{
+  animation: grow 0.1s ;
+}
+#underline4{
+  animation: grow 0.1s ;
+}
+
+
+#editar_conta:hover{
+  transition: all ease-in-out 0.1s;
+  color: white;
+  border: none;
+  background-color: #9767F8;
+}
+
+
+@keyframes grow{
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
