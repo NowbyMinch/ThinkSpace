@@ -14,10 +14,10 @@ export default function Configurações({ children, }: { children: React.ReactNo
                 <h1 className="font-medium text-[45px]">Configurações</h1>
                 <div className="w-full mt-5 ">
                     <div className="ml-10 flex justify-between w-[1085px] ">
-                        <Link href="/configuracoes/info">
+                        <Link href="/configuracoes/informacoes">
 
                             {(() => {
-                                if (pathname == "/configuracoes/info") {
+                                if (pathname == "/configuracoes/informacoes") {
                                     return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Informações básicas<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
                                 }
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>

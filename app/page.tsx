@@ -7,20 +7,22 @@ export default function Home() {
             <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden ">
 
                 <div className="h-[82px] mt-[15px] flex justify-between ">
-
-                    <div className="w-[55%] h-fit relative rounded-[60px]">
-                        <input type="text" id="search_bar" className=" w-full z-10 text-[25px] pl-5 h-[65px] border-2 shadow-md border-[rgba(0,0,0,0.19)] rounded-[60px] outline-[#9767F8]" />
-                        <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[25%] size-[30px] z-20"/>
-                    </div>
                     
-                    <div className="flex gap-[40px]">
+                    <div className="flex gap-[20px]">
                         
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Flame className="size-[45px] text-[#C8837A] fill-[#E9B28B]"/> </div>
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
-                        <div className="w-[75px] h-[75px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Bell className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
-                        <img src="Profile.png" className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md" alt="" />
-
+                        <div className="w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Flame className="size-[45px] text-[#C8837A] fill-[#E9B28B]"/> </div>
+                        <div className="w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
+                        <div className="w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md"> <Bell className="size-[45px] text-[rgba(0,0,0,31%)]"/> </div>
                     </div>
+
+                    <div className="flex gap-2">
+                        <div className="text-end flex flex-col justify-center">
+                            <h1 className="font-medium leading-[40px] text-[35px]">Maria Eduarda</h1>
+                            <h2 className="font-medium text-[22px] text-[#828181]">Estudante</h2>
+                        </div>
+                        <img src="Profile.png" className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md" alt="" />
+                    </div>
+
                 </div>
 
                 <div className=" grid grid-cols-[62%_1fr] gap-[30px] justify-between mt-3 pb-3 overflow-hidden ">
@@ -236,7 +238,7 @@ export default function Home() {
 
                         <h1 className="text-[32px] mt-4 mb-4 ">Salas de estudo recentes:</h1>
 
-                        <div  id="scroll" className=" h-[630px] overflow-y-scroll ">
+                        <div  id="scroll" className=" h-[630px] overflow-y-auto pr-1 ">
                             
                             <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
 

@@ -60,9 +60,9 @@ export const Sidebar  = () => {
                             <CalendarDays className= "size-[45px] cursor-pointer  text-black"/>
                         </Link>
 
-                        <Link href="/configuracoes/info">
+                        <Link href="/configuracoes/informacoes">
                             {(() => {
-                                if (pathname == "/configuracoes/info") {
+                                if (pathname == "/configuracoes/informacoes") {
                                     return <div className="bg-[#A39CEC] p-[15px] rounded-full"><Cog className= "size-[45px] cursor-pointer text-white"/></div>
                                 }
                                 return <div className=" p-[15px] rounded-full"><Cog className= "size-[45px] cursor-pointer text-black"/></div>
