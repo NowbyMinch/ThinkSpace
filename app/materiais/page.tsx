@@ -1,4 +1,4 @@
-import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search  } from "lucide-react";
+import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search, ChevronRight  } from "lucide-react";
 import {  useEffect, useState  } from 'react';
 
 // blue_text = 1E2351;
@@ -19,7 +19,7 @@ export default function() {
                     </div>
 
                     <div className="mt-[25px] ml-[30px] overflow-hidden flex flex-col items-center ">
-
+ 
                         <div className="w-full h-[82px] mt-16 flex justify-center relative" >
                             
                             <div className="w-[980px] rounded-[20px] mt-4 mr-11 h-[50px] bg-[#D9D9D9] absolute "></div>
@@ -118,12 +118,12 @@ export default function() {
 
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031] ">
+            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
                 
-                <div className="w-[100%] ">
-                    <div className="w-full ml-[10px] ">
+                <div className="w-[100%]">
+                    <div className=" ml-[10px] mr-[10px] w-[409px]">
 
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
+                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px]">
                             
                             <img src="Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
 
@@ -141,81 +141,101 @@ export default function() {
 
                         </div>
                         
-                        <div className="ml-[15px] mt-[30px]">
+                        <div className="ml-[15px] mt-[30px] ">
                             <h1 className="text-[34px] w-fit font-medium leading-6">Materiais de Estudo</h1>
                             <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] ">Ciência da computação</h1>
                         </div>
 
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[20px] gap-[15px]">
+                        <div className="flex flex-col gap-1 items-center">
+                            <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
 
-                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
 
-                            <div className="mt-[18px]">
-                                <h2 className="text-[35px] font-medium leading-[30px]">POO I</h2>
-                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 45 minutos</h2>
-                            </div>
-
-                        </div>
-
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[20px] gap-[15px]">
-
-                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">02</h1>
-
-                            <div className="mt-[18px]">
-                                <h2 className="text-[35px] font-medium leading-[30px]">POO II</h2>
-                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 1 hora</h2>
-                            </div>
-
-                        </div>
-
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[20px] gap-[15px]">
-
-                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">03</h1>
-
-                            <div className="mt-[18px]">
-                                <h2 className="text-[35px] font-medium leading-[30px]">Eng. Comp</h2>
-                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 20 minutos</h2>
-                            </div>
-
-                        </div>
-
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[20px] gap-[15px]">
-
-                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">04</h1>
-
-                            <div className="mt-[18px]">
-                                <h2 className="text-[35px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                            </div>
-
-                        </div>
-
-                        <div className="w-full h-full flex mt-[20px] mb-[20px] ">
-                            <div className=" w-[380px] h-[250px] border border-black rounded-[26px] overflow-hidden ml-4">
-
-                                <div className="m-3 flex flex-col ">
-                                    <p className="text-[21px] leading-8 mb-[5px]">Você já viu todos os resumos disponíveis!🎉</p>
-
-                                    <p className="text-[21px] leading-8">Que tal enriquecer ainda mais seu aprendizado? Adicione novos materiais e fortaleça seu conhecimento.</p>
-                                    
-                                    <div className=" flex justify-center">
-                                        <button className="flex justify-center gap-1 items-center border border-black rounded-[50px] w-[310px] full pt-[5px] pb-[5px] mt-[14px] bg-[#9B79E0] text-white text-[20px]" > <Plus className=""/> Adicionar novo material</button>
-
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
                                     </div>
-                                </div>
 
+                                    <ChevronRight className="size-12 "/>
+                                </div>
                             </div>
 
-                        </div>
+                            <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
 
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">02</h1>
+
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                    </div>
+
+                                    <ChevronRight className="size-12 "/>
+                                </div>
+                            </div>
+                            <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">03</h1>
+
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                    </div>
+
+                                    <ChevronRight className="size-12 "/>
+                                </div>
+                            </div>
+
+                            <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">04</h1>
+
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                    </div>
+
+                                    <ChevronRight className="size-12 "/>
+                                </div>
+                            </div>
+
+                            <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">05</h1>
+
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                    </div>
+
+                                    <ChevronRight className="size-12 "/>
+                                </div>
+                            </div>
+
+                            <div id="" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+
+                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">06</h1>
+
+                                <div className="mt-[18px] flex justify-between items-center ">
+                                    <div className="">
+                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
+                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                    </div>
+
+                                    <ChevronRight className="size-12"/>
+                                </div>
+                            </div>
+
+                            <button id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] h-[50px] rounded-full">Ver mais materiais</button>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
-            
         </div>
-
         </>
     );
 };

@@ -35,14 +35,12 @@ h1{
   animation: grow 0.1s ;
 }
 
-
 #editar_conta:hover{
   transition: all ease-in-out 0.1s;
   color: white;
   border: none;
-  background-color: #9767F8;
+  background-color: #A78CDC;
 }
-
 
 @keyframes grow{
   0% {
@@ -52,4 +50,28 @@ h1{
   100% {
     transform: scaleX(1);
   }
+}
+
+#slider{
+  transition: all ease-in-out 0.1s;
+}
+
+#opcao:checked + #slider{
+  margin-left: 40px;
+}
+
+#opcao:checked ~ #switch_color{
+  background-color: #9767F8;
+}
+
+#on{
+  opacity: 0;
+}
+
+#on:hover{
+  opacity: 1;
+}
+
+#pop:hover + #backdrop{
+  display: block;
 }

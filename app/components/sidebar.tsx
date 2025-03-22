@@ -3,19 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import { useState, useEffect, Children } from "react";
-// className={  pathname === "/products/1" ? "font-bold mr\-4" : "text-blue-500 mr-4"  }
 
 
 export const Sidebar  = () => {
     const pathname = usePathname();
     const [open, setOpen] = useState(false)
-    // {(() => {
-    //     if (pathname == "/") {
-    //         return <div className="bg-red-500 w-[100px] h-[100px] mt-5 flex justify-center items-center rounded-full "><img src="light Bulb.png" alt="" className=" w-[70%] h-[754%] cursor-pointer "/></div>    
-    //     }
-    //     <img src="light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
-    // })()}
-   
+
     return (
         
         <div className=" min-w-[118px] h-[calc(100vh-24px)] min-h-fit flex flex-col items-center mt-[12px] ml-4 border rounded-[70px] ">
@@ -28,7 +21,12 @@ export const Sidebar  = () => {
                             if (pathname == "/") {
                                 return <img src="Light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
                             }
-                            return <img src="../../../Light Bulb-off.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                            return (
+                                <div className=" w-16 h-[67px] mt-5 cursor-pointer relative">
+                                    <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute"/>
+                                    <img id="on" src="Light Bulb.png" alt="" className=" w-full absolute"/>
+                                </div>
+                            )
                             
                         })()}
                     </Link>
@@ -39,7 +37,6 @@ export const Sidebar  = () => {
                                 if (pathname == "/materiais") {
                                     return <div className="bg-[#A39CEC] p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-white"/></div>
                                 }
-
                                 return <div className=" p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-black"/></div>
                             })()}
 
@@ -74,9 +71,7 @@ export const Sidebar  = () => {
                     <Link href="/">
                         <LogOut className= "size-[45px] cursor-pointer  text-black"/>
                     </Link>
-
                 </div>
-
             </nav>
         </div>
     );

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Sidebar } from "./components/sidebar";
 import { Afacad, Geist, Geist_Mono } from "next/font/google";
 
-
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,16 +29,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body 
-        className={` font-[Afacad] antialiased flex` }
-      >
+      <body className={` font-[Afacad] antialiased flex`}>
         <Sidebar />
 
         {children}
-
       </body>
     </html>
   );
