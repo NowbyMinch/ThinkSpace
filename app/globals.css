@@ -75,3 +75,7 @@ h1{
 #pop:hover + #backdrop{
   display: block;
 }
+
+#pop2:hover + #backdrop{
+  display: block;
+}

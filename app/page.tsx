@@ -19,88 +19,24 @@ import { Backdrop } from "./components/backdrop";
 
 export default function Home() {
   const [pop, setPop] = useState(false);
+  const [pop2, setPop2] = useState(false);
 
-  function tru() {
-    setPop(true);
-    console.log("true");
-  }
-
-  function fals() {
-    setPop(false);
-    console.log("false");
-  }
   return (
     <>
       {(() => {
         if (pop == true) {
           return (
-            <div id="backdrop" className="absolute w-full h-full">
+          <div id="backdrop" className="absolute w-full h-full">
+            <Backdrop />
+          </div>
+          );
+          
+        }
+        if (pop2 == true) {
+          return (
+          <div id="backdrop" className="absolute w-full h-full">
               <Backdrop />
-              <div className=" relative w-full h-full">
-                <div className="absolute w-[530px] h-[250px] bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] left-[230px] top-[100px] flex justify-center items-center overflow-hidden">
-                  <div className=" w-[85%] h-[75%] flex flex-col gap-6">
-                    <div className="">
-                      <h1 className=" font-medium leading-[40px] ">
-                        Sua ofensiva
-                      </h1>
-                      <h2 className=" font-medium text-[22px]">
-                        Sua ofensiva atual é de 1 dia
-                      </h2>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">DOM</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                          <Check className="text-white" />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">DOM</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                          <Check className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">TER</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                          <X className="text-[#C10000]" />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px] font-medium text-[#726BB6]">
-                          QUA
-                        </span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
-                          <Check className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">QUI</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                      </div>
-
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">SEX</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                      </div>
-                      <div className="flex flex-col text-center ">
-                        <span className="text-[20px]">SAB</span>
-                        <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <img
-                    src="Vector.svg"
-                    className="absolute right-[-50px] top-[-40px]"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
+          </div>
           );
         }
       })()}
@@ -108,24 +44,123 @@ export default function Home() {
       <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden ">
         <div className="h-[82px] mt-[15px] flex justify-between ">
           <div className="flex gap-[20px]">
-            <div
-              id="pop"
-              className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md "
-            >
+            <div id="pop" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => setPop(true)}
                 onMouseLeave={() => setPop(false)}
-                className="w-full h-full absolute rounded-full z-10"
-              ></div>
+                className="w-full h-full absolute rounded-full z-10 group"
+              >
+                <div className=" relative w-full h-full group">
+                  <div className="absolute w-[530px] h-[250px] bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] hidden justify-center items-center overflow-hidden group-hover:flex">
+                    <div className=" w-[85%] h-[75%] flex flex-col gap-6">
+                      <div className="">
+                        <h1 className=" font-medium leading-[40px] ">
+                          Sua ofensiva
+                        </h1>
+                        <h2 className=" font-medium text-[22px] text-[#121212]">
+                          Sua ofensiva atual é de 1 dia
+                        </h2>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">DOM</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                            <Check className="text-white" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">DOM</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                            <Check className="text-white" />
+                          </div>
+                        </div>
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">TER</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                            <X className="text-[#C10000]" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px] font-medium text-[#726BB6]">
+                            QUA
+                          </span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
+                            <Check className="text-white" />
+                          </div>
+                        </div>
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">QUI</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                        </div>
+
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">SEX</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                        </div>
+                        <div className="flex flex-col text-center ">
+                          <span className="text-[20px]">SAB</span>
+                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <img
+                      src="Vector.svg"
+                      className="absolute right-[-50px] top-[-40px]"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
               <Flame className=" size-[45px] text-[#cc6b5f] fill-[#e19786]" />
             </div>
             <div className="w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md">
-              {" "}
-              <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]" />{" "}
+              
+              <CircleHelp className="size-[45px] text-[rgba(0,0,0,31%)]" />
             </div>
-            <div className="w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md">
-              {" "}
-              <Bell className="size-[45px] text-[rgba(0,0,0,31%)]" />{" "}
+            
+            <div id="pop2" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
+              <div
+                onMouseEnter={() => setPop2(true)}
+                onMouseLeave={() => setPop2(false)}
+                className="w-full h-full absolute rounded-full z-10 group"
+              >
+                <div className=" relative w-full h-full group">
+                  <div className="absolute w-[450px] h-[450px] bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] flex justify-center items-center overflow-hidden group-hover:flex">
+                    <div className=" w-[85%] h-[87%] flex flex-col gap-5">
+                      <div className="">
+                        <h1 className=" font-medium leading-[40px] ">
+                          Notificações
+                        </h1>
+                        <h2 className=" font-medium text-[22px] text-[#121212]">
+                          Fique em dia
+                        </h2>
+                      </div>
+
+                      <div className="w-full h-full bg-[rgb(217,217,217,57%)] rounded-[20px] flex items-center justify-center flex-col">
+                        <div className=" h-[95%] w-[95%] rounded-[20px] flex flex-col gap-2">
+                          <div className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] "></div>
+                          <div className="w-full h-[89px] bg-[#EB9481] rounded-[20px] "></div>
+                          <div className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] "></div>
+                        </div>
+                
+                      </div>
+
+                    </div>
+
+                    <img
+                      src="Vector.svg"
+                      className="absolute right-[-50px] top-[-40px]"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+              </div>
+              <Bell className="size-[45px] text-[rgba(0,0,0,31%)]" />
             </div>
           </div>
 
@@ -177,7 +212,7 @@ export default function Home() {
                 <div className="flex flex-col w-[85%] h-[60%] relative ">
                   <div className=" flex gap-[6px] items-center relative ">
                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                      <MonitorCog className="size-[40px] text-[#757575]" />{" "}
+                      <MonitorCog className="size-[40px] text-[#757575]" />
                     </div>
 
                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
@@ -205,10 +240,10 @@ export default function Home() {
                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
                   <div className=" flex gap-[6px] items-center relative">
                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                      <BrainCircuit className="size-[40px] text-[#757575]" />{" "}
+                      <BrainCircuit className="size-[40px] text-[#757575]" />
                     </div>
                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">
-                      Ciência da computação{" "}
+                      Ciência da computação
                     </h1>
                   </div>
 
@@ -232,7 +267,7 @@ export default function Home() {
                 <div className="flex flex-col w-[85%] h-[60%] overflow-ellipsis">
                   <div className=" flex gap-[6px] items-center relative ">
                     <div className="w-[60px] h-[60px] rounded-full bg-white flex justify-center items-center ">
-                      <HeartPulse className="size-[40px] text-[#757575]" />{" "}
+                      <HeartPulse className="size-[40px] text-[#757575]" />
                     </div>
                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium">
                       Enfermagem
@@ -269,7 +304,7 @@ export default function Home() {
 
                 <p className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis line-clamp-2 leading-8 mt-2 flex items-center ">
                   Como os grupos de estudo podem te ajudar na sua trajetória
-                  acadêmica?{" "}
+                  acadêmica?
                 </p>
               </div>
 
@@ -281,7 +316,7 @@ export default function Home() {
                 </div>
 
                 <p className=" w-[96%] h-[25%] text-[25px] text-white overflow-hidden text-ellipsis leading-8 mt-2 flex items-center">
-                  Como posso estudar de forma eficiente?{" "}
+                  Como posso estudar de forma eficiente?
                 </p>
               </div>
             </div>
