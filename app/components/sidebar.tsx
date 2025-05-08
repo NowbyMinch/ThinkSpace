@@ -19,12 +19,17 @@ export const Sidebar  = () => {
                     <Link className="relative" href="/">
                         {(() => {
                             if (pathname == "/") {
-                                return <img src="Light Bulb.png" alt="" className=" w-16 h-min mt-5  cursor-pointer "/>
+                                return (
+                                    <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
+                                        <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute "/>
+                                        <img src="Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
+                                    </div>
+                                )
                             }
                             return (
-                                <div className=" w-16 h-[67px] mt-5 cursor-pointer relative">
+                                <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
                                     <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute"/>
-                                    <img id="on" src="Light Bulb.png" alt="" className=" w-full absolute"/>
+                                    <img id="on" src="Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
                                 </div>
                             )
                             
@@ -32,10 +37,17 @@ export const Sidebar  = () => {
                     </Link>
 
                     <div className="flex flex-col items-center gap-[45px]">
-                        <Link href="/materiais" >
+                        <Link href="/materiais" className="">
                             {(() => {
                                 if (pathname == "/materiais") {
-                                    return <div className="bg-[#A39CEC] p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-white"/></div>
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <NotebookPen className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
                                 }
                                 return <div className=" p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-black"/></div>
                             })()}
@@ -47,7 +59,14 @@ export const Sidebar  = () => {
                         <Link href="/metricas">
                             {(() => {
                                 if (pathname == "/metricas") {
-                                    return <div className="bg-[#A39CEC] p-[15px] rounded-full"><ChartLine className= "size-[45px] cursor-pointer text-white"/></div>
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <ChartLine className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
                                 }
                                 return <div className=" p-[15px] rounded-full"><ChartLine className= "size-[45px] cursor-pointer text-black"/></div>
                             })()}
@@ -60,7 +79,44 @@ export const Sidebar  = () => {
                         <Link href="/configuracoes/informacoes">
                             {(() => {
                                 if (pathname == "/configuracoes/informacoes") {
-                                    return <div className="bg-[#A39CEC] p-[15px] rounded-full"><Cog className= "size-[45px] cursor-pointer text-white"/></div>
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                                if (pathname == "/configuracoes/notificacao") {
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                                if (pathname == "/configuracoes/personalizacao") {
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                                if (pathname == "/configuracoes/conta") {
+                                    return (
+                                        <>
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
+                                        </>
+                                    )
                                 }
                                 return <div className=" p-[15px] rounded-full"><Cog className= "size-[45px] cursor-pointer text-black"/></div>
                             })()}

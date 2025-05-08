@@ -131,11 +131,11 @@ export default function() {
                                 <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
                                 <h2 className="text-[#828181] font-medium text-[25px]">Estudante</h2>
                                 <div className="w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
-                                    <div className="w-[15%] h-2 rounded-[25px] bg-purple-600 "></div>
+                                    <div className="w-[45%] h-2 rounded-[25px] bg-purple-600 "></div>
                                 </div>
                                 <div className="flex justify-between w-[220px]">
                                     <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
-                                    <h2 className="font-medium text-[18px] text-[#828181]">150xp</h2>
+                                    <h2 className="font-medium text-[18px] text-[#828181]">450px</h2>
                                 </div>
                             </div>
 
