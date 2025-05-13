@@ -130,8 +130,8 @@ export default function Home() {
               >
                 <div className=" relative w-full h-full group cursor-pointer">
                   <div className="w-[100px] h-[100px] hidden group-hover:flex"></div>
-                  <div className="absolute w-[490px] h-[450px] bg-white border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center hidden items-center overflow-hidden group-hover:flex hover:flex ">
-                    <div className=" w-[85%] h-[87.5%] flex flex-col gap-5">
+                  <div className="absolute w-[490px] h-[470px]  bg-white  border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center hidden items-center overflow-hidden group-hover:flex hover:flex ">
+                    <div className=" w-[85%] h-[87.5%] flex flex-col relative">
                       <div className="">
                         <h1 className=" font-medium leading-[40px] cursor-text">
                           Notificações
@@ -141,10 +141,10 @@ export default function Home() {
                         </h2>
                       </div>
 
-                      <div className="w-full h-full bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden ">
+                      <div className="w-full h-[75%] bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden mt-4 z-100">
                         <div className=" w-full rounded-[20px] grid gap-2 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
                           
-                          <div className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
                             <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
                             <div className="">
                               <h1 className="text-[28px] text-white">Notificação de atenção</h1>
@@ -152,7 +152,7 @@ export default function Home() {
                             </div>
                           </div>
 
-                          <div className="w-full h-[89px] bg-[#EB9481] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                          <div id="notificacao" className="w-full h-[89px] bg-[#EB9481] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
                             <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><TriangleAlert className="text-[#994533] size-14"/> </div>
                             <div className="">
                               <h1 className="text-[28px] text-white">Notificação de denúncia</h1>
@@ -160,7 +160,7 @@ export default function Home() {
                             </div>
                           </div>
                           
-                          <div className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
                             <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
                             <div className="">
                               <h1 className="text-[28px] text-white">Notificação de atenção</h1>
@@ -168,7 +168,7 @@ export default function Home() {
                             </div>
                           </div>
                           
-                          <div className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
                             <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
                             <div className="">
                               <h1 className="text-[28px] text-white">Notificação de atenção</h1>
@@ -179,7 +179,6 @@ export default function Home() {
                         </div>
                 
                       </div>
-
                     </div>
 
                     <img
@@ -238,8 +237,6 @@ export default function Home() {
             <div className=" ">
               <CarouselSpacing />
             </div>
-
-            
 
             <h1 className="text-[32px] mt-4 mb-4">Links úteis:</h1>
 

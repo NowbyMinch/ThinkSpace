@@ -31,13 +31,13 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#CAC5FF] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <MonitorCog className="size-[40px] text-[#757575]" />
                                 </div>
 
                                 <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                Ciência da computação 
+                                Ciência da Computação 
                                 </h1>
                             </div>
 
@@ -63,7 +63,7 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#FFA6F1] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <BrainCircuit className="size-[40px] text-[#757575]" />
                                 </div>
@@ -95,7 +95,7 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#FF9F93] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <HeartPulse className="size-[40px] text-[#757575]" />
                                 </div>
@@ -126,7 +126,7 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#CAC5FF] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <MonitorCog className="size-[40px] text-[#757575]" />
                                 </div>
@@ -158,7 +158,7 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#FFA6F1] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <BrainCircuit className="size-[40px] text-[#757575]" />
                                 </div>
@@ -190,7 +190,7 @@ export function CarouselSpacing() {
                 <Card className=" h-[200px] w-[300px] rounded-[25px] bg-[#FF9F93] shadow-md border border-[#00000031]">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
-                        <div className=" flex gap-[6px] items-center relative ">
+                        <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                 <HeartPulse className="size-[40px] text-[#757575]" />
                                 </div>

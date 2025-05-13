@@ -2,7 +2,7 @@ import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Star, 
 import { Chart } from '../components/chart';
 import { ComboboxDemo } from '../components/dropdown';
 
-export default function Metricas() {
+export default function Métricas() {
     return(
         <>
             <div className="flex w-full justify-center overflow-hidden">

@@ -22,14 +22,14 @@ export const Sidebar  = () => {
                                 return (
                                     <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
                                         <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute "/>
-                                        <img src="Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
+                                        <img src="../../../Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
                                     </div>
                                 )
                             }
                             return (
                                 <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
                                     <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute"/>
-                                    <img id="on" src="Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
+                                    <img id="on" src="../../../Light Bulb.png" alt="" className=" z-10 w-full absolute "/>
                                 </div>
                             )
                             
