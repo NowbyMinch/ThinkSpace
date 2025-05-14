@@ -5,6 +5,7 @@ import {  useEffect, useState  } from 'react';
 
 
 export default function MaterialId({ params }: {params: { id: string }} ) {
+
     return( 
         <>
             <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
@@ -16,16 +17,16 @@ export default function MaterialId({ params }: {params: { id: string }} ) {
                             <h1 className="text-[35px] italic w-fit font-medium text-[#9767F8] ">Ciência da computação</h1>
                         </div>
 
-                        <div className="mt-[50px] ml-[30px] overflow-hidden flex flex-row gap-5">
+                        <div className="mt-[50px] overflow-hidden flex flex-row gap-5 justify-center">
                             <div className=" h-[82px] flex justify-center relative ">
                                 <div className="w-[980px] rounded-[20px] mt-4 mr-4 h-[50px] bg-[#D9D9D9] absolute"></div>
-                                <div className="relative  ">
+                                <div className="relative">
                                     <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
                                     <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                                 </div>
                             </div>
                             
-                            <button className="bg-[#9B79E0] border border-[#716BAF] w-[15%] h-[60px] rounded-full text-white text-[24px]">Criar novo</button>
+                            <button className="bg-[#9B79E0] border border-[#716BAF] w-[14%] h-[60px] rounded-full text-white text-[24px]">Criar novo</button>
                         </div>
 
                         <div className="flex h-[670px]  overflow-y-auto overflow-x-hidden flex-col items-center">

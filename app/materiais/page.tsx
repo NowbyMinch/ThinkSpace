@@ -1,14 +1,60 @@
+"use client";
+
 import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft, ChevronsRight, ChevronLeft } from "lucide-react";
 import {  useEffect, useState  } from 'react';
 
 // blue_text = 1E2351;
 
 export default function Materiais() {
+    const [open, setOpen] = useState(false)
+
     return( 
         <>
+        <div className={`w-full h-full ${ open? 'absolute' : 'hidden'}`}>
+            <div className={`w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center
+                ${ open? 'absolute' : 'hidden'}`}>
+
+                <div className="w-[80%] h-[85%] flex flex-col gap-10">
+                    <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
+                    <div className="w-full flex justify-between ">
+                        <div className="w-[47%] flex flex-col gap-2">
+                            <div className="">
+                                <h2 className="text-[28px] ">Nome da matéria:</h2>
+                                <input type="text" placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
+                            </div>
+
+                            <div className="">
+                                <h2 className="text-[28px] ">Cores:</h2>
+                                <div className="flex gap-1">
+                                    <div className="w-[30px] h-[30px] bg-[#8B81F3] rounded-full cursor-pointer"></div>
+                                    <div className="w-[30px] h-[30px] bg-[#CAC5FF] rounded-full cursor-pointer"></div>
+                                    <div className="w-[30px] h-[30px] bg-[#FFA6F1] rounded-full cursor-pointer"></div>
+                                    <div className="w-[30px] h-[30px] bg-[#FFACA1] rounded-full cursor-pointer"></div>
+                                </div>
+                            </div>
+
+                            <div className="">
+                                <h2 className="text-[28px] ">Ícone desejado:</h2>
+                                <div className="w-full h-[165px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px]">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className=" w-[47%]  ">
+                            <div className="w-full h-[100%] rounded-[25px] bg-[#EFEFEF]"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} onClick={() => setOpen(false)}></div>
+
         <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
             
-            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border  border-[#00000031] ">
+            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">
                 
                 <div className="w-[1200px] mt-4">
                     <div className="">
@@ -16,13 +62,13 @@ export default function Materiais() {
                         <h1 className="font-medium text-[30px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
                     </div>
 
-                    <div className="mt-[25px] ml-[30px] overflow-hidden flex flex-col items-center ">
- 
-                        <div className="w-full h-[82px] mt-10 flex justify-center relative">
+                    <div className="mt-[25px] overflow-hidden flex flex-col items-center ">
+  
+                        <div className="w-full h-[82px] mt-10 flex justify-center relative ">
                             
-                            <div className="w-[980px] rounded-[20px] mt-4 mr-11 h-[50px] bg-[#D9D9D9] absolute"></div>
+                            <div className="w-[980px] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
 
-                            <div className="relative mr-[30px] ">
+                            <div className="relative  ">
                                 <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                             </div>
@@ -33,7 +79,7 @@ export default function Materiais() {
                 <div className="flex justify-center overflow-y-auto mt-5 min-h-[580px] h-[580px] w-[1120px]">
                     <div className="w-[1100px] grid grid-cols-[1fr_1fr] gap-[20px] h-fit " >
                         
-                        <div id="materias" className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
+                        <div id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
                             <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
                             <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar um material</h2>
                         </div>
