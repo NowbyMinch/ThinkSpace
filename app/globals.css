@@ -209,9 +209,27 @@ h1{
   }
 }
 
+@keyframes graw{
+  0% {
+    scale: 0%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
 #materiais{
   animation: grow linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 80px;
+}
+
+#icone{
+  animation: graw linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 20px;
+  cursor: pointer;
 }
