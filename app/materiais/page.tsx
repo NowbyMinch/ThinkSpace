@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
 import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft, ChevronsRight, ChevronLeft } from "lucide-react";
 import {  useEffect, useState  } from 'react';
 
@@ -18,16 +19,31 @@ const icons = [
     {id: "plus", Icon: Plus}, 
     {id: "search", Icon: Search}
 ];
+
+{/* <div className="w-[30px] h-[30px] bg-[#8B81F3] rounded-full cursor-pointer"></div>
+<div className="w-[30px] h-[30px] bg-[#CAC5FF] rounded-full cursor-pointer"></div>
+<div className="w-[30px] h-[30px] bg-[#FFA6F1] rounded-full cursor-pointer"></div>
+<div className="w-[30px] h-[30px] bg-[#FFACA1] rounded-full cursor-pointer"></div> */}
+
+const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
+
 export default function Materiais() {
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
+    const [color, setColor] = useState<string | null>(null);
+
+    function closing(){
+        setOpen(false);
+        setSelected(null);
+        setColor(null);
+    }
 
     return( 
         <>
         <div className={`w-full h-full ${ open? 'absolute' : 'hidden'}`}>
             <div className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${ open? 'absolute' : 'hidden'}`}>
                 
-                <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => setOpen(false)}/>
+                <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
                 <img src="../../Vector.svg" alt="" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                 <img src="../../Vector.svg" alt="" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
@@ -43,20 +59,20 @@ export default function Materiais() {
                             <div className="">
                                 <h2 className="text-[28px] ">Cores:</h2>
                                 <div className="flex gap-1">
-                                    <div className="w-[30px] h-[30px] bg-[#8B81F3] rounded-full cursor-pointer"></div>
-                                    <div className="w-[30px] h-[30px] bg-[#CAC5FF] rounded-full cursor-pointer"></div>
-                                    <div className="w-[30px] h-[30px] bg-[#FFA6F1] rounded-full cursor-pointer"></div>
-                                    <div className="w-[30px] h-[30px] bg-[#FFACA1] rounded-full cursor-pointer"></div>
+                                    {colors.map((color) => (
+                                        <button key={color} style={{backgroundColor: color}} onClick={() => setColor(color) } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></button>
+                                    ))}
                                 </div>
+                                <div/>
                             </div>
 
                             <div className="">
                                 <h2 className="text-[28px] ">Ícone desejado:</h2>
                                 <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                    <div id="bah" className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
-                                        {icons.map(({ id, Icon }) => (
-                                            <button key={id} id="icone" onClick={() => setSelected(id)}>
-                                                <Icon />
+                                    <div className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
+                                        {icons.map(({id, Icon}) => (
+                                            <button key={id} onClick={() => setSelected(id)}>
+                                                <Icon id="icone"/>
                                             </button>
                                         ))}
                                     </div>
@@ -67,39 +83,40 @@ export default function Materiais() {
                         <div className=" w-[47%] ">
                             <div className="w-full h-[100%] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
                                 <h2 className="w-[85%] h-[60px] flex font-medium text-[25px]">Pré-visualização:</h2>
-                                <div className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center bg-white">
+                                <div style={{backgroundColor: color || "white"}} className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center">
 
-                                    <div className="w-[85%] h-[85%] flex items-center">
-                                        <div className="w-[50%] flex flex-col gap-4 ">
-                                            <h1 className="leading-8 font-medium">Nome da matéria</h1>
-                                            <div className="">
-                                                <h2>Materiais de estudo: 0</h2>
-                                                <h2>Tempo ativo: Sem dados</h2>
-                                                <h2>Última revisão: Sem dados</h2>
-                                            </div>
+                                <div className="w-[85%] h-[85%] flex items-center">
+                                    <div className="w-[50%] flex flex-col gap-4 ">
+                                        <h1 className="leading-8 font-medium">Nome da matéria</h1>
+                                        <div className="">
+                                            <h2>Materiais de estudo: 0</h2>
+                                            <h2>Tempo ativo: Sem dados</h2>
+                                            <h2>Última revisão: Sem dados</h2>
                                         </div>
+                                    </div>
 
-                                        <div className="w-[50%] ">
-                                            { selected && (
-                                                <>
-                                                    {(() => {
-                                                        const Selected = icons.find((icon) => icon.id === selected).Icon;
-                                                        return <Selected />
-                                                    })()}                                                 
-                                                </>
-                                            )}
-                                        </div>
+                                    <div className="w-[50%] flex justify-center items-center">
+                                        {selected && (
+                                            <>
+                                                {(() => {
+                                                    const SelectedIcon = icons.find((icon) => icon.id === selected)?.Icon;
+                                                    return SelectedIcon? <SelectedIcon className="size-[150px] opacity-[22%] stroke-1"/> : null;
+                                                })()}
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
+                                
+                            </div>
                         </div>
                     </div>
-                    <button id="editar_conta" className="border m-auto border-[#1E2351] text-[22px] w-[220px] h-[40px] rounded-full" onClick={() => setOpen(false)}>Criar nova matéria</button>
+                    <button id="editar_conta" className="border m-auto border-[#1E2351] text-[22px] w-[220px] h-[40px] rounded-full" onClick={() => closing()}>Criar nova matéria</button>
 
                 </div>
             </div>
         </div>
-        <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} onClick={() => setOpen(false)}></div>
+        <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} onClick={() => closing()}></div>
 
         <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
             
