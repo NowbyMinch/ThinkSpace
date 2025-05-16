@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  color: #1E2351;
+  color: #2F2F2F;
   background: #EFEFEF; 
 }
 
@@ -232,4 +232,16 @@ h1{
   animation-range-start: cover;
   animation-range-end: 20px;
   cursor: pointer;
+}
+
+#botoes-dta{
+  transition: all ease-in-out 0.15s;
+}
+
+#botoes-dta:hover {
+  scale: 101%;
+}
+
+#white-box{
+  transition: all ease-in-out 0.15s;
 }

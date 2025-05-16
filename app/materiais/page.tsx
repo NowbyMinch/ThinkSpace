@@ -1,29 +1,38 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import {  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse, Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft, ChevronsRight, ChevronLeft } from "lucide-react";
-import {  useEffect, useState  } from 'react';
-
-// blue_text = 1E2351;
-
+import {
+  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
+  Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
+  ChevronsRight, ChevronLeft, AlarmClock, Archive, Bell, Book,
+  Bookmark, Calendar, Camera, Check, Clipboard, Clock, Cloud,
+  Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
+  Folder, Gift, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
+  Home, Image, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb,
+  Link, List, Loader, Lock, LogIn, LogOut, Mail, Map, Menu
+} from "lucide-react";
 const icons = [
-    {id: "circlePlus", Icon: CirclePlus},
-    {id: "heart", Icon: Heart}, 
-    {id: "globe", Icon: Globe}, 
-    {id: "monitor", Icon: Monitor}, 
-    {id: "codeXml", Icon: CodeXml}, 
-    {id: "heartPulse", Icon: HeartPulse}, 
-    {id: "minus", Icon: Minus}, 
-    {id: "divide", Icon: Minus}, 
-    {id: "x", Icon: X}, 
-    {id: "plus", Icon: Plus}, 
-    {id: "search", Icon: Search}
+    { id: "circlePlus", Icon: CirclePlus }, { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse },
+    { id: "minus", Icon: Minus }, { id: "divide", Icon: Divide }, { id: "x", Icon: X }, { id: "plus", Icon: Plus },
+    { id: "check", Icon: Check }, { id: "search", Icon: Search }, { id: "download", Icon: Download }, { id: "edit", Icon: Edit },
+    { id: "filter", Icon: Filter }, { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "gift", Icon: Gift },
+    { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
+    { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
+    { id: "menu", Icon: Menu }, { id: "list", Icon: List }, { id: "grid", Icon: Grid }, { id: "link", Icon: Link },
+    { id: "monitor", Icon: Monitor }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
+    { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "loader", Icon: Loader },
+    { id: "eye", Icon: Eye }, { id: "clipboard", Icon: Clipboard }, { id: "flag", Icon: Flag }, { id: "file", Icon: File },
+    { id: "folder", Icon: Folder }, { id: "archive", Icon: Archive }, { id: "calendar", Icon: Calendar },
+    { id: "camera", Icon: Camera }, { id: "image", Icon: Image }, { id: "headphones", Icon: Headphones },
+    { id: "bell", Icon: Bell }, { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "helpCircle", Icon: HelpCircle },
+    { id: "key", Icon: Key }, { id: "lock", Icon: Lock }, { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut },
+    { id: "map", Icon: Map }, { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "hash", Icon: Hash },
+    { id: "clock", Icon: Clock }, { id: "alarmClock", Icon: AlarmClock },
+    { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
+    { id: "info", Icon: Info }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "lightbulb", Icon: Lightbulb },
+    { id: "gitBranch", Icon: GitBranch }, { id: "home", Icon: Home }
 ];
-
-{/* <div className="w-[30px] h-[30px] bg-[#8B81F3] rounded-full cursor-pointer"></div>
-<div className="w-[30px] h-[30px] bg-[#CAC5FF] rounded-full cursor-pointer"></div>
-<div className="w-[30px] h-[30px] bg-[#FFA6F1] rounded-full cursor-pointer"></div>
-<div className="w-[30px] h-[30px] bg-[#FFACA1] rounded-full cursor-pointer"></div> */}
+import {  useEffect, useState  } from 'react';
 
 const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
@@ -31,11 +40,13 @@ export default function Materiais() {
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
     const [color, setColor] = useState<string | null>(null);
+    const [titulo, setTitulo] = useState("");
 
     function closing(){
         setOpen(false);
         setSelected(null);
         setColor(null);
+        setTitulo("")
     }
 
     return( 
@@ -52,12 +63,13 @@ export default function Materiais() {
                     <div className="w-full flex justify-between ">
                         <div className="w-[47%] flex flex-col gap-2">
                             <div className="">
-                                <h2 className="text-[28px] ">Nome da matéria:</h2>
-                                <input type="text" placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
+                                <h2 className="text-[28px] font-medium">Nome da matéria:</h2>
+                                <input type="text" id="nome_materia" value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
+
                             </div>
 
                             <div className="">
-                                <h2 className="text-[28px] ">Cores:</h2>
+                                <h2 className="text-[28px] font-medium">Cores:</h2>
                                 <div className="flex gap-1">
                                     {colors.map((color) => (
                                         <button key={color} style={{backgroundColor: color}} onClick={() => setColor(color) } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></button>
@@ -67,9 +79,9 @@ export default function Materiais() {
                             </div>
 
                             <div className="">
-                                <h2 className="text-[28px] ">Ícone desejado:</h2>
+                                <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
                                 <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                    <div className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
+                                    <div className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(5,40px)] items-center pb-1">
                                         {icons.map(({id, Icon}) => (
                                             <button key={id} onClick={() => setSelected(id)}>
                                                 <Icon id="icone"/>
@@ -86,8 +98,8 @@ export default function Materiais() {
                                 <div style={{backgroundColor: color || "white"}} className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center">
 
                                 <div className="w-[85%] h-[85%] flex items-center">
-                                    <div className="w-[50%] flex flex-col gap-4 ">
-                                        <h1 className="leading-8 font-medium">Nome da matéria</h1>
+                                    <div className="w-[65%] flex flex-col gap-4 ">
+                                        <h1 className="w-[210px] line-clamp-2 break-words leading-12 font-medium">{titulo.trim() !== "" ? titulo : "Nome da matéria"}</h1>
                                         <div className="">
                                             <h2>Materiais de estudo: 0</h2>
                                             <h2>Tempo ativo: Sem dados</h2>
@@ -246,9 +258,9 @@ export default function Materiais() {
             <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
                 
                 <div className="w-[100%]">
-                    <div className=" ml-[10px] mr-[10px] w-[409px]">
+                    <div className=" ml-[10px] mr-[10px] w-[409px] ">
 
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px]">
+                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
                             
                             <img src="Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
 
@@ -267,11 +279,11 @@ export default function Materiais() {
                         </div>
                         
                         <div className="ml-[15px] mt-[30px] ">
-                            <h1 className="text-[34px] w-fit font-medium leading-6">Materiais de Estudo</h1>
+                            <h1 className="text-[34px] w-fit font-medium leading-6">Materiais recentes</h1>
                             <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] ">Ciência da computação</h1>
                         </div>
 
-                        <div className="flex flex-col gap-1 items-center">
+                        <div className="flex flex-col gap-1 items-center h-[685px] relative">
                             <div id="" className=" grid grid-cols-[100px_1fr]  px-2 py-1 w-[380px] ml-[15px] mr-[15px] gap-[5px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
 
                                 <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
@@ -355,7 +367,7 @@ export default function Materiais() {
                                 </div>
                             </div>
 
-                            <button id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] h-[50px] rounded-full">Ver mais materiais</button>
+                            <button id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</button>
                         </div>
                     </div>
                 </div>
