@@ -23,17 +23,27 @@ h1{
   background: #1E2351;
 }
 
+@keyframes growVar1{
+  0% {
+    scale: 85%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
 #underline{
-  animation: grow 0.1s ;
+  animation: growVar1 0.1s ;
 }
 #underline2{
-  animation: grow 0.1s ;
+  animation: growVar1 0.1s;
 }
 #underline3{
-  animation: grow 0.1s ;
+  animation: growVar1 0.1s ;
 }
 #underline4{
-  animation: grow 0.1s ;
+  animation: growVar1 0.1s ;
 }
 
 #editar_conta:hover{
@@ -45,26 +55,6 @@ h1{
 
 #side_pop{
   animation: grow 0.1s;
-}
-
-@keyframes grow{
-  0% {
-    scale: 0%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
-
-@keyframes grow{
-  0% {
-    transform: scaleX(0);
-  }
-
-  100% {
-    transform: scaleX(1);
-  }
 }
 
 #slider{
@@ -97,8 +87,6 @@ h1{
 #pop2:hover + #backdrop{
   display: block;
 }
-
-
 
 @layer base {
   :root {
@@ -209,16 +197,6 @@ h1{
   }
 }
 
-@keyframes graw{
-  0% {
-    scale: 0%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
-
 #materiais{
   animation: grow linear;
   animation-timeline: view();
@@ -244,4 +222,21 @@ h1{
 
 #white-box{
   transition: all ease-in-out 0.15s;
+}
+
+@keyframes vectorAppear{
+  0%{
+    scale: 0;  
+  }
+  100%{
+    scale: 1;
+  }
+
+}
+
+#aba{
+  font-weight: 500;
+}
+
+#vector{
 }

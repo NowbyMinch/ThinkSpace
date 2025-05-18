@@ -190,7 +190,7 @@ export default function Materiais() {
                             </div>
                         </a>
                         
-                        <a href="/materiais/ciencia da computacao">
+                        <a href="/materiais/Ciência da Computação">
                             <div id="materias" className="bg-[#FFA6F1]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">

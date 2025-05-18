@@ -2,13 +2,10 @@
 import { usePathname } from "next/navigation"
 import Link from "next/link";
 
-export default function Configurações({ children, }: { children: React.ReactNode}) {
+export default function Configurações({ children, }: { children: React.ReactNode}){
     const pathname = usePathname()
-    console.log(pathname)
-
     return(
         <>
-
         <div className="w-full mr-[20px] ml-[20px] h-[calc(100vh-24px)] mt-[12px] mb-[12px] bg-white shadow-md rounded-[35px] border border-[#00000031] flex justify-center items-center">
             <div className="w-[96%] h-[94%] ">
                 <h1 className="font-medium text-[45px]">Configurações</h1>

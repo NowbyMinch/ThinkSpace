@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Backdrop } from "./components/backdrop";
-import { CarouselSpacing } from "./components/carousel";
+import { CarouselLinks, CarouselSpacing } from "./components/carousel";
 
 export default function Home() {
   const [pop, setPop] = useState(false);
@@ -240,7 +240,11 @@ export default function Home() {
 
             <h1 className="text-[32px] mt-4 mb-4">Links úteis:</h1>
 
-            <div className="grid grid-cols-[1fr_1fr] h-[350px] gap-[20px] ">
+            <div className=" ">
+              <CarouselLinks />
+            </div>
+
+            {/* <div className="grid grid-cols-[1fr_1fr] h-[350px] gap-[20px] ">
               <div className="bg-[#1E2351] max-w-[100%] rounded-[25px] flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className=" w-[96%] h-[65%] bg-[#EFE7FF] rounded-tl-[15px] rounded-tr-[15px] mt-[8px] flex justify-center">
                   <div className=" w-fit h-[100%]">
@@ -265,7 +269,7 @@ export default function Home() {
                   Como posso estudar de forma eficiente?
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className=" ">
@@ -338,7 +342,7 @@ export default function Home() {
               Salas de estudo recentes:
             </h1>
 
-            <div id="scroll" className=" h-[630px] overflow-y-auto pr-1 ">
+            <div id="scroll" className="h-[665px] overflow-y-auto pr-1 rounded-[25px]">
               <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
                 <div className="w-[90%] ">
                   <div className="flex gap-[8px]">
