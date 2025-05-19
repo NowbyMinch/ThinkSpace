@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Sidebar } from "./components/sidebar";
-import { Afacad, Geist, Geist_Mono } from "next/font/google";
-
+import { Afacad } from "next/font/google";
 import "./globals.css";
 
 const afacad = Afacad({

@@ -1,10 +1,9 @@
 import * as React from "react"
+import Image from "next/image";
 import {
     HeartPulse,
     MonitorCog,
     BrainCircuit,
-    Check,
-    X,
   } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -160,7 +159,7 @@ export function CarouselLinks() {
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
                             <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center ">
-                                <img src="../../trajetoria.svg" alt="" className=" h-full" />
+                                <Image src="/trajetoria.svg" width={300} height={500} alt="Link Útil" className=" h-full" />
                             </div>  
                             <p className="text-white text-[25px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
                         </div>
@@ -173,7 +172,7 @@ export function CarouselLinks() {
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
                             <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center ">
-                                <img src="../../eficiente.svg" alt="" className=" h-full" />
+                                <Image src="/eficiente.svg" alt="Link Útil" width={300} height={500} className=" h-full" />
                             </div>  
                             <p className="text-white text-[25px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
                         </div>
@@ -186,7 +185,7 @@ export function CarouselLinks() {
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
                             <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center ">
-                                <img src="../../trajetoria.svg" alt="" className=" h-full" />
+                                <Image src="/trajetoria.svg" width={300} height={500} alt="Link Útil" className=" h-full" />
                             </div>  
                             <p className="text-white text-[25px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
                         </div>

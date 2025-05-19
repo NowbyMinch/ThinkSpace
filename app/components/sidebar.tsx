@@ -2,8 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
-import { useState } from "react";
-
+import Image from "next/image";
 
 export const Sidebar  = () => {
     const pathname = usePathname();
@@ -20,15 +19,15 @@ export const Sidebar  = () => {
                             if (pathname == "/") {
                                 return (
                                     <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
-                                        <img src="../../../Light Bulb-off.png" alt="Logo" className="w-full absolute "/>
-                                        <img src="../../../Light Bulb.png" alt="Logo" className=" z-10 w-full absolute "/>
+                                        <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute "/>
+                                        <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute "/>
                                     </div>
                                 )
                             }
                             return (
                                 <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
-                                    <img src="../../../Light Bulb-off.png" alt="Logo" className="w-full absolute"/>
-                                    <img id="on" src="../../../Light Bulb.png" alt="Logo" className=" z-10 w-full absolute "/>
+                                    <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute "/>
+                                    <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute "/>
                                 </div>
                             )
                             

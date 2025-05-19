@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
@@ -8,7 +9,7 @@ import {
   Bookmark, Calendar, Camera, Check, Clipboard, Clock,
   Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
   Folder, Gift, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
-  Home, Image, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb,
+  Home, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb,
 List, Loader, Lock, LogIn, LogOut, Mail, Map, Menu
 } from "lucide-react";
 const icons = [
@@ -23,7 +24,7 @@ const icons = [
     { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "loader", Icon: Loader },
     { id: "eye", Icon: Eye }, { id: "clipboard", Icon: Clipboard }, { id: "flag", Icon: Flag }, { id: "file", Icon: File },
     { id: "folder", Icon: Folder }, { id: "archive", Icon: Archive }, { id: "calendar", Icon: Calendar },
-    { id: "camera", Icon: Camera }, { id: "image", Icon: Image }, { id: "headphones", Icon: Headphones },
+    { id: "camera", Icon: Camera }, { id: "headphones", Icon: Headphones },
     { id: "bell", Icon: Bell }, { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "helpCircle", Icon: HelpCircle },
     { id: "key", Icon: Key }, { id: "lock", Icon: Lock }, { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut },
     { id: "map", Icon: Map }, { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "hash", Icon: Hash },
@@ -58,8 +59,8 @@ export default function Materiais() {
                 ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'}`}>
                 
                 <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
-                <img src="../../Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
-                <img src="../../Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
+                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
+                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
                 <div className="w-[80%] h-[85%] flex flex-col gap-10 z-[900]">
                     <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
@@ -265,7 +266,7 @@ export default function Materiais() {
 
                         <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
                             
-                            <img src="Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
+                            <Image width={300} height={500} src="Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
 
                             <div className="">
                                 <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
