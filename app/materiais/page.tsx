@@ -51,7 +51,9 @@ export default function Materiais() {
 
     return( 
         <>
-        <div onClick={() => closing()} className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
+        <div className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
+            <div className="w-full h-full absolute" onClick={() => closing()}></div>
+
             <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden 
                 ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'}`}>
                 
@@ -59,7 +61,7 @@ export default function Materiais() {
                 <img src="../../Vector.svg" alt="" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                 <img src="../../Vector.svg" alt="" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
-                <div className="w-[80%] h-[85%] flex flex-col gap-10 z-[1000]">
+                <div className="w-[80%] h-[85%] flex flex-col gap-10 z-[900]">
                     <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
                     <div className="w-full flex justify-between ">
                         <div className="w-[47%] flex flex-col gap-2">
@@ -120,7 +122,6 @@ export default function Materiais() {
                                     </div>
                                 </div>
                             </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -128,6 +129,7 @@ export default function Materiais() {
 
                 </div>
             </div>
+
         </div>
         <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} onClick={() => closing()}></div>
 
