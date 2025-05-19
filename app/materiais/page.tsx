@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
   Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
@@ -8,7 +9,7 @@ import {
   Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
   Folder, Gift, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
   Home, Image, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb,
-  Link, List, Loader, Lock, LogIn, LogOut, Mail, Map, Menu
+List, Loader, Lock, LogIn, LogOut, Mail, Map, Menu
 } from "lucide-react";
 const icons = [
     { id: "circlePlus", Icon: CirclePlus }, { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse },
@@ -17,7 +18,7 @@ const icons = [
     { id: "filter", Icon: Filter }, { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "gift", Icon: Gift },
     { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
     { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
-    { id: "menu", Icon: Menu }, { id: "list", Icon: List }, { id: "grid", Icon: Grid }, { id: "link", Icon: Link },
+    { id: "menu", Icon: Menu }, { id: "list", Icon: List }, { id: "grid", Icon: Grid },
     { id: "monitor", Icon: Monitor }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
     { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "loader", Icon: Loader },
     { id: "eye", Icon: Eye }, { id: "clipboard", Icon: Clipboard }, { id: "flag", Icon: Flag }, { id: "file", Icon: File },
@@ -165,7 +166,7 @@ export default function Materiais() {
                         </div>
                         
                         <Link href="">
-                            <div id="materias" className="bg-[#CAC5FF]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
+                            <div id="materias" className="bg-[#CAC5FF] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
                                     <h2 className="text-[35px] leading-[40px] text-[rgb(48,38,42,87%)] font-medium w-fit ">Geografia</h2>
                                     <h2 className="text-[22px] text-[#7A74B9] font-medium w-fit ">Materiais de estudo: 24</h2>

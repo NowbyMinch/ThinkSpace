@@ -1,23 +1,13 @@
 import type { Metadata } from "next";
 import { Sidebar } from "./components/sidebar";
-// import { Afacad, Geist, Geist_Mono } from "next/font/google";
+import { Afacad, Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
-// const afacad = Afacad({
-//   variable: "--font-afacad",
-//   subsets: ["latin"],
-// });
+const afacad = Afacad({
+  variable: "--font-afacad",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "ThinkSpace",
