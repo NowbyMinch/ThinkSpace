@@ -1,11 +1,10 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
   Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
   ChevronsRight, ChevronLeft, AlarmClock, Archive, Bell, Book,
-  Bookmark, Calendar, Camera, Check, Clipboard, Clock, Cloud,
+  Bookmark, Calendar, Camera, Check, Clipboard, Clock,
   Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
   Folder, Gift, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
   Home, Image, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb,
@@ -32,7 +31,7 @@ const icons = [
     { id: "info", Icon: Info }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "lightbulb", Icon: Lightbulb },
     { id: "gitBranch", Icon: GitBranch }, { id: "home", Icon: Home }
 ];
-import {  useEffect, useState  } from 'react';
+import {  useState  } from 'react';
 
 const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
@@ -58,8 +57,8 @@ export default function Materiais() {
                 ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'}`}>
                 
                 <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
-                <img src="../../Vector.svg" alt="" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
-                <img src="../../Vector.svg" alt="" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
+                <img src="../../Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
+                <img src="../../Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
                 <div className="w-[80%] h-[85%] flex flex-col gap-10 z-[900]">
                     <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
@@ -165,7 +164,7 @@ export default function Materiais() {
                             <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar um material</h2>
                         </div>
                         
-                        <a href="">
+                        <Link href="">
                             <div id="materias" className="bg-[#CAC5FF]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
                                     <h2 className="text-[35px] leading-[40px] text-[rgb(48,38,42,87%)] font-medium w-fit ">Geografia</h2>
@@ -177,9 +176,9 @@ export default function Materiais() {
                                 <Globe className="size-[110px] opacity-[22%] stroke-1"/>
 
                             </div>
-                        </a>
+                        </Link>
                         
-                        <a href="">
+                        <Link href="">
                             <div id="materias"className="bg-[#8B81F3]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
@@ -191,9 +190,9 @@ export default function Materiais() {
 
                                 <Monitor className="size-[110px] opacity-[22%] stroke-1"/>
                             </div>
-                        </a>
+                        </Link>
                         
-                        <a href="/materiais/Ciência da Computação">
+                        <Link href="/materiais/Ciência da Computação">
                             <div id="materias" className="bg-[#FFA6F1]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
@@ -205,9 +204,9 @@ export default function Materiais() {
 
                                 <CodeXml className="size-[110px] opacity-[22%] stroke-1"/>
                             </div>
-                        </a>
+                        </Link>
                         
-                        <a href="">
+                        <Link href="">
                             <div id="materias" className="bg-[#FF9F93]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
@@ -221,9 +220,9 @@ export default function Materiais() {
 
                             </div>
 
-                        </a>
+                        </Link>
                                             
-                        <a href="">
+                        <Link href="">
                             <div id="materias" className="bg-[#FFE89B]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[50%] overflow-hidden">
@@ -242,7 +241,7 @@ export default function Materiais() {
 
                                 </div>
                             </div>
-                        </a>
+                        </Link>
                         
                     </div>
                 </div>

@@ -14,8 +14,8 @@ export default function Personalização() {
                     <div id="tema" className="w-[300px] h-[180px] rounded-[25px] border border-[rgba(0,0,0,38%)] flex gap-3 items-center justify-center shadow-md cursor-pointer ">
                         <div className="border border-[rgba(0,0,0,38%)] h-[90%] w-6 rounded-full flex justify-center">
                             <div className=" w-[90%] mt-2 relative">
-                                <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute "/>
-                                <img src="../../../Light Bulb.png" alt="" className=" w-full absolute "/>
+                                <img src="../../../Light Bulb-off.png" alt="Logo" className="w-full absolute "/>
+                                <img src="../../../Light Bulb.png" alt="Logo" className=" w-full absolute "/>
                             </div>
                         </div>
                         <div className="border border-[rgba(0,0,0,38%)] h-[90%] w-[80%] rounded-[25px]"></div>
@@ -23,8 +23,8 @@ export default function Personalização() {
                     <div id="tema" className="w-[300px] h-[180px] rounded-[25px] border bg-[#383638] border-[rgba(0,0,0,38%)] flex gap-3 items-center justify-center shadow-md cursor-pointer">
                         <div className="border border-[rgba(0,0,0,38%)] h-[90%] w-6 rounded-full flex justify-center">
                             <div className=" w-[90%] mt-2 relative">
-                                <img src="../../../Light Bulb-off.png" alt="" className="w-full absolute"/>
-                                <img src="../../../Light Bulb.png" alt="" className=" w-full absolute "/>
+                                <img src="../../../Light Bulb-off.png" alt="Logo" className="w-full absolute"/>
+                                <img src="../../../Light Bulb.png" alt="Logo" className=" w-full absolute "/>
                             </div>
                         </div>
                         <div className="border border-[rgba(0,0,0,38%)] h-[90%] w-[80%] rounded-[25px]"></div>
