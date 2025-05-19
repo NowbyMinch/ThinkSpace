@@ -1,5 +1,6 @@
-import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Star, Earth } from 'lucide-react';
+import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Earth } from 'lucide-react';
 import { Chart } from '../components/chart';
+import Image from 'next/image';
 import { ComboboxDemo } from '../components/dropdown';
 
 export default function Métricas() {
@@ -57,7 +58,7 @@ export default function Métricas() {
                                 <div className="w-[90%] h-[90%] flex flex-col gap-4">
 
                                     <div className="flex items-center gap-5 relative">
-                                        <img src="Profile.png" className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
+                                        <Image width={300} height={500} src="/Profile.png" className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
                                         <div className="absolute w-[165.3px] h-[163px] bg-[#EB9481] rounded-full left-[-5px]"></div>
                                         <div className="">
                                             <h1 className="text-[40px] font-medium leading-none ">Maria Eduarda</h1>
@@ -76,72 +77,6 @@ export default function Métricas() {
                                             <h2 className="font-medium text-[20px] text-[#A39CEC]">1000xp</h2>
                                         </div>
                                     </div>
-                                    {/* <h1 className='text-[35px] font-medium '>Habilidades adquiridas</h1>
-
-                                    <div className="">
-                                        <h2 className='text-[20px]'>Raciocínio Lógico</h2>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
-                                                <div className="w-[60%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
-                                            </div>
-                                            <div className="flex gap-[1px]">
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star />
-                                                <Star />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="">
-                                        <h2 className='text-[20px]'>Interpretação de texto</h2>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
-                                                <div className="w-[27%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
-                                            </div>
-                                            <div className="flex gap-[1px]">
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star />
-                                                <Star />
-                                                <Star />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="">
-                                        <h2 className='text-[20px]'>Planejamento estratégico</h2>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
-                                                <div className="w-[75%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
-                                            </div>
-                                            <div className="flex gap-[1px]">
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="">
-                                        <h2 className='text-[20px]'>Design thinking</h2>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)]">
-                                                <div className="w-[35%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)]"></div>
-                                            </div>
-                                            <div className="flex gap-[1px]">
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star className='fill-[#1E2351]'/>
-                                                <Star />
-                                                <Star />
-                                            </div>
-                                        </div>
-                                    </div> */}
-
                                 </div>    
 
                             </div>
@@ -159,7 +94,7 @@ export default function Métricas() {
                                     </h1>
                                     <div className="mt-2 w-full h-14 flex items-center gap-[100px]">
                                         <div className="flex items-center gap-2 min-w-[194px]">
-                                            <img src="rank1.svg" alt="" className='h-12'/> 
+                                            <Image width={300} height={500} src="/rank1.svg" alt="Perfil do usuário" className='h-12'/> 
                                             <h2 className='text-[20px] font-bold'>Grande Dudinha</h2>
                                         </div>
                                         <div className="flex w-full items-center justify-between">
@@ -169,7 +104,7 @@ export default function Métricas() {
                                     </div>
                                     <div className="mt-2 w-full h-14 flex items-center gap-[100px]">
                                         <div className="flex items-center gap-2 min-w-[194px]">
-                                            <img src="rank2.svg" alt="" className='h-12'/>
+                                            <Image width={300} height={500} src="/rank2.svg" alt="Perfil do usuário" className='h-12'/>
                                             <h2 className='text-[20px] font-bold'>CEO</h2>
                                         </div>
                                         <div className="flex w-full items-center justify-between">
@@ -179,7 +114,7 @@ export default function Métricas() {
                                     </div>
                                     <div className="mt-2 w-full h-14 flex items-center gap-[100px]">
                                         <div className="flex items-center gap-2 min-w-[194px] ">
-                                            <img src="rank3.svg" alt="" className='h-12'/>
+                                            <Image width={300} height={500} src="/rank3.svg" alt="Perfil do usuário" className='h-12'/>
                                             <h2 className='text-[20px] font-bold'>França</h2>
                                         </div>
                                         <div className="flex w-full items-center justify-between">

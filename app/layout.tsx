@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` font-[Afacad] antialiased flex`}>
+      <body className={`${afacad.variable} font-[Afacad] antialiased flex`}>
         <Sidebar />
 
         {children}

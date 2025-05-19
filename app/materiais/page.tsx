@@ -266,7 +266,7 @@ export default function Materiais() {
 
                         <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
                             
-                            <Image width={300} height={500} src="Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
+                            <Image width={300} height={500} src="/Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
 
                             <div className="">
                                 <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
