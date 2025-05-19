@@ -51,8 +51,9 @@ export default function Materiais() {
 
     return( 
         <>
-        <div className={`w-full h-full ${ open? 'absolute' : 'hidden'}`}>
-            <div className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${ open? 'absolute' : 'hidden'}`}>
+        <div onClick={() => closing()} className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
+            <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden 
+                ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'}`}>
                 
                 <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
                 <img src="../../Vector.svg" alt="" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>

@@ -18,44 +18,62 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Backdrop } from "./components/backdrop";
+import { Backdrop2 } from "./components/backdrop";
 import { CarouselLinks, CarouselSpacing } from "./components/carousel";
 
 export default function Home() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
+  const [animate, setAnimate] = useState(false);
+
+  function opening(){
+    setPop(true);
+    setTimeout(() => setAnimate(true),5);
+  }
+  
+  function closing(){
+    setAnimate(false);
+    setTimeout(() => setPop(false), 10);
+  }
+  function opening2(){
+    setPop2(true);
+    setTimeout(() => setAnimate(true),5);
+  }
+  
+  function closing2(){
+    setAnimate(false);
+    setTimeout(() => setPop2(false), 10);
+  }
 
   return (
     <>
-      {(() => {
-        if (pop == true) {
-          return (
-          <div id="backdrop" className="absolute w-full h-full">
-            <Backdrop />
-          </div>
-          );
-          
-        }
-        if (pop2 == true) {
-          return (
-          <div id="backdrop" className="absolute w-full h-full">
-              <Backdrop />
-          </div>
-          );
-        }
-      })()}
 
+      <div id="backdrop" className={`${pop? "block": "hidden"} absolute w-full h-full`}>
+        <Backdrop />
+      </div>
+
+      <div id="backdrop2" className={`${pop2? "block": "hidden"} absolute w-full h-full`}>
+        <Backdrop2 />
+      </div>
       <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden ">
         <div className="h-[82px] mt-[15px] flex justify-between ">
-          <div className="flex gap-[20px]">
+          <div className="flex gap-[20px] ">
+
+
+
             <div id="pop" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
-                onMouseEnter={() => setPop(true)}
-                onMouseLeave={() => setPop(false)}
+                onMouseEnter={() => opening()}
+                onMouseLeave={() => closing()}
                 className="w-full h-full absolute rounded-full z-10 group"
               >
                 <div className=" relative w-full h-full group">
-                  <div className="w-[100px] h-[100px] hidden group-hover:flex"></div>
-                  <div className="absolute w-[530px] h-[250px] bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] hidden justify-center items-center overflow-hidden group-hover:flex cursor-default">
+                  
+                  <div className="w-[100px] h-[100px] hidden group-hover:flex">
+                    {/* Aumenta o tamanho da box que o mouse pode passar por cima para manter o pop-up ativo */}
+                  </div>
+                  <div className={`absolute w-[530px] h-[250px] origin-top-left transition-all ease-in-out bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] hidden justify-center items-center overflow-hidden group-hover:flex cursor-default
+                  ${ animate? "scale-1": "scale-[90%]" }`}>
                     <div className=" w-[85%] h-[75%] flex flex-col gap-6">
                       <div className="">
                         <h1 className="w-fit font-medium leading-[40px] cursor-text">
@@ -122,15 +140,19 @@ export default function Home() {
               <Flame className=" size-[45px] text-[#cc6b5f] fill-[#e19786]" />
             </div>
             
+
+
+
+
             <div id="pop2" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
-                onMouseEnter={() => setPop2(true)}
-                onMouseLeave={() => setPop2(false)}
+                onMouseEnter={() => opening2()}
+                onMouseLeave={() => closing2()}
                 className="w-full h-full absolute rounded-full z-10 group"
               >
                 <div className=" relative w-full h-full group cursor-pointer">
                   <div className="w-[100px] h-[100px] hidden group-hover:flex"></div>
-                  <div className="absolute w-[490px] h-[470px]  bg-white  border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center hidden items-center overflow-hidden group-hover:flex hover:flex ">
+                  <div className={`absolute w-[490px] h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center hidden items-center overflow-hidden group-hover:flex hover:flex ${ animate? "scale-1": "scale-[90%]" }`}>
                     <div className=" w-[85%] h-[87.5%] flex flex-col relative">
                       <div className="">
                         <h1 className=" font-medium leading-[40px] cursor-text">

@@ -84,7 +84,7 @@ h1{
   display: block;
 }
 
-#pop2:hover + #backdrop{
+#pop2:hover + #backdrop2{
   display: block;
 }
 
@@ -164,12 +164,14 @@ h1{
   font-weight: 500;
 }
 
-#paginas{
-  background-color: red;
-}
 
 @keyframes fade-in{
   from {scale:.8}
+  to {scale:1}
+}
+
+@keyframes fade-resumo{
+  from {scale:.98}
   to {scale:1}
 }
 
@@ -178,6 +180,13 @@ h1{
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 100px;
+}
+
+#bah{
+  animation: fade-resumo linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 50px;
 }
 
 #materias{
@@ -239,4 +248,13 @@ h1{
 }
 
 #vector{
+  animation: vectorAppear linear;
+}
+
+#AER{
+  transition: all ease-in-out 0.2s;
+}
+
+#AER:hover {
+  scale: 102%;
 }
