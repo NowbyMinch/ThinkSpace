@@ -207,7 +207,7 @@ export default function Home() {
           <div className="flex gap-2">
             <div className="text-end flex flex-col justify-center">
               <h1 className="font-medium leading-[40px] text-[35px]">
-                Maria Eduarda Teste Alteração Git
+                Maria Eduarda
               </h1>
               <h2 className="font-medium text-[22px] text-[#828181]">
                 Estudante
@@ -327,58 +327,7 @@ export default function Home() {
 
             <div id="scroll" className="h-[665px] overflow-y-auto pr-1 rounded-[25px]">
               <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
-                <div className="w-[90%] ">
-                  <div className="flex gap-[8px]">
-                    <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">
-                      Idiomas
-                    </h2>
-                    <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
-                      Espanhol
-                    </h2>
-                  </div>
-
-                  <div className="w-full leading-[55px] ">
-                    <h1 className="font-medium text-[40px]">ImaginAcción</h1>
-                    <Image width={300} height={500}
-                      src="/imaginaccion.svg"
-                      alt="Sala de Estudo"
-                      className="w-full rounded-[25px] shadow-md"
-                    />
-                    <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                      <Image width={300} height={500}
-                        src="/imaginuser4.svg"
-                        className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]" 
-                        alt="Usuário"
-                      />
-                      <Image width={300} height={500}
-                        src="/imaginuser3.svg"
-                        className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
-                        alt="Usuário"
-                      />
-                      <Image width={300} height={500}
-                        src="/imaginuser2.svg"
-                        className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
-                        alt="Usuário"
-                      />
-                      <Image width={300} height={500}
-                        src="/imaginuser1.svg"
-                        className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
-                        alt="Usuário"
-                      />
-                    </div>
-
-                    <div className="flex justify-between  items-center h-[44px] w-full  ">
-                      <h2 className="text-[20px]">+50 estudantes</h2>
-                      <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">
-                        Visitar
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                    
               </div>
 
               <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
