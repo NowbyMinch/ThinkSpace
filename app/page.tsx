@@ -53,8 +53,6 @@ export default function Home() {
         <div className="h-[82px] mt-[15px] flex justify-between ">
           <div className="flex gap-[20px] ">
 
-
-
             <div id="pop" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => opening()}
@@ -133,10 +131,6 @@ export default function Home() {
               </div>
               <Flame className=" size-[45px] text-[#cc6b5f] fill-[#e19786]" />
             </div>
-            
-
-
-
 
             <div id="pop2" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
@@ -213,7 +207,7 @@ export default function Home() {
           <div className="flex gap-2">
             <div className="text-end flex flex-col justify-center">
               <h1 className="font-medium leading-[40px] text-[35px]">
-                Maria Eduarda
+                Maria Eduarda Teste Alteração Git
               </h1>
               <h2 className="font-medium text-[22px] text-[#828181]">
                 Estudante
