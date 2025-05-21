@@ -333,12 +333,12 @@ export default function Home() {
                       Idiomas
                     </h2>
                     <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
-                      Português
+                      Espanhol
                     </h2>
                   </div>
 
                   <div className="w-full leading-[55px]">
-                    <h1 className="font-medium text-[40px]">Gramaticando</h1>
+                    <h1 className="font-medium text-[40px]">ImaginAccíon</h1>
                     <Image width={300} height={500}
                       src="/Imaginaccion.svg"
                       alt="Sala de Estudo"
