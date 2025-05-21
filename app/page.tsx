@@ -341,9 +341,9 @@ export default function Home() {
                   </div>
 
                   <div className="w-full leading-[55px]">
-                    <h1 className="font-medium text-[40px]">ImaginAcción</h1>
+                    <h1 className="font-medium text-[40px]">ImaginAccíon</h1>
                     <Image width={300} height={500}
-                      src="/imaginaccion.svg"
+                      src="/Imaginaccion.svg"
                       alt="Sala de Estudo"
                       className="w-full rounded-[25px] shadow-md"
                     />
