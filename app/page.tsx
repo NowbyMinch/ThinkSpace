@@ -49,7 +49,9 @@ export default function Home() {
       <div id="backdrop2" className={`${pop2? "block": "hidden"} absolute w-full h-full`}>
         <Backdrop2 />
       </div>
-      <div className=" w-[1580px] mx-auto h-full pb-8 max-h-full overflow-hidden ">
+
+
+      <div className=" w-[1580px] max-w-[85%] mx-auto h-full pb-8 max-h-full  ">
         <div className="h-[82px] mt-[15px] flex justify-between ">
           <div className="flex gap-[20px] ">
 
@@ -221,26 +223,27 @@ export default function Home() {
           </div>
         </div>
 
-        <div className=" grid grid-cols-[62%_1fr] gap-[30px] justify-between mt-3 pb-3 overflow-hidden ">
-          <div className="">
-            <div className="w-[100%] h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex justify-center items-center relative border border-[#00000031] ">
-              <div className=" w-[90%] h-[80%] flex justify-between ">
-                <div className=" flex flex-col justify-between w-[65%]">
-                  <h1 className="text-[32px] font-medium line-clamp-2 overflow-hidden text-ellipsis">
-                    Bom dia, Maria! Veja o relatório das suas metas de estudo
-                    semanais
-                  </h1>
+        <div className=" grid grid-cols-[62%_1fr] mt-3 pb-3 gap-[30px] ">
+          <div className=" ">
+            <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+              <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
+                <div className=" flex flex-col justify-between w-full h-full  ">
+                    <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
+                      Bom dia, Maria! Veja o relatório das suas metas de estudo
+                      semanais
+                    </h1>
 
-                  <button className="w-[250px] h-[55px] bg-[#1E2351] rounded-full text-white text-[22px] shadow-md">
-                    Saiba mais!
-                  </button>
+                    <button className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                      Saiba mais!
+                    </button>
                 </div>
+                
               </div>
               <Image width={300} height={500}
-                src="/meta.svg"
-                alt="Decoração"
-                className=" absolute w-[350px] h-[230px] object-cover right-5 "
-              />
+                  src="/meta.svg"
+                  alt="Decoração"
+                  className=" w-[350px] max-w-[40%] absolute h-full right-0 object-cover  "
+                />
             </div>
 
             <h1 className="text-[32px] mt-4 mb-4">Seu progresso semanal:</h1>
@@ -255,8 +258,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=" ">
-            <div className="bg-white h-[230px] rounded-[35px] shadow-md bg border border-[#00000031]">
+          <div className="  overflow-hidden ">
+            <div className=" bg-white h-[230px] rounded-[35px] shadow-md bg border border-[#00000031]">
               <div className=" w-full grid grid-cols-[1fr_1fr_1fr] h-[50%] text-center items-center ">
                 <div className="flex justify-center items-center">
                   <ArrowLeft className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351] " />

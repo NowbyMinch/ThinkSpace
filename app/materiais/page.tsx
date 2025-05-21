@@ -134,11 +134,10 @@ export default function Materiais() {
         </div>
         <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} onClick={() => closing()}></div>
 
-        <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
+        <div className="flex mt-[12px] mb-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] ">
             
-            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">
-                
-                <div className="w-[1200px] mt-4">
+            <div className="bg-white rounded-[35px] w-[75%] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031]">
+                <div className="min-w-[94%] max-w-[94%] mt-4 ">
                     <div className="">
                         <h1 className="text-[#1E2351] font-medium text-[50px]"> Olá, Maria </h1>
                         <h1 className="font-medium text-[30px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
@@ -148,18 +147,18 @@ export default function Materiais() {
   
                         <div className="w-full h-[82px] mt-10 flex justify-center relative ">
                             
-                            <div className="w-[980px] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
+                            <div className="w-[980px] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
 
-                            <div className="relative  ">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
+                            <div className="relative w-[84%] max-w-[90%]">
+                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full  text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex justify-center overflow-y-auto mt-5 min-h-[580px] h-[580px] w-[1120px]">
-                    <div className="w-[1100px] grid grid-cols-[1fr_1fr] gap-[20px] h-fit " >
+                <div className="flex justify-center overflow-y-auto mt-5 h-[580px] max-h-[80%]  min-w-[80%] max-w-[80%] ">
+                    <div className="w-[99%] grid grid-cols-[1fr_1fr] gap-[20px] h-fit  500 ">
                         
                         <div id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
                             <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
@@ -181,7 +180,7 @@ export default function Materiais() {
                         </Link>
                         
                         <Link href="">
-                            <div id="materias"className="bg-[#8B81F3]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
+                            <div id="materias"className="bg-[#8B81F3] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Rede de Computadores</h2>
@@ -195,7 +194,7 @@ export default function Materiais() {
                         </Link>
                         
                         <Link href="/materiais/Ciência da Computação">
-                            <div id="materias" className="bg-[#FFA6F1]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
+                            <div id="materias" className="bg-[#FFA6F1] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]">
                                     
                                 <div className="max-w-[80%] h-[78%] overflow-hidden">
                                     <h2 className="text-[35px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">Ciência da computação</h2>
@@ -248,7 +247,7 @@ export default function Materiais() {
                     </div>
                 </div>
 
-                <div className="w-[460px] h-[94px] flex justify-center items-center" id="paginacao">
+                <div className="min-w-max max-w-[94%] h-[94px] flex justify-center items-center" id="paginacao">
                     <ChevronsLeft/>
                     <ChevronLeft/>
                     <a href="" className="bg-[#9767F8] rounded-full text-white">1</a>
@@ -259,17 +258,17 @@ export default function Materiais() {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
-                
-                <div className="w-[100%]">
-                    <div className=" ml-[10px] mr-[10px] w-[409px] ">
-
-                        <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
+            <div className="bg-white rounded-[35px] w-[25%] flex justify-center shadow-md border border-[#00000031] ">
+                 
+                <div className="w-full overflow-hidden h-full flex justify-center items-center">   
+                    <div className="w-[95%] h-[95%] flex items-center flex-col">
+                        
+                        <div className="flex w-[95%] overflow-hidden gap-[15px] bg-blue-500">
                             
-                            <Image width={300} height={500} src="/Profile.png" className="h-[100px] rounded-full cursor-pointer" alt="Profile picture" />
+                            <Image width={300} height={500} src="/Profile.png" className="w-[30%] h-auto rounded-full cursor-pointer" alt="Profile picture" />
 
-                            <div className="">
-                                <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
+                            <div className="w-[70%] bg-red-500">
+                                {/* <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
                                 <h2 className="text-[#828181] font-medium text-[25px]">Estudante</h2>
                                 <div className="w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
                                     <div className="w-[45%] h-2 rounded-[25px] bg-purple-600 "></div>
@@ -277,11 +276,11 @@ export default function Materiais() {
                                 <div className="flex justify-between w-[220px]">
                                     <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
                                     <h2 className="font-medium text-[18px] text-[#828181]">450px</h2>
-                                </div>
+                                </div> */}
                             </div>
 
                         </div>
-                        
+{/*                         
                         <div className="ml-[15px] mt-[30px] ">
                             <h1 className="text-[34px] w-fit font-medium leading-6">Materiais recentes</h1>
                             <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] ">Ciência da computação</h1>
@@ -372,9 +371,9 @@ export default function Materiais() {
                             </div>
 
                             <button id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</button>
-                        </div>
+                        </div> */}
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
         </>
