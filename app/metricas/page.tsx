@@ -94,7 +94,7 @@ export default function Métricas() {
                                     </h1>
                                     <div className="mt-2 w-full h-14 flex items-center gap-[100px]">
                                         <div className="flex items-center gap-2 min-w-[194px]">
-                                            <Image width={300} height={500} src="/rank1.svg" alt="Perfil do usuário" className='h-12'/> 
+                                            <Image width={300} height={500} src="/rank1.svg" alt="Perfil do usuário" className='w-2 h-12'/> 
                                             <h2 className='text-[20px] font-bold'>Grande Dudinha</h2>
                                         </div>
                                         <div className="flex w-full items-center justify-between">
