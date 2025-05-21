@@ -340,7 +340,7 @@ export default function Home() {
                   <div className="w-full leading-[55px]">
                     <h1 className="font-medium text-[40px]">Gramaticando</h1>
                     <Image width={300} height={500}
-                      src="/gramaticando.svg"
+                      src="/Imaginaccion.svg"
                       alt="Sala de Estudo"
                       className="w-full rounded-[25px] shadow-md"
                     />
