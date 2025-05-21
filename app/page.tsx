@@ -338,9 +338,9 @@ export default function Home() {
                   </div>
 
                   <div className="w-full leading-[55px]">
-                    <h1 className="font-medium text-[40px]">ImaginAcción</h1>
+                    <h1 className="font-medium text-[40px]">ImaginAccíon</h1>
                     <Image width={300} height={500}
-                      src="/imaginaccion.svg"
+                      src="/gramaticando.svg"
                       alt="Sala de Estudo"
                       className="w-full rounded-[25px] shadow-md"
                     />
@@ -350,22 +350,22 @@ export default function Home() {
                   <div className="flex items-center ">
                     <div className="relative w-[160px] h-[50px] flex cursor-pointer">
                       <Image width={300} height={500}
-                        src="/imaginuser4.svg"
+                        src="/gramatiuser4.svg"
                         className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"
                         alt="Usuário"
                       />
                       <Image width={300} height={500}
-                        src="/imaginuser3.svg"
+                        src="/gramatiuser3.svg"
                         className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
                         alt="Usuário"
                       />
                       <Image width={300} height={500}
-                        src="/imaginuser2.svg"
+                        src="/gramatiuser2.svg"
                         className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
                         alt="Usuário"
                       />
                       <Image width={300} height={500}
-                        src="/imaginuser1.svg"
+                        src="/gramatiuser1.svg"
                         className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
                         alt="Usuário"
                       />
@@ -379,7 +379,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
 
               <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
                 <div className="w-[90%] ">
