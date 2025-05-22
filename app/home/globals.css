@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #2F2F2F;
+  background: #EFEFEF; 
+}
+
+h1{
+  font-size: 40px;
+  line-height: normal;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #D9D9D9;
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: #1E2351;
+}
+
+@keyframes growVar1{
+  0% {
+    scale: 85%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
+#underline{
+  animation: growVar1 0.1s ;
+}
+#underline2{
+  animation: growVar1 0.1s;
+}
+#underline3{
+  animation: growVar1 0.1s ;
+}
+#underline4{
+  animation: growVar1 0.1s ;
+}
+
+#editar_conta:hover{
+  transition: all ease-in-out 0.1s;
+  color: white;
+  border: none;
+  background-color: #A78CDC;
+}
+
+#side_pop{
+  animation: grow 0.1s;
+}
+
+#slider{
+  transition: all ease-in-out 0.1s;
+}
+
+#opcao:checked + #slider{
+  margin-left: 40px;
+}
+
+#opcao:checked ~ #switch_color{
+  background-color: #9767F8;
+}
+
+#on{
+  scale: 0.52;
+  transition: scale ease-in-out 150ms;
+  opacity: 0;
+}
+
+#light-box:hover #on{
+  scale: 1;
+  opacity: 1;
+}
+
+#pop:hover + #backdrop{
+  display: block;
+}
+
+#pop2:hover + #backdrop2{
+  display: block;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+#tema:hover{
+  border: solid 1px #9767F8;
+}
+
+#paginacao a{
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+
+
+@keyframes fade-in{
+  from {scale:.8}
+  to {scale:1}
+}
+
+@keyframes fade-resumo{
+  from {scale:.98}
+  to {scale:1}
+}
+
+#notificacao{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 100px;
+}
+
+#bah{
+  animation: fade-resumo linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 50px;
+}
+
+#materias{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 250px;
+}
+
+@keyframes grow{
+  0% {
+    scale: 95%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
+#materiais{
+  animation: grow linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 80px;
+}
+
+#icone{
+  animation: graw linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 20px;
+  cursor: pointer;
+}
+
+#botoes-dta{
+  transition: all ease-in-out 0.15s;
+}
+
+#botoes-dta:hover {
+  scale: 101%;
+}
+
+#white-box{
+  transition: all ease-in-out 0.15s;
+}
+
+@keyframes vectorAppear{
+  0%{
+    scale: 0;  
+  }
+  100%{
+    scale: 1;
+  }
+
+}
+
+#aba{
+  font-weight: 500;
+}
+
+#vector{
+  animation: vectorAppear linear;
+}
+
+#AER{
+  transition: all ease-in-out 0.2s;
+}
+
+#AER:hover {
+  scale: 102%;
+}
