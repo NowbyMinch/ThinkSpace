@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Sidebar } from "./components/sidebar";
 import { Afacad } from "next/font/google";
 import "./globals.css";
 
@@ -21,8 +20,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${afacad.variable} font-[Afacad] antialiased flex`}>
-        <Sidebar />
-
         {children}
       </body>
     </html>

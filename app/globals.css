@@ -7,9 +7,27 @@ body {
   background: #EFEFEF; 
 }
 
-h1{
-  font-size: 40px;
-  line-height: normal;
+@font-face {
+  font-family: "ConfiteriaScript";
+  src: url("/fonts/ConfiteriaScript-Medium.woff") format("woff");
+}
+
+#conf{
+  font-family: "ConfiteriaScript";
+}
+
+#links-header a{
+  border: solid 2px rgba(18, 18, 18,0.24);
+  padding: 4px 22px;
+  border-radius: 45px;
+  transition: all ease-in-out 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#links-header a:hover{
+  border: solid 2px #A39CEC;
 }
 
 ::-webkit-scrollbar {
@@ -21,71 +39,6 @@ h1{
 ::-webkit-scrollbar-thumb {
   border-radius: 30px;
   background: #1E2351;
-}
-
-@keyframes growVar1{
-  0% {
-    scale: 85%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
-
-#underline{
-  animation: growVar1 0.1s ;
-}
-#underline2{
-  animation: growVar1 0.1s;
-}
-#underline3{
-  animation: growVar1 0.1s ;
-}
-#underline4{
-  animation: growVar1 0.1s ;
-}
-
-#editar_conta:hover{
-  transition: all ease-in-out 0.1s;
-  color: white;
-  border: none;
-  background-color: #A78CDC;
-}
-
-#side_pop{
-  animation: grow 0.1s;
-}
-
-#slider{
-  transition: all ease-in-out 0.1s;
-}
-
-#opcao:checked + #slider{
-  margin-left: 40px;
-}
-
-#opcao:checked ~ #switch_color{
-  background-color: #9767F8;
-}
-
-#on{
-  scale: 0.52;
-  transition: scale ease-in-out 150ms;
-  opacity: 0;
-}
-
-#light-box:hover #on{
-  scale: 1;
-  opacity: 1;
-}
-
-#pop:hover + #backdrop{
-  display: block;
-}
-
-#pop2:hover + #backdrop2{
-  display: block;
 }
 
 @layer base {
@@ -151,110 +104,4 @@ h1{
   body {
     @apply bg-background text-foreground;
   }
-}
-
-#tema:hover{
-  border: solid 1px #9767F8;
-}
-
-#paginacao a{
-  width: 24px;
-  display: flex;
-  justify-content: center;
-  font-weight: 500;
-}
-
-
-@keyframes fade-in{
-  from {scale:.8}
-  to {scale:1}
-}
-
-@keyframes fade-resumo{
-  from {scale:.98}
-  to {scale:1}
-}
-
-#notificacao{
-  animation: fade-in linear;
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 100px;
-}
-
-#bah{
-  animation: fade-resumo linear;
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 50px;
-}
-
-#materias{
-  animation: fade-in linear;
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 250px;
-}
-
-@keyframes grow{
-  0% {
-    scale: 95%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
-
-#materiais{
-  animation: grow linear;
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 80px;
-}
-
-#icone{
-  animation: graw linear;
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 20px;
-  cursor: pointer;
-}
-
-#botoes-dta{
-  transition: all ease-in-out 0.15s;
-}
-
-#botoes-dta:hover {
-  scale: 101%;
-}
-
-#white-box{
-  transition: all ease-in-out 0.15s;
-}
-
-@keyframes vectorAppear{
-  0%{
-    scale: 0;  
-  }
-  100%{
-    scale: 1;
-  }
-
-}
-
-#aba{
-  font-weight: 500;
-}
-
-#vector{
-  animation: vectorAppear linear;
-}
-
-#AER{
-  transition: all ease-in-out 0.2s;
-}
-
-#AER:hover {
-  scale: 102%;
 }
