@@ -46,14 +46,14 @@ export default function Home() {
 
                         <div className="w-[1570px] h-full flex max-w-[80%] absolute">
                             <div className="flex max-w-[50%]">
-                                <div className="w-[600px] h-[80%] text-[70px] flex flex-col gap-4 justify-center items-start">  
+                                <div className="w-[600px] h-[80%] text-[70px] flex flex-col gap-4 justify-center items-start ">  
 
                                     <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE]">rápida</span> e <span id="conf" className=" text-[#5F3AC4]">eficiente</span></h1>
-                                    <p className="text-[25px] text-white">O jeito inteligente de aprender mais em menos tempo.</p>
+                                    <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
-                                    <div className="w-[280px] text-white text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A39CEC] bg-[#BF9FFF]">
-                                        Comece a estudar
-                                        <button className="bg-white p-3 rounded-full"> <MoveUpRight className="text-[#A39CEC] size-5"/> </button>
+                                    <div className="w-[255px] max-w-[43%] text-white text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A39CEC] bg-[#BF9FFF] ">
+                                        <span className="line-clamp-2 break-words">Comece a estudar</span>
+                                        <button className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </button>
                                     </div>
                                 </div>
                             </div>
@@ -61,27 +61,28 @@ export default function Home() {
                     </div>
 
                     <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7">   
-                        <h1 className="w-full text-[55px] flex justify-between items-center">Nossas funcionalidades
-                            <Image width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
-                        </h1>
+                        <div  className="w-full text-[55px] flex justify-between items-center">
+                            <h1 id="title">Nossas funcionalidades</h1>
+                            <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
+                        </div>
 
                         <div className="grid grid-rows-[1fr_46%] w-[78%] h-[720px] gap-6">
                             <div className="grid grid-cols-3 gap-5">
-                                <div className="bg-[#B697F5] rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
+                                <div id="func-boxes" className="bg-[#B697F5] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
                                     <Image width={300} height={500} src="/landingpage/func1.svg" alt="Funcionalidade 1" className="absolute top-0 right-0 w-[90%] "/>
                                     <div className="h-[60%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Quizzes</h1>
                                         <p className="text-[18px] break-words line-clamp-5">Descubra quizzes feitos pela comunidade ou crie os seus próprios para testar conhecimentos e compartilhar com outras pessoas.</p>
                                     </div>
                                 </div>
-                                <div className="bg-[#FFB0F3] rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
+                                <div id="func-boxes" className="bg-[#FFB0F3] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
                                     <Image width={300} height={500} src="/landingpage/func2.svg" alt="Funcionalidade 2" className="absolute top-0 right-0 w-[90%] "/>
                                     <div className="h-[60%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Comunidade </h1>
                                         <p className="text-[18px] break-words line-clamp-5">Uma comunidade aberta para trocar ideias, compartilhar conteúdos e se conectar com pessoas que compartilham seus interesses.</p>
                                     </div>
                                 </div>
-                                <div className="bg-[#9678FF] rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
+                                <div id="func-boxes" className="bg-[#9678FF] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
                                     <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-0 right-0 w-[90%] "/>
                                     <div className="h-[60%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Materiais</h1>
@@ -90,14 +91,14 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-[1fr_1fr] gap-6">
-                                <div className="bg-[#A67EF6] rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
+                                <div id="func-boxes" className="bg-[#A67EF6] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
                                     <Image width={300} height={500} src="/landingpage/func4.svg" alt="Funcionalidade 4" className="absolute top-[-15px] right-[0] w-[85%] "/>
                                     <div className="h-[59%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Métricas</h1>
                                         <p className="text-[18px] break-words w-[75%] line-clamp-4">Acompanhe seu progresso, visualize suas conquistas e descubra insights que ajudam você a aprender melhor a cada dia.</p>
                                     </div>
                                 </div>                                
-                                <div className="bg-[#FF80EB] rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
+                                <div id="func-boxes" className="bg-[#FF80EB] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
                                     <Image width={300} height={500} src="/landingpage/func5.svg" alt="Funcionalidade 5" className="absolute top-[-15px] right-[-75px] w-full "/>
                                     <div className="h-[62%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Calendário</h1>

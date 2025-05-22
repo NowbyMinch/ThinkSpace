@@ -16,6 +16,44 @@ body {
   font-family: "ConfiteriaScript";
 }
 
+@keyframes fade-in {
+  0% {
+    scale: 0.8;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes rotate{
+  0% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(20deg);
+  }
+}
+
+#title{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 160px;
+}
+
+#func-vector{
+  animation: rotate linear 1s;
+  animation-timeline: view();
+  animation-range-start: cover;
+}
+
+#func-boxes{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 160px;
+}
+
 #links-header a{
   border: solid 2px rgba(18, 18, 18,0.24);
   padding: 4px 22px;
