@@ -34,7 +34,19 @@ body {
   }
 }
 
+.swiper-button-prev{
+  
+}
+
 #title{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 160px;
+  font-size: 55px;
+}
+
+#animate{
   animation: fade-in linear;
   animation-timeline: view();
   animation-range-start: cover;

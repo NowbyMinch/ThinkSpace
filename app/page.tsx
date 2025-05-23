@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image"
 import { MoveUpRight } from "lucide-react"
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation, Pagination } from 'swiper/modules';
 
 export default function Home() {
     return (
@@ -38,8 +43,8 @@ export default function Home() {
                     </div>
                 </header>
                 
-                <main className="flex justify-center items-center flex-col gap-14 pb-[500px]">
-                    <div className="w-full relative flex justify-center items-center ">
+                <main className="flex justify-center items-center flex-col pb-[500px] gap-[150px] ">
+                    <div className="w-full relative flex justify-center items-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full  "/>
                         </div>
@@ -60,7 +65,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7">   
+                    <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
                         <div  className="w-full text-[55px] flex justify-between items-center">
                             <h1 id="title">Nossas funcionalidades</h1>
                             <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
@@ -83,7 +88,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div id="func-boxes" className="bg-[#9678FF] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-0 right-0 w-[90%] "/>
+                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-4 right-0 w-[90%] "/>
                                     <div className="h-[60%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Materiais</h1>
                                         <p className="text-[18px] break-words line-clamp-5">Geração automática de materiais de estudo com IA, a partir de documentos enviados ou tópicos personalizados.</p>
@@ -99,7 +104,9 @@ export default function Home() {
                                     </div>
                                 </div>                                
                                 <div id="func-boxes" className="bg-[#FF80EB] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func5.svg" alt="Funcionalidade 5" className="absolute top-[-15px] right-[-75px] w-full "/>
+                                    <div className="absolute top-[-30px] right-[-95px] w-[105%] h-[100%]">
+                                        <Image width={800} height={800} src="/landingpage/func5.svg" alt="Funcionalidade 5" className=" w-full "/>
+                                    </div>
                                     <div className="h-[62%] w-[80%] flex flex-col ">
                                         <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Calendário</h1>
                                         <p className="text-[18px] break-words w-[70%] line-clamp-4">Organize sua rotina, planeje seus estudos e nunca perca um prazo com um calendário feito para acompanhar seu ritmo.</p>
@@ -108,7 +115,71 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                    
+                    <div className="w-[1300px] max-w-[80%] flex flex-row justify-center ">
+                        <div className="w-[50%] flex flex-col gap-12">
+                            <h1 id="title" className="w-full">Aprender nunca foi tão fácil
+                                <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[40%]" src="/landingpage/aprendervec.svg" alt="Vector"/>
+                            </h1>
+                            <p id="animate" className="text-[22px]">Nossa missão é simples: tornar o estudo mais inteligente, acessível e personalizado para todos os estudantes, em qualquer fase da vida.
+                                Na ThinkSpace, criamos planos de estudo estratégicos, pensados para economizar tempo, reduzir o estresse e ajudar cada pessoa a alcançar seus objetivos com mais foco e confiança.
+                                Acreditamos que aprender não precisa ser complicado — e com o plano certo, tudo flui melhor.
+                            </p>
+                            <div className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] transition-all ease-in-out duration-300 cursor-pointer  ">
+                                <span className="line-clamp-2 break-words">Comece a estudar</span>
+                                <button className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </button>
+                            </div>
+                        </div>
 
+                        <div id="animate" className=" w-[50%] flex flex-col ">
+                            <div className="h-[570px] flex justify-end relative ">
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className="w-full h-[850px] bg-[#9767F8] flex flex-col justify-center items-center ">
+                        <div className="w-[1300px] h-[80%] max-w-[80%] relative flex flex-col items-center ">
+                            <Image width={300} height={800} src="/landingpage/materiaisvec.svg" alt="Banner" className="absolute w-full top-0"/>
+
+                            <h1 id="animate" className="text-white text-center text-[55px] w-[80%]">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
+                            
+                            <Swiper slidesPerView={4} pagination={{clickable : true}} navigation={true} loop = {true} modules={[Navigation]} className="w-[80%]  flex justify-center items-center mt-10">
+                                
+                                <SwiperSlide className="">
+                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
+                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide className="">
+                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
+                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide className="">
+                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
+                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide className="">
+                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
+                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide className="">
+                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
+                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
+                                    </div>
+                                </SwiperSlide>
+
+                            </Swiper>
+
+
+                        </div>
+                    </div>
                 </main>
                     
                 <footer></footer>
