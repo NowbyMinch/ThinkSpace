@@ -34,8 +34,15 @@ body {
   }
 }
 
-.swiper-button-prev{
-  
+#estudantes-tit{
+  font-size: 30px;
+  color: white;
+}
+
+#estudantes-subtit{
+  font-size: 20px;
+  color: white;
+
 }
 
 #title{

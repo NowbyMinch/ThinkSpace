@@ -200,3 +200,55 @@ export function CarouselLinks() {
 
   )
 }
+
+export function CarouselLanding() {
+  return (
+    <Carousel className=" flex justify-center" opts={{ slidesToScroll: 2 }}>
+        <CarouselContent className=" w-[1150px] pr-1 pl-1 ">
+            <CarouselItem className=" md:basis-[25%] flex justify-center  w-[25%] ">
+                <div className="flex justify-center flex-col items-center">
+                    <Image src="/landingpage/materiais-img1.svg" className="w-full" width={300} height={500} alt="Alt"/>
+                    <h1 id="estudantes-tit">Pré-universitários</h1>
+                    <h2 id="estudantes-subtit">Science Teacher</h2>
+                </div>  
+            </CarouselItem>
+
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] ">
+                <div className="flex justify-center flex-col items-center">
+                    <Image src="/landingpage/materiais-img2.svg" className="w-full" width={300} height={500} alt="Alt"/>
+                    <h1 id="estudantes-tit">Mentores</h1>
+                    <h2 id="estudantes-subtit">Drawing Teacher</h2>
+                </div>            
+            </CarouselItem>
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] ">
+                <div className="flex justify-center flex-col items-center">
+                    <Image src="/landingpage/materiais-img3.svg" className="w-full" width={300} height={500} alt="Alt"/>
+                    <h1 id="estudantes-tit" className="">Universitários</h1>
+                    <h2 id="estudantes-subtit">Drawing Teacher</h2>
+                </div>  
+            </CarouselItem>
+
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] ">
+                <div className="flex justify-center flex-col items-center">
+                    <Image src="/landingpage/materiais-img4.svg" className="w-full"  width={300} height={500} alt="Alt"/>
+                    <h1 id="estudantes-tit">Estudantes</h1>
+                    <h2 id="estudantes-subtit">Reading Teacher</h2>
+                </div>
+            </CarouselItem>
+
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] ">
+                <div className="flex justify-center flex-col items-center">
+                    <Image src="/landingpage/materiais-img1.svg" className="w-full"  width={300} height={500} alt="Alt"/>
+                    <h1 id="estudantes-tit">Pré-universitários</h1>
+                    <h2 id="estudantes-subtit">Science Teacher</h2>
+                </div>  
+            </CarouselItem>
+
+        </CarouselContent>
+
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+
+  )
+}

@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image"
-import { MoveUpRight } from "lucide-react"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation, Pagination } from 'swiper/modules';
+import Image from "next/image";
+import { MoveUpRight } from "lucide-react" ;
+import { CarouselLanding } from "./home/components/carousel";
 
 export default function Home() {
     return (
@@ -144,39 +141,11 @@ export default function Home() {
                     <div className="w-full h-[850px] bg-[#9767F8] flex flex-col justify-center items-center ">
                         <div className="w-[1300px] h-[80%] max-w-[80%] relative flex flex-col items-center ">
                             <Image width={300} height={800} src="/landingpage/materiaisvec.svg" alt="Banner" className="absolute w-full top-0"/>
-
-                            <h1 id="animate" className="text-white text-center text-[55px] w-[80%]">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
                             
-                            <Swiper slidesPerView={4} pagination={{clickable : true}} navigation={true} loop = {true} modules={[Navigation]} className="w-[80%]  flex justify-center items-center mt-10">
-                                
-                                <SwiperSlide className="">
-                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
-                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="">
-                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
-                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="">
-                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
-                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="">
-                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
-                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="">
-                                    <div className={` w-[220px]  p-4 flex flex-col items-center `}>
-                                        <Image src="/landingpage/materiais-img1.svg" alt="Pré Universitários" width={300} height={500} className=""/>
-                                    </div>
-                                </SwiperSlide>
-
-                            </Swiper>
-
+                            <div className="flex flex-col items-center gap-[100px] w-full h-full">
+                                <h1 id="animate" className="text-white text-center text-[50px] w-[80%]">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
+                                <CarouselLanding />
+                            </div>
 
                         </div>
                     </div>
