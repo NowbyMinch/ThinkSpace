@@ -1,13 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { MoveUpRight } from "lucide-react" ;
-import { CarouselLanding } from "./home/components/carousel";
+import React, { useCallback } from 'react'
+import { MoveUpRight, ChevronLeft, ChevronRight } from "lucide-react" ;
+import useEmblaCarousel from 'embla-carousel-react'
 
 export default function Home() {
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' } )
+
+    const scrollPrev = useCallback(() => {
+        if (emblaApi) emblaApi.scrollPrev()
+    }, [emblaApi])
+
+    const scrollNext = useCallback(() => {
+        if (emblaApi) emblaApi.scrollNext()
+    }, [emblaApi])
+
     return (
         <>
-            <div className="w-screen h-screen ">
+            <div className="w-screen z-[0]">
                 <header className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
                     <button className=" w-full h-full flex items-center ">
                         <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
@@ -31,7 +42,7 @@ export default function Home() {
                     <div className=" w-full flex justify-end ">
                         <div className="flex items-center gap-8">
                             <button className="text-[20px]">Entrar</button>
-                            <div className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A39CEC]">
+                            <div  className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#866ABF]">
                                 Registre-se
                                 <button className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </button>
                             </div>
@@ -41,19 +52,19 @@ export default function Home() {
                 </header>
                 
                 <main className="flex justify-center items-center flex-col pb-[500px] gap-[150px] ">
-                    <div className="w-full relative flex justify-center items-center h-fit ">
+                    <div className="w-full relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
-                            <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full  "/>
+                            <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px]"/>
                         </div>
 
-                        <div className="w-[1570px] h-full flex max-w-[80%] absolute">
+                        <div className="w-[1570px] h-[88%] flex max-w-[80%] absolute ">
                             <div className="flex max-w-[50%]">
                                 <div className="w-[600px] h-[80%] text-[70px] flex flex-col gap-4 justify-center items-start ">  
 
                                     <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE]">rápida</span> e <span id="conf" className=" text-[#5F3AC4]">eficiente</span></h1>
                                     <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
-                                    <div className="w-[255px] max-w-[43%] text-white text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A39CEC] bg-[#BF9FFF] ">
+                                    <div className="w-[255px] max-w-[43%] text-white text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#866ABF] bg-[#BF9FFF] ">
                                         <span className="line-clamp-2 break-words">Comece a estudar</span>
                                         <button className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </button>
                                     </div>
@@ -144,9 +155,65 @@ export default function Home() {
                             
                             <div className="flex flex-col items-center gap-[100px] w-full h-full">
                                 <h1 id="animate" className="text-white text-center text-[50px] w-[80%]">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
-                                <CarouselLanding />
+                                
+                                <div className="flex w-full gap-2 justify-center items-center">
+
+                                    <button className="embla__prev h-min" onClick={scrollPrev}>
+                                        <ChevronLeft className="bg-[rgba(255,255,255,0.10)] size-12 p-2 rounded-full text-white"/>
+                                    </button>
+
+                                    <div className="embla">
+                                        <div className="embla__viewport " ref={emblaRef}>
+                                            <div className="embla__container ">
+
+                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                    <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                </div>
+                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                    <Image src="/landingpage/materiais-img2.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                </div>
+                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                    <Image src="/landingpage/materiais-img3.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                </div>
+                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                    <Image src="/landingpage/materiais-img4.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                </div>
+                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                    <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="embla__next h-min" onClick={scrollNext}>
+                                        <ChevronRight className="bg-[rgba(255,255,255,0.10)] size-12 p-2 rounded-full text-white"/>
+                                    </button>
+                                </div>
+                                
                             </div>
 
+                        </div>
+                    </div>
+
+                    <div className="w-full h-[500px] ">
+                        <div className="w-[45%] h-full relative ">
+                            <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
+                            <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
+                        </div>
+
+                        <div className="">
+                            
                         </div>
                     </div>
                 </main>

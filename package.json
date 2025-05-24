@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/react": "^2.7.8",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-dialog": "^1.1.7",
     "@radix-ui/react-dropdown-menu": "^2.1.7",
@@ -20,8 +21,11 @@
     "cmdk": "^1.1.1",
     "date": "^2.0.6",
     "date-fns": "^2.30.0",
+    "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.12.2",
     "lucide-react": "^0.475.0",
+    "motion": "^12.12.2",
     "next": "^15.3.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",

@@ -1,114 +1,171 @@
 "use client";
 
-import { X, Search, ChevronRight, ChevronDown, BookOpenText, FileText, FileInput } from "lucide-react";
+import { X, Search, ChevronRight, BookOpenText, FileText, FileInput } from "lucide-react";
 import { useState } from 'react';
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+
+export const animals = [
+  {label: "Ciência da Computação", key: "cienciadacomputacao"},
+  {label: "Enfermagem", key: "enfermagem"},
+  {label: "Geografia", key: "geografia"},
+  {label: "Matemática", key: "matematica"},
+];
 
 export default function MateriaisClient({ id }: { id: string; }) {
     const [open, setOpen] = useState(false);
     const [openVar, setOpenVar] = useState(false);
     const [input, setInput] = useState("");
-    const [input2, setInput2] = useState("");
     const [input3, setInput3] = useState("");
     const [input4, setInput4] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
     const decodedId = decodeURIComponent(id);
+
+    const [query, setQuery] = useState("");
+    const filtered = animals.filter((item) =>
+        item.label.toLowerCase().includes(query.toLowerCase())
+    );
+    const isExactMatch = animals.some(
+        (item) => item.label.toLowerCase() === query.toLowerCase()
+    );
     
     function closing(){
         setOpen(false);
         setOpenVar(false);
         setInput("");
-        setInput2("");
+        setQuery("");
         setInput3("");
         setInput4("");
     }
 
     return( 
         <>
-            <div className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
-                <div className="w-full h-full absolute" onClick={() => closing()}></div>
-                <div id="white-box" className={` w-[1250px] h-[600px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} ${openVar? 'h-[650px]' : 'h-[600px]'} `}>
+            <AnimatePresence initial={false} >
+                {open && (
+                    <motion.div 
+                        key="content"
+                        initial={{ opacity: 0, scale: 0.85}}
+                        animate={{ opacity: 1, scale: 0.94 }}
+                        exit={{ opacity: 0, scale: 0.90 }}
+                        className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
+                            <div className="w-full h-full absolute" onClick={() => closing()}></div>
+                            <div id="white-box" className={` w-[1250px] h-[600px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} ${openVar? 'h-[650px]' : 'h-[600px]'} `}>
 
-                    <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
-    
-                    <div className="w-[80%] h-[85%] flex flex-col gap-14 z-[1000]">
-                        <h1 className={`text-center text-[45px] font-medium ${ openVar? "hidden": "block"}`}>Como você deseja criar a matéria?</h1>
-                        <div className="flex w-[100%] h-[100%] justify-between ">
-                            <button onClick={() => setOpenVar(true)} id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
-                                <BookOpenText id="cobaias" className=" text-white size-[130px] stroke-1"/>
-                                <div id="cobaias" className="flex flex-col items-center ">
-                                    <h1 id="cobaias" className="text-[45px] font-medium text-white">Documentos</h1>
-                                    <h2 id="cobaias" className="text-[18px] font-medium">PDF, slides da aula, livros diversos</h2>
-                                </div>
-                            </button>
+                                <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
+                
+                                <div className="w-[80%] h-[85%] flex flex-col gap-14 z-[1000]">
+                                    <h1 className={`text-center text-[45px] font-medium ${ openVar? "hidden": "block"}`}>Como você deseja criar a matéria?</h1>
+                                    <div className="flex w-[100%] h-[100%] justify-between ">
+                                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => setOpenVar(true)}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
+                                            <BookOpenText  className=" text-white size-[130px] stroke-1"/>
+                                            <div  className="flex flex-col items-center ">
+                                                <h1  className="text-[45px] font-medium text-white">Documentos</h1>
+                                                <h2  className="text-[18px] font-medium">PDF, slides da aula, livros diversos</h2>
+                                            </div>
+                                        </motion.button>
 
-                            <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
-                                <BookOpenText id="cobaias" className=" text-white size-[130px] stroke-1"/>
-                                <div id="cobaias" className="flex flex-col items-center ">
-                                    <h1 id="cobaias" className="text-[45px] font-medium text-white">Tópicos</h1>
-                                    <h2 id="cobaias" className="text-[18px] font-medium">Digite um tópico que deseja revisar</h2>
-                                </div>
-                            </button>
-                            <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
-                                <BookOpenText id="cobaias" className=" text-white size-[130px] stroke-1"/>
-                                <div id="cobaias" className="flex flex-col items-center ">
-                                    <h1 id="cobaias" className="text-[45px] font-medium text-white">Assuntos</h1>
-                                    <h2 id="cobaias" className="text-[18px] font-medium">Digite assuntos gerais para revisar</h2>
-                                </div>
-                            </button>
+                                        <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
+                                            <BookOpenText  className=" text-white size-[130px] stroke-1"/>
+                                            <div  className="flex flex-col items-center ">
+                                                <h1  className="text-[45px] font-medium text-white">Tópicos</h1>
+                                                <h2  className="text-[18px] font-medium">Digite um tópico que deseja revisar</h2>
+                                            </div>
+                                        </button>
+                                        <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
+                                            <BookOpenText  className=" text-white size-[130px] stroke-1"/>
+                                            <div  className="flex flex-col items-center ">
+                                                <h1  className="text-[45px] font-medium text-white">Assuntos</h1>
+                                                <h2  className="text-[18px] font-medium">Digite assuntos gerais para revisar</h2>
+                                            </div>
+                                        </button>
 
-                            <div className={`w-full h-full flex gap-12 items-center  ${ openVar? "block": "hidden"}`}>
-                                <div className="w-[50%] h-[85%] bg-[#A39CEC] rounded-[25px] flex justify-center items-center">
-                                    <div className="w-[85%] h-[85%] flex flex-col gap-2">
-                                        <div className="">
-                                            <h1 className="text-white text-[40px]">Documento</h1>
-                                            <h2 className="text-white text-[20px]">1 Fevereiro 2025</h2>
+                                        <div className={`w-full h-full flex gap-12 items-center  ${ openVar? "block": "hidden"}`}>
+                                            <div className="w-[50%] h-[85%] bg-[#A39CEC] rounded-[25px] flex justify-center items-center">
+                                                <div className="w-[85%] h-[85%] flex flex-col gap-2">
+                                                    <div className="">
+                                                        <h1 className="text-white text-[40px]">Documento</h1>
+                                                        <h2 className="text-white text-[20px]">1 Fevereiro 2025</h2>
+                                                    </div>
+                                                    <div className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
+                                                        <FileInput className="size-[110px] stroke-1 opacity-[75%]"/>
+                                                        <h1 className="text-[30px] opacity-[75%]">Faça o upload do material</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
+                                                <div className="">
+                                                    <h2 className="text-[28px] font-medium">Nome do Material</h2>
+                                                    <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                                </div>
+                                                
+                                                <div className="relative">
+                                                    <h2 className="text-[28px] font-medium">Matéria designada:</h2>
+
+                                                    <div className=" w-full relative">
+                                                        <input
+                                                        type="text"
+                                                        value={query}
+                                                        onChange={(e) => setQuery(e.target.value)}
+                                                        onFocus={() => setIsFocused(true)}
+                                                        onBlur={() => setTimeout(() => setIsFocused(false), 150)}
+                                                        placeholder="Search an animal"
+                                                        className="w-full border-2 border-[rgba(0,0,0,0.19)] h-[45px] rounded-[20px] pl-5 text-[20px] outline-[rgba(151,103,248,0.6)] "
+                                                        />
+                                                        {query.length > 0 && !isExactMatch && isFocused && (
+                                                        <ul id="label-box" className="absolute z-10 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-[10px] shadow-md">
+                                                            {filtered.length === 0 && (
+                                                                <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
+                                                            )}
+                                                            {filtered.map((animal) => (
+                                                                
+                                                                <li
+                                                                    key={animal.key}
+                                                                    
+                                                                    className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
+                                                                    onClick={() => {
+                                                                    setQuery(animal.label);
+                                                                    }}
+                                                                >
+                                                                    <div className="font-medium">{animal.label}</div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                        )}
+                                                    </div>
+
+                                                </div>
+                                                
+                                                <div className="relative">
+                                                    <h2 className="text-[28px] font-medium">Tópicos:</h2>
+                                                    <input type="text" value={input3} onChange={(e) => setInput3(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                                    <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
+                                                </div>
+                                                
+                                                <div className="relative">
+                                                    <h2 className="text-[28px] font-medium">Palavras-chave:</h2>
+                                                    <input type="text" value={input4} onChange={(e) => setInput4(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                                    <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
+                                                </div>
+                                                
+                                                <button id="editar_conta" className="border my-auto border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
+                                                    <FileText />
+                                                    Enviar
+                                                </button>
+                                            
+                                            </div>
                                         </div>
-                                        <div className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
-                                            <FileInput className="size-[110px] stroke-1 opacity-[75%]"/>
-                                            <h1 className="text-[30px] opacity-[75%]">Faça o upload do material</h1>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
-                                    <div className="">
-                                        <h2 className="text-[28px] font-medium">Nome do Material</h2>
-                                        <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
                                     </div>
-                                    
-                                    <div className="relative">
-                                        <h2 className="text-[28px] font-medium">Matéria designada:</h2>
-                                        <input type="text" value={input2} onChange={(e) => setInput2(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
-                                        <ChevronDown className="absolute bottom-2 right-3 cursor-pointer"/>
-                                    </div>
-                                    
-                                    <div className="relative">
-                                        <h2 className="text-[28px] font-medium">Tópicos:</h2>
-                                        <input type="text" value={input3} onChange={(e) => setInput3(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
-                                        <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
-                                    </div>
-                                    
-                                    <div className="relative">
-                                        <h2 className="text-[28px] font-medium">Palavras-chave:</h2>
-                                        <input type="text" value={input4} onChange={(e) => setInput4(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[#9767F8]"/>
-                                        <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
-                                    </div>
-                                    
-                                    <button id="editar_conta" className="border my-auto border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
-                                        <FileText />
-                                        Enviar
-                                    </button>
-                                
+                
                                 </div>
+                                <Image width={300} height={500} src="/Vector.svg" id="vector" alt="Decoração" className={`absolute top-[350px] right-[-130px] -rotate-90 w-[550px] `}/>
                             </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            
 
-                        </div>
-    
-                    </div>
-
-                    <Image width={300} height={500} src="/Vector.svg" id="vector" alt="Decoração" className={`absolute top-[350px] right-[-130px] -rotate-90 w-[550px] `}/>
-                </div>
-            </div>
             <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} ></div>
 
             <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
@@ -124,12 +181,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <div className=" h-[82px] flex justify-center relative ">
                                 <div className="w-[980px] rounded-[20px] mt-4 mr-4 h-[50px] bg-[#D9D9D9] absolute"></div>
                                 <div className="relative">
-                                    <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[#9767F8]" />
+                                    <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-[1000px] text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
                                     <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                                 </div>
                             </div>
                             
-                            <button onClick={() => setOpen(true)} className="bg-[#9B79E0] border border-[#716BAF] w-[14%] h-[60px] rounded-full text-white text-[24px] z-[900]">Criar novo</button>
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="bg-[#9B79E0] border border-[#716BAF] w-[14%] h-[60px] rounded-full text-white text-[24px] z-[900]">Criar novo</motion.button>
                         </div>
 
                         <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">

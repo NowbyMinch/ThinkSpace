@@ -146,10 +146,10 @@ h1{
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-[#fff];
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#fff] text-[#fff];
   }
 }
 
@@ -206,6 +206,16 @@ h1{
   }
 }
 
+@keyframes grow-icons{
+  0% {
+    scale: 10%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
 #materiais{
   animation: grow linear;
   animation-timeline: view();
@@ -214,7 +224,7 @@ h1{
 }
 
 #icone{
-  animation: graw linear;
+  animation: grow-icons linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 20px;
@@ -257,4 +267,21 @@ h1{
 
 #AER:hover {
   scale: 102%;
+}
+
+@keyframes label-pop {
+  0% {
+    scale: 0.9;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+#label-box{
+  transition: all ease-in-out 0.3s;
+  animation: label-pop ease-in-out 0.1s;
+  transform-origin: 50% 50%;
 }
