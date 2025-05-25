@@ -2,11 +2,39 @@
 
 import Image from "next/image";
 import React, { useCallback } from 'react'
-import { MoveUpRight, ChevronLeft, ChevronRight } from "lucide-react" ;
+import { MoveUpRight, ChevronLeft, ChevronRight, Plus, ChevronDown } from "lucide-react" ;
 import useEmblaCarousel from 'embla-carousel-react'
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+
+interface AccordionItem {
+  title: string;
+  content: string;
+}
+
+const items: AccordionItem[] = [
+  {
+    title: "O que torna o ThinkSpace diferente das outras plataformas de estudo?",
+    content:
+      "ThinkSpace oferece uma abordagem personalizada e gamificada para o aprendizado.",
+  },
+  {
+    title: "Como eu posso acessar a plataforma?",
+    content:
+      "Você pode acessar a plataforma através do site oficial usando seu e-mail cadastrado.",
+  },
+  {
+    title: "Qual a idade mínima para registro na plataforma?",
+    content: "A idade mínima para se registrar é 13 anos.",
+  },
+];
 
 export default function Home() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' } )
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const toggle = (index: number) => {
+        setOpenIndex(index === openIndex ? null : index);
+    };
 
     const scrollPrev = useCallback(() => {
         if (emblaApi) emblaApi.scrollPrev()
@@ -42,7 +70,7 @@ export default function Home() {
                     <div className=" w-full flex justify-end ">
                         <div className="flex items-center gap-8">
                             <button className="text-[20px]">Entrar</button>
-                            <div  className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#866ABF]">
+                            <div  className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A78CDC]">
                                 Registre-se
                                 <button className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </button>
                             </div>
@@ -54,7 +82,7 @@ export default function Home() {
                 <main className="flex justify-center items-center flex-col pb-[500px] gap-[150px] ">
                     <div className="w-full relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
-                            <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px]"/>
+                            <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>
                         </div>
 
                         <div className="w-[1570px] h-[88%] flex max-w-[80%] absolute ">
@@ -168,27 +196,27 @@ export default function Home() {
 
                                                 <div className="embla__slide flex flex-col gap-2 ">
                                                     <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Pré-universitários</h1>
                                                     <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
                                                 </div>
                                                 <div className="embla__slide flex flex-col gap-2 ">
                                                     <Image src="/landingpage/materiais-img2.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Mentores</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de desenho</h2>
                                                 </div>
                                                 <div className="embla__slide flex flex-col gap-2 ">
                                                     <Image src="/landingpage/materiais-img3.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes universitários</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professor de Matemática</h2>
                                                 </div>
                                                 <div className="embla__slide flex flex-col gap-2 ">
                                                     <Image src="/landingpage/materiais-img4.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes</h1>
+                                                    <h2 className="text-white text-center text-[20px]">Professora de leitura</h2>
                                                 </div>
                                                 <div className="embla__slide flex flex-col gap-2 ">
                                                     <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center">Estudantes universitários</h1>
+                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes universitários</h1>
                                                     <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
                                                 </div>
                                                 
@@ -206,14 +234,52 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="w-full h-[500px] ">
+                    <div className="w-full h-[500px] flex gap-[150px] ">
                         <div className="w-[45%] h-full relative ">
                             <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
                             <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
                         </div>
 
-                        <div className="">
-                            
+                        <div className="w-[45%] flex flex-col  ">
+                            {items.map((item, index) => (
+                                <div
+                                key={index}
+                                className="border w-[550px] max-w-[85%] min-h-[82px] border-[rgba(18,18,18,0.14)] rounded-[20px] mb-4 overflow-hidden shadow-md"
+                                >
+                                {/* Header */}
+                                <button
+                                    onClick={() => toggle(index)}
+                                    className="w-full min-h-[82px] flex justify-between items-center px-6 py-4 text-left text-[20px] font-medium "
+                                >
+                                    {item.title}
+                                    
+                                    <span className={`text-[20px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
+                                    ${
+                                        openIndex === index ? "-rotate-90" : ""
+                                    }`}
+                                    >
+                                    <ChevronLeft />
+                                    </span>
+                                </button>
+
+                                {/* Animated Content */}
+                                <AnimatePresence initial={false}>
+                                    {openIndex === index && (
+                                    <motion.div
+                                        key="content"
+                                        initial={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                                        animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
+                                        exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    >
+                                        <div className="px-6 pb-4 text-sm text-gray-700">
+                                        {item.content}
+                                        </div>
+                                    </motion.div>
+                                    )}
+                                </AnimatePresence>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </main>
