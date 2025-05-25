@@ -307,7 +307,9 @@ export default function Home() {
                     </div>
 
                     <div className="w-[33%] flex flex-col ">
-                        <motion.button 
+                        <motion.a 
+                        href="https://www.instagram.com/thinkspace__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                        target="_blank" rel="noopener noreferrer"
                         whileTap={{ scale: 0.98 }} 
                         whileHover={{ scale: 1.02 }}
                         transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -315,7 +317,7 @@ export default function Home() {
                         className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
                             <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
                             <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
-                        </motion.button>
+                        </motion.a>
                     </div>
                 </footer>
             </div>
