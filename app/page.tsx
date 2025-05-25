@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useCallback } from 'react'
-import { MoveUpRight, ChevronLeft, ChevronRight } from "lucide-react" ;
+import { MoveUpRight, ChevronLeft, ChevronRight, Instagram } from "lucide-react" ;
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -46,7 +46,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="w-screen z-[0]">
+            <div className="w-screen z-[0] relative">
                 <header className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
                     <button className=" w-full h-full flex items-center ">
                         <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
@@ -79,7 +79,7 @@ export default function Home() {
                     </div>
                 </header>
                 
-                <main className="flex justify-center items-center flex-col pb-[500px] gap-[150px] ">
+                <main className="flex justify-center items-center flex-col pb-[150px] gap-[150px] ">
                     <div className="w-full relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>
@@ -288,7 +288,36 @@ export default function Home() {
                     </div>
                 </main>
                     
-                <footer></footer>
+                <footer className="w-full h-[300px] flex justify-center items-center">
+                    <div className="w-[34%] h-[140px] flex justify-center  items-center">
+                        <Image width={300} height={500} src="/landingpage/logo1.png" className="h-full w-auto" alt="Logo"/>
+                    </div>
+
+                    <div className="w-[33%] flex flex-col justify-center items-center ">
+
+                        <div className=" flex justify-center items-center gap-4 ">
+                            <a href="">Termos de uso</a>
+                            <a href="">Política de privacidade</a>
+                            <a href="">Suporte</a>
+                        </div>
+                        
+                        <div className="w-full flex justify-center items-center gap-4 mt-2">
+                            <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
+                        </div>
+                    </div>
+
+                    <div className="w-[33%] flex flex-col ">
+                        <motion.button 
+                        whileTap={{ scale: 0.98 }} 
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+
+                        className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
+                            <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
+                            <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
+                        </motion.button>
+                    </div>
+                </footer>
             </div>
         </>
     )
