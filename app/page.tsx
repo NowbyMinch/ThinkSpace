@@ -243,6 +243,7 @@ export default function Home() {
                         <div className="w-[45%] flex flex-col  ">
                             {items.map((item, index) => (
                                 <motion.div
+                                id="perguntas"
                                 key={index}
                                 whileTap={{ scale: 0.99 }} 
                                 whileHover={{ scale: 1.01 }}

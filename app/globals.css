@@ -122,6 +122,13 @@ body {
   animation-range-end: 160px;
 }
 
+#perguntas{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 90px;
+}
+
 #func-vector{
   animation: rotate linear 1s;
   animation-timeline: view();
@@ -177,6 +184,8 @@ body {
   height: 100%;
 
 }
+
+
 
 .embla__viewport{
   height: 100%;
