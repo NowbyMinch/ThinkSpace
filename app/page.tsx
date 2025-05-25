@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useCallback } from 'react'
-import { MoveUpRight, ChevronLeft, ChevronRight, Plus, ChevronDown } from "lucide-react" ;
+import { MoveUpRight, ChevronLeft, ChevronRight } from "lucide-react" ;
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
