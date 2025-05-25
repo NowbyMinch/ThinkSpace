@@ -47,9 +47,9 @@ export default function Home() {
     return (
         <>
             <div className="w-screen z-[0] relative">
-                <header className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
+                <header id="header" className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
                     <div className=" w-full h-full flex items-center ">
-                        <a href="">
+                        <a href="#header">
                             <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
                         </a>
                     </div>
@@ -70,8 +70,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div className=" w-full flex justify-end ">
-                        <div className="flex items-center gap-8">
-                            <button className="text-[20px]">Entrar</button>
+                        <div className="flex items-center gap-8 ">
+                            <div className=" transition-all ease-in-out hover:text-[#A78CDC]">
+                                <button className="text-[20px] ">Entrar</button>
+                            </div>
                             <motion.button 
                             whileTap={{ scale: 0.99 }} 
                             whileHover={{ scale: 1.01 }}
