@@ -242,43 +242,46 @@ export default function Home() {
 
                         <div className="w-[45%] flex flex-col  ">
                             {items.map((item, index) => (
-                                <div
+                                <motion.div
                                 key={index}
+                                whileTap={{ scale: 0.99 }} 
+                                whileHover={{ scale: 1.01 }}
+                                transition={{ duration: 0.2, ease: "easeInOut" }}
                                 className="border w-[550px] max-w-[85%] min-h-[82px] border-[rgba(18,18,18,0.14)] rounded-[20px] mb-4 overflow-hidden shadow-md"
                                 >
-                                {/* Header */}
-                                <button
-                                    onClick={() => toggle(index)}
-                                    className="w-full min-h-[82px] flex justify-between items-center px-6 py-4 text-left text-[20px] font-medium "
-                                >
-                                    {item.title}
-                                    
-                                    <span className={`text-[20px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-                                    ${
-                                        openIndex === index ? "-rotate-90" : ""
-                                    }`}
+                                    {/* Header */}
+                                    <button
+                                        onClick={() => toggle(index)}
+                                        className="w-full min-h-[82px] flex justify-between items-center px-6 py-4 text-left text-[20px] font-medium "
                                     >
-                                    <ChevronLeft />
-                                    </span>
-                                </button>
+                                        {item.title}
+                                        
+                                        <span className={`text-[20px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
+                                        ${
+                                            openIndex === index ? "-rotate-90" : ""
+                                        }`}
+                                        >
+                                        <ChevronLeft />
+                                        </span>
+                                    </button>
 
-                                {/* Animated Content */}
-                                <AnimatePresence initial={false}>
-                                    {openIndex === index && (
-                                    <motion.div
-                                        key="content"
-                                        initial={{ height: 0, opacity: 0, filter: "blur(1px)" }}
-                                        animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
-                                        exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
-                                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    >
-                                        <div className="px-6 pb-4 text-sm text-gray-700">
-                                        {item.content}
-                                        </div>
-                                    </motion.div>
-                                    )}
-                                </AnimatePresence>
-                                </div>
+                                    {/* Animated Content */}
+                                    <AnimatePresence initial={false}>
+                                        {openIndex === index && (
+                                        <motion.div
+                                            key="content"
+                                            initial={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                                            animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
+                                            exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        >
+                                            <div className="px-6 pb-4 text-[18px] text-gray-700">
+                                            {item.content}
+                                            </div>
+                                        </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
                             ))}
                         </div>
                     </div>
