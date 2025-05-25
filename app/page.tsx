@@ -48,9 +48,11 @@ export default function Home() {
         <>
             <div className="w-screen z-[0] relative">
                 <header className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
-                    <button className=" w-full h-full flex items-center ">
-                        <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
-                    </button>
+                    <div className=" w-full h-full flex items-center ">
+                        <a href="">
+                            <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
+                        </a>
+                    </div>
                     <div className=" w-full flex justify-center items-center ">  
                         <div id="links-header" className="flex justify-between gap-2">
                             <a href="">
@@ -62,7 +64,7 @@ export default function Home() {
                             <a href="">
                                 Precificação
                             </a>
-                            <a href="">
+                            <a href="#perguntas-frequentes">
                                 FAQ
                             </a>
                         </div>
@@ -70,10 +72,14 @@ export default function Home() {
                     <div className=" w-full flex justify-end ">
                         <div className="flex items-center gap-8">
                             <button className="text-[20px]">Entrar</button>
-                            <div  className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#A78CDC]">
+                            <motion.button 
+                            whileTap={{ scale: 0.99 }} 
+                            whileHover={{ scale: 1.01 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
                                 Registre-se
-                                <button className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </button>
-                            </div>
+                                <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
+                            </motion.button>
                         </div>
 
                     </div>
@@ -92,10 +98,15 @@ export default function Home() {
                                     <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE]">rápida</span> e <span id="conf" className=" text-[#5F3AC4]">eficiente</span></h1>
                                     <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
-                                    <div className="w-[255px] max-w-[43%] text-white text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] transition-all ease-in-out duration-300 cursor-pointer hover:border-[#866ABF] bg-[#BF9FFF] ">
+                                    <motion.button 
+                                    whileTap={{ scale: 0.99 }} 
+                                    whileHover={{ scale: 1.01 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                    className="w-[250px] max-w-[43%] text-white text-[20px] p-[10px] rounded-full flex gap-4 items-center justify-center cursor-pointer 
+                                    bg-[#BF9FFF] ">
                                         <span className="line-clamp-2 break-words">Comece a estudar</span>
-                                        <button className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </button>
-                                    </div>
+                                        <div className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </div>
+                                    </motion.button>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +245,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="w-full h-[500px] flex gap-[150px] ">
+                    <div id="perguntas-frequentes" className="w-full h-[500px] flex gap-[150px] ">
                         <div className="w-[45%] h-full relative ">
                             <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
                             <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
