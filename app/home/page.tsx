@@ -14,28 +14,24 @@ import { useState } from "react";
 import { Backdrop } from "./components/backdrop";
 import { Backdrop2 } from "./components/backdrop";
 import { CarouselLinks, CarouselSpacing } from "./components/carousel";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
-  const [animate, setAnimate] = useState(false);
 
   function opening(){
     setPop(true);
-    setTimeout(() => setAnimate(true),5);
   }
   
   function closing(){
-    setAnimate(false);
     setTimeout(() => setPop(false), 10);
   }
   function opening2(){
     setPop2(true);
-    setTimeout(() => setAnimate(true),5);
   }
   
   function closing2(){
-    setAnimate(false);
     setTimeout(() => setPop2(false), 10);
   }
 
@@ -63,72 +59,88 @@ export default function Home() {
               >
                 <div className=" relative w-full h-full group">
                   
-                  <div className="w-[100px] h-[100px] hidden group-hover:flex">
-                    {/* Aumenta o tamanho da box que o mouse pode passar por cima para manter o pop-up ativo */}
-                  </div>
-                  <div className={`absolute w-[530px] h-[250px] origin-top-left transition-all ease-in-out bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] hidden justify-center items-center overflow-hidden group-hover:flex cursor-default
-                  ${ animate? "scale-1": "scale-[90%]" }`}>
-                    <div className=" w-[85%] h-[75%] flex flex-col gap-6">
-                      <div className="">
-                        <h1 className="w-fit font-medium leading-[40px] cursor-text">
-                          Sua ofensiva
-                        </h1>
-                        <h2 className="cursor-text font-medium text-[22px] w-fit text-[#121212] ">
-                          Sua ofensiva atual é de 1 dia
-                        </h2>
-                      </div>
+                  <AnimatePresence initial={false}>
+                    { pop && (
+                      <div className="w-[70px] h-[100px]"></div>
+                    )}
 
-                      <div className="flex justify-between">
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">DOM</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                            <Check className="text-white" />
+                  </AnimatePresence>
+                  <AnimatePresence initial={false}>
+                    { pop && (
+                      
+                      <motion.div 
+                      key="content"
+                      initial={{ opacity: 0.95, scale: 0.90}}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0.95, scale: 0.90 }}
+                      transition={{ duration: 0.01, ease: "easeInOut" }}
+
+                      className={`absolute w-[530px] h-[250px] origin-top-left transition-all ease-in-out bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center items-center overflow-hidden flex cursor-default
+                      `}>
+                        <div className=" w-[85%] h-[75%] flex flex-col gap-6">
+                          <div className="">
+                            <h1 className="w-fit font-medium leading-[40px] cursor-text">
+                              Sua ofensiva
+                            </h1>
+                            <h2 className="cursor-text font-medium text-[22px] w-fit text-[#121212] ">
+                              Sua ofensiva atual é de 1 dia
+                            </h2>
+                          </div>
+
+                          <div className="flex justify-between">
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">DOM</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                <Check className="text-white" />
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">DOM</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                <Check className="text-white" />
+                              </div>
+                            </div>
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">TER</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                <X className="text-[#C10000]" />
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px] font-medium text-[#726BB6]">
+                                QUA
+                              </span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
+                                <Check className="text-white" />
+                              </div>
+                            </div>
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">QUI</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">SEX</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">SAB</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">DOM</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                            <Check className="text-white" />
-                          </div>
-                        </div>
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">TER</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                            <X className="text-[#C10000]" />
-                          </div>
-                        </div>
+                        <Image width={300} height={500}
+                          src="/Vector.svg"
+                          className="absolute right-[-50px] top-[-40px] z-[-10]"
+                          alt="Decoração"
+                        />
+                      </motion.div>
+                    )}
 
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px] font-medium text-[#726BB6]">
-                            QUA
-                          </span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
-                            <Check className="text-white" />
-                          </div>
-                        </div>
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">QUI</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                        </div>
-
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">SEX</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                        </div>
-                        <div className="flex flex-col text-center ">
-                          <span className="text-[20px]">SAB</span>
-                          <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Image width={300} height={500}
-                      src="/Vector.svg"
-                      className="absolute right-[-50px] top-[-40px] z-[-10]"
-                      alt="Decoração"
-                    />
-                  </div>
+                  </AnimatePresence>
                 </div>
               </div>
               <Flame className=" size-[45px] text-[#cc6b5f] fill-[#e19786]" />
@@ -141,64 +153,83 @@ export default function Home() {
                 className="w-full h-full absolute rounded-full z-[150] group"
               >
                 <div className=" relative w-full h-full group cursor-pointer">
-                  <div className="w-[100px] h-[100px] hidden group-hover:flex"></div>
-                  <div className={`absolute w-[490px] h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center hidden items-center overflow-hidden group-hover:flex hover:flex ${ animate? "scale-1": "scale-[90%]" }`}>
-                    <div className=" w-[85%] h-[87.5%] flex flex-col relative">
-                      <div className="">
-                        <h1 className=" font-medium leading-[40px] cursor-text">
-                          Notificações
-                        </h1>
-                        <h2 className=" font-medium text-[22px] text-[#121212] cursor-text">
-                          Fique em dia
-                        </h2>
-                      </div>
 
-                      <div className="w-full h-[75%] bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden mt-4 z-100">
-                        <div className=" w-full rounded-[20px] grid gap-2 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
-                          
-                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                            <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
-                            <div className="">
-                              <h1 className="text-[28px] text-white">Notificação de atenção</h1>
-                              <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
-                            </div>
-                          </div>
+                  <AnimatePresence initial={false}>
+                    { pop2 && (
+                      <div className="w-[70px] h-[100px]"></div>
+                    )}
 
-                          <div id="notificacao" className="w-full h-[89px] bg-[#EB9481] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                            <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><TriangleAlert className="text-[#994533] size-14"/> </div>
-                            <div className="">
-                              <h1 className="text-[28px] text-white">Notificação de denúncia</h1>
-                              <h2 className="text-[18px] text-[#7f3a2a]">Descrição da notificação de comunidade</h2>
-                            </div>
-                          </div>
-                          
-                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                            <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
-                            <div className="">
-                              <h1 className="text-[28px] text-white">Notificação de atenção</h1>
-                              <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
-                            </div>
-                          </div>
-                          
-                          <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                            <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
-                            <div className="">
-                              <h1 className="text-[28px] text-white">Notificação de atenção</h1>
-                              <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
-                            </div>
+                  </AnimatePresence>
+                  
+                  <AnimatePresence initial={false}>
+                    { pop2 && (
+                      <motion.div
+                      key="content"
+                      initial={{ opacity: 0.95, scale: 0.90}}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0.95, scale: 0.90 }}
+                      transition={{ duration: 0.01, ease: "easeInOut" }}
+
+                      className={`absolute w-[490px] h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
+                        <div className=" w-[85%] h-[87.5%] flex flex-col relative">
+                          <div className="">
+                            <h1 className=" font-medium leading-[40px] cursor-text">
+                              Notificações
+                            </h1>
+                            <h2 className=" font-medium text-[22px] text-[#121212] cursor-text">
+                              Fique em dia
+                            </h2>
                           </div>
 
+                          <div className="w-full h-[75%] bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden mt-4 z-100">
+                            <div className=" w-full rounded-[20px] grid gap-2 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
+                              
+                              <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
+                                <div className="">
+                                  <h1 className="text-[28px] text-white">Notificação de atenção</h1>
+                                  <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
+                                </div>
+                              </div>
+
+                              <div id="notificacao" className="w-full h-[89px] bg-[#EB9481] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><TriangleAlert className="text-[#994533] size-14"/> </div>
+                                <div className="">
+                                  <h1 className="text-[28px] text-white">Notificação de denúncia</h1>
+                                  <h2 className="text-[18px] text-[#7f3a2a]">Descrição da notificação de comunidade</h2>
+                                </div>
+                              </div>
+                              
+                              <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
+                                <div className="">
+                                  <h1 className="text-[28px] text-white">Notificação de atenção</h1>
+                                  <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
+                                </div>
+                              </div>
+                              
+                              <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
+                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
+                                <div className="">
+                                  <h1 className="text-[28px] text-white">Notificação de atenção</h1>
+                                  <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
+                                </div>
+                              </div>
+
+                            </div>
+                    
+                          </div>
                         </div>
-                
-                      </div>
-                    </div>
 
-                    <Image width={300} height={500}
-                      src="/Vector.svg"
-                      className="absolute right-[-50px] top-[-40px]"
-                      alt="Decoração"
-                    />
-                  </div>
+                        <Image width={300} height={500}
+                          src="/Vector.svg"
+                          className="absolute right-[-50px] top-[-40px]"
+                          alt="Decoração"
+                        />
+                      </motion.div>
+                    )}
+                    
+                  </AnimatePresence>
                 </div>
 
               </div>

@@ -5,8 +5,6 @@ import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-
 import Image from "next/image";
 import React from "react";
 
-import {Popover, PopoverTrigger, PopoverContent} from "@heroui/react";
-
 export const Sidebar = () => {
     const pathname = usePathname();
 
@@ -43,21 +41,10 @@ export const Sidebar = () => {
                                 if (pathname == "/home/materiais") {
                                     return (
                                         <>
-                                            <Popover showArrow offset={20} placement="bottom">
-                                            <PopoverTrigger onMouseLeave={() => console.log("Mouse Left")}>
-                                                <div className="relative p-[15px] rounded-full"> 
-                                                    <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                    <NotebookPen className= "size-[45px] cursor-pointer text-white"/>
-                                                </div>
-                                            </PopoverTrigger>
-                                            <PopoverContent>
-                                                <div className="px-1 py-2">
-                                                <div className="text-small font-bold">Popover Content</div>
-                                                <div className="text-tiny">This is the popover content</div>
-                                                </div>
-                                            </PopoverContent>
-                                            </Popover>
-                                            
+                                            <div className="relative p-[15px] rounded-full"> 
+                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                                <NotebookPen className= "size-[45px] cursor-pointer text-white"/>
+                                            </div>
                                         </>
                                     )
                                 }

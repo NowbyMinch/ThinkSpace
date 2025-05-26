@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const animals = [
+export const materias = [
   {label: "Ciência da Computação", key: "cienciadacomputacao"},
   {label: "Enfermagem", key: "enfermagem"},
   {label: "Geografia", key: "geografia"},
@@ -22,10 +22,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const decodedId = decodeURIComponent(id);
 
     const [query, setQuery] = useState("");
-    const filtered = animals.filter((item) =>
+    const filtered = materias.filter((item) =>
         item.label.toLowerCase().includes(query.toLowerCase())
     );
-    const isExactMatch = animals.some(
+    const isExactMatch = materias.some(
         (item) => item.label.toLowerCase() === query.toLowerCase()
     );
     
@@ -109,7 +109,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                         onChange={(e) => setQuery(e.target.value)}
                                                         onFocus={() => setIsFocused(true)}
                                                         onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-                                                        placeholder="Search an animal"
+                                                        placeholder="Pesquisar por materia"
                                                         className="w-full border-2 border-[rgba(0,0,0,0.19)] h-[45px] rounded-[20px] pl-5 text-[20px] outline-[rgba(151,103,248,0.6)] "
                                                         />
                                                         {query.length > 0 && !isExactMatch && isFocused && (
@@ -117,17 +117,17 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                             {filtered.length === 0 && (
                                                                 <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
                                                             )}
-                                                            {filtered.map((animal) => (
+                                                            {filtered.map((materias) => (
                                                                 
                                                                 <li
-                                                                    key={animal.key}
+                                                                    key={materias.key}
                                                                     
                                                                     className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
                                                                     onClick={() => {
-                                                                    setQuery(animal.label);
+                                                                    setQuery(materias.label);
                                                                     }}
                                                                 >
-                                                                    <div className="font-medium">{animal.label}</div>
+                                                                    <div className="font-medium">{materias.label}</div>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -148,10 +148,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                     <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
                                                 </div>
                                                 
-                                                <button id="editar_conta" className="border my-auto border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
+                                                <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="border my-auto border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
                                                     <FileText />
                                                     Enviar
-                                                </button>
+                                                </motion.button>
                                             
                                             </div>
                                         </div>

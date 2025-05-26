@@ -72,7 +72,7 @@ export default function Materiais() {
                     <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                     <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
-                    <div className="w-[80%] h-[85%] flex flex-col gap-10 z-[900]">
+                    <div className="w-[80%] h-[85%] flex flex-col items-center gap-10 z-[900]">
                         <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
                         <div className="w-full flex justify-between ">
                             <div className="w-[47%] flex flex-col gap-2">
@@ -136,7 +136,8 @@ export default function Materiais() {
                                 </div>
                             </div>
                         </div>
-                        <button id="editar_conta" className="border m-auto border-[#1E2351] text-[22px] w-[220px] h-[40px] rounded-full" onClick={() => closing()}>Criar nova matéria</button>
+
+                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => closing()}>Criar nova matéria</motion.button>
 
                     </div>
                 </div>
