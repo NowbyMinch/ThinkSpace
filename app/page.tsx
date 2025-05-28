@@ -6,6 +6,7 @@ import { MoveUpRight, ChevronLeft, ChevronRight, Instagram } from "lucide-react"
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import Link from "next/link";
 
 interface AccordionItem {
   title: string;
@@ -71,9 +72,9 @@ export default function Home() {
                     </div>
                     <div className=" w-full flex justify-end ">
                         <div className="flex items-center gap-8 ">
-                            <div className=" transition-all ease-in-out hover:text-[#A78CDC]">
+                            <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
                                 <button className="text-[20px] ">Entrar</button>
-                            </div>
+                            </Link>
                             <motion.button 
                             whileTap={{ scale: 0.99 }} 
                             whileHover={{ scale: 1.01 }}
