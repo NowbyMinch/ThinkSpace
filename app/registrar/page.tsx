@@ -58,12 +58,26 @@ export default function LoginPage() {
                       if (subStep === 2) {
                         return (
                         <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>)
-                      } else {
+                      } 
+                      else if (subStep < 5 ) { 
                         return (
-                        <h1 className='text-[60px] font-bold text-[#EB7262]'>Primeiro acesso</h1>)
+                          <div className='text-[60px] font-bold text-[#EB7262]'>Primeiro acesso</div>)
+                        } 
+                      else if (subStep === 5 ) { 
+                        return (
+                        <h1 className='h-[90px]'>asd</h1>)
                       } 
                     })()}
-                    <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center'>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
+
+                    {(() => {
+                      if (subStep < 5) {
+                        return <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center'>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
+                      } 
+                      else if (subStep === 5 ) { 
+                        return <h1 className=' h-[75px]'>asd</h1>
+                      } 
+
+                    })()}
                   </div>
 
                   <div className="w-[40%] h-14 mt-8 mb-10 flex justify-center items-center">
@@ -88,34 +102,34 @@ export default function LoginPage() {
                           <form action="" className='flex justify-center items-center gap-20 h-[350px]'>
                             <div className="w-[50%] flex flex-col gap-4">
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Primeiro nome</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
                                 <input type="text" placeholder='Digite seu nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                   
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Sobrenome</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Sobrenome</label>
                                 <input type="text" placeholder='Digite seu Sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                   
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Email</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Email</label>
                                 <input type="text" placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                             </div>
                   
                             <div className="w-[50%] flex flex-col gap-4">
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Data de nascimento</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
                                 <input type="text" placeholder='Digite sua data de nascimento' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                   
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Senha</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Senha</label>
                                 <input type="text" placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                   
                               <div className="flex flex-col gap-1">
-                                <label htmlFor="" className='text-[24px] ml-3'>Repita a senha</label>
+                                <label htmlFor="" className='text-[26px] ml-3'>Repita a senha</label>
                                 <input type="text" placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                               </div>
                             </div>
@@ -230,6 +244,41 @@ export default function LoginPage() {
                         </div>
                       )
                     }
+                    else if (subStep === 4) {
+                      return (
+                        <div className="w-[70%] mb-16">
+                          <form action="" className='flex justify-center items-center gap-20 h-[350px]'>
+                            <div className="w-[50%] flex flex-col gap-6 ">
+
+                              <div className="flex flex-col gap-1">
+                                <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
+                                <input type="text" placeholder='Digite seu nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                              </div>
+
+                              <div className="flex flex-col gap-1">
+                                <label htmlFor="" className='text-[26px] ml-3'>Email</label>
+                                <input type="text" placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                              </div>
+                            </div>
+                  
+                            <div className="w-[50%] flex flex-col gap-6">
+                              <div className="flex flex-col gap-1">
+                                <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
+                                <input type="text" placeholder='Digite sua data de nascimento' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                              </div>
+
+                              <div className="flex flex-col gap-1">
+                                <label htmlFor="" className='text-[26px] ml-3'>Repita a senha</label>
+                                <input type="text" placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                              </div>
+
+
+                            </div>
+                          </form>
+                        </div>
+                      );
+                    }
+
                   })()}
                   <motion.div 
                   className=" flex justify-center items-center gap-10 mt-10">
