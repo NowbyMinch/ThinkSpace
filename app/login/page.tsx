@@ -3,27 +3,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 
 export default function LoginPage() {
-  const [ step, setStep] = useState(1);
-  const [ subStep, setSubStep] = useState(1);
-  const [ purple, setPurple] = useState(false);
-  const [ purple2, setPurple2] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validation and auth logic here
-    // If success:
-    setStep(2);
-  };
-
-  function fade(p: React.Dispatch<React.SetStateAction<boolean>>){
-    setTimeout(() => {
-      p(true);
-    }, 200);
-
-  }
 
   return (
     <>
