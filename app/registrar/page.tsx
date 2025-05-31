@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRef, useEffect } from 'react';
 import React from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,13 +11,48 @@ import DatePicker from '@/components/ui/datepicker';
 
 export default function LoginPage() {
   const [ subStep, setSubStep] = useState(1);
+  
+    // ✅ On first load: initialize history state
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !history.state?.subStep) {
+      history.replaceState({ subStep: 1 }, '');
+    }
+  }, []);
+
+  // ✅ On subStep change: push new state into browser history
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      history.pushState({ subStep }, '', `?subStep=${subStep}`);
+    }
+  }, [subStep]);
+
+  // ✅ Handle browser back/forward button
+  useEffect(() => {
+  if (typeof window !== 'undefined' && !history.state?.subStep) {
+    history.replaceState({ subStep: 1 }, '');
+  }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      history.pushState({ subStep }, '', `?subStep=${subStep}`);
+    }
+  }, [subStep]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setSubStep(1); // Always go to step 1 on browser back
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("");
   const [ finalizar, setFinalizar] = useState(false);
-  
   const inputRefs = useRef<HTMLInputElement[]>([]);
-
   const categorias = (categoria: string) => {
     setSubStep(4);
     setCategoria(categoria);
@@ -374,7 +410,7 @@ export default function LoginPage() {
 
                                     <motion.div className=" flex justify-center items-center relative w-[550px] max-w-[90%] mx-auto  flex-col">
                                       <div className="h-[55px] flex justify-center items-center gap-2 overflow-hidden">
-                                        <input type="checkbox" className='size-4 accent-[#804EE5] cursor-pointer'/> 
+                                        <input type="checkbox" required className='size-4 accent-[#804EE5] cursor-pointer'/> 
                                         <h2 className='text-[20px]'>Li e concordo com os Termos de Uso e a Política de Privacidade.</h2>
                                       </div>
                                       <div className="flex gap-10">
@@ -395,48 +431,7 @@ export default function LoginPage() {
                                     </motion.div>
                                   </form>
                                 </div>
-                                // <div className="w-[70%] mb-16 flex justify-center items-center">
-                                //   <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
-                                //     <h2 className="text-gray-700 text-[25px]">Digite o seu código de administrador geral da plataforma:</h2>
-                                //     <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
-                                //       <div className="flex flex-col items-center gap-4 w-full h-full">
-                                //         <div className="flex gap-3 w-full h-full">
-                                //           {[...Array(5)].map((_, i) => (
-                                //             <input
-                                //               key={i}
-                                //               ref={(el) => { inputRefs.current[i] = el!; }}
-                                //               type="text"
-                                //               inputMode="numeric"
-                                //               required
-                                //               maxLength={1}
-                                //               onChange={(e) => handleChange(i, e)}
-                                //               onKeyDown={(e) => handleKeyDown(i, e)}
-                                //               className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
-                                //             />
-                                //           ))}
-                                //         </div>
-                                //       </div>
-                                //     </div>
-                                    
-                                //     <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
-                                //         <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                //           <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} onClick={() => setSubStep(subStep - 1)} className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
-                                //         </div>
-
-                                //         <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                //           <motion.button
-                                //             whileTap={{ scale: 0.99 }}
-                                //             whileHover={{ scale: 1.01 }}
-                                //             transition={{ duration: 0.2, ease: "easeInOut" }}
-                                //             type='submit'
-                                //             className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
-                                //         </div>
-                                //     </motion.div>
-                                //     {/* <div className="flex flex-col items-center gap-4 w-full h-full">
-                                //     </div> */}
-                                //   </div>
-                                  
-                                // </div>
+                                
                               );
                             }
                           })()}

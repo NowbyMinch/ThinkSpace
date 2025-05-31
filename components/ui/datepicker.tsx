@@ -72,7 +72,7 @@ export default function DatePicker() {
       </div>
 
       {showPicker && (
-        <div className="absolute z-10 mt-2 w-[65%] rounded-[25px] border border-gray-700 bg-white p-4 shadow-xl ">
+        <div id='date-box' className="absolute z-10 mt-2 w-[65%] rounded-[25px] border border-gray-700 bg-white p-4 shadow-xl ">
           <div className="mb-3 flex items-center justify-between px-2 ">
             <button type='button' onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}>
               <ChevronLeft size={20} />
