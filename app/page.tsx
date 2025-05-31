@@ -80,7 +80,9 @@ export default function Home() {
                             whileHover={{ scale: 1.01 }}
                             transition={{ duration: 0.2, ease: "easeInOut" }}
                             className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
-                                Registre-se
+                                <a href="/registrar">
+                                    Registre-se
+                                </a>
                                 <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
                             </motion.button>
                         </div>

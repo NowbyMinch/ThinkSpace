@@ -35,7 +35,7 @@ export default function LoginPage() {
                     <form action="registrar" className='flex flex-col gap-10 ' >
                       <div className="flex flex-col gap-4 items-end">
                         <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                        <input type="password" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                        <input type="password" required placeholder='Digite sua senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                         <a href='' className='underline text-[#3881AF] w-fit text-[18px]'>Esqueceu a senha?</a>
                       </div>
 
