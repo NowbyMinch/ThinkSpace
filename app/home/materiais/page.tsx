@@ -65,8 +65,7 @@ export default function Materiais() {
             className={`w-full h-full absolute opacity-1 z-[1100] `}>
                 <div className="w-full h-full absolute" onClick={() => closing()}></div>
 
-                <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden 
-                    ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'}`}>
+                <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} `}>
                     
                     <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
                     <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
@@ -86,7 +85,11 @@ export default function Materiais() {
                                     <h2 className="text-[28px] font-medium">Cores:</h2>
                                     <div className="flex gap-1">
                                         {colors.map((color) => (
-                                            <button key={color} style={{backgroundColor: color}} onClick={() => setColor(color) } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></button>
+                                            <motion.button 
+                                            whileTap={{ scale: 0.95 }} 
+                                            whileHover={{ scale: 1.02 }}
+
+                                            key={color} style={{backgroundColor: color}} onClick={() => setColor(color) } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></motion.button>
                                         ))}
                                     </div>
                                     <div/>
@@ -97,9 +100,12 @@ export default function Materiais() {
                                     <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
                                         <div className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(5,40px)] items-center pb-1">
                                             {icons.map(({id, Icon}) => (
-                                                <button id="icone" key={id} onClick={() => setSelected(id)}>
+                                                <motion.button 
+                                                whileTap={{ scale: 0.95 }} 
+                                                whileHover={{ scale: 1.02 }}
+                                                id="icone" key={id} onClick={() => setSelected(id)}>
                                                     <Icon />
-                                                </button>
+                                                </motion.button>
                                             ))}
                                         </div>
                                     </div>

@@ -15,7 +15,7 @@ export default function MaterialClient() {
                             <div className="absolute bg-blue-500 top-0 w-full h-5">
                                 <div className="">Questão 1/5</div>
                             </div>
-                            <div className="w-[90%] h-[85%] bg-red-500"></div>
+                            <div className="w-[90%] h-[85%]"></div>
                             <div className="absolute bg-blue-500 bottom-0 w-full h-5"></div>
                         </div>
                     </div>

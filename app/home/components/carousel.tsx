@@ -16,10 +16,10 @@ import {
 
 export function CarouselSpacing() {
   return (
-    <Carousel className=" flex justify-center">
+    <Carousel className=" flex justify-center ">
         <CarouselContent className=" gap-4 w-[960px] pr-1 pl-1 ">
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px]">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                 <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
@@ -49,7 +49,7 @@ export function CarouselSpacing() {
                 </Card>
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px]">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                 <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#FFA6F1] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
@@ -79,7 +79,7 @@ export function CarouselSpacing() {
                 </Card>
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px]">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                 <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#FF9F93] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
@@ -109,7 +109,7 @@ export function CarouselSpacing() {
                 </Card>
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px]">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                 <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
@@ -154,7 +154,7 @@ export function CarouselLinks() {
     <Carousel className=" flex justify-center" opts={{ slidesToScroll: 2 }}>
         <CarouselContent className=" gap-4 w-[960px] pr-1 pl-1 ">
 
-            <CarouselItem className=" md:basis-[50%] sm:basis-[40%] lg:basis-[49%] ">
+            <CarouselItem className=" md:basis-[50%] sm:basis-[40%] lg:basis-[49%] cursor-pointer">
                 <Card className=" h-[390px] rounded-[25px]  bg-[#1E2351] shadow-md border border-[#00000031]  ">
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
@@ -167,7 +167,7 @@ export function CarouselLinks() {
                 </Card>
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[49%] ">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[49%] cursor-pointer">
                 <Card className=" h-[390px] rounded-[25px] min-w-[440px] bg-[#1E2351] shadow-md border border-[#00000031]  ">
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
@@ -180,7 +180,7 @@ export function CarouselLinks() {
                 </Card>
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[32%] lg:basis-[49%] ">
+            <CarouselItem className=" md:basis-[32%] lg:basis-[49%] cursor-pointer">
                 <Card className=" h-[390px] rounded-[25px] min-w-[440px] bg-[#1E2351] shadow-md border border-[#00000031]  ">
                     <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[95%] h-[95%] ">
@@ -205,7 +205,7 @@ export function CarouselLanding() {
   return (
     <Carousel className=" flex justify-center " opts={{ slidesToScroll: 2 }}>
         <CarouselContent className=" w-[1150px] pr-1 pl-1 max-h-[350px] ">
-            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%]">
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%] cursor-pointer">
                 <div className="flex justify-center flex-col items-center w-[80%] overflow-hidden gap-2">
                     <Image src="/landingpage/materiais-img1.svg" className="w-full" width={300} height={500} alt="Alt"/>
                     <h1 id="estudantes-tit" className="w-full text-center flex justify-center items-center leading-8 h-[64px]">Pré-universitários</h1>
@@ -213,7 +213,7 @@ export function CarouselLanding() {
                 </div>  
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%]">
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%] cursor-pointer">
                 <div className="flex justify-center flex-col items-center w-[80%] overflow-hidden gap-2">
                     <Image src="/landingpage/materiais-img2.svg" className="w-full" width={300} height={500} alt="Alt"/>
                     <h1 id="estudantes-tit" className="w-full text-center leading-8 h-[64px]">Estudantes  Universitários</h1>
@@ -221,7 +221,7 @@ export function CarouselLanding() {
                 </div>  
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%]">
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%] cursor-pointer">
                 <div className="flex justify-center flex-col items-center w-[80%] overflow-hidden gap-2">
                     <Image src="/landingpage/materiais-img3.svg" className="w-full" width={300} height={500} alt="Alt"/>
                     <h1 id="estudantes-tit" className="w-full text-center flex justify-center items-center leading-8 h-[64px]">Estudantes  Universitários</h1>
@@ -229,7 +229,7 @@ export function CarouselLanding() {
                 </div>  
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%]">
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%] cursor-pointer">
                 <div className="flex justify-center flex-col items-center w-[80%] overflow-hidden gap-2">
                     <Image src="/landingpage/materiais-img4.svg" className="w-full" width={300} height={500} alt="Alt"/>
                     <h1 id="estudantes-tit" className="w-full text-center flex justify-center items-center leading-8 h-[64px]">Estudantes  Universitários</h1>
@@ -237,7 +237,7 @@ export function CarouselLanding() {
                 </div>  
             </CarouselItem>
 
-            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%]">
+            <CarouselItem className=" md:basis-[25%] flex justify-center w-[25%] max-w-[25%] cursor-pointer">
                 <div className="flex justify-center flex-col items-center w-[80%] overflow-hidden gap-2">
                     <Image src="/landingpage/materiais-img1.svg" className="w-full" width={300} height={500} alt="Alt"/>
                     <h1 id="estudantes-tit" className="w-full text-center flex justify-center items-center leading-8 h-[64px]">Estudantes  Universitários</h1>

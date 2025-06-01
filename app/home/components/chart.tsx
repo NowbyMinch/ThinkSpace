@@ -9,7 +9,7 @@ const data = [
     {dia:"Dia 4", atividades:14},
     {dia:"Dia 5", atividades:19},
     {dia:"Dia 6", atividades:16},
-    {dia:"Dia 6", atividades:8},
+    {dia:"Dia 7", atividades:8},
  ] 
 
  export const Chart  = () => {

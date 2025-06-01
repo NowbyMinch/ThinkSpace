@@ -1,7 +1,7 @@
 "use client";
 
 import { X, Search, ChevronRight, BookOpenText, FileText, FileInput } from "lucide-react";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,6 +20,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [input4, setInput4] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const decodedId = decodeURIComponent(id);
+    const documentInputRef = useRef<HTMLInputElement>(null);
 
     const [query, setQuery] = useState("");
     const filtered = materias.filter((item) =>
@@ -86,10 +87,16 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                         <h1 className="text-white text-[40px]">Documento</h1>
                                                         <h2 className="text-white text-[20px]">1 Fevereiro 2025</h2>
                                                     </div>
-                                                    <div className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
+                                                    <motion.button
+                                                    whileTap={{ scale: 0.99 }}
+                                                    whileHover={{ scale: 1.01 }}
+                                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                    onClick={() => documentInputRef.current?.click()}
+                                                    className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
                                                         <FileInput className="size-[110px] stroke-1 opacity-[75%]"/>
+                                                        <input ref={documentInputRef} type="file" className="absolute right-[9999px]"/>
                                                         <h1 className="text-[30px] opacity-[75%]">Faça o upload do material</h1>
-                                                    </div>
+                                                    </motion.button>
                                                 </div>
                                             </div>
 
