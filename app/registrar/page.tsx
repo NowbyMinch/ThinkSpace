@@ -7,8 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import DatePicker from '@/components/ui/datepicker';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
+  
+    // ✅ Initialize subStep state
   const [ subStep, setSubStep] = useState(1);
   
     // ✅ On first load: initialize history state
@@ -75,7 +79,7 @@ export default function LoginPage() {
     }
 
   };
-  
+
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -190,9 +194,12 @@ export default function LoginPage() {
                                     </div>
 
                                     <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
-                                      {/* <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
-                                      </div> */}
+                                      <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
+                                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                        type='button'
+                                        onClick={() => router.back()}
+                                        className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                      </div>
 
                                       <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
                                         <motion.button

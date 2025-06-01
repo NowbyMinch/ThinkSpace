@@ -36,7 +36,7 @@ export default function LoginPage() {
                       <div className="flex flex-col gap-4 items-end">
                         <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                         <input type="password" required placeholder='Digite sua senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                        <a href='/esqueceu-senha' className='underline text-[#3881AF] w-fit text-[18px]'>Esqueceu a senha?</a>
+                        <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[18px]'>Esqueceu a senha?</a>
                       </div>
 
                       <motion.button 
@@ -46,25 +46,32 @@ export default function LoginPage() {
                       type='submit' className='bg-[#804EE5] py-[10px] text-white text-[25px] rounded-[25px] shadow-md'>Entrar</motion.button>
 
                     </form>
-            
-                    <div className="flex justify-center items-center mt-[-15px]">
-                      <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
-                      <span className='w-[33%] flex justify-center items-center text-[18px]'>Ou continue com</span>
-                      <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
+
+                    <div className="flex flex-col gap-4">
+                      <div className="flex justify-center items-center mt-[-15px] ">
+                        <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
+                        <span className='w-[33%] flex justify-center items-center text-[18px]'>Ou continue com</span>
+                        <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
+                      </div>
+              
+                      <div className=" flex justify-center gap-4 h-[60px] ">
+                        <a className="flex p-2 bg-[#804EE5] rounded-full h-full cursor-pointer">
+                          <Image src="/google.svg" alt="Google Logo" className='w-full' width={300} height={500}/>
+                        </a>
+                        
+                        <a className=" h-full p-2 rounded-full bg-[#804EE5] cursor-pointer">
+                          <svg viewBox="0 0 96.124 96.123" fill="white" className=''  height="100%" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M72.09 0.006H59.681C44.479 0.006 34.89 9.729 34.89 25.138v11.801H22.362c-1.104 0-2 .896-2 2v15.803c0 1.104.896 2 2 2H34.89v39.381c0 1.104.896 2 2 2h16.436c1.104 0 2-.896 2-2V56.743h14.711c1.104 0 2-.896 2-2l.006-15.803a2 2 0 00-2-2H53.326v-9.99c0-4.807 1.145-7.246 7.383-7.246l11.381-.005c1.104 0 2-.896 2-2V2.006a2 2 0 00-2-2z"/>
+                          </svg>
+                        </a>
+              
+                      </div>
+
+                      <h2 className='text-[20px] w-full text-center'>Não tem uma conta? <a href="/registrar" className='text-[#3881AF]'> Registre-se</a></h2>
+
                     </div>
-            
-                    <div className=" flex justify-center gap-4 h-[60px]">
-                      <a className="flex p-2 bg-[#804EE5] rounded-full h-full cursor-pointer">
-                        <Image src="/google.svg" alt="Google Logo" className='w-full' width={300} height={500}/>
-                      </a>
-                      
-                      <a className=" h-full p-2 rounded-full bg-[#804EE5] cursor-pointer">
-                        <svg viewBox="0 0 96.124 96.123" fill="white" className=''  height="100%" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M72.09 0.006H59.681C44.479 0.006 34.89 9.729 34.89 25.138v11.801H22.362c-1.104 0-2 .896-2 2v15.803c0 1.104.896 2 2 2H34.89v39.381c0 1.104.896 2 2 2h16.436c1.104 0 2-.896 2-2V56.743h14.711c1.104 0 2-.896 2-2l.006-15.803a2 2 0 00-2-2H53.326v-9.99c0-4.807 1.145-7.246 7.383-7.246l11.381-.005c1.104 0 2-.896 2-2V2.006a2 2 0 00-2-2z"/>
-                        </svg>
-                      </a>
-            
-                    </div>
+
+
                   </div>
             
                 </motion.div>
