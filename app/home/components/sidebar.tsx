@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import {Tooltip, Button} from "@heroui/react";
+import {Tooltip} from "@heroui/react";
 
 
 export const Sidebar = () => {
