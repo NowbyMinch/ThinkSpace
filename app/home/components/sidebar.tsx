@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import {Tooltip, Button} from "@heroui/react";
+
 
 export const Sidebar = () => {
     const pathname = usePathname();
@@ -19,10 +21,12 @@ export const Sidebar = () => {
                         {(() => {
                             if (pathname == "/home") {
                                 return (
-                                    <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
-                                        <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute opacity-1"/>
-                                        <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute opacity-1"/>
-                                    </div>
+                                    <Tooltip closeDelay={0} content="Menu Principal" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                        <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
+                                            <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute opacity-1"/>
+                                            <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute opacity-1"/>
+                                        </div>
+                                    </Tooltip>
                                 )
                             }
                             return (
@@ -41,90 +45,128 @@ export const Sidebar = () => {
                                 if (pathname == "/home/materiais") {
                                     return (
                                         <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <NotebookPen className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
+                                            <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                    <NotebookPen className= "size-[45px] cursor-pointer text-white "/>
+                                                </button>
+                                            </Tooltip>
                                         </>
                                     )
                                 }
-                                return <div className=" p-[15px] rounded-full"><NotebookPen className= "size-[45px] cursor-pointer  text-black"/></div>
+                                return (
+                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                        <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                            <NotebookPen className= "size-[45px] cursor-pointer text-black "/>
+                                        </button>
+                                    </Tooltip>
+                                )
                             })()}
-
                         </Link>
+                        
                         <Link href="/home">
-                            <User className= "size-[45px] cursor-pointer  text-black"/>
+                            <Tooltip closeDelay={0} content="Comunidades" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                    <User className= "size-[45px] cursor-pointer text-black "/>
+                                </button>
+                            </Tooltip>
                         </Link>
+
+                        {/* <Link href="/home">
+                            <User className= "size-[45px] cursor-pointer  text-black"/>
+                        </Link> */}
+
                         <Link href="/home/metricas">
                             {(() => {
                                 if (pathname == "/home/metricas") {
                                     return (
                                         <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <ChartLine className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
+                                            <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                    <ChartLine className= "size-[45px] cursor-pointer text-white "/>
+                                                </button>
+                                            </Tooltip>
                                         </>
                                     )
                                 }
-                                return <div className=" p-[15px] rounded-full"><ChartLine className= "size-[45px] cursor-pointer text-black"/></div>
+                                return (
+                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                        <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                            <NotebookPen className= "size-[45px] cursor-pointer text-black "/>
+                                        </button>
+                                    </Tooltip>
+                                )
                             })()}
                         </Link>
 
                         <Link href="/home">
-                            <CalendarDays className= "size-[45px] cursor-pointer  text-black"/>
+                            <Tooltip closeDelay={0} content="Calendário" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                    <CalendarDays className= "size-[45px] cursor-pointer text-black "/>
+                                </button>
+                            </Tooltip>
                         </Link>
 
                         <Link href="/home/configuracoes/informacoes">
                             {(() => {
-                                if (pathname == "/home/configuracoes/informacoes") {
+                                if (pathname == "/home/configuracoes/informacoes" || pathname == "/home/configuracoes/notificacao" || pathname == "/home/configuracoes/personalizacao" || pathname == "/home/configuracoes/conta") {
                                     return (
                                         <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
+                                            <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                    <Cog className= "size-[45px] cursor-pointer text-white "/>
+                                                </button>
+                                            </Tooltip>
                                         </>
                                     )
                                 }
-                                if (pathname == "/home/configuracoes/notificacao") {
-                                    return (
-                                        <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                if (pathname == "/home/configuracoes/personalizacao") {
-                                    return (
-                                        <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                if (pathname == "/home/configuracoes/conta") {
-                                    return (
-                                        <>
-                                            <div className="relative p-[15px] rounded-full"> 
-                                                <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                                <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                return <div className=" p-[15px] rounded-full"><Cog className= "size-[45px] cursor-pointer text-black"/></div>
+                                // if (pathname == "/home/configuracoes/notificacao") {
+                                //     return (
+                                //         <>
+                                //             <div className="relative p-[15px] rounded-full"> 
+                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                //             </div>
+                                //         </>
+                                //     )
+                                // }
+                                // if (pathname == "/home/configuracoes/personalizacao") {
+                                //     return (
+                                //         <>
+                                //             <div className="relative p-[15px] rounded-full"> 
+                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                //             </div>
+                                //         </>
+                                //     )
+                                // }
+                                // if (pathname == "/home/configuracoes/conta") {
+                                //     return (
+                                //         <>
+                                //             <div className="relative p-[15px] rounded-full"> 
+                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
+                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
+                                //             </div>
+                                //         </>
+                                //     )
+                                // }
+                                return (
+                                    <Tooltip closeDelay={0} content="Configuração"  placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                        <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                            <Cog className= "size-[45px] cursor-pointer text-black "/>
+                                        </button>
+                                    </Tooltip>
+                                )
                             })()}
                         </Link>
 
                     </div>
                         
                     <Link href="/home">
-                        <LogOut className= "size-[45px] cursor-pointer  text-black"/>
+                        <Tooltip closeDelay={0} content="Sair" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                            <button id="side_pop" className="relative p-[15px] rounded-full "> 
+                                <LogOut className= "size-[45px] cursor-pointer text-black "/>
+                            </button>
+                        </Tooltip>
                     </Link>
                 </div>
             </nav>
