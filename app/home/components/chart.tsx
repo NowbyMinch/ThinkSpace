@@ -24,8 +24,8 @@ const data = [
     
     return (
         <>
-            <div className="w-760">
-                <LineChart width={750} height={300} data={data} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
+            <div className="w-[770px] max-w-[100%] overflow-hidden">
+                <LineChart width={770} height={300} data={data} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
                     <XAxis stroke="#666" dataKey="dia"/>
                     <YAxis dataKey="atividades"/>

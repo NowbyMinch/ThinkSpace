@@ -86,10 +86,10 @@ export default function Métricas() {
                                     <h1 className='leading-[50px] font-medium flex justify-between items-end'>Ranking
                                         <div className="flex gap-2">
                                             <div className="w-fit px-3 h-8 rounded-[30px] bg-[#D9D9D9] flex justify-center items-center text-[18px] text-black cursor-pointer">Geral</div>
-                                            <div className="w-fit px-3 h-8 rounded-[30px] bg-[#9767f85e] flex justify-center items-center text-[18px] text-black cursor-pointer">
+                                            {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#9767f85e] flex justify-center items-center text-[18px] text-black cursor-pointer">
                                                 Sala de estudos
                                                 <ChevronDown/>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </h1>
                                     <div className="mt-2 w-full h-14 flex items-center gap-[100px]">
@@ -122,7 +122,7 @@ export default function Métricas() {
                                             <h2 className='text-[20px] font-bold'>89%</h2>
                                         </div>
                                     </div>
-                                    <div className="mt-2  w-full flex justify-end">
+                                    <div className=" w-full flex justify-end">
                                         <button className='bg-[#d9d9d979] w-fit px-3 h-8 rounded-[30px] flex justify-center items-center'>
                                             Veja mais
                                             <ChevronDown/>

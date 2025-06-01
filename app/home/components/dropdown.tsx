@@ -48,20 +48,22 @@ export function ComboboxDemo() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[180px] flex gap-4 justify-center rounded-[10px]"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
             : "Selecione a semana"}
+
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
+      <PopoverContent className="w-[200px] p-0 rounded-[10px]">
+        <Command className="rounded-[10px]">
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
+                
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
@@ -78,6 +80,7 @@ export function ComboboxDemo() {
                     )}
                   />
                 </CommandItem>
+
               ))}
             </CommandGroup>
           </CommandList>
