@@ -7,46 +7,51 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
     const pathname = usePathname();
     return (
         <>
-            <Link href="/home/materiais/Ciência da Computação/Eng. Comp II/Material" className="flex items-center">
-                {(() => {
-                    if (pathname == `/home/materiais/${id}/${idMaterial}/Material`) {
-                        return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Material<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
-                    }
-                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Material</h2>
-                    }
-                )()}
-                
-            </Link>    
-            <Link href="/home/materiais/Ciência da Computação/Eng. Comp II/Resumo" className="flex items-center">
-                {(() => {
-                    if (pathname == `/home/materiais/${id}/${idMaterial}/Resumo`) {
-                        return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Resumo<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
-                    }
-                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Resumo</h2>
-                    }
-                )()}
-                
-            </Link>    
-            <Link href="/home/materiais/Ciência da Computação/Eng. Comp II/Flashcards" className="flex items-center">
-                {(() => {
-                    if (pathname == `/home/materiais/${id}/${idMaterial}/Flashcards`) {
-                        return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Flashcards<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
-                    }
-                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Flashcards</h2>
-                    }
-                )()}
-                
-            </Link>     
-            <Link href="/home/materiais/Ciência da Computação/Eng. Comp II/Quizzes" className="flex items-center">
-                {(() => {
-                    if (pathname == `/home/materiais/${id}/${idMaterial}/Quizzes`) {
-                        return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Quizzes<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
-                    }
-                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Quizzes</h2>
-                    }
-                )()}
-                
-            </Link>         
+            <div className="flex flex-col w-full h-full relative overflow-hidden ">
+                <div className="flex gap-6">
+                    <Link href={`/home/materiais/${id}/${idMaterial}/Material`} className="flex items-center">
+                        {(() => {
+                            if (pathname == `/home/materiais/${id}/${idMaterial}/Material`) {
+                                return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Material</h2>
+                            }
+                            return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Material</h2>
+                            }
+                        )()}
+                        
+                    </Link>    
+                    <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`} className="flex items-center">
+                        {(() => {
+                            if (pathname == `/home/materiais/${id}/${idMaterial}/Resumo`) {
+                                return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Resumo</h2>
+                            }
+                            return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Resumo</h2>
+                            }
+                        )()}
+                        
+                    </Link>    
+                    <Link href={`/home/materiais/${id}/${idMaterial}/Flashcards`} className="flex items-center">
+                        {(() => {
+                            if (pathname == `/home/materiais/${id}/${idMaterial}/Flashcards`) {
+                                return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Flashcards</h2>
+                            }
+                            return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Flashcards</h2>
+                            }
+                        )()}
+                        
+                    </Link>     
+                    <Link href={`/home/materiais/${id}/${idMaterial}/Quizzes`} className="flex items-center">
+                        {(() => {
+                            if (pathname == `/home/materiais/${id}/${idMaterial}/Quizzes`) {
+                                return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Quizzes</h2>
+                            }
+                            return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Quizzes</h2>
+                            }
+                        )()}
+                    </Link>     
+                </div>
+                <div className={` ${pathname === `/home/materiais/${id}/${idMaterial}/Resumo` ? "ml-[98px] w-[96px]" : pathname === `/home/materiais/${id}/${idMaterial}/Flashcards` ? "ml-[199px] w-[125px]" : pathname === `/home/materiais/${id}/${idMaterial}/Quizzes` ? "ml-[329px] w-[90px]" : "" } transition-all ease-in-out duration-300 w-[91px] bg-[#A39CEC] h-[3px] rounded-full `}></div>
+            </div>
+            
         </>
     )
 }

@@ -5,6 +5,7 @@ import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-
 import Image from "next/image";
 import React from "react";
 import {Tooltip} from "@heroui/react";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 export const Sidebar = () => {
@@ -47,11 +48,18 @@ export const Sidebar = () => {
                                 if (pathname == "/home/materiais") {
                                     return (
                                         <>
-                                            <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                    <NotebookPen className= "size-[45px] cursor-pointer text-white "/>
-                                                </button>
-                                            </Tooltip>
+                                            <AnimatePresence>
+                                                <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                    <motion.button 
+                                                    initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                    animate={{ scale: 1 }}
+                                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                    className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                        <NotebookPen className= "size-[45px] cursor-pointer text-white "/>
+                                                    </motion.button>
+
+                                                </Tooltip>
+                                            </AnimatePresence>
                                         </>
                                     )
                                 }
@@ -73,27 +81,31 @@ export const Sidebar = () => {
                             </Tooltip>
                         </Link>
 
-                        {/* <Link href="/home">
-                            <User className= "size-[45px] cursor-pointer  text-black"/>
-                        </Link> */}
-
                         <Link href="/home/metricas">
                             {(() => {
                                 if (pathname == "/home/metricas") {
                                     return (
                                         <>
-                                            <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                    <ChartLine className= "size-[45px] cursor-pointer text-white "/>
-                                                </button>
-                                            </Tooltip>
+                                            <AnimatePresence>
+                                                <Tooltip closeDelay={0} content="Métricas" placement="right" className="w-fit text-[18px]" showArrow={true}>
+
+                                                    <motion.button 
+                                                    initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                    animate={{ scale: 1 }}
+                                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                    id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                        <ChartLine className= "size-[45px] cursor-pointer text-white "/>
+                                                    </motion.button>
+
+                                                </Tooltip>
+                                            </AnimatePresence>
                                         </>
                                     )
                                 }
                                 return (
-                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                    <Tooltip closeDelay={0} content="Métricas" placement="right" className="w-fit text-[18px]" showArrow={true}>
                                         <button id="side_pop" className="relative p-[15px] rounded-full "> 
-                                            <NotebookPen className= "size-[45px] cursor-pointer text-black "/>
+                                            <ChartLine className= "size-[45px] cursor-pointer text-black "/>
                                         </button>
                                     </Tooltip>
                                 )
@@ -113,46 +125,26 @@ export const Sidebar = () => {
                                 if (pathname == "/home/configuracoes/informacoes" || pathname == "/home/configuracoes/notificacao" || pathname == "/home/configuracoes/personalizacao" || pathname == "/home/configuracoes/conta") {
                                     return (
                                         <>
-                                            <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                                <button id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                    <Cog className= "size-[45px] cursor-pointer text-white "/>
-                                                </button>
-                                            </Tooltip>
+                                            <AnimatePresence>
+                                                <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                        <motion.button 
+                                                        initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                        animate={{ scale: 1 }}
+                                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                        id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+
+                                                            <Cog className= "size-[45px] cursor-pointer text-white "/>
+                                                            
+                                                        </motion.button>
+                                                </Tooltip>
+
+                                            </AnimatePresence>
                                         </>
                                     )
                                 }
-                                // if (pathname == "/home/configuracoes/notificacao") {
-                                //     return (
-                                //         <>
-                                //             <div className="relative p-[15px] rounded-full"> 
-                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                //             </div>
-                                //         </>
-                                //     )
-                                // }
-                                // if (pathname == "/home/configuracoes/personalizacao") {
-                                //     return (
-                                //         <>
-                                //             <div className="relative p-[15px] rounded-full"> 
-                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                //             </div>
-                                //         </>
-                                //     )
-                                // }
-                                // if (pathname == "/home/configuracoes/conta") {
-                                //     return (
-                                //         <>
-                                //             <div className="relative p-[15px] rounded-full"> 
-                                //                 <div id="side_pop" className=" p-[15px] rounded-full bg-[#A39CEC] w-full h-full z-[-10] top-0 left-0 absolute"></div>
-                                //                 <Cog className= "size-[45px] cursor-pointer text-white"/>
-                                //             </div>
-                                //         </>
-                                //     )
-                                // }
+                                
                                 return (
-                                    <Tooltip closeDelay={0} content="Configuração"  placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                    <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
                                         <button id="side_pop" className="relative p-[15px] rounded-full "> 
                                             <Cog className= "size-[45px] cursor-pointer text-black "/>
                                         </button>

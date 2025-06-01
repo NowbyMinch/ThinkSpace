@@ -15,7 +15,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
 
                             {(() => {
                                 if (pathname == "/home/configuracoes/informacoes") {
-                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Informações básicas<div id="underline" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
+                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Informações básicas</h2>
                                 }
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>
                                 }
@@ -27,7 +27,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
 
                             {(() => {
                                 if (pathname == "/home/configuracoes/personalizacao") {
-                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Personalização<div id="underline2" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
+                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Personalização</h2>
                                 }
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Personalização</h2>
                                 }
@@ -39,7 +39,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
 
                             {(() => {
                                 if (pathname == "/home/configuracoes/notificacao") {
-                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Notificação<div id="underline3" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
+                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Notificação</h2>
                                 }
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Notificação</h2>
                                 }
@@ -51,16 +51,18 @@ export default function Configurações({ children, }: { children: React.ReactNo
 
                             {(() => {
                                 if (pathname == "/home/configuracoes/conta") {
-                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Conta<div id="underline4" className="bg-[#A39CEC] w-[120%] h-[3px] rounded-full absolute bottom-[-2px]"></div></h2>
+                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Conta</h2>
                                 }
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Conta</h2>
                                 }
                             )()}
 
                         </Link>
-                        
                     </div>
-                    <div className="w-[calc(100%+4.1%)] ml-[-2.1%] h-[2px]  bg-[rgba(0,0,0,0.25)]"></div>
+                    <div className="w-[calc(100%+4.1%)] ml-[-2.1%] h-[2px]  bg-[rgba(0,0,0,0.25)]">
+                        <div 
+                        className={`${ pathname === "/home/configuracoes/conta"?  "w-[74px] ml-[1092px]": pathname === "/home/configuracoes/personalizacao"?  "w-[180px] ml-[447px]" : pathname === "/home/configuracoes/informacoes"?  "w-[242px] ml-[55px]" : pathname === "/home/configuracoes/notificacao"?  "w-[140px] ml-[785px]" : "" } transition-all ease-in-out duration-300 absolute h-[3px] bg-[#A39CEC]`}></div> 
+                    </div>
                 </div>
                 
                 { children }

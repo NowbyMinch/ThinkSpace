@@ -32,7 +32,7 @@ h1{
     scale: 100%;
   }
 }
-
+/* 
 #underline{
   animation: growVar1 0.1s ;
 }
@@ -44,7 +44,7 @@ h1{
 }
 #underline4{
   animation: growVar1 0.1s ;
-}
+} */
 
 #editar_conta:hover{
   transition: all ease-in-out 0.1s;
