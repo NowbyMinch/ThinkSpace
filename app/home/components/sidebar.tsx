@@ -30,10 +30,12 @@ export const Sidebar = () => {
                                 )
                             }
                             return (
-                                <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
-                                    <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute "/>
-                                    <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" id="on" className=" z-10 w-full opacity-0"/>
-                                </div>
+                                <Tooltip closeDelay={0} content="Menu Principal" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                    <div id="light-box" className=" w-16 h-[67px] mt-5 cursor-pointer relative">
+                                        <Image src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className="w-full absolute "/>
+                                        <Image src="/Light Bulb.png" width={300} height={500} alt="Logo" id="on" className=" z-10 w-full opacity-0"/>
+                                    </div>
+                                </Tooltip>
                             )
                             
                         })()}
