@@ -306,24 +306,68 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                 <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
                     
-                    <div className="w-[100%]">
-                        <div className=" ml-[10px] mr-[10px] w-[409px] ">
+                    <div className="w-[100%] flex justify-center ">
+                        <div className=" ml-[10px] mr-[10px] w-[390px] flex flex-col gap-10">
 
-                            <div className="grid grid-cols-[100px_1fr] ml-[15px] mt-[30px] gap-[15px] ">
-                                
-                                <Image width={300} height={500} src="/Profile.png" className="h-[100px] rounded-full cursor-pointer " alt="Profile picture" />
+                            <div className="flex ml-[15px] mt-[30px] gap-[15px] ">
+                                <div className="w-[28%] ">
+                                    <Image width={300} height={500} src="/Profile.png" className="h-auto w-full rounded-full cursor-pointer " alt="Profile picture" />
+                                </div>
 
-                                <div className="">
+                                <div className="w-[68%]">
                                     <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
                                     <h2 className="text-[#828181] font-medium text-[25px]">Estudante</h2>
-                                    <div className="w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
+                                    <div className="w-[220px] max-w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
                                         <div className="w-[45%] h-2 rounded-[25px] bg-purple-600 "></div>
                                     </div>
-                                    <div className="flex justify-between w-[220px]">
+                                    <div className="flex justify-between w-[220px] max-w-[220px]">
                                         <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
                                         <h2 className="font-medium text-[18px] text-[#828181]">450px</h2>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="flex flex-col gap-5">
+                                <div className="w-full flex flex-col gap-2 text-[22px]">
+                                    <h1 className="text-[40px] font-medium border border-b-[rgba(0,0,0,0.28)] ">Filtro</h1>
+
+                                    <div className="flex gap-2 items-center ">
+                                        <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                        Mais recentes
+                                    </div>
+
+                                    <div className="flex gap-2 items-center ">
+                                        <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                        Mais antigos
+                                    </div>
+
+                                    <div className="flex gap-2 items-center ">
+                                        <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                        Maior tempo de estudo
+                                    </div>
+
+                                    <div className="flex gap-2 items-center ">
+                                        <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                        Menor tempo de estudo
+                                    </div>
+                                </div>
+
+                                <div className="w-full flex flex-col gap-2 text-[25px]">
+                                    <h1 className="text-[40px] font-medium border border-b-[rgba(0,0,0,0.28)] ">POO I</h1>
+
+                                    <h2>Criado em 01/02</h2>
+                                    <h2>Tempo de estudo: 45 min</h2>
+                                    <h2>Flashcards: 12</h2>
+                                    <div className="flex flex-col gap-2">
+                                        <h2>Status da atividade:</h2>
+                                        <div className="flex gap-2 items-center text-[20px]">
+                                            <h3 className="bg-[#9767F8] px-5 rounded-[25px] text-white">Completa</h3>
+                                            <h3 className="bg-[#C7C7C7] px-5 rounded-[25px] text-white">Incompleta</h3>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>

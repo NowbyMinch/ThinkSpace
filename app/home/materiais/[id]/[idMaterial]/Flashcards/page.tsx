@@ -1,5 +1,8 @@
 "use client";
 
+import { ChatMateriais } from "@/app/home/components/chat-materiais";
+import {  motion } from "framer-motion";
+
 // import { PageProps } from "../type";
 // { params }: PageProps 
 
@@ -26,15 +29,29 @@ export default function MaterialClient() {
 
                         <div className="w-[78%] h-full flex justify-center items-center ">
                             <div className="flex gap-4 max-w-[95%] h-[100px] max-h-[90%] justify-center items-center ">
-                                <button id="AER" className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                <motion.button 
+                                whileTap={{ scale: 0.98 }}
+                                whileHover={{ scale: 1.02, backgroundColor: "#A39CEC", color: "#FFFFFF", transition: { duration: 0.2 }}}
+
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Acertei</span>
-                                </button>
-                                <button id="AER" className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                </motion.button>
+
+                                <motion.button 
+                                whileTap={{ scale: 0.98 }}
+                                whileHover={{ scale: 1.02, backgroundColor: "#A39CEC", color: "#FFFFFF", transition: { duration: 0.2 }}}
+
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Errei</span>
-                                </button>
-                                <button id="AER" className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                </motion.button>
+
+                                <motion.button 
+                                whileTap={{ scale: 0.98 }}
+                                whileHover={{ scale: 1.02, backgroundColor: "#A39CEC", color: "#FFFFFF", transition: { duration: 0.2 }}}
+
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Revisar</span>
-                                </button>
+                                </motion.button>
                             </div>
 
                         </div>
@@ -43,9 +60,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
-                
-            </div>
+            <ChatMateriais />
         </>
     );
 };

@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  color: #2F2F2F;
-  background: #EFEFEF; 
+
+html{
+  height: 100vh;
+  scroll-behavior: smooth;
 }
 
+body {
+  color: #2F2F2F;
+  background-color: #EFEFEF; 
+}
 h1{
   font-size: 40px;
   line-height: normal;
@@ -204,6 +209,14 @@ h1{
   100% {
     scale: 100%;
   }
+}
+
+
+#messages div{
+  animation: grow linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 80px;
 }
 
 @keyframes grow-icons{

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChatMateriais } from "@/app/home/components/chat-materiais";
 import Image from "next/image";
 // import { PageProps } from "../type";
 // { params }: PageProps 
@@ -13,9 +14,7 @@ export default function MaterialClient() {
                 <Image width={970} height={500} src="/material.png" className="h-[970px] w-auto max-h-[104%]" alt="Material" />
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
-                
-            </div>
+            <ChatMateriais />
         </>
     );
 };

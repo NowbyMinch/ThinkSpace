@@ -49,9 +49,8 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                         )()}
                     </Link>     
                 </div>
-                <div className={` ${pathname === `/home/materiais/${id}/${idMaterial}/Resumo` ? "ml-[98px] w-[96px]" : pathname === `/home/materiais/${id}/${idMaterial}/Flashcards` ? "ml-[199px] w-[125px]" : pathname === `/home/materiais/${id}/${idMaterial}/Quizzes` ? "ml-[329px] w-[90px]" : "" } transition-all ease-in-out duration-300 w-[91px] bg-[#A39CEC] h-[3px] rounded-full `}></div>
+                <div className={` ${pathname === `/home/materiais/${id}/${idMaterial}/Resumo` ? "ml-[106px] w-[78px]" : pathname === `/home/materiais/${id}/${idMaterial}/Flashcards` ? "ml-[209px] w-[104px]" : pathname === `/home/materiais/${id}/${idMaterial}/Quizzes` ? "ml-[336px] w-[75px]" : pathname === `/home/materiais/${id}/${idMaterial}/Material` ? "w-[83px]" : "" } transition-all ease-in-out duration-300 bg-[#A39CEC] h-[3px] rounded-full `}></div>
             </div>
-            
         </>
     )
 }
