@@ -8,7 +8,7 @@ export const ChatMateriais = () => {
             <div id="messages" className="w-[95%] max-w-[600px] flex flex-col gap-[18px] pr-1 h-[89%] overflow-y-auto mt-6 ">
                 <div className=" flex gap-2 ml-auto justify-end">
                     <div className="bg-[#FF9F93] max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tr-none flex justify-center items-center shadow-md">
-                        <p className=" text-[20px] break-words text-white ">Consegui entender, muito obrigada!</p>        
+                        <p className=" text-[20px] break-words text-white ">Olá. Você pode me explicar com um exemplo?</p>        
                     </div>
 
                     <div className="shadow-md h-min rounded-full w-[15%]">
