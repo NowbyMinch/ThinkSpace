@@ -29,7 +29,7 @@ const data = [
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
                     <XAxis stroke="#666" dataKey="dia"/>
                     <YAxis dataKey="atividades"/>
-                    <Line type="monotone" dataKey="atividades" strokeWidth={2} stroke="#9767F8" />
+                    <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
                     <Tooltip/>
                 </LineChart>
             </div>
