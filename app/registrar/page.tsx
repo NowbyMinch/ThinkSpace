@@ -12,45 +12,9 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
   const router = useRouter();
   
-    // ✅ Initialize subStep state
   const [ subStep, setSubStep] = useState(1);
   
-    // ✅ On first load: initialize history state
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !history.state?.subStep) {
-      history.replaceState({ subStep: 1 }, '');
-    }
-  }, []);
-
-  // ✅ On subStep change: push new state into browser history
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      history.pushState({ subStep }, '', `?subStep=${subStep}`);
-    }
-  }, [subStep]);
-
-  // ✅ Handle browser back/forward button
-  useEffect(() => {
-  if (typeof window !== 'undefined' && !history.state?.subStep) {
-    history.replaceState({ subStep: 1 }, '');
-  }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      history.pushState({ subStep }, '', `?subStep=${subStep}`);
-    }
-  }, [subStep]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      setSubStep(1); // Always go to step 1 on browser back
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
+  
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("");

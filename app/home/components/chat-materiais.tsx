@@ -38,7 +38,7 @@ export const ChatMateriais = () => {
                 </div>
 
             </div>
-            <div className="w-[95%] max-w-[600px] h-[6%] flex gap-2">
+            <div className="w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center">
                 <input type="text" placeholder="Pergunte a assistente IA" className="w-[80%] h-full rounded-full max-h-[74px] pl-5 text-[20px] border-2 border-[rgba(0,0,0,0.19)]  outline-[rgba(151,103,248,0.6)]"/>
                 <motion.button 
                 whileHover={{ scale: 1.02 }}

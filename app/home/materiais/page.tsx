@@ -98,7 +98,7 @@ export default function Materiais() {
                                 <div className="">
                                     <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
                                     <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                        <div className=" w-[90%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(5,40px)] items-center pb-1">
+                                        <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(5,40px)] items-center pb-1">
                                             {icons.map(({id, Icon}) => (
                                                 <motion.button 
                                                 whileTap={{ scale: 0.95 }} 
