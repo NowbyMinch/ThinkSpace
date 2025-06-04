@@ -13,11 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={`${afacad.variable} font-[Afacad] antialiased flex h-full `}>
-        <Sidebar />
-        {children}
-      </body>
-    </html>
+    <>
+      <Sidebar />
+      {children}
+    </>
   );
 }

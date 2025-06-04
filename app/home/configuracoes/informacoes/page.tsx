@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from 'framer-motion';
+
 export default function Informações() {
   return (
     <>
@@ -58,12 +62,15 @@ export default function Informações() {
           ></input>
         </div>
 
-        <button
-          id="editar_conta"
-          className="mt-3 w-[200px] h-[60px] rounded-[30px] text-[25px] font-medium border border-[#1E2351]"
+        <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+
+        id="editar_conta"
+        className="mt-3 ml-1 w-[200px] h-[60px] rounded-[30px] text-[25px] font-medium border border-[#1E2351]"
         >
           Salvar
-        </button>
+        </motion.button>
       </div>
     </>
   );
