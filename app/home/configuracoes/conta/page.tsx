@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Conta() {
   return (
     <>
@@ -8,12 +12,14 @@ export default function Conta() {
             <h2 className="text-[25px]">marimachado@gmail.com</h2>
           </div>
 
-          <button
+          <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </button>
+          </motion.button>
         </div>
 
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
@@ -22,12 +28,14 @@ export default function Conta() {
             <h2 className="text-[25px]">***********</h2>
           </div>
 
-          <button
+          <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </button>
+          </motion.button>
         </div>
 
         <div className="flex justify-between w-[1000px] items-center ">
@@ -40,12 +48,14 @@ export default function Conta() {
             </p>
           </div>
 
-          <button
+          <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Excluir
-          </button>
+          </motion.button>
         </div>
 
         <div className="flex justify-between w-[1000px] items-center ">
@@ -58,12 +68,14 @@ export default function Conta() {
             </p>
           </div>
 
-          <button
+          <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[120px] h-[55px] text-[24px]"
           >
             Suspender
-          </button>
+          </motion.button>
         </div>
       </div>
     </>
