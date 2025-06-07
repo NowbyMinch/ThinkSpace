@@ -17,7 +17,7 @@ const data = [
 import type { TooltipProps } from "recharts";
 
 
-const CustomTooltip = ({ active, payload, label }:  TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
   if (!active || !payload || payload.length === 0) return null;
 
   const atividades = payload[0].value;
@@ -43,7 +43,6 @@ const CustomTooltip = ({ active, payload, label }:  TooltipProps<number, string>
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-      // Só após o componente estar no cliente
       setIsClient(true);
     }, []);
   
