@@ -298,3 +298,11 @@ h1{
   animation: label-pop ease-in-out 0.1s;
   transform-origin: 50% 50%;
 }
+
+.perspective {
+  perspective: 3000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}

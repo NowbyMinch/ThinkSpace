@@ -44,7 +44,7 @@ export const ChatMateriais = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.92 }}
                 
-                className="w-[15%] h-full bg-[#A39CEC] rounded-[20px] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
+                className="w-[15%] h-[75px] max-h-[100%] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
                     <SendHorizonal className="size-7"/>
                 </motion.button>
             </div>
