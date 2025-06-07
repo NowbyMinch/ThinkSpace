@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -50,9 +49,11 @@ export function ComboboxDemo() {
           aria-expanded={open}
           className="w-[180px] flex gap-4 justify-center rounded-[10px]"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Selecione a semana"}
+          <span>
+            {value
+              ? frameworks.find((framework) => framework.value === value)?.label
+              : "Selecione a semana"}
+          </span>
 
           <ChevronsUpDown className="opacity-50" />
         </Button>

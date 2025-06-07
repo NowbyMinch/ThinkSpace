@@ -2,6 +2,8 @@
 
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
 const data = [ 
     {dia:"Dia 1", atividades:2}, 
     {dia:"Dia 2", atividades:18}, 
@@ -11,6 +13,31 @@ const data = [
     {dia:"Dia 6", atividades:16},
     {dia:"Dia 7", atividades:8},
  ] 
+
+import type { TooltipProps } from "recharts";
+
+
+const CustomTooltip = ({ active, payload, label }:  TooltipProps<number, string>) => {
+  if (!active || !payload || payload.length === 0) return null;
+
+  const atividades = payload[0].value;
+
+  return (
+    
+    <AnimatePresence>
+        <motion.div
+        initial={{ scale:0.50 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.50 }}
+        transition={{ ease: "easeInOut" }}
+        className="bg-white rounded-xl shadow p-3 text-center origin-top-left">
+            <p className="text-xl font-bold">{atividades}</p>
+            <p className="text-base ">Atividades feitas</p>
+        </motion.div>
+
+    </AnimatePresence>
+  );
+};
 
  export const Chart  = () => {
     const [isClient, setIsClient] = useState(false);
@@ -30,7 +57,8 @@ const data = [
                     <XAxis stroke="#666" dataKey="dia"/>
                     <YAxis dataKey="atividades"/>
                     <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
-                    <Tooltip/>
+                    <Tooltip content={CustomTooltip} />
+
                 </LineChart>
             </div>
         </>
