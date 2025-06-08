@@ -95,11 +95,11 @@ export default function MaterialClient() {
                                 transition={{ 
                                     backgroundColor: { duration: 0.15, ease: "easeInOut" }
                                 }} 
-                                onClick={() => setCardstate(prev => {
+                                onClick={() => {setCardstate(prev => {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 1; // 1 = acertei
                                     return novo;
-                                })}
+                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Acertei</span>
                                 </motion.button>
@@ -110,11 +110,12 @@ export default function MaterialClient() {
                                 transition={{ 
                                     backgroundColor: { duration: 0.15, ease: "easeInOut" }
                                 }} 
-                                onClick={() => setCardstate(prev => {
+                                onClick={() => 
+                                    {setCardstate(prev => {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 2; // 1 = errei
                                     return novo;
-                                })}
+                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Errei</span>
                                 </motion.button>
@@ -125,11 +126,11 @@ export default function MaterialClient() {
                                 transition={{ 
                                     backgroundColor: { duration: 0.15, ease: "easeInOut" }
                                 }} 
-                                onClick={() => setCardstate(prev => {
+                                onClick={() => {setCardstate(prev => {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 3; // 1 = revisar
                                     return novo;
-                                })}
+                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Revisar</span>
                                 </motion.button>
