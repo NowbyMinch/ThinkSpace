@@ -16,7 +16,7 @@ const questoes = [
 
 export default function MaterialClient() {
     const [questaoIndex, setQuestaoIndex] = useState(0);
-    let barlength = (questaoIndex / (questoes.length - 1) ) * 100;
+    const barlength = (questaoIndex / (questoes.length - 1) ) * 100;
 
     return( 
         <>  
