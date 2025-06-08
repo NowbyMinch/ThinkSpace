@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function Notificação() {
-  const [ checked, setChecked ] = useState([false, false, false, false, false, false, false]);
+  const [ checked, setChecked ] = useState<boolean[]>(Array(7).fill(false));
 
   return (
     <>

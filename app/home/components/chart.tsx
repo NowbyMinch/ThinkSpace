@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
         initial={{ scale:0.50 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.50 }}
-        transition={{ ease: "easeInOut" }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
         className="bg-white rounded-xl shadow p-3 text-center origin-top-left">
             <p className="text-xl font-bold">{atividades}</p>
             <p className="text-base ">Atividades feitas</p>
