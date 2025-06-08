@@ -8,13 +8,12 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 // import { PageProps } from "../type";
 // { params }: PageProps 
 
-export const questoes = [
+const questoes = [
     {questao: "Questão 1", resposta: "Resposta 1"},
     {questao: "Questão 2", resposta: "Resposta 2"},
     {questao: "Questão 3", resposta: "Resposta 3"},
     {questao: "Questão 4", resposta: "Resposta 4"},
 ]
-
 
 export default function MaterialClient() {
     const [flipped, setFlipped] = useState(false);
