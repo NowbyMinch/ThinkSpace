@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { MoveUpRight, ChevronLeft, ChevronRight, Instagram } from "lucide-react" ;
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from "framer-motion";
@@ -33,6 +33,15 @@ const items: AccordionItem[] = [
 export default function Home() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' } )
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    const scrollToSection = (index: number) => {
+        sectionRefs.current[index]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    };
+
     const toggle = (index: number) => {
         setOpenIndex(index === openIndex ? null : index);
     };
@@ -56,16 +65,16 @@ export default function Home() {
                     </div>
                     <div className=" w-full flex justify-center items-center ">  
                         <div id="links-header" className="flex justify-between gap-2">
-                            <a href="">
+                            <a className="cursor-pointer" onClick={() => scrollToSection(0)} >
                             Home
                             </a>
-                            <a href="">
+                            <a className="cursor-pointer" onClick={() => scrollToSection(1)} >
                                 Sobre nós
                             </a>
-                            <a href="">
+                            <a className="cursor-pointer" >
                                 Precificação
                             </a>
-                            <a href="#perguntas-frequentes">
+                            <a className="cursor-pointer" onClick={() => scrollToSection(3)}>
                                 FAQ
                             </a>
                         </div>
@@ -90,8 +99,8 @@ export default function Home() {
                     </div>
                 </header>
                 
-                <main className="flex justify-center items-center flex-col pb-[150px] gap-[150px] ">
-                    <div className="w-full relative flex justify-center h-fit ">
+                <main className="flex justify-center items-center flex-col gap-[150px] ">
+                    <div className="w-full  relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>
                         </div>
@@ -117,7 +126,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
+                    <div ref={el => {sectionRefs.current[0] = el}} className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
                         <div  className="w-full text-[55px] flex justify-between items-center">
                             <h1 id="title">Nossas funcionalidades</h1>
                             <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
@@ -168,7 +177,7 @@ export default function Home() {
                         </div>
                     </div>
                     
-                    <div className="w-[1300px] max-w-[80%] flex flex-row justify-center ">
+                    <div ref={el => { sectionRefs.current[1] = el; }} className="w-[1300px]  max-w-[80%] flex flex-row justify-center ">
                         <div className="w-[50%] flex flex-col gap-12">
                             <h1 id="title" className="w-full">Aprender nunca foi tão fácil
                                 <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[40%]" src="/landingpage/aprendervec.svg" alt="Vector"/>
@@ -250,7 +259,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div id="perguntas-frequentes" className="w-full h-[500px] flex gap-[150px] ">
+                    <div ref={el => { sectionRefs.current[0] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
                         <div className="w-[45%] h-full relative ">
                             <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
                             <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
