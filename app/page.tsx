@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useEffect} from 'react'
 import { MoveUpRight, ChevronLeft, ChevronRight, Instagram } from "lucide-react" ;
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,6 +34,28 @@ export default function Home() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' } )
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [showHeader, setShowHeader] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentY = window.scrollY;
+
+            if (currentY > lastScrollY && currentY > 100) {
+                // Scrolling down
+                setShowHeader(false);
+            } else {
+                // Scrolling up
+                setShowHeader(true);
+            }
+
+            setLastScrollY(currentY);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
+
 
     const scrollToSection = (index: number) => {
         sectionRefs.current[index]?.scrollIntoView({
@@ -57,50 +79,71 @@ export default function Home() {
     return (
         <>
             <div className="w-screen z-[0] relative">
-                <header id="header" className=" w-[90%] max-w-[1700px] h-[120px] flex justify-between mx-auto ">
-                    <div className=" w-full h-full flex items-center ">
-                        <a href="#header">
-                            <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
-                        </a>
-                    </div>
-                    <div className=" w-full flex justify-center items-center ">  
-                        <div id="links-header" className="flex justify-between gap-2">
-                            <a className="cursor-pointer" onClick={() => scrollToSection(0)} >
-                            Home
-                            </a>
-                            <a className="cursor-pointer" onClick={() => scrollToSection(1)} >
-                                Sobre nós
-                            </a>
-                            <a className="cursor-pointer" >
-                                Precificação
-                            </a>
-                            <a className="cursor-pointer" onClick={() => scrollToSection(3)}>
-                                FAQ
+                <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center`}>
+                    <div className="flex w-[90%] max-w-[1700px] h-[120px] justify-between">
+                        <div className=" w-full h-full flex items-center ">
+                            <a className="cursor-pointer ">
+                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
                             </a>
                         </div>
-                    </div>
-                    <div className=" w-full flex justify-end ">
-                        <div className="flex items-center gap-8 ">
-                            <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
-                                <button className="text-[20px] ">Entrar</button>
-                            </Link>
-                            <motion.button 
-                            whileTap={{ scale: 0.99 }} 
-                            whileHover={{ scale: 1.01 }}
-                            transition={{ duration: 0.2, ease: "easeInOut" }}
-                            className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
-                                <a href="/registrar">
-                                    Registre-se
-                                </a>
-                                <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
-                            </motion.button>
-                        </div>
+                        <div className=" w-full flex justify-center items-center ">  
+                            <div id="links-header" className="flex justify-between gap-2">
+                                <motion.a 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
 
+                                className="cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                                    Home
+                                </motion.a>
+
+                                <motion.a 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                
+                                className="cursor-pointer" onClick={() => scrollToSection(1)} >
+                                    Sobre nós
+                                </motion.a>
+
+                                <motion.a 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }} 
+                                
+                                className="cursor-pointer" >
+                                    Precificação
+                                </motion.a>
+
+                                <motion.a 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                
+                                className="cursor-pointer" onClick={() => scrollToSection(3)}>
+                                    FAQ
+                                </motion.a>
+                            </div>
+                        </div>
+                        <div className=" w-full flex justify-end ">
+                            <div className="flex items-center gap-8 ">
+                                <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
+                                    <button className="text-[20px] ">Entrar</button>
+                                </Link>
+                                <motion.button 
+                                whileTap={{ scale: 0.99 }} 
+                                whileHover={{ scale: 1.01 }}
+                                transition={{ duration: 0.2, ease: "easeInOut" }}
+                                className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
+                                    <Link href="/registrar">
+                                        Registre-se
+                                    </Link>
+                                    <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
+                                </motion.button>
+                            </div>
+
+                        </div>
                     </div>
                 </header>
                 
                 <main className="flex justify-center items-center flex-col gap-[150px] ">
-                    <div className="w-full  relative flex justify-center h-fit ">
+                    <div className="w-full relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>
                         </div>
@@ -126,7 +169,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div ref={el => {sectionRefs.current[0] = el}} className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
+                    <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
                         <div  className="w-full text-[55px] flex justify-between items-center">
                             <h1 id="title">Nossas funcionalidades</h1>
                             <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
@@ -259,7 +302,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div ref={el => { sectionRefs.current[0] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
+                    <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
                         <div className="w-[45%] h-full relative ">
                             <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
                             <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
