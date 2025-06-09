@@ -65,7 +65,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Respostas</h2>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Atividades</h2>
             </div>
 
             <div className="flex gap-2 ">
@@ -128,7 +128,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Estudos</h2>
             </div>
           </div>
 
@@ -168,7 +168,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Postagens</h2>
             </div>
 
             <div className="flex gap-2 ">
@@ -193,7 +193,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Destaques</h2>
             </div>
           </div>
 
@@ -233,7 +233,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[26px] font-medium">Seguidores</h2>
             </div>
           </div>
 
