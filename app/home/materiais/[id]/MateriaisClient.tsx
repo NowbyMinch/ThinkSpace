@@ -177,10 +177,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             <div className="grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
                 <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031]">
-                    <div className="w-[1200px] mt-4 ">
-
-                        <div className="ml-[15px] mt-[40px] ">
-                            <h1 className="text-[45px] w-fit font-medium leading-6">Materiais de Estudo</h1>
+                    <div className="w-[1200px] mt-4 max-w-[95%]">
+                        <div className="">
+                            <h1 className="text-[45px] w-fit font-medium ">Materiais de Estudo</h1>
                             <h1 className="text-[35px] italic w-fit font-medium text-[#9767F8] ">{decodedId}</h1>
                         </div>
 

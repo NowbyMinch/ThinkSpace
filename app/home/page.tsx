@@ -258,15 +258,17 @@ export default function Home() {
           <div className=" ">
             <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
               <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
-                <div className=" flex flex-col justify-between w-full h-full  ">
+                <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
                     <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
                       Bom dia, Maria! Veja o relatório das suas metas de estudo
                       semanais
                     </h1>
 
-                    <button className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
-                      Saiba mais!
-                    </button>
+                    <a href="/home/metricas" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
+                      <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                        Saiba mais!
+                      </button>
+                    </a>
                 </div>
                 
               </div>

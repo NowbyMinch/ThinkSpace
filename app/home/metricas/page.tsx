@@ -11,7 +11,7 @@ export default function Métricas() {
                     <div className=" grid grid-cols-[55%_1fr] gap-4 ">
                         
                         <div className=" bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
-                            <div className=" w-[90%] h-[90%]">
+                            <div className=" w-[90%] h-[90%] ">
                                 <h1 className="text-[58px] font-medium leading-[60px]">Métricas</h1>
                                 <h2 className="text-[22px] leading-[28px] ">Seu desempenho da semana está aqui! 💡</h2>
 
