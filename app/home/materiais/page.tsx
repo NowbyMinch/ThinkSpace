@@ -37,6 +37,7 @@ const icons = [
     { id: "gitBranch", Icon: GitBranch }, { id: "home", Icon: Home }
 ];
 import {  useState, useEffect, useRef } from 'react';
+import { Backdrop3 } from "../components/backdrop";
 
 const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
@@ -61,9 +62,10 @@ export default function Materiais() {
     const [open, setOpen] = useState(false);
     const [editar, setEditar] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
-    const [color, setColor] = useState<string | null>(null);
+    const [color, setColor] = useState<string | "">("");
     const [titulo, setTitulo] = useState("");
     const [openPop, setOpenPop] = useState<number | null>(null);
+    const [materiaIndex, setMateriaIndex] = useState<number | null>(null);
     const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -91,8 +93,9 @@ export default function Materiais() {
     function closing(){
         setOpen(false);
         setEditar(false);
+        setMateriaIndex(null);
         setSelected(null);
-        setColor(null);
+        setColor("");
         setTitulo("")
     }
     
@@ -109,7 +112,7 @@ export default function Materiais() {
         setMateriais([...materiais, novoMaterial])
         setOpen(false);
         setSelected(null);
-        setColor(null);
+        setColor("");
         setTitulo("")
     }
 
@@ -126,7 +129,7 @@ export default function Materiais() {
             className={`w-full h-full absolute opacity-1 z-[1100] `}>
                 <div className="w-full h-full absolute" onClick={() => closing()}></div>
 
-                <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} `}>
+                <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
                     
                     <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
                     <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
@@ -227,7 +230,7 @@ export default function Materiais() {
                     <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
                     <div className="w-[80%] h-[85%] flex flex-col items-center gap-10 z-[900]">
-                        <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
+                        <h1 className="text-center text-[45px] font-medium">Editar matéria</h1>
                         <div className="w-full flex justify-between ">
                             <div className="w-[47%] flex flex-col gap-2">
                                 <div className="">
@@ -270,15 +273,23 @@ export default function Materiais() {
                             <div className=" w-[47%] ">
                                 <div className="w-full h-[100%] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
                                     <h2 className="w-[85%] h-[60px] flex font-medium text-[25px]">Pré-visualização:</h2>
-                                    <div style={{backgroundColor: color || "white"}} className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center">
+                                    <div
+                                        className={`w-[85%] h-[70%] rounded-[25px] flex justify-center items-center`}
+                                        style={{
+                                            backgroundColor:
+                                                color == "" && materiaIndex !== null && materiais[materiaIndex]
+                                                    ? materiais[materiaIndex].color
+                                                    : color
+                                        }}
+                                    >
 
                                     <div className="w-[85%] h-[85%] flex items-center">
                                         <div className="w-[65%] flex flex-col gap-4 ">
-                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{titulo.trim() !== "" ? titulo : "Nome da matéria"}</h1>
+                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{titulo.trim() !== "" ? titulo : (materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].nome : "Nome da matéria")}</h1>
                                             <div className="">
-                                                <h2>Materiais de estudo: 0</h2>
-                                                <h2>Tempo ativo: Sem dados</h2>
-                                                <h2>Última revisão: Sem dados</h2>
+                                                <h2>Materiais de estudo: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].materiais : 0}</h2>
+                                                <h2>Tempo ativo: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].tempo : 0}</h2>
+                                                <h2>Última revisão: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].ultima : 0}</h2>
                                             </div>
                                         </div>
 
@@ -291,6 +302,18 @@ export default function Materiais() {
                                                     })()}
                                                 </>
                                             )}
+                                            {!selected && (
+                                                <>
+                                                    {(() => {
+                                                        if (materiaIndex !== null && materiais[materiaIndex]) {
+                                                            const iconId = materiais[materiaIndex].icon;
+                                                            const SelectedIcon = icons.find((icon) => icon.id.toLowerCase() === iconId.toLowerCase())?.Icon;
+                                                            return SelectedIcon ? <SelectedIcon className="size-[150px] opacity-[22%] stroke-1"/> : null;
+                                                        }
+                                                        return null;
+                                                    })()}
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -298,7 +321,7 @@ export default function Materiais() {
                             </div>
                         </div>
 
-                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => add()}>Criar nova matéria</motion.button>
+                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => closing()}>Editar matéria</motion.button>
 
                     </div>
                 </div>
@@ -307,7 +330,13 @@ export default function Materiais() {
 
         </AnimatePresence>
 
-        <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open || editar ? 'flex' : 'hidden'} justify-center items-center`} onClick={() => closing()}></div>
+        {open && (
+            <Backdrop3 onClick={() => closing()}/>
+        )}
+
+        { editar && (
+            <Backdrop3 onClick={() => closing()}/>
+        )}
 
         <div className="flex mt-[12px] mb-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] ">
             
@@ -371,7 +400,9 @@ export default function Materiais() {
                                                             <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
                                                                 <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
                                                                 <div className="flex flex-col w-full gap-1 text-base ">
-                                                                    <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3  items-center flex gap-2" onClick={() => setEditar(true)}><SquarePen/> Editar</button>
+                                                                    <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); setMateriaIndex(index); console.log(index);}}>
+                                                                        <SquarePen/> Editar
+                                                                    </button>
                                                                     <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
                                                                     <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
                                                                 </div>

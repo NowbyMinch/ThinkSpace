@@ -152,7 +152,7 @@ export default function Home() {
                             <div className="flex max-w-[50%]">
                                 <div className="w-[600px] h-[80%] text-[70px] flex flex-col gap-4 justify-center items-start ">  
 
-                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE]">rápida</span> e <span id="conf" className=" text-[#5F3AC4]">eficiente</span></h1>
+                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[65px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[60px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[60px]">eficiente</span></h1>
                                     <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                     <motion.button 

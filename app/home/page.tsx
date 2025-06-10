@@ -37,14 +37,15 @@ export default function Home() {
 
   return (
     <>
-
-      <div id="backdrop" className={`${pop? "block": "hidden"} absolute w-full h-full`}>
-        <Backdrop />
-      </div>
-
-      <div id="backdrop2" className={`${pop2? "block": "hidden"} absolute w-full h-full`}>
-        <Backdrop2 />
-      </div>
+      <AnimatePresence initial={false}>
+        {pop && (
+          <Backdrop key={1}/>
+        )}
+        {pop2 && (
+          <Backdrop2 key={2}/>
+        )}
+        
+      </AnimatePresence>
 
 
       <div className=" w-[1580px] max-w-[85%] mx-auto h-full pb-8 max-h-full  ">
