@@ -31,7 +31,7 @@ export default function MaterialClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         let count: number = 0;
-        cardstate.forEach((state, index) => {
+        cardstate.forEach((state) => {
             if (state == 0){
                 count = count + 1;
             }
