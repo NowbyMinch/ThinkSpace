@@ -196,7 +196,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                         </div>
 
                         <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
-                            <a href="/home/materiais/Ciência da Computação/Eng. Comp II/Material" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+                            <a href={`/home/materiais/${id}/Eng. Comp II/Material`} id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
                                 <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
 
                                 <div className="mt-[18px] flex justify-between items-center ">

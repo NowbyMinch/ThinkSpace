@@ -22,7 +22,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
         //     redirect(`/home/materiais/${id}`)
         // }, 2500);
     }
-
+    
     return (
         <>
             <AnimatePresence initial={false}>
