@@ -56,7 +56,6 @@ export default function Home() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [lastScrollY]);
 
-
     const scrollToSection = (index: number) => {
         sectionRefs.current[index]?.scrollIntoView({
             behavior: 'smooth',
@@ -299,6 +298,30 @@ export default function Home() {
                                 
                             </div>
 
+                        </div>
+                    </div>
+
+                    <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px]  max-w-[80%] flex flex-row justify-center ">
+                        <div className="w-[50%] flex flex-col gap-12">
+                            <h1 id="title" className="w-full">Aprender nunca foi tão fácil
+                                <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[40%]" src="/landingpage/aprendervec.svg" alt="Vector"/>
+                            </h1>
+                            <p id="animate" className="text-[22px]">Nossa missão é simples: tornar o estudo mais inteligente, acessível e personalizado para todos os estudantes, em qualquer fase da vida.
+                                Na ThinkSpace, criamos planos de estudo estratégicos, pensados para economizar tempo, reduzir o estresse e ajudar cada pessoa a alcançar seus objetivos com mais foco e confiança.
+                                Acreditamos que aprender não precisa ser complicado — e com o plano certo, tudo flui melhor.
+                            </p>
+                            <div className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] transition-all ease-in-out duration-300 cursor-pointer  ">
+                                <span className="line-clamp-2 break-words">Comece a estudar</span>
+                                <button className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </button>
+                            </div>
+                        </div>
+
+                        <div id="animate" className=" w-[50%] flex flex-col ">
+                            <div className="h-[570px] flex justify-end relative ">
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
+                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
+                            </div>
                         </div>
                     </div>
 
