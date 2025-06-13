@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { format, parse, isValid, startOfMonth, endOfMonth, startOfWeek, addDays, addMonths, subMonths, isSameMonth, isSameDay } from 'date-fns';
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function DatePicker() {
+type DatePickerProps = {
+  onChange: (date: string) => void; // formato "YYYY-MM-DD"
+};
+
+export default function DatePicker({ onChange }: DatePickerProps ) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [showPicker, setShowPicker] = useState(false);
@@ -19,6 +23,7 @@ export default function DatePicker() {
     if (isValid(parsed) && parsed.getFullYear() >= 1900) {
       setSelectedDate(parsed);
       setCalendarMonth(parsed);
+      onChange(parsed.toISOString().split('T')[0]);
     } else {
       setSelectedDate(null);
     }
@@ -30,6 +35,7 @@ export default function DatePicker() {
     setInputValue(format(date, 'dd/MM/yyyy'));
     setCalendarMonth(date);
     setShowPicker(false);
+    onChange(date.toISOString().split("T")[0]); 
   };
 
   const generateCalendar = () => {
@@ -53,6 +59,7 @@ export default function DatePicker() {
           type="text"
           placeholder="Data de nascimento" // <-- updated format
           value={inputValue}
+          required
           onChange={handleInputChange}
           onClick={() => {
             const prevMonth = subMonths(calendarMonth, 1);

@@ -3,9 +3,11 @@
 import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X } from 'lucide-react';
+import { useRouter } from 'next/navigation'; 
 // import { useState } from 'react';
 
 export default function LoginPage() {
+    const router = useRouter();
     const [ step, setStep ] = useState(1);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +39,10 @@ export default function LoginPage() {
             <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF] ">
                 <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
                 <AnimatePresence >
-                    <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white overflow-y-hidden rounded-[35px] relative">
+                    <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white overflow-y-auto rounded-[35px] relative">
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="w-[70%] mb-16 flex justify-center h-full">
 
-                        <div className="w-[55%] flex flex-col mt-10 items-center gap-4 max-h-[90%] overflow-hidden">
+                        <div className="w-[55%] flex flex-col mt-10 items-center gap-4 max-h-[90%] ">
                             <div className="flex flex-col items-center gap-10 w-full max-w-[100%] h-full ">
                                 <div className="flex flex-col justify-center items-center ">
                                     <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Esqueceu a senha?</h1>
@@ -61,12 +63,24 @@ export default function LoginPage() {
                                             <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                                         </div>
                                         
-                                        <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        type='submit'
-                                        className='bg-[#9767F8] mx-auto w-full max-w-[450px] py-2 rounded-full text-white text-[25px]'>Enviar código</motion.button>
+                                        <div className="flex justify-center items-center gap-10 ">
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                                type='button'
+                                                onClick={() => router.back()}
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                            </div>
+
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button
+                                                whileTap={{ scale: 0.99 }}
+                                                whileHover={{ scale: 1.01 }}
+                                                transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                type='submit'
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Enviar código</motion.button>
+                                            </div>
+                                        </div>
+
                                         <div className="flex justify-center items-center mt-[-15px] ">
                                             <div className="h-[1px] w-full bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
                                             <span className="px-4 flex justify-center items-center text-[18px]">Ou</span>
@@ -107,11 +121,23 @@ export default function LoginPage() {
                                             </div>
                                         </div>
                                         
-                                        <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        type='submit'
-                                        className='bg-[#9767F8] mx-auto w-full max-w-[450px] py-2 rounded-full text-white text-[25px]'>Confirmar senha</motion.button>
+                                        <div className="flex justify-center items-center gap-10 ">
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                                type='button'
+                                                onClick={() => setStep(step - 1)}
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                            </div>
+
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button
+                                                whileTap={{ scale: 0.99 }}
+                                                whileHover={{ scale: 1.01 }}
+                                                transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                type='submit'
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md  '>Confirmar senha</motion.button>
+                                            </div>
+                                        </div>
                                     </motion.form>
                                 )}
                                 
@@ -134,11 +160,23 @@ export default function LoginPage() {
                                             </div>
                                         </div>
                                         
-                                        <motion.button
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        type='submit'
-                                        className='bg-[#9767F8] mx-auto mt-auto w-full py-2 rounded-full text-white text-[25px]'>Confirmar senha</motion.button>
+                                        <div className="flex justify-center items-center gap-10 ">
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                                type='button'
+                                                onClick={() => setStep(step - 1)}
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                            </div>
+
+                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                                <motion.button
+                                                whileTap={{ scale: 0.99 }}
+                                                whileHover={{ scale: 1.01 }}
+                                                transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                type='submit'
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md  '>Confirmar senha</motion.button>
+                                            </div>
+                                        </div>
                                     </motion.form>
                                 )}
 

@@ -27,8 +27,6 @@ export default function MaterialClient() {
     const revisar = cardstate.filter(v => v === 3).length;
     const [questaoIndex, setQuestaoIndex] = useState(0);
     const [ falta, setFalta ] = useState(true);
-    // Log cardstate changes for debugging
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         let count: number = 0;
         cardstate.forEach((state) => {

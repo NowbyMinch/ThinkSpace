@@ -9,21 +9,47 @@ import { ChevronRight } from 'lucide-react';
 import DatePicker from '@/components/ui/datepicker';
 import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
-  
-  const [ subStep, setSubStep] = useState(1);
-  
-  
+  const [ subStep, setSubStep] = useState(2);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("");
   const [ finalizar, setFinalizar] = useState(false);
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const categorias = (categoria: string) => {
-    setSubStep(4);
+    setSubStep(3);
     setCategoria(categoria);
   }
+
+  const [form, setForm] = useState({ primeiroNome: "", sobrenome: "", email: "", senha: "", confirmarSenha: "", dataNascimento: ""});
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(console.log(form.dataNascimento))
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/registrar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    if (data.message === "Usuário registrado com sucesso. Por favor, verifique seu e-mail."){
+      setSubStep(2)
+    }
+    console.log(data); 
+  };
+  const handleSubmitVerificar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verificar-codigo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    final();
+    console.log(data); 
+  };
 
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -43,27 +69,23 @@ export default function LoginPage() {
     }
 
   };
-
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
 
   };
-
   function fade(p: React.Dispatch<React.SetStateAction<boolean>>){
     setTimeout(() => {
       p(true);
     }, 200);
   }
-
   function final(){
     setFinalizar(true);
     setTimeout(() => {
       setSubStep(5);
     }, 700);
   }
-
   return (
     <>
         <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF]">
@@ -120,39 +142,41 @@ export default function LoginPage() {
                             if (subStep === 1) {
                               return (
                                 <div className="w-[70%] mb-16">
-                                  <form onSubmit={(e) => { e.preventDefault(); setSubStep(subStep + 1)}} className='flex flex-col justify-center gap-20 h-[350px]'>
+                                  <form onSubmit={handleSubmit} 
+                                    method='POST'
+                                    className='flex flex-col justify-center gap-20 h-[350px]'>
                                     <div className="flex justify-center items-center gap-20 h-full mt-24">
                                       <div className="w-[50%] flex flex-col gap-4">
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
-                                          <input type="text" required placeholder='Digite seu nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Sobrenome</label>
-                                          <input type="text" required placeholder='Digite seu Sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Email</label>
-                                          <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
 
                                       <div className="w-[50%] flex flex-col gap-4">
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
-                                          <DatePicker />
+                                          <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Senha</label>
-                                          <input type="password" required placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Repita a senha</label>
-                                          <input type="password" required placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
                                     </div>
@@ -179,48 +203,6 @@ export default function LoginPage() {
                               );
                             }
                             else if (subStep === 2) {
-                              return (
-                                <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
-                                  <form onSubmit={(e) => { e.preventDefault(); setSubStep(subStep + 1)}} className='flex flex-col justify-center items-center gap-20 '>
-                                    <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
-                                      <div className="flex flex-col items-center gap-4 w-full h-full">
-                                        <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
-                                        <div className="flex gap-3  w-full h-full">
-                                          {[...Array(5)].map((_, i) => (
-                                            <input
-                                              key={i}
-                                              ref={(el) => { inputRefs.current[i] = el!; }}
-                                              type="text"
-                                              inputMode="numeric"
-                                              required
-                                              maxLength={1}
-                                              onChange={(e) => handleChange(i, e)}
-                                              onKeyDown={(e) => handleKeyDown(i, e)}
-                                              className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
-                                            />
-                                          ))}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
-                                        <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                          <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} onClick={() => setSubStep(subStep - 1)} className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
-                                        </div>
-
-                                        <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                          <motion.button
-                                            whileTap={{ scale: 0.99 }}
-                                            whileHover={{ scale: 1.01 }}
-                                            transition={{ duration: 0.2, ease: "easeInOut" }}
-                                            type='submit'
-                                            className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
-                                        </div>
-                                    </motion.div>
-                                  </form>
-                                </div>
-                              )
-                            }
-                            else if (subStep === 3) {
                               return (
                                 <div className="w-[70%] flex justify-center items-center flex-col gap-20 mb-16">
                                   <div className="w-[90%] flex flex-col gap-4 text-center h-[350px] max-h-[90%] ">
@@ -296,10 +278,10 @@ export default function LoginPage() {
                                 </div>
                               )
                             }
-                            else if (categoria === "usuario" && subStep === 4) {
+                            else if (categoria === "usuario" && subStep === 3) {
                               return (
                                 <div className="w-[70%] mb-16 ">
-                                  <form onSubmit={(e) => {e.preventDefault(); final()}} className='flex flex-col justify-center items-center gap-20'>
+                                  <form onSubmit={(e) => {e.preventDefault(); setSubStep(4)}} className='flex flex-col justify-center items-center gap-20'>
                                     <div className="w-full h-[350px] flex gap-20 justify-center items-center max-h-[90%]">
                                       <div className="w-[50%] flex flex-col gap-6 ">
 
@@ -317,7 +299,7 @@ export default function LoginPage() {
                                       <div className="w-[50%] flex flex-col gap-6 ">
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
-                                          <DatePicker />
+                                          <DatePicker onChange={(val) => setForm({ ...form, dataNascimento: val })}/>
                                         </div>
 
                                         <div className="flex flex-col gap-1">
@@ -348,10 +330,10 @@ export default function LoginPage() {
                               );
                             }
 
-                            else if (categoria === "restrito" && subStep === 4) {
+                            else if (categoria === "restrito" && subStep === 3) {
                               return (
                                 <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
-                                  <form onSubmit={(e) => { e.preventDefault(); final()}} className='flex flex-col justify-center items-center gap-[25px] '>
+                                  <form onSubmit={(e) => { e.preventDefault(); setSubStep(4)}} className='flex flex-col justify-center items-center gap-[25px] '>
                                     <div className="w-[55%] flex flex-col  h-[350px] max-h-[90%] ">
                                       <div className="flex flex-col items-center gap-4 w-full h-full">
                                         <h2 className="text-gray-700 text-[25px]">Digite o seu código de administrador geral da plataforma:</h2>
@@ -372,7 +354,7 @@ export default function LoginPage() {
                                             ))}
 
                                           </div>
-                                          <a href='' className='underline text-[#3881AF] w-fit text-[18px]'>Não tem o seu código? Fale conosco</a>
+                                          <a className='underline text-[#3881AF] w-fit text-[18px]'>Não tem o seu código? Fale conosco</a>
                                         </div>
                                       </div>
                                       
@@ -404,9 +386,51 @@ export default function LoginPage() {
                                 
                               );
                             }
+                            else if (subStep === 4) {
+                              return (
+                                <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
+                                  <form onSubmit={handleSubmitVerificar} method="POST" className='flex flex-col justify-center items-center gap-20 '>
+                                    <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
+                                      <div className="flex flex-col items-center gap-4 w-full h-full">
+                                        <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
+                                        <div className="flex gap-3  w-full h-full">
+                                          {[...Array(5)].map((_, i) => (
+                                            <input
+                                              key={i}
+                                              ref={(el) => { inputRefs.current[i] = el!; }}
+                                              type="text"
+                                              inputMode="numeric"
+                                              required
+                                              maxLength={1}
+                                              onChange={(e) => handleChange(i, e)}
+                                              onKeyDown={(e) => handleKeyDown(i, e)}
+                                              className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
+                                            />
+                                          ))}
+                                        </div>
+                                        <a className=' text-[#3881AF] w-fit text-[18px] -mt-36'>Reenviar Código</a>
+                                      </div>
+                                    </div>
+                                    <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
+                                        <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
+                                          <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} onClick={() => setSubStep(subStep - 1)} className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                        </div>
+
+                                        <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
+                                          <motion.button
+                                            whileTap={{ scale: 0.99 }}
+                                            whileHover={{ scale: 1.01 }}
+                                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                                            type='submit'
+                                            className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
+                                        </div>
+                                    </motion.div>
+                                  </form>
+                                </div>
+                              )
+                            }
                           })()}
-
-
+                          
                         </>
                       );
                     }
