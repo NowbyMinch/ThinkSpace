@@ -7,20 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
 import { Backdrop3 } from "@/app/home/components/backdrop";
+
 export default function LayoutClient({ id, idMaterial, }: { id: string; idMaterial: string;}) { 
     const pathname = usePathname();
     const [ concluiu, setConcluiu ] = useState(false);
 
     const concluir = () => {
         setConcluiu(true);
-
-        // setTimeout(() => {
-        //    setConcluiu(false); 
-        // }, 2000);
-        
-        // setTimeout(() => {
-        //     redirect(`/home/materiais/${id}`)
-        // }, 2500);
     }
     
     return (

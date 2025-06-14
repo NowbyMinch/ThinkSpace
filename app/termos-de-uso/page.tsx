@@ -74,70 +74,90 @@ export default function TermosDeUso() {
 
                     <div className="w-[1000px] max-w-[80%] h-full mb-5">
                         <h1 className="text-[35px]">Termos de Uso e Serviço da ThinkSpace</h1>
+
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">Seja Bem-Vindo ao site da ThinkSpace. Antes de explorar tudo o que temos a oferecer, é importante que você entenda e concorde com algumas regras básicas que regem o uso do nosso site thinkspace.app.br, e qualquer outro serviço digital que nós oferecemos, como lojas e plataformas de e-commerce.</p>
+                            <p className="text-[20px]">
+                            Seja bem-vindo ao site da ThinkSpace. Antes de explorar tudo o que temos a oferecer, é importante que você entenda e concorde com algumas regras básicas que regem o uso do nosso site, thinkspace.app.br, e de qualquer outro serviço digital que oferecemos, como lojas e plataformas de e-commerce.
+                            </p>
 
                             <p className="text-[20px]">
-                            Ao usar nosso site e serviços, você automaticamente concorda em seguir as regras que estabelecemos aqui. Caso não concorde com algo, por favor, considere não usar nossos serviços. É muito importante para nós que você se sinta seguro e informado a todo momento.
+                            Ao utilizar nosso site e serviços, você automaticamente concorda em seguir as regras aqui estabelecidas. Caso não concorde com algum ponto, por favor, considere não utilizar nossos serviços. É muito importante para nós que você se sinta seguro e bem informado a todo momento.
                             </p>
                         </div>
 
-                        <h1 className="text-[32px]">1. Aceitando os Termos</h1>
+                        <h1 className="text-[32px]">1. Aceitação dos Termos</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">Ao navegar e usar o site da ThinkSpace, você concorda automaticamente com nossas regras e condições. Estamos sempre procurando melhorar, então esses termos podem mudar de vez em quando. Se fizermos alterações significativas, vamos postar as atualizações aqui no site. Continuar usando o site após essas mudanças significa que você aceita os novos termos.</p>
+                            <p className="text-[20px]">
+                            Ao navegar e utilizar o site da ThinkSpace, você concorda automaticamente com nossos termos e condições. Estamos sempre buscando melhorias, portanto, esses termos podem ser alterados periodicamente. Se realizarmos mudanças significativas, publicaremos as atualizações aqui no site. Ao continuar utilizando o site após tais alterações, você estará aceitando os novos termos.
+                            </p>
                         </div>
 
                         <h1 className="text-[32px]">2. Como Usar o Nosso Site</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">A maior parte do nosso site está aberta para você sem a necessidade de cadastro. No entanto, algumas seções especiais podem exigir que você crie uma conta. Pedimos que você seja honesto ao fornecer suas informações e que mantenha sua senha e login seguros. Se decidir compartilhar algum conteúdo conosco, como comentários, por favor, faça-o de maneira respeitosa e dentro da lei.</p>
+                            <p className="text-[20px]">
+                            A maior parte do nosso site está disponível sem necessidade de cadastro. No entanto, algumas seções específicas podem exigir que você crie uma conta. Pedimos que forneça informações verdadeiras e mantenha seu login e senha seguros. Se decidir compartilhar conteúdo conosco, como comentários, faça-o de forma respeitosa e dentro da legalidade.
+                            </p>
                         </div>
 
                         <h1 className="text-[32px]">3. Sua Privacidade</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">Na ThinkSpace, a privacidade é um valor essencial. Ao interagir com nosso site, você aceita nossa Política de Privacidade, que detalha nossa abordagem responsável e conforme às leis para o manejo dos seus dados pessoais. Nosso compromisso é com a transparência e a segurança: explicamos como coletamos, usamos e protegemos suas informações, garantindo sua privacidade e oferecendo controle sobre seus dados.
-                            </p>
-                            
                             <p className="text-[20px]">
-                                Adotamos práticas de segurança para proteger suas informações contra acesso não autorizado e compartilhamento indevido, assegurando que qualquer cooperação com terceiros ocorra apenas com base na sua aprovação ou exigências legais claras, reafirmando nosso comprometimento com a sua confiança e segurança digital.
-                            </p>    
+                            Na ThinkSpace, a privacidade é um valor essencial. Ao interagir com nosso site, você aceita nossa Política de Privacidade, que detalha nossa abordagem responsável e em conformidade com as leis quanto ao tratamento dos seus dados pessoais. Nosso compromisso é com a transparência e a segurança: explicamos como coletamos, utilizamos e protegemos suas informações, garantindo sua privacidade e oferecendo controle sobre seus dados.
+                            </p>
+
+                            <p className="text-[20px]">
+                            Adotamos práticas de segurança para proteger suas informações contra acessos não autorizados e compartilhamento indevido. Qualquer eventual cooperação com terceiros ocorrerá somente com sua autorização ou por exigência legal clara, reafirmando nosso compromisso com sua confiança e segurança digital.
+                            </p>
                         </div>
 
                         <h1 className="text-[32px]">4. Direitos de Conteúdo</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">O conteúdo disponível no site da ThinkSpace, incluindo, mas não se limitando a, textos, imagens, ilustrações, designs, ícones, fotografias, programas de computador, videoclipes e áudios, constitui propriedade intelectual protegida tanto pela legislação nacional quanto por tratados internacionais sobre direitos autorais e propriedade industrial. Essa propriedade engloba não apenas materiais diretamente produzidos e publicados por nós, mas também conteúdos que são utilizados sob licença ou permissão de terceiros, garantindo que todos os direitos sejam respeitados conforme as normativas vigentes.
+                            <p className="text-[20px]">
+                            O conteúdo disponível no site da ThinkSpace, incluindo, mas não se limitando a textos, imagens, ilustrações, designs, ícones, fotografias, softwares, videoclipes e áudios, constitui propriedade intelectual protegida pela legislação nacional e por tratados internacionais. Essa proteção abrange tanto materiais produzidos por nós quanto conteúdos utilizados sob licença ou permissão de terceiros, garantindo o respeito aos direitos autorais e de propriedade industrial.
                             </p>
 
-                            <p className="text-[20px]">Ao acessar nosso site, você recebe uma licença limitada, não exclusiva e revogável para visualizar e usar o conteúdo para fins pessoais e não comerciais. Isso implica que qualquer reprodução, distribuição, transmissão ou modificação do conteúdo, sem a devida autorização escrita da ThinkSpace, é estritamente proibida. Tal restrição visa proteger os direitos de propriedade intelectual associados aos materiais disponibilizados, assegurando que sua utilização não infrinja os direitos dos criadores ou detentores desses direitos, além de promover um ambiente de respeito e valorização da criatividade e inovação.
+                            <p className="text-[20px]">
+                            Ao acessar nosso site, você recebe uma licença limitada, não exclusiva e revogável para visualizar e utilizar o conteúdo para fins pessoais e não comerciais. Qualquer reprodução, distribuição, transmissão ou modificação sem autorização escrita da ThinkSpace é proibida. Essa medida visa proteger os direitos dos criadores e valorizar a criatividade e a inovação.
                             </p>
                         </div>
 
                         <h1 className="text-[32px]">5. Cookies e Mais</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">Utilizamos cookies para melhorar sua experiência, coletando informações anônimas durante sua visita, como suas preferências de idioma, duração da visita, páginas acessadas, e outras estatísticas de uso. Esses dados nos ajudam a personalizar seu conteúdo, otimizar a navegação, melhorar continuamente o site em design e funcionalidade, e garantir sua segurança online. Esta prática é essencial para nos permitir oferecer um serviço mais ajustado às suas necessidades e resolver qualquer problema que possa surgir mais rapidamente.
+                            <p className="text-[20px]">
+                            Utilizamos cookies para melhorar sua experiência, coletando informações anônimas durante sua visita, como preferências de idioma, duração da sessão, páginas acessadas e outras estatísticas de uso. Esses dados nos ajudam a personalizar conteúdos, otimizar a navegação, aprimorar o design e garantir segurança online.
                             </p>
 
-                            <p className="text-[20px]">Se você preferir limitar ou recusar o uso de cookies, a configuração pode ser ajustada através do seu navegador. Isso pode afetar a sua experiência no site, pois algumas funcionalidades dependem dos cookies para funcionar corretamente. Entendemos a importância do controle sobre suas informações e queremos que você saiba que, ao ajustar as configurações para bloquear cookies, algumas partes do nosso site podem não oferecer a experiência completa pretendida.
+                            <p className="text-[20px]">
+                            Se preferir limitar ou desativar os cookies, você pode ajustar as configurações do seu navegador. No entanto, isso pode impactar sua experiência, já que algumas funcionalidades dependem deles para funcionar corretamente.
                             </p>
                         </div>
 
-                        <h1 className="text-[32px]">6. Explorando Links Externos</h1>
+                        <h1 className="text-[32px]">6. Links Externos</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">Nosso site pode incluir links para sites externos que achamos que podem ser do seu interesse. Note que não temos controle sobre esses sites externos e, portanto, não somos responsáveis pelo seu conteúdo ou políticas.
+                            <p className="text-[20px]">
+                            Nosso site pode conter links para páginas externas que acreditamos ser do seu interesse. Ressaltamos que não temos controle sobre esses sites e não nos responsabilizamos por seus conteúdos ou políticas.
                             </p>
                         </div>
 
-                        <h1 className="text-[32px]">7. Mudanças e Atualizações</h1>
+                        <h1 className="text-[32px]">7. Alterações e Atualizações</h1>
                         <div className="flex flex-col gap-2 mt-4 mb-10">
-                            <p className="text-[20px]">A evolução é parte de como operamos, o que significa que estes Termos de Uso podem passar por atualizações para refletir melhor as mudanças em nossos serviços ou na legislação. Sempre que isso acontecer, você encontrará a versão mais recente disponível aqui. Se as mudanças forem significativas, faremos o possível para notificá-lo através dos meios de contato que você nos forneceu.
+                            <p className="text-[20px]">
+                            A evolução constante faz parte da nossa atuação. Por isso, estes Termos de Uso podem ser atualizados para refletir mudanças em nossos serviços ou na legislação. Sempre que isso ocorrer, a versão mais recente estará disponível aqui. Caso as mudanças sejam significativas, faremos o possível para notificá-lo pelos meios de contato fornecidos.
                             </p>
-                            <p className="text-[20px]">Continuar a acessar o site após essas mudanças indica que você concorda com os novos termos. Se, por qualquer motivo, você não concordar com as atualizações, pedimos que não continue utilizando nosso site e serviços.
+
+                            <p className="text-[20px]">
+                            Ao continuar acessando o site após tais alterações, você concorda com os novos termos. Se não concordar, recomendamos que interrompa o uso dos nossos serviços.
                             </p>
                         </div>
 
-                        <p className="text-[20px]">Dúvidas ou Comentários?</p>
-                        <p className="text-[20px]">Se tiver dúvidas sobre estes termos, não hesite em nos contatar através do e-mail suportethinkspace@gmail.com</p>
+                        <p className="text-[20px] font-semibold mt-10">Dúvidas ou Comentários?</p>
+                        <p className="text-[20px]">Caso tenha dúvidas sobre estes termos, entre em contato pelo e-mail <strong>suportethinkspace@gmail.com</strong>.</p>
 
-                    </div>
+                        <p className="text-[16px] text-neutral-500 mt-10">
+                            Os ícones utilizados neste site são fornecidos pelo <strong>Lucide Icons</strong>. As imagens e vetores são licenciados e obtidos por meio da plataforma <strong>Freepik</strong>.
+                        </p>
+                        </div>
+
                 </div>
                 <footer className="w-full h-[300px] flex justify-center items-center py-8 mt-auto">
                     <div className="w-[34%] h-[140px] flex justify-center  items-center">

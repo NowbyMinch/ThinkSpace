@@ -7,34 +7,51 @@ import Link from "next/link";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
   Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
-  ChevronsRight, ChevronLeft, AlarmClock, Archive, Bell, Book,
-  Bookmark, Calendar, Camera, Check, Clipboard, Clock,
+  ChevronsRight, ChevronLeft, AlarmClock, Bell, Book,
+  Bookmark, Calendar, Check, Clipboard, Clock,
   Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
-  Folder, Gift, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
+  Folder, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
   Home, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb, List,
-  Loader, Lock, LogIn, LogOut, Mail, Map, Menu, Ellipsis, SquareX, 
-  SquarePen
+  Loader, Lock, LogIn, LogOut, Mail, Map, Menu, SquareX, 
+  SquarePen,
+  Ellipsis
 } from "lucide-react";
+
 const icons = [
-    { id: "circlePlus", Icon: CirclePlus }, { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse },
-    { id: "minus", Icon: Minus }, { id: "divide", Icon: Divide }, { id: "x", Icon: X }, { id: "plus", Icon: Plus },
-    { id: "check", Icon: Check }, { id: "search", Icon: Search }, { id: "download", Icon: Download }, { id: "edit", Icon: Edit },
-    { id: "filter", Icon: Filter }, { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "gift", Icon: Gift },
-    { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
-    { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
-    { id: "menu", Icon: Menu }, { id: "list", Icon: List }, { id: "grid", Icon: Grid },
-    { id: "monitor", Icon: Monitor }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
-    { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "loader", Icon: Loader },
-    { id: "eye", Icon: Eye }, { id: "clipboard", Icon: Clipboard }, { id: "flag", Icon: Flag }, { id: "file", Icon: File },
-    { id: "folder", Icon: Folder }, { id: "archive", Icon: Archive }, { id: "calendar", Icon: Calendar },
-    { id: "camera", Icon: Camera }, { id: "headphones", Icon: Headphones },
-    { id: "bell", Icon: Bell }, { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "helpCircle", Icon: HelpCircle },
-    { id: "key", Icon: Key }, { id: "lock", Icon: Lock }, { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut },
-    { id: "map", Icon: Map }, { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "hash", Icon: Hash },
-    { id: "clock", Icon: Clock }, { id: "alarmClock", Icon: AlarmClock },
-    { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
-    { id: "info", Icon: Info }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "lightbulb", Icon: Lightbulb },
-    { id: "gitBranch", Icon: GitBranch }, { id: "home", Icon: Home }
+  // Educação e aprendizado
+  { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
+  { id: "clipboard", Icon: Clipboard }, { id: "file", Icon: File }, { id: "folder", Icon: Folder },
+  { id: "calendar", Icon: Calendar }, { id: "clock", Icon: Clock }, { id: "alarmClock", Icon: AlarmClock },
+  { id: "edit", Icon: Edit }, { id: "download", Icon: Download }, { id: "eye", Icon: Eye },
+  { id: "check", Icon: Check }, { id: "search", Icon: Search }, { id: "filter", Icon: Filter },
+  { id: "helpCircle", Icon: HelpCircle }, { id: "info", Icon: Info }, { id: "lightbulb", Icon: Lightbulb },
+
+  // Programação e lógica
+  { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
+  { id: "gitBranch", Icon: GitBranch }, { id: "hash", Icon: Hash }, { id: "Monitor", Icon: Monitor },
+
+  // Matemática
+  { id: "plus", Icon: Plus }, { id: "minus", Icon: Minus }, { id: "x", Icon: X }, { id: "divide", Icon: Divide },
+
+  // Interface e organização de conhecimento
+  { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "grid", Icon: Grid }, { id: "list", Icon: List },
+  { id: "menu", Icon: Menu }, { id: "loader", Icon: Loader },
+
+  // Comunicação e interações
+  { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "bell", Icon: Bell }, { id: "headphones", Icon: Headphones },
+
+  // Identidade e acesso (login/logout para ambientes de estudo)
+  { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut }, { id: "lock", Icon: Lock }, { id: "key", Icon: Key },
+
+  // Contexto global e navegação de conteúdo
+  { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "map", Icon: Map }, { id: "home", Icon: Home },
+  { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
+  { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
+
+  // Extras úteis
+  { id: "flag", Icon: Flag }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "circlePlus", Icon: CirclePlus },
+  { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse }, { id: "squareX", Icon: SquareX },
+  { id: "squarePen", Icon: SquarePen }
 ];
 import {  useState, useEffect, useRef } from 'react';
 import { Backdrop3 } from "../components/backdrop";
@@ -162,7 +179,7 @@ export default function Materiais() {
                                 <div className="">
                                     <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
                                     <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                        <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(5,40px)] items-center pb-1">
+                                        <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
                                             {icons.map(({id, Icon}) => (
                                                 <motion.button 
                                                 whileTap={{ scale: 0.95 }} 

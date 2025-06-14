@@ -307,11 +307,11 @@ export default function Home() {
                         </div>
                     </div>
                     
-                    <div className="w-full pb-20 flex justify-center overflow-hidden relative ">
-                        <div className="w-[1500px] flex justify-center items-center overflow-hidden">
+                    <div className="w-full pb-20 flex justify-center relative ">
+                        <div className="w-[1500px] flex justify-center items-center ">
                             <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px] max-w-[80%] flex flex-row justify-center">
                                 <div className="w-full flex flex-col gap-12 relative ">
-                                    <h1 id="title" className="w-full">Nossos planos</h1>
+                                    <h1 id="title" className="preco w-full">Nossos planos</h1>
                                     <div className="h-[575px] flex justify-center items-center gap-10 relative ">
                                         <motion.div
                                         whileHover={{ scale: 1.01 }}
@@ -352,9 +352,37 @@ export default function Home() {
                                             </div>
                                             <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
                                                 <span className="leading-none text-[40px]">R$</span>
-                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
+                                                <span className="text-[105px] font-medium leading-[85px]">12</span>
                                                 <span className="leading-none ">,</span>
-                                                <span className="mb-auto text-[35px] font-medium">00</span>
+                                                <span className="mb-auto text-[35px] font-medium">90</span>
+                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
+                                            </div>
+
+                                            <div className=" w-[90%] flex items-end ">
+                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
+                                                    <li>Acesso ilimitado a salas de estudo</li>
+                                                    <li>30 Materiais de estudo por mês</li>
+                                                    <li>Inteligência Artificial limitada</li>
+                                                    <li>Ambiente 100% livre de anúncios</li>
+                                                </ul>
+                                            </div>
+
+                                        </motion.div>
+
+                                        <motion.div
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
+                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                        id="title"
+                                        className="w-[420px] rounded-[45px] h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#876de7] flex flex-col items-center gap-10">
+                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
+                                                <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                            </div>
+                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
+                                                <span className="leading-none text-[40px]">R$</span>
+                                                <span className="text-[105px] font-medium leading-[85px]">19</span>
+                                                <span className="leading-none ">,</span>
+                                                <span className="mb-auto text-[35px] font-medium">90</span>
                                                 <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
                                             </div>
 
@@ -366,36 +394,6 @@ export default function Home() {
                                                     <li>Ambiente 100% livre de anúncios</li>
                                                 </ul>
                                             </div>
-
-
-                                        </motion.div>
-
-                                        <motion.div
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        id="title"
-                                        className="w-[420px] rounded-[45px] h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#876de7] flex flex-col items-center gap-10">
-                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%] ">
-                                                <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
-                                            </div>
-                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
-                                                <span className="leading-none text-[40px]">R$</span>
-                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
-                                                <span className="leading-none ">,</span>
-                                                <span className="mb-auto text-[35px] font-medium">00</span>
-                                                <span className="leading-none text-['40px] -ml-3 ">/mensal</span>
-                                            </div>
-
-                                            <div className=" w-[90%] flex items-end ">
-                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
-                                                    <li>Acesso ilimitado a salas de estudo</li>
-                                                    <li>Materiais de estudo sempre disponíveis</li>
-                                                    <li>Inteligência Artificial sem limites</li>
-                                                    <li>Ambiente 100% livre de anúncios</li>
-                                                </ul>
-                                            </div>
-
 
                                         </motion.div>
 
