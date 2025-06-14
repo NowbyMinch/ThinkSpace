@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const router = useRouter();
+  // const router = useRouter();
   const [ form, setForm ] = useState({ email: "", senha: "" })
 
   const handleSubmit = async (e: React.FormEvent) => {
