@@ -21,10 +21,10 @@ export default function LoginPage() {
 
     const data = await res.json();
     console.log(form)
-    if (data.message === "Login realizado com sucesso")
-    {
-      router.push("/home")
-    }
+    // if (data.message === "Login realizado com sucesso")
+    // {
+    //   router.push("/home")
+    // }
     console.log(data); 
     
   };
