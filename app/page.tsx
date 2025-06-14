@@ -44,10 +44,8 @@ export default function Home() {
             if (currentY > lastScrollY && currentY > 100) {
                 // Scrolling down
                 setShowHeader(false);
-                console.log("false")
             } else {
                 // Scrolling up
-                console.log("true")
                 setShowHeader(true);
             }
 
