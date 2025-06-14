@@ -18,16 +18,22 @@ export default function RegisterPage() {
   const [ categoria, setCategoria] = useState("");
   const [ finalizar, setFinalizar] = useState(false);
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const categorias = (categoria: string) => {
-    setSubStep(3);
-    setCategoria(categoria);
-  }
   const [selectedEscolaridade, setSelectedEscolaridade] = useState("");
   const [selectedObjetivo, setSelectedObjetivo] = useState("");
-
+  const [ code, setCode ] = useState<number[]>([]);
+  
   const [form, setForm] = useState({ primeiroNome: "", sobrenome: "", email: "", senha: "", confirmarSenha: "", dataNascimento: ""});
-  const [form2, setForm2] = useState({ email: 'placeholder', escolaridade: selectedEscolaridade, objetivoNaPlataforma: selectedObjetivo, areaDeInteresse: "", instituicaoNome: ""});
-  const [form3, setForm3] = useState({ primeiroNome: "", sobrenome: "", email: "", senha: "", confirmarSenha: "", dataNascimento: ""});
+  const [formFunc, setFormFunc] = useState({ email: form.email, funcao: ""})
+  const [form2, setForm2] = useState({ email: form.email, escolaridade: selectedEscolaridade, objetivoNaPlataforma: selectedObjetivo, areaDeInteresse: "", instituicaoNome: ""});
+  const [form3, setForm3] = useState({ email: form.email, code: ""});
+  
+  function final(){
+    setFinalizar(true);
+    setTimeout(() => {
+      setSubStep(5);
+    }, 700);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/registrar`, {
@@ -39,6 +45,7 @@ export default function RegisterPage() {
     const data = await res.json();
     if (data.message === "Dados iniciais recebidos. Escolha a função (administrador ou usuário comum)."){
       setSubStep(2)
+      setForm2({ ...form2, email: form.email })
     }
     console.log(data); 
   };
@@ -52,17 +59,78 @@ export default function RegisterPage() {
     });
 
     const data = await res.json();
-    if (data.message === "Dados iniciais recebidos. Escolha a função (administrador ou usuário comum)."){
+    if (data.message === "Código de verificação enviado para o e-mail."){
       setSubStep(4)
     }
-    console.log(selectedEscolaridade, selectedObjetivo); 
-    console.log(form2); 
     console.log(data); 
   };
   
+  const categorias = (categoria: string) => {
+    setCategoria(categoria);
+    setFormFunc({...formFunc, email: form.email });
+    if (categoria === "usuario"){
+      setFormFunc({...formFunc, funcao: "ESTUDANTE" });
+    }
+    else{
+      setFormFunc({...formFunc, funcao: "ADMIN" });
+    }
+  }
+
+  const handleFuncao = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormFunc({...formFunc, email: form.email})
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/escolher-funcao`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formFunc),
+    });
+
+    const data = await res.json();
+    console.log(formFunc)
+    if (data.message === "Função definida. Complete o cadastro."){
+      setSubStep(4)
+    }
+    console.log(data); 
+
+  };
+
+  const handleSubmit3 = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const codeString = code.join("");
+    setForm3({...form3, code: codeString})
+    setForm3({...form3, email: form.email})
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verificar-codigo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form3),
+    });
+
+    const data = await res.json();
+    console.log(form3)
+    if (data.message === "E-mail verificado e cadastro concluído."){
+      final()
+    }
+    console.log(data); 
+  };
+  
+  const reenviar = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form.email),
+    });
+
+    const data = await res.json();
+    console.log(data); 
+  };
+
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    
+
     if (!Number.isInteger(value)) {
       e.preventDefault();
     };
@@ -77,6 +145,10 @@ export default function RegisterPage() {
       inputRefs.current[index + 1]?.focus();
     }
 
+    // Update code state here
+    const values = inputRefs.current.map(input => input?.value ? Number(input.value) : 0);
+    setCode(values);
+    console.log(values)
   };
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
@@ -89,12 +161,7 @@ export default function RegisterPage() {
       p(true);
     }, 200);
   }
-  function final(){
-    setFinalizar(true);
-    setTimeout(() => {
-      setSubStep(5);
-    }, 700);
-  }
+
   return (
     <>
         <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF]">
@@ -107,14 +174,14 @@ export default function RegisterPage() {
                         <>
                           <div className="flex items-center flex-col w-[45%]  max-w-[80%] ">
                             {(() => {
-                              if (subStep === 2) {
+                              if (subStep === 4) {
                                 return (
                                   <>
                                     <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>
                                   </>
                                 )
                               }
-                              else if ( subStep === 4 && categoria === "restrito") {
+                              else if ( subStep === 3 && categoria === "restrito") {
                                 return (
                                   <>
                                     <div className='text-[60px] font-bold text-[#EB7262] text-center'>Área do Administrador Geral </div>
@@ -218,7 +285,7 @@ export default function RegisterPage() {
                                     <h2 className="text-gray-700 text-[25px]">Escolha sua categoria:</h2>
                                     <div className="flex gap-5 w-full h-full  flex-col justify-center items-center ">
                                       <AnimatePresence >
-                                        <div className=" flex w-full h-full gap-9">
+                                        <form onSubmit={handleFuncao} method="POST" className=" flex w-full h-full gap-9">
                                           <motion.button
                                             initial={{ y: 10 }}
                                             animate={{ y: 0 }}
@@ -226,6 +293,7 @@ export default function RegisterPage() {
                                             whileTap={{ scale: 1.03 }}
                                             whileHover="hovered"
                                             key="usuario"
+                                            type='submit'
                                             onClick={() => categorias("usuario")}
                                             className="h-full w-full flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
                                             <motion.div
@@ -254,6 +322,7 @@ export default function RegisterPage() {
                                             whileHover="hovered"
                                             transition={{ duration: 0.3, ease: "easeInOut" }}
                                             key="restrito"
+                                            type='submit'
                                             onClick={() => categorias("restrito")}
                                             className="h-full w-full flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
                                             <motion.div
@@ -274,7 +343,7 @@ export default function RegisterPage() {
                                               </div>
                                             </motion.div>
                                           </motion.button>
-                                        </div>
+                                        </form>
                                       </AnimatePresence>
                                     </div>
                                   </div>
@@ -361,7 +430,7 @@ export default function RegisterPage() {
                             else if (categoria === "restrito" && subStep === 3) {
                               return (
                                 <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
-                                  <form onSubmit={(e) => { e.preventDefault(); setSubStep(4)}} className='flex flex-col justify-center items-center gap-[25px] '>
+                                  <form onSubmit={(e) => { e.preventDefault()}} className='flex flex-col justify-center items-center gap-[25px] '>
                                     <div className="w-[55%] flex flex-col  h-[350px] max-h-[90%] ">
                                       <div className="flex flex-col items-center gap-4 w-full h-full">
                                         <h2 className="text-gray-700 text-[25px]">Digite o seu código de administrador geral da plataforma:</h2>
@@ -416,7 +485,7 @@ export default function RegisterPage() {
                             else if (subStep === 4) {
                               return (
                                 <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
-                                  <form  method="POST" className='flex flex-col justify-center items-center gap-20 '>
+                                  <form onSubmit={handleSubmit3} method="POST" className='flex flex-col justify-center items-center gap-20 '>
                                     <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
                                       <div className="flex flex-col items-center gap-4 w-full h-full">
                                         <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
@@ -429,13 +498,13 @@ export default function RegisterPage() {
                                               inputMode="numeric"
                                               required
                                               maxLength={1}
-                                              onChange={(e) => handleChange(i, e)}
+                                              onChange={(e) => {handleChange(i, e);}}
                                               onKeyDown={(e) => handleKeyDown(i, e)}
                                               className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
                                             />
                                           ))}
                                         </div>
-                                        <a className=' text-[#3881AF] w-fit text-[18px] -mt-36'>Reenviar Código</a>
+                                        <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
                                       </div>
                                     </div>
                                     <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">

@@ -20,6 +20,8 @@ export default function Home() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
 
+  
+
   function opening(){
     setPop(true);
   }

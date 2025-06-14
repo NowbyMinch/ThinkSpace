@@ -1,10 +1,32 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [ form, setForm ] = useState({ email: "", senha: "" })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    console.log(form)
+    if (data.message === "Login realizado com sucesso")
+    {
+      router.push("/home")
+    }
+    console.log(data); 
+  };
 
   return (
     <>
@@ -32,10 +54,10 @@ export default function LoginPage() {
                       <h2 className='text-[26px]'>Bem-vindo de volta! Pronto para mais um dia de aprendizado?</h2>
                     </div>
                     
-                    <form action="/home" className='flex flex-col gap-10 ' >
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-10 ' >
                       <div className="flex flex-col gap-4 items-end">
-                        <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                        <input type="password" required placeholder='Digite sua senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                        <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                        <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                         <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[18px]'>Esqueceu a senha?</a>
                       </div>
 
@@ -68,10 +90,7 @@ export default function LoginPage() {
                       </div>
 
                       <h2 className='text-[20px] w-full text-center'>Não tem uma conta? <a href="/registrar" className='text-[#3881AF]'> Registre-se</a></h2>
-
                     </div>
-
-
                   </div>
             
                 </motion.div>
