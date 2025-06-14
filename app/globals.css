@@ -175,10 +175,9 @@ body {
   background: #1E2351;
 }
 
-
 .embla{
-  width: 100%;
-  height: 320px;
+  width: 150%;
+  height: 400px;
   display: flex;
   justify-content: center;
   overflow: hidden;

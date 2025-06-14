@@ -267,30 +267,30 @@ export default function Home() {
                                         <div className="embla__viewport " ref={emblaRef}>
                                             <div className="embla__container ">
 
-                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                <div className="embla__slide flex flex-col gap-6 items-center">
                                                     <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Pré-universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                    <h1 className=" h-[60px] text-white  text-[30px] leading-8 text-center flex justify-center ">Professora de Ciências</h1>
+                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Ajuda pré-universitários a explorarem o mundo com curiosidade e foco no vestibular.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                <div className="embla__slide flex flex-col gap-6 items-center">
                                                     <Image src="/landingpage/materiais-img2.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Mentores</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de desenho</h2>
+                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Mentora de Artes</h1>
+                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Inspira estudantes a desenvolverem a criatividade através do desenho e expressão visual.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                <div className="embla__slide flex flex-col gap-6 items-center">
                                                     <Image src="/landingpage/materiais-img3.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professor de Matemática</h2>
+                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Professor de Matemática</h1>
+                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Ensina com entusiasmo, conectando o raciocínio lógico ao dia a dia universitário.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-2 ">
+                                                <div className="embla__slide flex flex-col gap-6 items-center">
                                                     <Image src="/landingpage/materiais-img4.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de leitura</h2>
+                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Estudante amante de leitura</h1>
+                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Descobre novos mundos através dos livros e compartilha conhecimento com alegria.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-2 ">
-                                                    <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[70px] text-white text-[35px] leading-8 text-center flex justify-center items-center">Estudantes universitários</h1>
-                                                    <h2 className="text-white text-center text-[20px]">Professora de Ciências</h2>
+                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                    <Image src="/landingpage/materiais-img5.svg" className=" max-h-[200px]" width={300} height={500} alt="Alt"/>
+                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Estudante autodidata em tecnologia</h1>
+                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Aprende por conta própria sobre programação e inovação, com sede de descobertas.</h2>
                                                 </div>
                                                 
 

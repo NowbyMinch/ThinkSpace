@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Search, ChevronRight, BookOpenText, FileText, FileInput } from "lucide-react";
+import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput } from "lucide-react";
 import { useState, useRef } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -66,14 +66,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </motion.button>
 
                                         <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
-                                            <BookOpenText  className=" text-white size-[130px] stroke-1"/>
+                                            <FileText  className=" text-white size-[130px] stroke-1"/>
                                             <div  className="flex flex-col items-center ">
                                                 <h1  className="text-[45px] font-medium text-white">Tópicos</h1>
                                                 <h2  className="text-[18px] font-medium">Digite um tópico que deseja revisar</h2>
                                             </div>
                                         </button>
                                         <button id="botoes-dta" className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar? "hidden": "block"}`}>
-                                            <BookOpenText  className=" text-white size-[130px] stroke-1"/>
+                                            <ScrollText  className=" text-white size-[130px] stroke-1"/>
                                             <div  className="flex flex-col items-center ">
                                                 <h1  className="text-[45px] font-medium text-white">Assuntos</h1>
                                                 <h2  className="text-[18px] font-medium">Digite assuntos gerais para revisar</h2>
