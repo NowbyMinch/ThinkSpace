@@ -15,7 +15,6 @@ export default function LoginPage() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify(form),
     });
 
@@ -26,6 +25,7 @@ export default function LoginPage() {
       router.push("/home")
     }
     console.log(data); 
+    
   };
 
   return (
@@ -54,7 +54,7 @@ export default function LoginPage() {
                       <h2 className='text-[26px]'>Bem-vindo de volta! Pronto para mais um dia de aprendizado?</h2>
                     </div>
                     
-                    <form onSubmit={handleSubmit} className='flex flex-col gap-10 ' >
+                    <form onSubmit={handleSubmit} method='POST' className='flex flex-col gap-10 ' >
                       <div className="flex flex-col gap-4 items-end">
                         <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                         <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
