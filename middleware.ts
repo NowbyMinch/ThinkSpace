@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest){
     const token = request.cookies.get('token'); 
     console.log(token)
+
     const isProtectedRoute = request.nextUrl.pathname.startsWith('/home');
 
     if (isProtectedRoute && !token) {

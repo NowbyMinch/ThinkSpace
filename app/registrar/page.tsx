@@ -43,6 +43,7 @@ export default function RegisterPage() {
     });
 
     const data = await res.json();
+    console.log(form)
     if (data.message === "Dados iniciais recebidos. Escolha a função (administrador ou usuário comum)."){
       setSubStep(2)
       setForm2({ ...form2, email: form.email })
@@ -64,33 +65,27 @@ export default function RegisterPage() {
     }
     console.log(data); 
   };
-  
-  const categorias = (categoria: string) => {
-    setCategoria(categoria);
-    setFormFunc({...formFunc, email: form.email });
-    if (categoria === "usuario"){
-      setFormFunc({...formFunc, funcao: "ESTUDANTE" });
-    }
-    else{
-      setFormFunc({...formFunc, funcao: "ADMIN" });
-    }
-  }
 
   const handleFuncao = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormFunc({...formFunc, email: form.email})
 
+    const funcao = categoria === "usuario" ? "ESTUDANTE" : "ADMIN";
+    const funcObj = { email: form.email, funcao };
+
+    setFormFunc(funcObj);
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/escolher-funcao`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formFunc),
+      body: JSON.stringify(funcObj),
     });
-
+    
     const data = await res.json();
-    console.log(formFunc)
     if (data.message === "Função definida. Complete o cadastro."){
-      setSubStep(4)
+      setSubStep(3)
     }
+    console.log(formFunc)
+    console.log(funcObj)
     console.log(data); 
 
   };
@@ -98,21 +93,23 @@ export default function RegisterPage() {
   const handleSubmit3 = async (e: React.FormEvent) => {
     e.preventDefault();
     const codeString = code.join("");
-    setForm3({...form3, code: codeString})
-    setForm3({...form3, email: form.email})
+    const newForm3 = { ...form3, code: codeString, email: form.email };
+
+    setForm3(newForm3);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verificar-codigo`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form3),
+      body: JSON.stringify(newForm3), // use the new object directly
     });
 
     const data = await res.json();
-    console.log(form3)
-    if (data.message === "E-mail verificado e cadastro concluído."){
-      final()
+    console.log(newForm3);
+    if (data.message === "E-mail verificado e cadastro concluído.") {
+      final();
     }
-    console.log(data); 
+    console.log(data);
+
   };
   
   const reenviar = async (e: React.FormEvent) => {
@@ -123,7 +120,8 @@ export default function RegisterPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.email),
     });
-
+    
+    console.log(form.email)
     const data = await res.json();
     console.log(data); 
   };
@@ -285,7 +283,8 @@ export default function RegisterPage() {
                                     <h2 className="text-gray-700 text-[25px]">Escolha sua categoria:</h2>
                                     <div className="flex gap-5 w-full h-full  flex-col justify-center items-center ">
                                       <AnimatePresence >
-                                        <form onSubmit={handleFuncao} method="POST" className=" flex w-full h-full gap-9">
+                                        <form onSubmit={handleFuncao} 
+                                          method="POST" className=" flex w-full h-full gap-9">
                                           <motion.button
                                             initial={{ y: 10 }}
                                             animate={{ y: 0 }}
@@ -293,8 +292,8 @@ export default function RegisterPage() {
                                             whileTap={{ scale: 1.03 }}
                                             whileHover="hovered"
                                             key="usuario"
+                                            onClick={() => setCategoria("usuario")}
                                             type='submit'
-                                            onClick={() => categorias("usuario")}
                                             className="h-full w-full flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
                                             <motion.div
                                               variants={{
@@ -323,7 +322,7 @@ export default function RegisterPage() {
                                             transition={{ duration: 0.3, ease: "easeInOut" }}
                                             key="restrito"
                                             type='submit'
-                                            onClick={() => categorias("restrito")}
+                                            onClick={() => setCategoria("restrito")}
                                             className="h-full w-full flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
                                             <motion.div
                                               variants={{
