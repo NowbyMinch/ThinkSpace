@@ -44,8 +44,10 @@ export default function Home() {
             if (currentY > lastScrollY && currentY > 100) {
                 // Scrolling down
                 setShowHeader(false);
+                console.log("false")
             } else {
                 // Scrolling up
+                console.log("true")
                 setShowHeader(true);
             }
 
@@ -107,8 +109,8 @@ export default function Home() {
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }} 
                                 
-                                className="cursor-pointer" >
-                                    Precificação
+                                className="cursor-pointer" onClick={() => scrollToSection(2)}>
+                                    Planos
                                 </motion.a>
 
                                 <motion.a 
@@ -155,8 +157,8 @@ export default function Home() {
                                     <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                     <motion.button 
-                                    whileTap={{ scale: 0.99 }} 
-                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.98 }} 
+                                    whileHover={{ scale: 1.02 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
                                     className="w-[250px] max-w-[43%] text-white text-[20px] p-[10px] rounded-full flex gap-4 items-center justify-center cursor-pointer 
                                     bg-[#BF9FFF] ">
@@ -228,17 +230,21 @@ export default function Home() {
                                 Na ThinkSpace, criamos planos de estudo estratégicos, pensados para economizar tempo, reduzir o estresse e ajudar cada pessoa a alcançar seus objetivos com mais foco e confiança.
                                 Acreditamos que aprender não precisa ser complicado — e com o plano certo, tudo flui melhor.
                             </p>
-                            <div className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] transition-all ease-in-out duration-300 cursor-pointer  ">
+                            <motion.button 
+                            whileTap={{ scale: 0.98 }} 
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] cursor-pointer  ">
                                 <span className="line-clamp-2 break-words">Comece a estudar</span>
-                                <button className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </button>
-                            </div>
+                                <div className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </div>
+                            </motion.button>
                         </div>
 
                         <div id="animate" className=" w-[50%] flex flex-col ">
                             <div className="h-[570px] flex justify-end relative ">
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
+                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
+                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
+                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
                             </div>
                         </div>
 
@@ -300,29 +306,108 @@ export default function Home() {
 
                         </div>
                     </div>
+                    
+                    <div className="w-full pb-20 flex justify-center overflow-hidden relative ">
+                        <div className="w-[1500px] flex justify-center items-center overflow-hidden">
+                            <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px] max-w-[80%] flex flex-row justify-center">
+                                <div className="w-full flex flex-col gap-12 relative ">
+                                    <h1 id="title" className="w-full">Nossos planos</h1>
+                                    <div className="h-[575px] flex justify-center items-center gap-10 relative ">
+                                        <motion.div
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
+                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                        id="title"
+                                        className="w-[420px] rounded-[45px] h-full bg-[#B697F5] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#a98ee4] flex flex-col items-center gap-10">
+                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
+                                                <Image src="/landingpage/gratis.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                            </div>
+                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
+                                                <span className="leading-none text-[40px]">R$</span>
+                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
+                                                <span className="leading-none ">,</span>
+                                                <span className="mb-auto text-[35px] font-medium">00</span>
+                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
+                                            </div>
 
-                    <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px]  max-w-[80%] flex flex-row justify-center ">
-                        <div className="w-[50%] flex flex-col gap-12">
-                            <h1 id="title" className="w-full">Aprender nunca foi tão fácil
-                                <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[40%]" src="/landingpage/aprendervec.svg" alt="Vector"/>
-                            </h1>
-                            <p id="animate" className="text-[22px]">Nossa missão é simples: tornar o estudo mais inteligente, acessível e personalizado para todos os estudantes, em qualquer fase da vida.
-                                Na ThinkSpace, criamos planos de estudo estratégicos, pensados para economizar tempo, reduzir o estresse e ajudar cada pessoa a alcançar seus objetivos com mais foco e confiança.
-                                Acreditamos que aprender não precisa ser complicado — e com o plano certo, tudo flui melhor.
-                            </p>
-                            <div className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] transition-all ease-in-out duration-300 cursor-pointer  ">
-                                <span className="line-clamp-2 break-words">Comece a estudar</span>
-                                <button className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </button>
-                            </div>
+                                            <div className=" w-[90%] flex items-end ">
+                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
+                                                    <li>5 Salas de estudos</li>
+                                                    <li>Até 10 materiais de estudo por mês</li>
+                                                    <li>Sem acesso à chat IA</li>
+                                                    <li>Ambiente com anúncios</li>
+                                                </ul>
+                                            </div>
+
+                                        </motion.div>
+
+                                        <motion.div
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
+                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                        id="title"
+                                        className="w-[420px] rounded-[45px] h-full bg-[#FFB0F3] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#e59eda] flex flex-col items-center gap-10">
+                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
+                                                <Image src="/landingpage/basico.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                            </div>
+                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
+                                                <span className="leading-none text-[40px]">R$</span>
+                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
+                                                <span className="leading-none ">,</span>
+                                                <span className="mb-auto text-[35px] font-medium">00</span>
+                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
+                                            </div>
+
+                                            <div className=" w-[90%] flex items-end ">
+                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
+                                                    <li>Acesso ilimitado a salas de estudo</li>
+                                                    <li>Materiais de estudo sempre disponíveis</li>
+                                                    <li>Inteligência Artificial sem limites</li>
+                                                    <li>Ambiente 100% livre de anúncios</li>
+                                                </ul>
+                                            </div>
+
+
+                                        </motion.div>
+
+                                        <motion.div
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
+                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                        id="title"
+                                        className="w-[420px] rounded-[45px] h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#876de7] flex flex-col items-center gap-10">
+                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%] ">
+                                                <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                            </div>
+                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
+                                                <span className="leading-none text-[40px]">R$</span>
+                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
+                                                <span className="leading-none ">,</span>
+                                                <span className="mb-auto text-[35px] font-medium">00</span>
+                                                <span className="leading-none text-['40px] -ml-3 ">/mensal</span>
+                                            </div>
+
+                                            <div className=" w-[90%] flex items-end ">
+                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
+                                                    <li>Acesso ilimitado a salas de estudo</li>
+                                                    <li>Materiais de estudo sempre disponíveis</li>
+                                                    <li>Inteligência Artificial sem limites</li>
+                                                    <li>Ambiente 100% livre de anúncios</li>
+                                                </ul>
+                                            </div>
+
+
+                                        </motion.div>
+
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
 
-                        <div id="animate" className=" w-[50%] flex flex-col ">
-                            <div className="h-[570px] flex justify-end relative ">
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
-                                <Image id="animate" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
-                            </div>
+                        <div className="absolute w-[100%] overflow-hidden bottom-0 z-[-10]">
+                            <Image id="aprender" width={300} height={800} src="Vector 2.svg" alt="Banner" className=" w-full"/>
                         </div>
+
                     </div>
 
                     <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
@@ -387,8 +472,8 @@ export default function Home() {
                     <div className="w-[33%] flex flex-col justify-center items-center ">
 
                         <div className=" flex justify-center items-center gap-4 ">
-                            <a href="">Termos de uso</a>
-                            <a href="">Política de privacidade</a>
+                            <a href="/termos-de-uso">Termos de uso</a>
+                            <a href="/politica-de-privacidade">Política de privacidade</a>
                             <a href="">Suporte</a>
                         </div>
                         

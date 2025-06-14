@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${afacad.variable} font-[Afacad] antialiased flex  `}>
+      <body className={`${afacad.variable} font-[Afacad] antialiased flex `}>
         {children}
       </body>
     </html>

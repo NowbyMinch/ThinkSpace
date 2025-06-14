@@ -114,6 +114,13 @@ body {
   font-size: 55px;
 }
 
+#aprender{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 400px;
+}
+
 #animate{
   animation: fade-in linear;
   animation-timeline: view();

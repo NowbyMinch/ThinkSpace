@@ -371,7 +371,7 @@ export default function Materiais() {
 
                         id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
                             <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
-                            <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar um material</h2>
+                            <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
                         </motion.div>
                         {materiais.map((material, index) => {
                             const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icon.toLowerCase())?.Icon;
