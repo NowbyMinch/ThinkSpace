@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+// import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest){
-    const token = request.cookies.get('token'); 
-    console.log(token)
+// export function middleware(request: NextRequest){
+//     const token = request.cookies.get('token'); 
+//     console.log(token)
 
-    const isProtectedRoute = request.nextUrl.pathname.startsWith('/home');
+//     const isProtectedRoute = request.nextUrl.pathname.startsWith('/home');
 
-    if (isProtectedRoute && !token) {
-        return NextResponse.redirect(new URL('/', request.url));
-    }
+//     if (isProtectedRoute && !token) {
+//         return NextResponse.redirect(new URL('/', request.url));
+//     }
     
-    return NextResponse.next();
-};
+//     return NextResponse.next();
+// };
 
-export const config = {
-  matcher: ['/home/:path*', '/home']
-}
+// export const config = {
+//   matcher: ['/home/:path*', '/home']
+// }
