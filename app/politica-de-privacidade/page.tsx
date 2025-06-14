@@ -36,9 +36,9 @@ export default function PoliticaDePrivacidade() {
                     <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center`}>
                         <div className="flex w-[90%] max-w-[1700px] h-[120px] justify-between">
                             <div className=" w-full h-full flex items-center ">
-                                <a href="/" className="cursor-pointer ">
+                                <Link href="/" className="cursor-pointer ">
                                     <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
-                                </a>
+                                </Link>
                             </div>
                             <div className=" w-full flex justify-center items-center ">  
                                 
