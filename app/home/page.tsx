@@ -41,7 +41,7 @@ export default function Home() {
   useEffect(() => {
     const banner = async () => {
       try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/banner`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
           method: 'GET',
           credentials: 'include',
         });
