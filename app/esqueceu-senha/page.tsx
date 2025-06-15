@@ -46,10 +46,10 @@ export default function LoginPage() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form.email),
+            body: JSON.stringify(form),
         });
 
-        console.log(form.email)
+        console.log(form)
         const data = await res.json();
         console.log(data); 
         setStep(2)
@@ -64,7 +64,7 @@ export default function LoginPage() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form.code),
+            body: JSON.stringify(form),
         });
 
         console.log(form)
