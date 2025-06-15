@@ -14,10 +14,12 @@ export const Sidebar = () => {
     const [ logoutPop, setLogoutPop ] = useState(false);
     
     const handleLogout = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
-    const data = await res.json();
-    console.log(data); 
-};
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+            method: "POST"
+        });
+        const data = await res.json();
+        console.log(data); 
+    };
 
     return (
         <>
