@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
-// import { Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation'; 
 import ErrorModal from '@/components/ui/ErrorModal';
 // import { useState } from 'react';
@@ -53,11 +52,32 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
-        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+        if (data.message === "Código de redefinição enviado para o e-mail." ){
+            setStep(2)
+        }
+        else{
             setMessage(data.message)
         }
+
         console.log(data); 
-        setStep(2)
+    };
+
+    const reenviar = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form.email),
+        });
+
+        console.log(form.email)
+        const data = await res.json();
+        if (data.message === "Novo código enviado para o e-mail."){
+            setMessage(data.message)
+        }
+
+        console.log(data); 
     };
 
     const handleSubmit2 = async (e: React.FormEvent) => {
@@ -186,6 +206,7 @@ export default function LoginPage() {
                                                     />
                                                 ))}
                                                 </div>
+                                                <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
                                             </div>
                                         </div>
                                         

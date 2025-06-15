@@ -137,6 +137,10 @@ export default function RegisterPage() {
     
     console.log(form.email)
     const data = await res.json();
+    if (data.message === "Novo código enviado para o e-mail."){
+      setMessage(data.message)
+    }
+
     console.log(data); 
   };
 
