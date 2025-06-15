@@ -62,24 +62,6 @@ export default function LoginPage() {
         console.log(data); 
     };
 
-    const reenviar = async (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form),
-        });
-
-        console.log(form.email)
-        const data = await res.json();
-        if (data.message === "Novo código enviado para o e-mail."){
-            setMessage(data.message)
-        }
-
-        console.log(data); 
-    };
-
     const handleSubmit2 = async (e: React.FormEvent) => {
         e.preventDefault();
         const codeString = code.join("");
@@ -94,11 +76,29 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
-        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+        if (data.message !== "E-mail verificado e cadastro concluído."){
             setMessage(data.message)
         }
         console.log(data); 
         setStep(3)
+    };
+
+    const reenviar = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+        });
+
+        console.log(form)
+        const data = await res.json();
+        if (data.message !== "Novo código enviado para o e-mail."){
+            setMessage(data.message)
+        }
+
+        console.log(data); 
     };
 
     const handleSubmit3 = async (e: React.FormEvent) => {
@@ -112,9 +112,10 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
-        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+        if (data.message !== "E-mail verificado e cadastro concluído."){
             setMessage(data.message)
         }
+
         console.log(data); 
         router.push('/login')
     };

@@ -137,7 +137,7 @@ export default function RegisterPage() {
     
     console.log(form)
     const data = await res.json();
-    if (data.message === "Novo código enviado para o e-mail."){
+    if (data.message !== "Novo código enviado para o e-mail."){
         setMessage(data.message)
     }
 
@@ -172,6 +172,7 @@ export default function RegisterPage() {
     }
 
   };
+  
   function fade(p: React.Dispatch<React.SetStateAction<boolean>>){
     setTimeout(() => {
       p(true);
