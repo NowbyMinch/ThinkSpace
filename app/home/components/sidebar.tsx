@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";

@@ -101,19 +101,16 @@ export default function Materiais() {
         }
     }
 
-    useEffect(() => {
-        const banner = async () => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais`, {
-                method: 'GET',
-                credentials: 'include',
-            });
-            
-            const data = await res.json();
-            console.log(data); 
-        };
-
-        banner();
-    }, []);
+    const banner = async () => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        
+        const data = await res.json();
+        console.log(data); 
+    };
+    banner();
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
