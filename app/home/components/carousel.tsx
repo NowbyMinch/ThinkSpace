@@ -18,7 +18,7 @@ import {
 export function CarouselSpacing() {
   return (
     <Carousel className=" flex justify-center ">
-        <CarouselContent className=" gap-4 w-[960px] pr-1 pl-1 ">
+        <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                 <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
