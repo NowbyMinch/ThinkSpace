@@ -10,7 +10,7 @@ export default function LoginPage() {
     const router = useRouter();
     const [ step, setStep ] = useState(1);
     const inputRefs = useRef<HTMLInputElement[]>([]);
-    const [ form, setForm ] = useState({email: "", code: "", novaSenha: "", confirmarSenha: "" });
+    const [ form, setForm ] = useState({ email: "", code: "", novaSenha: "", confirmarSenha: "" });
     const [ code, setCode ] = useState<number[]>([]);
     const [message, setMessage] = useState<string | null>(null);
 
@@ -85,7 +85,7 @@ export default function LoginPage() {
 
     const reenviar = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

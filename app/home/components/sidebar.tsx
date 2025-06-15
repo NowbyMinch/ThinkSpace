@@ -3,17 +3,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
 import { useRouter } from "next/navigation";
+import ErrorModal from "@/components/ui/ErrorModal";
 
 
 export const Sidebar = () => {
     const route = useRouter();
     const pathname = usePathname();
-    
+    const [message, setMessage] = useState("");
     const [ logoutPop, setLogoutPop ] = useState(false);
     
     const handleLogout = async () => {
@@ -29,9 +30,14 @@ export const Sidebar = () => {
         console.log(data); 
     };
 
+    
+
     return (
         <>
             
+            {message && (
+                <ErrorModal message="" onClose={() => {setMessage("")}}/>
+            )}
             <AnimatePresence initial={false}>
                 {logoutPop && (
                     <>
