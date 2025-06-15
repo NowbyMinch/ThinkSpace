@@ -268,8 +268,6 @@ export default function LoginPage() {
                                         </div>
                                     </motion.form>
                                 )}
-
-
                             </div>
                         </div>
 
