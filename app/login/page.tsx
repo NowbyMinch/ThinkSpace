@@ -33,7 +33,13 @@ export default function LoginPage() {
     <>
         <div className="w-[100%] h-[100vh] flex justify-center bg-white">
             <div className="w-[1600px] h-full max-w-[90%] flex justify-center items-center">
-              
+              <button onClick={() => {
+                fetch('https://thinkspace-backend-production.up.railway.app/auth/teste-cookie', {
+                  credentials: 'include'
+                });
+              }}>
+                Testar Cookie
+              </button>
               <AnimatePresence >
                 <motion.div 
                 key="loginimage"
