@@ -146,8 +146,8 @@ export default function RegisterPage() {
     // Update code state here
     const values = inputRefs.current.map(input => input?.value ? Number(input.value) : 0);
     setCode(values);
-    console.log(values)
   };
+
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
       inputRefs.current[index - 1]?.focus();

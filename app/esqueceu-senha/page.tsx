@@ -10,30 +10,85 @@ export default function LoginPage() {
     const router = useRouter();
     const [ step, setStep ] = useState(1);
     const inputRefs = useRef<HTMLInputElement[]>([]);
+    const [ form, setForm ] = useState({email: "", code: "", novaSenha: "", confirmarSenha: "" });
+    const [ code, setCode ] = useState<number[]>([]);
+
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
         
         if (!Number.isInteger(value)) {
-          e.preventDefault();
+            e.preventDefault();
         };
-    
+        
         if (!/^[0-9]?$/.test(value)){
-          value = ""; 
+            value = ""; 
         }
-    
+        
         e.target.value = value;
-    
+        
         if (value && index < inputRefs.current.length - 1) {
-          inputRefs.current[index + 1]?.focus();
+            inputRefs.current[index + 1]?.focus();
         }
-    
+
+        const values = inputRefs.current.map(input => input?.value ? Number(input.value) : 0);
+        setCode(values);
     };
+
     const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
-          inputRefs.current[index - 1]?.focus();
+            inputRefs.current[index - 1]?.focus();
         }
     };
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form.email),
+        });
+
+        console.log(form.email)
+        const data = await res.json();
+        console.log(data); 
+        setStep(2)
+    };
+
+    const handleSubmit2 = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const codeString = code.join("");
+        const formSubmit = {...form, code: codeString}
+
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form.code),
+        });
+
+        console.log(form)
+        const data = await res.json();
+        console.log(data); 
+        setStep(3)
+    };
+
+    const handleSubmit3 = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const codeString = code.join("");
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+        });
+
+        console.log(form)
+        const data = await res.json();
+        console.log(data); 
+        router.push('/login')
+    };
+    
     return (
         <>
             <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF] ">
@@ -58,9 +113,9 @@ export default function LoginPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    onSubmit={() => setStep(2)} className='flex flex-col gap-8 w-full max-w-[500px]'>
+                                    onSubmit={handleSubmit} className='flex flex-col gap-8 w-full max-w-[500px]'>
                                         <div className="flex flex-col gap-4 justify-center items-center">
-                                            <input type="email" required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="email" onChange={(e) => {setForm({...form, email: e.target.value})}} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                                         </div>
                                         
                                         <div className="flex justify-center items-center gap-10 ">
@@ -98,7 +153,7 @@ export default function LoginPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }} 
-                                    onSubmit={() => setStep(3) }
+                                    onSubmit={handleSubmit2}
                                     className='flex flex-col gap-8 w-full justify-center items-center h-[100%]'>
                                         <div className="w-full flex flex-col gap-4 h-full">
                                             <div className="flex flex-col items-center gap-4 w-full h-full">
@@ -146,18 +201,18 @@ export default function LoginPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }} 
-                                    action="/login"
+                                    onSubmit={handleSubmit3}
                                     className='flex flex-col gap-8 w-full max-w-[500px] justify-center items-center  h-[100%]'>
                                         <div className="w-full flex flex-col gap-4 h-full">
-                                            <input type="password" required placeholder='Digite sua senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                                            <input type="password" required placeholder='Confirme sua senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setForm({...form, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setForm({...form, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
 
-                                            <div className={`h-[96px] overflow-hidden w-fit transition-all duration-300 ease-in-out min-w-10 min-h-2 `}>
-                                                {/* modelo */}
+                                            {/* <div className={`h-[96px] overflow-hidden w-fit transition-all duration-300 ease-in-out min-w-10 min-h-2 `}>
+                                                modelo
                                                 <h2 className={`text-[20px] h-[32px] text-[#068D3A] flex items-center gap-2`}><Check /> A senha deve conter no mínimo 8 caracteres</h2>
                                                 <h2 className={`text-[20px] h-[32px] text-[#F92A46] flex items-center gap-2`}><X />A senha deve conter pelo menos um número</h2>
                                                 <h2 className={`text-[20px] h-[32px] text-[#F92A46] flex items-center gap-2`}><X />A senha deve conter pelo menos um símbolo</h2>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         
                                         <div className="flex justify-center items-center gap-10 ">
