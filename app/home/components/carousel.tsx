@@ -1,11 +1,7 @@
 import * as React from "react"
 import Image from "next/image";
 import Link from "next/link";
-import {
-    HeartPulse,
-    MonitorCog,
-    BrainCircuit,
-  } from "lucide-react";
+import * as Icons from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
@@ -21,12 +17,12 @@ export function CarouselSpacing() {
         <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
-                        <Link href="/home/materiais/Rede de computadores">
+                        <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
                             <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                <MonitorCog className="size-[40px] text-[#757575]" />
+                                <Icons.MonitorCog className="size-[40px] text-[#757575]" />
                                 </div>
 
                                 <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
@@ -34,15 +30,15 @@ export function CarouselSpacing() {
                                 </h1>
                             </div>
 
-                            <div className="w-full">
+                            <div className="w-full ">
                                 <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
                                     <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                    <div className="flex justify-between ">
-                                        <span className="font-medium text-[17px]">
-                                        XP acumulada
-                                        </span>
-                                        <span className="font-medium text-[17px]">500XP</span>
-                                    </div>
+                                </div>
+                                <div className="flex justify-between ">
+                                    <span className="font-medium text-[17px]">
+                                    XP acumulada
+                                    </span>
+                                    <span className="font-medium text-[17px]">500XP</span>
                                 </div>
                             </div>
 
@@ -53,78 +49,12 @@ export function CarouselSpacing() {
             </CarouselItem>
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#FFA6F1] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
-                        <Link href="/home/materiais/Ciência da computação">
+                        <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
                             <div className=" flex gap-[6px] w-full items-center relative ">
                                 <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                <BrainCircuit className="size-[40px] text-[#757575]" />
-                                </div>
-
-                                <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                Ciência da computação 
-                                </h1>
-                            </div>
-
-                            <div className="w-full">
-                                <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                    <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                    <div className="flex justify-between ">
-                                        <span className="font-medium text-[17px]">
-                                        XP acumulada
-                                        </span>
-                                        <span className="font-medium text-[17px]">400XP</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </Link>
-                        
-                    </CardContent>
-                </Card>
-            </CarouselItem>
-
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#FF9F93] shadow-md border border-[#00000031] ">
-                    <CardContent className="flex items-center justify-center h-full flex-col ">
-                        <Link href="/home/materiais/Enfermagem">
-                            <div className=" flex gap-[6px] w-full items-center relative ">
-                                <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                <HeartPulse className="size-[40px] text-[#757575]" />
-                                </div>
-
-                                <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                Enfermagem
-                                </h1>
-                            </div>
-
-                            <div className="w-full">
-                                <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                    <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                    <div className="flex justify-between ">
-                                        <span className="font-medium text-[17px]">
-                                        XP acumulada
-                                        </span>
-                                        <span className="font-medium text-[17px]">350XP</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </Link>
-
-                        
-                    </CardContent>
-                </Card>
-            </CarouselItem>
-
-            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px]  bg-[#CAC5FF] shadow-md border border-[#00000031] ">
-                    <CardContent className="flex items-center justify-center h-full flex-col ">
-
-                        <Link href="/home/materiais/Rede de computadores">
-                            <div className=" flex gap-[6px] w-full items-center relative ">
-                                <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                <MonitorCog className="size-[40px] text-[#757575]" />
+                                <Icons.MonitorCog className="size-[40px] text-[#757575]" />
                                 </div>
 
                                 <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
@@ -132,15 +62,15 @@ export function CarouselSpacing() {
                                 </h1>
                             </div>
 
-                            <div className="w-full">
+                            <div className="w-full ">
                                 <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
                                     <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                    <div className="flex justify-between ">
-                                        <span className="font-medium text-[17px]">
-                                        XP acumulada
-                                        </span>
-                                        <span className="font-medium text-[17px]">500XP</span>
-                                    </div>
+                                </div>
+                                <div className="flex justify-between ">
+                                    <span className="font-medium text-[17px]">
+                                    XP acumulada
+                                    </span>
+                                    <span className="font-medium text-[17px]">500XP</span>
                                 </div>
                             </div>
 
@@ -149,6 +79,71 @@ export function CarouselSpacing() {
                     </CardContent>
                 </Card>
             </CarouselItem>
+
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                    <CardContent className="flex items-center justify-center h-full flex-col ">
+                        <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                            <div className=" flex gap-[6px] w-full items-center relative ">
+                                <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                </div>
+
+                                <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                Rede de computadores
+                                </h1>
+                            </div>
+
+                            <div className="w-full ">
+                                <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                    <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                </div>
+                                <div className="flex justify-between ">
+                                    <span className="font-medium text-[17px]">
+                                    XP acumulada
+                                    </span>
+                                    <span className="font-medium text-[17px]">500XP</span>
+                                </div>
+                            </div>
+
+                        </Link>
+                        
+                    </CardContent>
+                </Card>
+            </CarouselItem>
+
+            <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                    <CardContent className="flex items-center justify-center h-full flex-col ">
+                        <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                            <div className=" flex gap-[6px] w-full items-center relative ">
+                                <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                </div>
+
+                                <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                Rede de computadores
+                                </h1>
+                            </div>
+
+                            <div className="w-full ">
+                                <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                    <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                </div>
+                                <div className="flex justify-between ">
+                                    <span className="font-medium text-[17px]">
+                                    XP acumulada
+                                    </span>
+                                    <span className="font-medium text-[17px]">500XP</span>
+                                </div>
+                            </div>
+
+                        </Link>
+                        
+                    </CardContent>
+                </Card>
+            </CarouselItem>
+
 
         </CarouselContent>
 
