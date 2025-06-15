@@ -15,7 +15,8 @@ import {
 export function CarouselSpacing() {
 
 
-    const [ materiais, setMateriais ] = useState();
+    // const [ materiais, setMateriais ] = useState();
+    const materiais = useState() 
 
     const materias = async () => {
         try{
@@ -41,11 +42,11 @@ export function CarouselSpacing() {
                         Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
                     </h1>
 
-                    <a href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
+                    <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
                     <button className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
                         <Icons.CirclePlus className="size-8"/> Criar matéria
                     </button>
-                    </a>
+                    </Link>
                 </div>
                 
             </div>

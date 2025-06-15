@@ -8,7 +8,6 @@ import {
   Check,
   X,
   Info,
-  TriangleAlert
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Backdrop } from "./components/backdrop";
@@ -64,15 +63,15 @@ export default function Home() {
     // add other properties if needed
   };
 
-  type salasData = {
-    salasMembro?: string;
-    salasModerador?: string;
-    // add other properties if needed
-  };
+  // type salasData = {
+  //   salasMembro?: string;
+  //   salasModerador?: string;
+  //   // add other properties if needed
+  // };
 
   type notificacaoData = {
     userId?: string;
-    notificacoes?: Array<any>;
+    notificacoes?: Array<number>;
     message?: string;
     // add other properties if needed
   };
@@ -80,7 +79,7 @@ export default function Home() {
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
-  const [ salas, setSalas ] = useState<salasData>({})
+  // const [ salas, setSalas ] = useState<salasData>({})
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
 
   useEffect(() => {
@@ -299,7 +298,7 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0.95, scale: 0.90 }}
                       transition={{ duration: 0.01, ease: "easeInOut" }}
-                      className={`absolute w-[490px] h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
+                      className={`absolute w-[490px] h-fit py-4 max-h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
                         <div className=" w-[85%] h-[87.5%] flex flex-col relative">
                           <div className="">
                             <h1 className=" font-medium leading-[40px] cursor-text">
@@ -310,28 +309,23 @@ export default function Home() {
                             </h2>
                           </div>
 
-                          <div className="w-full  h-[75%] bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden mt-4 z-100">
-                            <div className=" w-full rounded-[20px] grid gap-2 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
-                              
-                              ( )
-                              {/* <div id="notificacao" className="w-full h-[89px] bg-[#A39CEC] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/> </div>
-                                <div className="">
-                                  <h1 className="text-[28px] text-white">Notificação de atenção</h1>
-                                  <h2 className="text-[18px]">Descrição da notificação de comunidade</h2>
-                                </div>
-                              </div>
+                          <div className="w-full h-fit max-h-[335px] py-1 bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden mt-4 z-100">
+                            <div className=" w-full rounded-[20px] max-h-[335px] grid gap-2 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
+                              { notificacao.message === "Você não possui notificações no momento." && (
+                                <>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[28px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
 
-                              <div id="notificacao" className="w-full h-[89px] bg-[#EB9481] rounded-[20px] flex items-center justify-center gap-2 cursor-pointer">
-                                <div className="w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><TriangleAlert className="text-[#994533] size-14"/> </div>
-                                <div className="">
-                                  <h1 className="text-[28px] text-white">Notificação de denúncia</h1>
-                                  <h2 className="text-[18px] text-[#7f3a2a]">Descrição da notificação de comunidade</h2>
-                                </div>
-                              </div> */}
-
+                                    </div>
+                                  </div>
+                                </>
+                              )}
                             </div>
-                    
                           </div>
                         </div>
 
@@ -360,7 +354,7 @@ export default function Home() {
                 {user.cargo}
               </h2>
             </div>
-            <img width={300} height={500}
+            <Image width={300} height={500}
             src={`${user.foto}`}
             className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md"
             alt="Foto de perfil"
