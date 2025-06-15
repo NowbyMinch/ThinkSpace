@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 export const Sidebar = () => {

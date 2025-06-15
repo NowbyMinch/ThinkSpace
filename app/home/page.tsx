@@ -27,6 +27,7 @@ export default function Home() {
   function closing(){
     setTimeout(() => setPop(false), 10);
   }
+
   function opening2(){
     setPop2(true);
   }
@@ -170,7 +171,6 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0.95, scale: 0.90 }}
                       transition={{ duration: 0.01, ease: "easeInOut" }}
-
                       className={`absolute w-[490px] h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
                         <div className=" w-[85%] h-[87.5%] flex flex-col relative">
                           <div className="">
