@@ -8,7 +8,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function LoginPage() {
     const router = useRouter();
-    const [ step, setStep ] = useState(2);
+    const [ step, setStep ] = useState(1);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const [ form, setForm ] = useState({email: "", code: "", novaSenha: "", confirmarSenha: "" });
     const [ code, setCode ] = useState<number[]>([]);
