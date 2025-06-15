@@ -13,6 +13,12 @@ export const Sidebar = () => {
     const pathname = usePathname();
     const [ logoutPop, setLogoutPop ] = useState(false);
     
+    const handleLogout = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+    const data = await res.json();
+    console.log(data); 
+};
+
     return (
         <>
             
@@ -24,7 +30,6 @@ export const Sidebar = () => {
                         initial={{ opacity: 0, scale: 0.85}}
                         animate={{ opacity: 1, scale: 0.94 }}
                         exit={{ opacity: 0, scale: 0.90 }}
-                        
                         className={`w-full h-full fixed flex justify-center items-center  opacity-1 z-[1100] `}>
                             
                             <div className="w-full h-full absolute" onClick={() => setLogoutPop(false)}></div>
@@ -59,7 +64,7 @@ export const Sidebar = () => {
                                             <motion.button 
                                             whileHover={{ scale: 1.03 }}
                                             whileTap={{ scale: 0.97 }}
-                                            onClick={() => {setLogoutPop(false); redirect("/")}}
+                                            onClick={() => {setLogoutPop(false); handleLogout()}}
                                             className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
                                                 Sair
                                             </motion.button>
