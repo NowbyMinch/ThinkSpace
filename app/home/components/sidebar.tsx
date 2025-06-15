@@ -7,10 +7,13 @@ import React, { useState } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
+import { useRouter } from "next/router";
 
 
 export const Sidebar = () => {
+    const route = useRouter();
     const pathname = usePathname();
+    
     const [ logoutPop, setLogoutPop ] = useState(false);
     
     const handleLogout = async () => {
@@ -18,7 +21,11 @@ export const Sidebar = () => {
             method: "POST",
             credentials: "include",
         });
+
         const data = await res.json();
+        if (data.message === "Logout realizado com sucesso"){
+            window.location.reload();
+        }
         console.log(data); 
     };
 
