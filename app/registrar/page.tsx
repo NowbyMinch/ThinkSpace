@@ -132,10 +132,10 @@ export default function RegisterPage() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form.email),
+      body: JSON.stringify(form),
     });
     
-    console.log(form.email)
+    console.log(form)
     const data = await res.json();
     if (data.message === "Novo código enviado para o e-mail."){
       setMessage(data.message)

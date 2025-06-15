@@ -64,11 +64,11 @@ export default function LoginPage() {
 
     const reenviar = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form.email),
+            body: JSON.stringify(form),
         });
 
         console.log(form.email)
