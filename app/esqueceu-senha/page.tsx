@@ -207,7 +207,7 @@ export default function LoginPage() {
                                                 />
                                                 ))}
                                             </div>
-                                            <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
+                                            <button onClick={reenviar} type='button' className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
                                             </div>
                                         </div>
                                         

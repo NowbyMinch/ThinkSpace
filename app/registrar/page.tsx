@@ -172,7 +172,7 @@ export default function RegisterPage() {
     }
 
   };
-  
+
   function fade(p: React.Dispatch<React.SetStateAction<boolean>>){
     setTimeout(() => {
       p(true);
@@ -184,6 +184,7 @@ export default function RegisterPage() {
       {message && (
         <ErrorModal message={message} onClose={() => setMessage(null)} />
       )}
+      
       <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF]">
           <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
             <AnimatePresence >

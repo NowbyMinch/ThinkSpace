@@ -10,15 +10,17 @@ import {
   Info,
   TriangleAlert
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Backdrop } from "./components/backdrop";
 import { Backdrop2 } from "./components/backdrop";
 import { CarouselLinks, CarouselSpacing } from "./components/carousel";
 import { motion, AnimatePresence } from "framer-motion";
+import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function Home() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   function opening(){
     setPop(true);
@@ -36,8 +38,32 @@ export default function Home() {
     setTimeout(() => setPop2(false), 10);
   }
 
+  useEffect(() => {
+    const banner = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/banner`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+        console.log(data); 
+        
+      } catch (err) {
+        setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    };
+
+    banner();
+  }, []);
+
   return (
     <>
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
+    
       <AnimatePresence initial={false}>
         {pop && (
           <Backdrop key={1}/>
