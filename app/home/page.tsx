@@ -42,7 +42,7 @@ export default function Home() {
     const banner = async () => {
       try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-          method: 'GET',
+          method: 'POST',
           credentials: 'include',
         });
         
