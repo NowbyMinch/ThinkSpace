@@ -112,12 +112,14 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
-        if (data.message !== "E-mail verificado e cadastro concluído."){
+        if (data.message !== "algo da senha"){
             setMessage(data.message)
+        }
+        else if (data.message === "deu certo sei la"){
+            router.push('/login')
         }
 
         console.log(data); 
-        router.push('/login')
     };
     
     return (
