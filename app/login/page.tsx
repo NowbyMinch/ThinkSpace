@@ -3,10 +3,10 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  // const router = useRouter();
+  const router = useRouter();
   const [ form, setForm ] = useState({ email: "", senha: "" })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,25 +21,17 @@ export default function LoginPage() {
 
     const data = await res.json();
     console.log(form)
-    // if (data.message === "Login realizado com sucesso")
-    // {
-    //   router.push("/home")
-    // }
+    if (data.message === "Login realizado com sucesso")
+    {
+      router.push("/home")
+    }
     console.log(data); 
     
   };
-
   return (
     <>
         <div className="w-[100%] h-[100vh] flex justify-center bg-white">
             <div className="w-[1600px] h-full max-w-[90%] flex justify-center items-center">
-              <button onClick={() => {
-                fetch('https://thinkspace-backend-production.up.railway.app/auth/teste-cookie', {
-                  credentials: 'include'
-                });
-              }}>
-                Testar Cookie
-              </button>
               <AnimatePresence >
                 <motion.div 
                 key="loginimage"
