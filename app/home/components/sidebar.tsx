@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
@@ -30,11 +30,34 @@ export const Sidebar = () => {
         console.log(data); 
     };
 
+    type BannerData = {
+        relatorioUrl?: string;
+        // add other properties if needed
+      };
+      
+      const [ bannerData, setBannerData ] = useState<BannerData>({})
     
+      useEffect(() => {
+        const banner = async () => {
+          try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
+              method: 'GET',
+              credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setBannerData(data)
+          } catch (err) {
+            setMessage("Erro ao carregar saudação.");
+            console.error(err);
+          }
+        };
+    
+        banner();
+      }, []);
 
     return (
         <>
-            
             {message && (
                 <ErrorModal message="" onClose={() => {setMessage("")}}/>
             )}
@@ -169,7 +192,7 @@ export const Sidebar = () => {
                                 </Tooltip>
                             </Link>
 
-                            <Link href="/home/metricas">
+                            <Link href={`/home/${bannerData.relatorioUrl}`}>
                                 {(() => {
                                     if (pathname == "/home/metricas") {
                                         return (

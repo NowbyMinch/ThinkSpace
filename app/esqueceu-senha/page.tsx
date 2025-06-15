@@ -10,7 +10,9 @@ export default function LoginPage() {
     const router = useRouter();
     const [ step, setStep ] = useState(1);
     const inputRefs = useRef<HTMLInputElement[]>([]);
-    const [ form, setForm ] = useState({ email: "", code: "", novaSenha: "", confirmarSenha: "" });
+    const [ form, setForm ] = useState({ email: "" });
+    const [ form2, setForm2 ] = useState({ email: "", code: ""});
+    const [ completeForm, setCompleteForm ] = useState({ email: "", code: "", novaSenha: "", confirmarSenha: ""});
     const [ code, setCode ] = useState<number[]>([]);
     const [message, setMessage] = useState<string | null>(null);
 
@@ -44,7 +46,7 @@ export default function LoginPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/enviar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form),
@@ -66,15 +68,15 @@ export default function LoginPage() {
         e.preventDefault();
         const codeString = code.join("");
         const formSubmit = {...form, code: codeString}
-        setForm(formSubmit)
+        setForm2(formSubmit)
         
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/verificar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form),
+            body: JSON.stringify(form2),
         });
 
-        console.log(form)
+        console.log(form2)
         const data = await res.json();
         if (data.message !== "E-mail verificado e cadastro concluído."){
             setMessage(data.message)
@@ -103,14 +105,15 @@ export default function LoginPage() {
 
     const handleSubmit3 = async (e: React.FormEvent) => {
         e.preventDefault();
+        setCompleteForm({...completeForm, email: form2.email, code: form2.code});
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/redefinir`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form),
+            body: JSON.stringify(completeForm),
         });
 
-        console.log(form)
+        console.log(completeForm)
         const data = await res.json();
         if (data.message !== "algo da senha"){
             setMessage(data.message)
@@ -241,8 +244,8 @@ export default function LoginPage() {
                                     onSubmit={handleSubmit3}
                                     className='flex flex-col gap-8 w-full max-w-[500px] justify-center items-center  h-[100%]'>
                                         <div className="w-full flex flex-col gap-4 h-full">
-                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setForm({...form, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setForm({...form, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setCompleteForm({...completeForm, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setCompleteForm({...completeForm, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
 
                                             {/* <div className={`h-[96px] overflow-hidden w-fit transition-all duration-300 ease-in-out min-w-10 min-h-2 `}>
                                                 modelo

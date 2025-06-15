@@ -87,33 +87,32 @@ export default function Materiais() {
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-        const target = event.target as Node;
+        function handleClickOutside(event: MouseEvent) {
+            const target = event.target as Node;
 
-        if (
-        openPop !== null &&
-        popoverRefs.current[openPop] &&
-        !popoverRefs.current[openPop]!.contains(target) &&
-        buttonRefs.current[openPop] &&
-        !buttonRefs.current[openPop]!.contains(target)
-        ) {
-        setOpenPop(null);
+            if (
+            openPop !== null &&
+            popoverRefs.current[openPop] &&
+            !popoverRefs.current[openPop]!.contains(target) &&
+            buttonRefs.current[openPop] &&
+            !buttonRefs.current[openPop]!.contains(target)
+            ) {
+            setOpenPop(null);
+            }
         }
-    }
 
-    const banner = async () => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-        
-        const data = await res.json();
-        console.log(data); 
-    };
-    banner();
+        const materias = async () => {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            
+            const data = await res.json();
+            console.log(data); 
+        }; materias();
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
     }, [openPop]);

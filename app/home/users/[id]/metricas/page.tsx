@@ -1,7 +1,7 @@
 import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Earth } from 'lucide-react';
-import { Chart } from '../components/chart';
+import { Chart } from '@/app/home/components/chart';
 import Image from 'next/image';
-import { ComboboxDemo } from '../components/dropdown';
+import { ComboboxDemo } from '@/app/home/components/dropdown';
 
 export default function Métricas() {
     return(
