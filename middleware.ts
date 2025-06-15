@@ -6,9 +6,9 @@ export function middleware(request: NextRequest){
 
     const isProtectedRoute = request.nextUrl.pathname.startsWith('/home');
 
-    // if (isProtectedRoute && !token) {
-    //     return NextResponse.redirect(new URL('/', request.url));
-    // }
+    if (isProtectedRoute && !token) {
+        return NextResponse.redirect(new URL('/', request.url));
+    }
     
     return NextResponse.next();
 };
