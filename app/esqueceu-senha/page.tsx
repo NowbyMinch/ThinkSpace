@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 // import { Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation'; 
+import ErrorModal from '@/components/ui/ErrorModal';
 // import { useState } from 'react';
 
 export default function LoginPage() {
@@ -12,6 +13,7 @@ export default function LoginPage() {
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const [ form, setForm ] = useState({email: "", code: "", novaSenha: "", confirmarSenha: "" });
     const [ code, setCode ] = useState<number[]>([]);
+    const [message, setMessage] = useState<string | null>(null);
 
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
@@ -51,6 +53,9 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
+        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+            setMessage(data.message)
+        }
         console.log(data); 
         setStep(2)
     };
@@ -69,6 +74,9 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
+        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+            setMessage(data.message)
+        }
         console.log(data); 
         setStep(3)
     };
@@ -84,12 +92,18 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
+        if (data.message === "Usuário não encontrado." || "Erro ao enviar o e-mail de redefinição de senha." || "Dados insuficientes para redefinir a senha." || "Código inválido." || "O código expirou." || "As senhas não coincidem." || "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos."){
+            setMessage(data.message)
+        }
         console.log(data); 
         router.push('/login')
     };
     
     return (
         <>
+            {message && (
+                <ErrorModal message={message} onClose={() => setMessage(null)} />
+            )}
             <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF] ">
                 <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
                 <AnimatePresence >
