@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+// import { Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation'; 
 // import { useState } from 'react';
 
@@ -59,7 +59,7 @@ export default function LoginPage() {
         e.preventDefault();
         const codeString = code.join("");
         const formSubmit = {...form, code: codeString}
-
+        setForm(formSubmit)
         
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
             method: 'POST',
@@ -75,8 +75,7 @@ export default function LoginPage() {
 
     const handleSubmit3 = async (e: React.FormEvent) => {
         e.preventDefault();
-        const codeString = code.join("");
-        
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
