@@ -8,7 +8,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function LoginPage() {
     const router = useRouter();
-    const [ step, setStep ] = useState(1);
+    const [ step, setStep ] = useState(2);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const [ form, setForm ] = useState({email: "", code: "", novaSenha: "", confirmarSenha: "" });
     const [ code, setCode ] = useState<number[]>([]);
@@ -128,13 +128,13 @@ export default function LoginPage() {
                 <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
                 <AnimatePresence >
                     <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white overflow-y-auto rounded-[35px] relative">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="w-[70%] mb-16 flex justify-center h-full">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="w-[100%] mb-16 flex justify-center h-full">
 
-                        <div className="w-[55%] flex flex-col mt-10 items-center gap-4 max-h-[90%] ">
+                        <div className="w-[100%]  flex flex-col mt-10 items-center gap-4 max-h-[90%] ">
                             <div className="flex flex-col items-center gap-10 w-full max-w-[100%] h-full ">
-                                <div className="flex flex-col justify-center items-center ">
+                                <div className="flex flex-col justify-center items-center w-[45%] ">
                                     <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Esqueceu a senha?</h1>
-                                    <h2 className="text-gray-700 text-[22px] text-center">
+                                    <h2 className="text-gray-700 text-[25px] text-center ">
                                         {step === 1? "Insira o seu email e enviaremos um código de verificação para você voltar a acessar a sua conta.": 
                                         step === 2? "Um e-mail de confirmação foi enviado. Digite o código de verificação para redefinir sua senha com segurança." : 
                                         step === 3? "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos." : ""}
@@ -187,26 +187,26 @@ export default function LoginPage() {
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }} 
                                     onSubmit={handleSubmit2}
-                                    className='flex flex-col gap-8 w-full justify-center items-center h-[100%]'>
-                                        <div className="w-full flex flex-col gap-4 h-full">
+                                    className='flex flex-col justify-center items-center gap-20 w-[70%]'>
+                                        <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
                                             <div className="flex flex-col items-center gap-4 w-full h-full">
-                                                <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
-                                                <div className="flex gap-3  w-full h-full">
+                                            <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
+                                            <div className="flex gap-3  w-full h-full">
                                                 {[...Array(5)].map((_, i) => (
-                                                    <input
+                                                <input
                                                     key={i}
                                                     ref={(el) => { inputRefs.current[i] = el!; }}
                                                     type="text"
                                                     inputMode="numeric"
                                                     required
                                                     maxLength={1}
-                                                    onChange={(e) => handleChange(i, e)}
+                                                    onChange={(e) => {handleChange(i, e);}}
                                                     onKeyDown={(e) => handleKeyDown(i, e)}
                                                     className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
-                                                    />
+                                                />
                                                 ))}
-                                                </div>
-                                                <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
+                                            </div>
+                                            <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
                                             </div>
                                         </div>
                                         

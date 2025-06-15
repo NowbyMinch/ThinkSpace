@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(1);
+  const [ subStep, setSubStep] = useState(4);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("");
@@ -191,7 +191,7 @@ export default function RegisterPage() {
                   if (subStep < 5) {
                     return (
                       <>
-                        <div className="flex items-center flex-col w-[45%]  max-w-[80%] ">
+                        <div className="flex items-center flex-col w-[45%] max-w-[80%] ">
                           {(() => {
                             if (subStep === 4) {
                               return (
@@ -215,7 +215,7 @@ export default function RegisterPage() {
                               )
                             }
                           })()}
-                          <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center'>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
+                          <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center '>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
                         
                         </div>
 
@@ -504,8 +504,8 @@ export default function RegisterPage() {
                           }
                           else if (subStep === 4) {
                             return (
-                              <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
-                                <form onSubmit={handleSubmit3} method="POST" className='flex flex-col justify-center items-center gap-20 '>
+                              <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col ">
+                                <form onSubmit={handleSubmit3} method="POST" className=' flex flex-col justify-center items-center gap-20 '>
                                   <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
                                     <div className="flex flex-col items-center gap-4 w-full h-full">
                                       <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
