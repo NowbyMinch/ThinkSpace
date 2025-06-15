@@ -88,7 +88,7 @@ export default function LoginPage() {
     const reenviar = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reenviar-codigo`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/reenviar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form),
@@ -96,7 +96,7 @@ export default function LoginPage() {
 
         console.log(form)
         const data = await res.json();
-        if (data.message !== "Novo código enviado para o e-mail."){
+        if (data.message !== "Código de redefinição enviado para o e-mail."){
             setMessage(data.message)
         }
 

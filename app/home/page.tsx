@@ -354,7 +354,7 @@ export default function Home() {
                 {user.cargo}
               </h2>
             </div>
-            <Image width={300} height={500}
+            <img
             src={`${user.foto}`}
             className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md"
             alt="Foto de perfil"
