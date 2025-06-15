@@ -15,7 +15,8 @@ export const Sidebar = () => {
     
     const handleLogout = async () => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-            method: "POST"
+            method: "POST",
+            credentials: "include",
         });
         const data = await res.json();
         console.log(data); 
