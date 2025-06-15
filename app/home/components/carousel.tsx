@@ -21,7 +21,7 @@ export function CarouselSpacing() {
         <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
                         <Link href="/home/materiais/Rede de computadores">
                             <div className=" flex gap-[6px] w-full items-center relative ">
@@ -53,7 +53,7 @@ export function CarouselSpacing() {
             </CarouselItem>
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#FFA6F1] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#FFA6F1] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
                         <Link href="/home/materiais/Ciência da computação">
                             <div className=" flex gap-[6px] w-full items-center relative ">
@@ -85,7 +85,7 @@ export function CarouselSpacing() {
             </CarouselItem>
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#FF9F93] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px] bg-[#FF9F93] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
                         <Link href="/home/materiais/Enfermagem">
                             <div className=" flex gap-[6px] w-full items-center relative ">
@@ -118,7 +118,7 @@ export function CarouselSpacing() {
             </CarouselItem>
 
             <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                <Card className=" h-[200px] rounded-[25px] max-w-[376px] w-[302px]  bg-[#CAC5FF] shadow-md border border-[#00000031] ">
                     <CardContent className="flex items-center justify-center h-full flex-col ">
 
                         <Link href="/home/materiais/Rede de computadores">
