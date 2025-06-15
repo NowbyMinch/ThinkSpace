@@ -20,7 +20,14 @@ export default function Home() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
 
-  
+  const handlelogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+
+    const data = await res.json();
+    console.log(data); 
+  };
 
   function opening(){
     setPop(true);
