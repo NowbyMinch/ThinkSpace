@@ -10,7 +10,7 @@ export function middleware(request: NextRequest){
       return NextResponse.redirect(new URL('/', request.url));
     }
     
-    if (request.nextUrl.pathname === '' && token) {
+    if (request.nextUrl.pathname === '/' && token) {
       return NextResponse.redirect(new URL('/home', request.url));
     }
     
@@ -18,5 +18,5 @@ export function middleware(request: NextRequest){
 };
 
 export const config = {
-  matcher: ['/home/:path*', '/home', '/']
+  matcher: ['/', '/home/:path*', '/home']
 }
