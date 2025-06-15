@@ -24,7 +24,7 @@ export const Sidebar = () => {
 
         const data = await res.json();
         if (data.message === "Logout realizado com sucesso"){
-            window.location.reload();
+            route.push('/');
         }
         console.log(data); 
     };
