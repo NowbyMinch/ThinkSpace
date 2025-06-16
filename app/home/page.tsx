@@ -63,11 +63,11 @@ export default function Home() {
     // add other properties if needed
   };
 
-  // type salasData = {
-  //   salasMembro?: string;
-  //   salasModerador?: string;
-  //   // add other properties if needed
-  // };
+  type salasData = {
+    salasMembro?: string;
+    salasModerador?: string;
+    // add other properties if needed
+  };
 
   type notificacaoData = {
     userId?: string;
@@ -79,7 +79,7 @@ export default function Home() {
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
-  // const [ salas, setSalas ] = useState<salasData>({})
+  const [ salas, setSalas ] = useState<salasData>({})
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function Home() {
         });
         
         const data = await res.json();
-        console.log(data)
+        setSalas(data);
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -151,13 +151,27 @@ export default function Home() {
         });
         
         const data = await res.json();
-        console.log(data);
         setNotificacao(data);
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
         console.error(err);
       }
     }; notificacao();
+
+    const ofensiva = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+        console.log(data);
+      } catch (err) {
+        setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    }; ofensiva();
     
   }, []);
 
@@ -469,10 +483,10 @@ export default function Home() {
             </h1>
             <div id="scroll" className="h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
               
-              {/* { salas && salas.length === 0 && (
-                <div className="w-full h-[500px] bg-[#CCB2FF] rounded-[25px] flex  items-center flex-col shadow-md">
+              { salas.salasMembro?.length === 0 && salas.salasModerador?.length === 0 && (
+                <div className="w-full h-[500px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
                   <div className="w-[90%] h-[35%]  flex justify-center items-center">
-                      <h1 className="text-[32px] font-medium">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
+                      <h1 className="text-[32px] font-medium line-clamp-3 break-words">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
                   </div>
 
                   <div className="flex relative w-[90%] h-[65%] ">
@@ -494,7 +508,7 @@ export default function Home() {
                   </div>
                 </div>
               )}
-              { salas && salas.length > 0 &&  (
+              { salas.salasMembro?.length === 0 || salas.salasModerador?.length === 0 &&  (
                 <>
                   <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
                     <div className="w-[90%] ">
@@ -606,7 +620,7 @@ export default function Home() {
                     </div>
                   </div>
                 </>
-              )} */}
+              )}
 
             </div>
           </div>

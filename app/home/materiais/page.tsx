@@ -16,6 +16,7 @@ import {
   SquarePen,
   Ellipsis
 } from "lucide-react";
+import * as Icons from "lucide-react"; 
 
 const icons = [
   // Educação e aprendizado
@@ -55,37 +56,46 @@ const icons = [
 ];
 import {  useState, useEffect, useRef } from 'react';
 import { Backdrop3 } from "../components/backdrop";
+import ErrorModal from "@/components/ui/ErrorModal";
 
 const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
+const cor = { 
+    "#8B81F3": "ROXO", 
+    "#CAC5FF": "LILAS", 
+    "#FFA6F1": "ROSA", 
+    "#FFACA1": "SALMAO" 
+};
+type materiaData = {
+    id?: string;
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    usuarioId?: string;
+    materiais?: Array<number>;
+    // add other properties if needed
+};
 
-type Material = {
-    nome: string;
-    color: string;
-    materiais: number;
-    tempo: number;
-    ultima: string;
-    icon: string;
+type criar = {
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    // add other properties if needed
 };
 
 export default function Materiais() {
-    const [materiais, setMateriais] = useState<Material[]>([
-        {nome: "Geografia", color: "#8B81F3", materiais: 24, tempo: 2, ultima: "15/01", icon: "Globe" },
-        {nome: "Rede de Computadores", color: "#CAC5FF", materiais: 9, tempo: 1, ultima: "10/01", icon: "Monitor" },
-        {nome: "Ciência da Computação", color: "#FFA6F1", materiais: 24, tempo: 2, ultima: "18/01", icon: "CodeXml" },
-        {nome: "Enfermagem", color: "#FFACA1", materiais: 24, tempo: 2, ultima: "21/01", icon: "HeartPulse" },
-        {nome: "Matemática", color: "#8B81F3", materiais: 24, tempo: 2, ultima: "19/01", icon: "Plus" },
-    ]);
-
     const [open, setOpen] = useState(false);
     const [editar, setEditar] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
     const [color, setColor] = useState<string | "">("");
     const [titulo, setTitulo] = useState("");
     const [openPop, setOpenPop] = useState<number | null>(null);
-    const [materiaIndex, setMateriaIndex] = useState<number | null>(null);
+    // const [materiaIndex, setMateriaIndex] = useState<number | null>(null);
     const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const [message, setMessage] = useState<string | null>(null);
 
+    const [ materias, setMaterias ] = useState<materiaData>({});
+    const [ criarMateria, setCriarMateria ] = useState<criar>({});
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             const target = event.target as Node;
@@ -101,50 +111,65 @@ export default function Materiais() {
             }
         }
 
-        const materias = async () => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-                method: 'GET',
-                credentials: 'include',
-            });
-            
-            const data = await res.json();
-            console.log(data); 
-        }; materias();
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
-    };
-    }, [openPop]);
+    };}, [openPop]);
+
+        useEffect(() => {
+            const materia = async () => {
+                try{
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                        method: 'GET',
+                        credentials: 'include',
+                    });
+                    
+                    const data = await res.json();
+                    console.log(data)
+                    setMaterias(data)
+                } catch (err) {
+                console.error(err);
+                }
+            }; 
+            materia();
+        }, []);
+    
+    // Função para criar nova matéria
+        const criar = async () => {
+            console.log(criarMateria)
+
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(criarMateria),
+                    credentials: "include",
+                });
+                
+                const data = await res.json();
+                console.log(data)
+                if (data.message === "Matéria criada com sucesso."){
+                    closing()
+                }
+            } catch (err) {
+            console.error(err);
+            }
+        };
     
     function closing(){
         setOpen(false);
         setEditar(false);
-        setMateriaIndex(null);
+        // setMateriaIndex(null);
         setSelected(null);
         setColor("");
         setTitulo("")
     }
-    
-    function add(){
-        if (!color || !selected) return;
-        const novoMaterial: Material = {
-            nome: titulo,
-            color: color,
-            materiais: 0,
-            tempo: 0,
-            ultima: "09/06",
-            icon: selected,
-        }
-        setMateriais([...materiais, novoMaterial])
-        setOpen(false);
-        setSelected(null);
-        setColor("");
-        setTitulo("")
-    }
-
+     
     return( 
         <>
+        {message && (
+            <ErrorModal message={message} onClose={() => setMessage(null)} />
+        )}
         <AnimatePresence initial={false}>
         {open && (
             <motion.div 
@@ -168,7 +193,7 @@ export default function Materiais() {
                             <div className="w-[47%] flex flex-col gap-2">
                                 <div className="">
                                     <h2 className="text-[28px] font-medium ">Nome da matéria:</h2>
-                                    <input type="text" id="nome_materia" value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                    <input type="text" id="nome_materia" onChange={(e) => {setCriarMateria({...criarMateria, nome: e.target.value }); console.log(criarMateria)}} placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
 
                                 </div>
 
@@ -180,7 +205,7 @@ export default function Materiais() {
                                             whileTap={{ scale: 0.95 }} 
                                             whileHover={{ scale: 1.02 }}
 
-                                            key={color} style={{backgroundColor: color}} onClick={() => setColor(color) } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></motion.button>
+                                            key={color} style={{backgroundColor: color}} onClick={() => {setCriarMateria({...criarMateria, cor: cor[color as keyof typeof cor] }); setColor(color); } } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></motion.button>
                                         ))}
                                     </div>
                                     <div/>
@@ -190,11 +215,14 @@ export default function Materiais() {
                                     <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
                                     <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
                                         <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
-                                            {icons.map(({id, Icon}) => (
-                                                <motion.button 
-                                                whileTap={{ scale: 0.95 }} 
-                                                whileHover={{ scale: 1.02 }}
-                                                id="icone" key={id} onClick={() => setSelected(id)}>
+                                            {icons.map(({ id, Icon }) => (
+                                                <motion.button
+                                                    whileTap={{ scale: 0.95 }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    id="icone"
+                                                    key={id}
+                                                    onClick={() => {setCriarMateria({...criarMateria, icone: id }); setSelected(id) }}
+                                                >
                                                     <Icon />
                                                 </motion.button>
                                             ))}
@@ -210,7 +238,7 @@ export default function Materiais() {
 
                                     <div className="w-[85%] h-[85%] flex items-center">
                                         <div className="w-[65%] flex flex-col gap-4 ">
-                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{titulo.trim() !== "" ? titulo : "Nome da matéria"}</h1>
+                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{ criarMateria.nome?.trim() !== "" ? criarMateria.nome : "Nome da matéria"}</h1>
                                             <div className="">
                                                 <h2>Materiais de estudo: 0</h2>
                                                 <h2>Tempo ativo: Sem dados</h2>
@@ -234,7 +262,7 @@ export default function Materiais() {
                             </div>
                         </div>
 
-                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => add()}>Criar nova matéria</motion.button>
+                        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => { criar();}}>Criar nova matéria</motion.button>
 
                     </div>
                 </div>
@@ -303,20 +331,16 @@ export default function Materiais() {
                                     <div
                                         className={`w-[85%] h-[70%] rounded-[25px] flex justify-center items-center`}
                                         style={{
-                                            backgroundColor:
-                                                color == "" && materiaIndex !== null && materiais[materiaIndex]
-                                                    ? materiais[materiaIndex].color
-                                                    : color
                                         }}
                                     >
 
                                     <div className="w-[85%] h-[85%] flex items-center">
                                         <div className="w-[65%] flex flex-col gap-4 ">
-                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{titulo.trim() !== "" ? titulo : (materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].nome : "Nome da matéria")}</h1>
+                                            <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{titulo.trim() !== "" ? titulo : "Nome da matéria"}</h1>
                                             <div className="">
-                                                <h2>Materiais de estudo: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].materiais : 0}</h2>
-                                                <h2>Tempo ativo: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].tempo : 0}</h2>
-                                                <h2>Última revisão: {materiaIndex !== null && materiais[materiaIndex] ? materiais[materiaIndex].ultima : 0}</h2>
+                                                <h2>Materiais de estudo: </h2>
+                                                <h2>Tempo ativo: </h2>
+                                                <h2>Última revisão: </h2>
                                             </div>
                                         </div>
 
@@ -327,18 +351,12 @@ export default function Materiais() {
                                                         const SelectedIcon = icons.find((icon) => icon.id === selected)?.Icon;
                                                         return SelectedIcon? <SelectedIcon className="size-[150px] opacity-[22%] stroke-1"/> : null;
                                                     })()}
+                                                    {/* o que cliquei agora */}
                                                 </>
                                             )}
                                             {!selected && (
                                                 <>
-                                                    {(() => {
-                                                        if (materiaIndex !== null && materiais[materiaIndex]) {
-                                                            const iconId = materiais[materiaIndex].icon;
-                                                            const SelectedIcon = icons.find((icon) => icon.id.toLowerCase() === iconId.toLowerCase())?.Icon;
-                                                            return SelectedIcon ? <SelectedIcon className="size-[150px] opacity-[22%] stroke-1"/> : null;
-                                                        }
-                                                        return null;
-                                                    })()}
+                                                    {/* o que já estava */}
                                                 </>
                                             )}
                                         </div>
@@ -389,73 +407,99 @@ export default function Materiais() {
                 </div>
 
                 <div className=" flex justify-center overflow-y-auto mt-5 h-[590px] max-h-[80%] w-[1100px]  max-w-[95%] ">
-                    <div className="w-[99%] grid grid-cols-[1fr_1fr] gap-[20px] h-fit pt-1 pb-1  ">
-                        
-                        <motion.div 
-                        whileHover={{ scale:1.01 }}
-                        whileTap={{ scale:0.99 }}
-                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                    <div className={`w-[980px] max-w-[100%] ${!materias || !materias.materiais || materias.materiais.length === 0 ?  "": "grid-cols-[1fr_1fr]"} grid gap-[20px] h-fit pt-1 pb-1 `}>
+                        {(
+                            (!materias || !materias.materiais || materias.materiais.length === 0)
+                        ) ? (
+                                <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+                                <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
+                                    <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
+                                        <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
+                                            Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
+                                        </h1>
 
-                        id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
-                            <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
-                            <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
-                        </motion.div>
-                        {materiais.map((material, index) => {
-                            const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icon.toLowerCase())?.Icon;
-                            return (
-                                <div key={material.nome + index}>
-                                    <motion.div 
-                                    whileHover={{ scale:1.01 }}
-                                    whileTap={{ scale:0.99 }}
-                                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                                    id="materias" className="h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.color }}>
-                                        <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
-                                            <div className="">
-                                                <AnimatePresence initial={false}>
-                                                    <button ref={(el) => { buttonRefs.current[index] = el; }}
-                                                    onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                                                    key={0} className=" " ><Ellipsis className="opacity-[80%] size-8"/>
-                                                    </button>
-
-                                                    { openPop === index &&(
-                                                        <motion.div 
-                                                        initial={{ scale: 0, opacity: 0}}
-                                                        animate={{ scale: 1, opacity: 1 }}
-                                                        exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
-
-                                                        ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
-                                                            <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
-                                                                <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
-                                                                <div className="flex flex-col w-full gap-1 text-base ">
-                                                                    <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); setMateriaIndex(index); console.log(index);}}>
-                                                                        <SquarePen/> Editar
-                                                                    </button>
-                                                                    <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                                                                    <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
-                                                                </div>
-                                                            </div>
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
-                                            </div>
-                                            {/* <div className="w-[170px] rounded-[15px] h-[110px] bg-white"></div> */}
-                                        </div>
-                                        <Link href={`/home/materiais/${material.nome}`} className="w-full h-full flex justify-center rounded-[28px]" >
-                                            <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
-                                                <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
-                                                    <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                                                    <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais}</h2>
-                                                    <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: {material.tempo} horas</h2>
-                                                    <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: {material.ultima}</h2>
-                                                </div>
-                                                {IconComponent && <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />}
-                                            </div>
+                                        <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
+                                        <button onClick={() => setOpen(true)} className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
+                                            <Icons.CirclePlus className="size-8"/> Criar matéria
+                                        </button>
                                         </Link>
-
-                                    </motion.div>
+                                    </div>
+                                    
                                 </div>
-                            );
-                        })}
+                                <Image width={300} height={500}
+                                    src="/semmateria.svg"
+                                    alt="Decoração"
+                                    className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
+                                    />
+                                </div>
+                        ) : (
+                            <motion.div 
+                            whileHover={{ scale:1.01 }}
+                            whileTap={{ scale:0.99 }}
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+    
+                            id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
+                                <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
+                                <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
+                            </motion.div>
+    
+                            // {materiais.map((material, index) => {
+                            //     const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icon.toLowerCase())?.Icon;
+                            //     return (
+                            //         <div key={material.nome + index}>
+                            //             <motion.div 
+                            //             whileHover={{ scale:1.01 }}
+                            //             whileTap={{ scale:0.99 }}
+                            //             transition={{ duration: 0.25, ease: "easeInOut" }}
+                            //             id="materias" className="h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.color }}>
+                            //                 <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
+                            //                     <div className="">
+                            //                         <AnimatePresence initial={false}>
+                            //                             <button ref={(el) => { buttonRefs.current[index] = el; }}
+                            //                             onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
+                            //                             key={0} className=" " ><Ellipsis className="opacity-[80%] size-8"/>
+                            //                             </button>
+    
+                            //                             { openPop === index &&(
+                            //                                 <motion.div 
+                            //                                 initial={{ scale: 0, opacity: 0}}
+                            //                                 animate={{ scale: 1, opacity: 1 }}
+                            //                                 exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
+    
+                            //                                 ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
+                            //                                     <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+                            //                                         <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
+                            //                                         <div className="flex flex-col w-full gap-1 text-base ">
+                            //                                             <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); setMateriaIndex(index); console.log(index);}}>
+                            //                                                 <SquarePen/> Editar
+                            //                                             </button>
+                            //                                             <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                            //                                             <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
+                            //                                         </div>
+                            //                                     </div>
+                            //                                 </motion.div>
+                            //                             )}
+                            //                         </AnimatePresence>
+                            //                     </div>
+                            //                 </div>
+                            //                 <Link href={`/home/materiais/${material.nome}`} className="w-full h-full flex justify-center rounded-[28px]" >
+                            //                     <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
+                            //                         <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
+                            //                             <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
+                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais}</h2>
+                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: {material.tempo} horas</h2>
+                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: {material.ultima}</h2>
+                            //                         </div>
+                            //                         {IconComponent && <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />}
+                            //                     </div>
+                            //                 </Link>
+    
+                            //             </motion.div>
+                            //         </div>
+                            //     );
+                            // })}
+                        )}
+                        
                         
                     </div>
                 </div>

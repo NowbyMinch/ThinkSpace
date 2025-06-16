@@ -1,8 +1,42 @@
+"use client";
+
 import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Earth } from 'lucide-react';
 import { Chart } from '@/app/home/components/chart';
 import Image from 'next/image';
 import { ComboboxDemo } from '@/app/home/components/dropdown';
+import { useEffect, useState } from 'react';
+
 export default function Métricas() {
+
+    type userData = {
+        primeiroNome?: string;
+        cargo?: string;
+        foto?: string;
+        // add other properties if needed
+    };
+    
+    const [ user, setUser ] = useState<userData>({});
+
+      useEffect(() => {
+
+        const user = async () => {
+          try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+              method: 'GET',
+              credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setUser(data)
+            
+          } catch (err) {
+            console.error(err);
+          }
+        }; user();
+     
+      }, []);
+
+    
     return(
         <>
             <div className="flex w-full justify-center overflow-hidden">
@@ -57,11 +91,11 @@ export default function Métricas() {
                                 <div className="w-[90%] h-[90%] flex flex-col gap-4">
 
                                     <div className="flex items-center gap-5 relative">
-                                        <Image width={300} height={500} src="/Profile.png" className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
+                                        <img src={`${user.foto}`} className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
                                         <div className="absolute w-[165.3px] h-[163px] bg-[#EB9481] rounded-full left-[-5px]"></div>
                                         <div className="">
-                                            <h1 className="text-[40px] font-medium leading-none ">Maria Eduarda</h1>
-                                            <h2 className="text-[#828181] font-medium text-[30px] leading-none">Estudante</h2>
+                                            <h1 className="text-[40px] font-medium leading-none ">{user.primeiroNome}</h1>
+                                            <h2 className="text-[#828181] font-medium text-[30px] leading-none">{user.cargo}</h2>
                                         </div>    
                                     </div>
 

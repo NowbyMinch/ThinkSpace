@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as Icons from "lucide-react";
@@ -12,30 +12,45 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
+type materiaData = {
+    id?: string;
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    usuarioId?: string;
+    materiais?: Array<number>;
+    // add other properties if needed
+};
+
 export function CarouselSpacing() {
+    const [ materiais, setMateriais ] = useState<materiaData>({});
 
+    
+    useEffect(() => {
+        const materias = async () => {
+            try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/materias`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            setMateriais(data)
+            } catch (err) {
+            console.error(err);
+            }
+        }; materias();
 
-    // const [ materiais, setMateriais ] = useState();
-    const materiais = useState() 
-
-    const materias = async () => {
-        try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/materias`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-        
-        const data = await res.json();
-        console.log(data)
-        } catch (err) {
-        console.error(err);
-        }
-    }; materias();
+    }, [])
 
   return (
     <>
-      { !materiais && (
-          <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+    
+      {(
+        (!materiais || !materiais.materiais || materiais.materiais.length === 0)
+      ) ? (
+            <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
             <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
                 <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
                     <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
@@ -56,146 +71,147 @@ export function CarouselSpacing() {
                 className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
                 />
             </div>
-      )}
+      ) : (
+          
+          <Carousel className=" flex justify-center ">
+               <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
+                   
+                   <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                       <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                           <CardContent className="flex items-center justify-center h-full flex-col ">
+                               <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                   <div className=" flex gap-[6px] w-full items-center relative ">
+                                       <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                       <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                       </div>
+       
+                                       <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                       Rede de computadores
+                                       </h1>
+                                   </div>
+       
+                                   <div className="w-full ">
+                                       <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                           <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                       </div>
+                                       <div className="flex justify-between ">
+                                           <span className="font-medium text-[17px]">
+                                           XP acumulada
+                                           </span>
+                                           <span className="font-medium text-[17px]">500XP</span>
+                                       </div>
+                                   </div>
+       
+                               </Link>
+                               
+                           </CardContent>
+                       </Card>
+                   </CarouselItem>
+       
+                   <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                       <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                           <CardContent className="flex items-center justify-center h-full flex-col ">
+                               <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                   <div className=" flex gap-[6px] w-full items-center relative ">
+                                       <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                       <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                       </div>
+       
+                                       <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                       Rede de computadores
+                                       </h1>
+                                   </div>
+       
+                                   <div className="w-full ">
+                                       <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                           <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                       </div>
+                                       <div className="flex justify-between ">
+                                           <span className="font-medium text-[17px]">
+                                           XP acumulada
+                                           </span>
+                                           <span className="font-medium text-[17px]">500XP</span>
+                                       </div>
+                                   </div>
+       
+                               </Link>
+                               
+                           </CardContent>
+                       </Card>
+                   </CarouselItem>
+       
+                   <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                       <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                           <CardContent className="flex items-center justify-center h-full flex-col ">
+                               <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                   <div className=" flex gap-[6px] w-full items-center relative ">
+                                       <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                       <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                       </div>
+       
+                                       <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                       Rede de computadores
+                                       </h1>
+                                   </div>
+       
+                                   <div className="w-full ">
+                                       <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                           <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                       </div>
+                                       <div className="flex justify-between ">
+                                           <span className="font-medium text-[17px]">
+                                           XP acumulada
+                                           </span>
+                                           <span className="font-medium text-[17px]">500XP</span>
+                                       </div>
+                                   </div>
+       
+                               </Link>
+                               
+                           </CardContent>
+                       </Card>
+                   </CarouselItem>
+       
+                   <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                       <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
+                           <CardContent className="flex items-center justify-center h-full flex-col ">
+                               <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                   <div className=" flex gap-[6px] w-full items-center relative ">
+                                       <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                       <Icons.MonitorCog className="size-[40px] text-[#757575]" />
+                                       </div>
+       
+                                       <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                       Rede de computadores
+                                       </h1>
+                                   </div>
+       
+                                   <div className="w-full ">
+                                       <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                           <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                       </div>
+                                       <div className="flex justify-between ">
+                                           <span className="font-medium text-[17px]">
+                                           XP acumulada
+                                           </span>
+                                           <span className="font-medium text-[17px]">500XP</span>
+                                       </div>
+                                   </div>
+       
+                               </Link>
+                               
+                           </CardContent>
+                       </Card>
+                   </CarouselItem>
+       
+               </CarouselContent>
+       
+             <CarouselPrevious />
+             <CarouselNext />
+          </Carousel>
+        )}
+      
 
-      { materiais && (
-        <Carousel className=" flex justify-center ">
-             <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
-                 
-                 <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                     <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
-                         <CardContent className="flex items-center justify-center h-full flex-col ">
-                             <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
-                                 <div className=" flex gap-[6px] w-full items-center relative ">
-                                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                     <Icons.MonitorCog className="size-[40px] text-[#757575]" />
-                                     </div>
-     
-                                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                     Rede de computadores
-                                     </h1>
-                                 </div>
-     
-                                 <div className="w-full ">
-                                     <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                         <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                     </div>
-                                     <div className="flex justify-between ">
-                                         <span className="font-medium text-[17px]">
-                                         XP acumulada
-                                         </span>
-                                         <span className="font-medium text-[17px]">500XP</span>
-                                     </div>
-                                 </div>
-     
-                             </Link>
-                             
-                         </CardContent>
-                     </Card>
-                 </CarouselItem>
-     
-                 <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                     <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
-                         <CardContent className="flex items-center justify-center h-full flex-col ">
-                             <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
-                                 <div className=" flex gap-[6px] w-full items-center relative ">
-                                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                     <Icons.MonitorCog className="size-[40px] text-[#757575]" />
-                                     </div>
-     
-                                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                     Rede de computadores
-                                     </h1>
-                                 </div>
-     
-                                 <div className="w-full ">
-                                     <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                         <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                     </div>
-                                     <div className="flex justify-between ">
-                                         <span className="font-medium text-[17px]">
-                                         XP acumulada
-                                         </span>
-                                         <span className="font-medium text-[17px]">500XP</span>
-                                     </div>
-                                 </div>
-     
-                             </Link>
-                             
-                         </CardContent>
-                     </Card>
-                 </CarouselItem>
-     
-                 <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                     <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
-                         <CardContent className="flex items-center justify-center h-full flex-col ">
-                             <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
-                                 <div className=" flex gap-[6px] w-full items-center relative ">
-                                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                     <Icons.MonitorCog className="size-[40px] text-[#757575]" />
-                                     </div>
-     
-                                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                     Rede de computadores
-                                     </h1>
-                                 </div>
-     
-                                 <div className="w-full ">
-                                     <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                         <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                     </div>
-                                     <div className="flex justify-between ">
-                                         <span className="font-medium text-[17px]">
-                                         XP acumulada
-                                         </span>
-                                         <span className="font-medium text-[17px]">500XP</span>
-                                     </div>
-                                 </div>
-     
-                             </Link>
-                             
-                         </CardContent>
-                     </Card>
-                 </CarouselItem>
-     
-                 <CarouselItem className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                     <Card className=" h-[200px] rounded-[25px] max-w-[376px] bg-[#CAC5FF] shadow-md border border-[#00000031] ">
-                         <CardContent className="flex items-center justify-center h-full flex-col ">
-                             <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
-                                 <div className=" flex gap-[6px] w-full items-center relative ">
-                                     <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
-                                     <Icons.MonitorCog className="size-[40px] text-[#757575]" />
-                                     </div>
-     
-                                     <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
-                                     Rede de computadores
-                                     </h1>
-                                 </div>
-     
-                                 <div className="w-full ">
-                                     <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
-                                         <div className="w-[23%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
-                                     </div>
-                                     <div className="flex justify-between ">
-                                         <span className="font-medium text-[17px]">
-                                         XP acumulada
-                                         </span>
-                                         <span className="font-medium text-[17px]">500XP</span>
-                                     </div>
-                                 </div>
-     
-                             </Link>
-                             
-                         </CardContent>
-                     </Card>
-                 </CarouselItem>
-     
-             </CarouselContent>
-     
-           <CarouselPrevious />
-           <CarouselNext />
-        </Carousel> 
-      )}
 
     </>
   )
