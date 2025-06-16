@@ -1,8 +1,37 @@
 import Image from "next/image"
 import { SendHorizonal } from "lucide-react"
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+
+type UserData = {
+    primeiroNome?: string;
+    cargo?: string;
+    foto?: string;
+    // add other properties if needed
+};
 
 export const ChatMateriais = () => {
+    const [ user, setUser ] = useState<UserData>({})
+     useEffect(() => {
+
+        const user = async () => {
+          try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+              method: 'GET',
+              credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setUser(data)
+
+          } catch (err) {
+            // setMessage("Erro ao carregar saudação.");
+            console.error(err);
+          }
+        }; user();
+    
+      }, []);
+
     return (
         <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">
             <div id="messages" className="w-[95%] max-w-[600px] flex flex-col gap-[18px] pr-1 h-[89%] overflow-y-auto mt-6 ">
@@ -12,7 +41,7 @@ export const ChatMateriais = () => {
                     </div>
 
                     <div className="shadow-md h-min rounded-full w-[15%]">
-                        <Image alt="Profile Picture" src="/Profile.png" className="rounded-full w-full" width={800} height={800} />
+                        <img alt="Profile Picture" src={user.foto} className="rounded-full w-full"  />
                     </div>
                 </div>
 
@@ -33,7 +62,7 @@ export const ChatMateriais = () => {
                     </div>
 
                     <div className="shadow-md h-min rounded-full w-[15%]">
-                        <Image alt="Profile Picture" src="/Profile.png" className="rounded-full w-full" width={800} height={800} />
+                        <img alt="Profile Picture" src={user.foto} className="rounded-full w-full" />
                     </div>
                 </div>
 
