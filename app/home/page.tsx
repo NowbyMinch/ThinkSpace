@@ -231,7 +231,7 @@ export default function Home() {
                           </div>
 
                           <div className="flex justify-between">
-                            <div className="flex flex-col text-center ">
+                            {/* <div className="flex flex-col text-center ">
                               <span className="text-[20px]">DOM</span>
                               <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
                                 <Check className="text-white" />
@@ -239,7 +239,7 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">DOM</span>
+                              <span className="text-[20px]">SEG</span>
                               <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
                                 <Check className="text-white" />
                               </div>
@@ -258,7 +258,28 @@ export default function Home() {
                               <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
                                 <Check className="text-white" />
                               </div>
+                            </div> */}
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">DOM</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
                             </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">SEG</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">TER</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
+
+                            <div className="flex flex-col text-center ">
+                              <span className="text-[20px]">QUA</span>
+                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                            </div>
+                            
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">QUI</span>
                               <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>

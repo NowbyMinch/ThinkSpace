@@ -1,15 +1,58 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Backdrop3 } from "../../components/backdrop";
 
+type UserData = {
+  primeiroNome?: string;
+  cargo?: string;
+  foto?: string;
+  // add other properties if needed
+};
+
 export default function Conta() {
   const [ excluir, setExcluirPop ] = useState(false);
   const [ suspender, setSuspenderPop ] = useState(false);
+  const [ user, setUser ] = useState<UserData>({})
+  const [email, setEmail] = useState("");
+  // const [message, setMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    const user = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+        setUser(data)
+      } catch (err) {
+        // setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    }; user();
+
+    const e = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/email`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+        setEmail(data.email);
+      } catch (err) {
+        // setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    }; 
+    e();
+
+  }, []);
   return (
     <>
       <AnimatePresence initial={false}>
@@ -38,9 +81,9 @@ export default function Conta() {
 
                             <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                                 <div className="flex flex-col justify-center items-center">
-                                    <Image width={300} height={500} src="/Profile.png" alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                    <span className="font-medium text-[30px]">Maria Luisa </span>
-                                    <span className="text-[20px]">malu@gmail.com</span>
+                                    <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                    <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                    <span className="text-[20px]"></span>
                                 </div>
 
                                 <h1 className="text-center text-[35px] font-medium">Você deseja mesmo suspender sua conta do ThinkSpace?</h1>
@@ -99,9 +142,9 @@ export default function Conta() {
 
                             <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                                 <div className="flex flex-col justify-center items-center">
-                                    <Image width={300} height={500} src="/Profile.png" alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                    <span className="font-medium text-[30px]">Maria Luisa </span>
-                                    <span className="text-[20px]">malu@gmail.com</span>
+                                    <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                    <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                    <span className="text-[20px]"></span>
                                 </div>
 
                                 <h1 className="text-center text-[35px] font-medium">Você deseja mesmo excluir sua conta do ThinkSpace?</h1>
@@ -141,37 +184,45 @@ export default function Conta() {
       
 
 
-      <div className="ml-10 mt-4 flex flex-col gap-10">
+      <div className="ml-10 mt-4 flex flex-col gap-5">
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="">
+          <div className="flex flex-col justify-between w-[400px] gap-4">
             <h1 className="font-medium text-[30px]">Endereço de Email</h1>
-            <h2 className="text-[25px]">marimachado@gmail.com</h2>
+            <input
+              type="text"
+              defaultValue={email}
+              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
+            ></input>
           </div>
 
-          <motion.button
+          {/* <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </motion.button>
+          </motion.button> */}
         </div>
 
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="">
+          <div className="flex flex-col justify-between w-[400px] gap-4">
             <h1 className="font-medium text-[30px]">Senha</h1>
-            <h2 className="text-[25px]">***********</h2>
+            <input
+            type="text"
+              placeholder="************"
+              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
+            ></input>
           </div>
 
-          <motion.button
+          {/* <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </motion.button>
+          </motion.button> */}
         </div>
 
         <div className="flex justify-between w-[1000px] items-center ">
@@ -215,6 +266,15 @@ export default function Conta() {
             Suspender
           </motion.button>
         </div>
+        <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+
+        id="editar_conta"
+        className="mt-3 ml-1 w-[200px] h-[60px] rounded-[30px] text-[25px] font-medium border border-[#1E2351]"
+        >
+          Salvar
+        </motion.button>
       </div>
     </>
   );

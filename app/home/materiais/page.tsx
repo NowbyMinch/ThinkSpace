@@ -103,6 +103,12 @@ type UserData = {
     // add other properties if needed
 };
 
+type recentesData = {
+    indice?: number;
+    nome?: string;
+    // add other properties if needed
+};
+
 export default function Materiais() {
     const [open, setOpen] = useState(false);
     const [ user, setUser ] = useState<UserData>({})
@@ -114,7 +120,8 @@ export default function Materiais() {
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [message, setMessage] = useState<string | null>(null);
     
-    const [temp, setTemp ] = useState<editar[]>([]);
+    const [ temp, setTemp ] = useState<editar[]>([]);
+    const [ recentes, setRecentes ] = useState<recentesData[]>([]);
     
     const cores = {
         ROXO: "#8B81F3",
@@ -145,29 +152,6 @@ export default function Materiais() {
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
 
-        const verMaterias = async () => {
-            console.log(criarMateria)
-
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(criarMateria),
-                    credentials: "include",
-                });
-                
-                const data = await res.json();
-                console.log(data)
-                if (data.message === "Matéria criada com sucesso."){
-                    closing()
-                }
-                setMessage(data.message)
-            } catch (err) {
-            console.error(err);
-            }
-        };
-
-
     };}, [openPop]);
 
     useEffect(() => {
@@ -179,7 +163,6 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
-                console.log(data)
                 setMaterias(data)
             } catch (err) {
             console.error(err);
@@ -202,6 +185,23 @@ export default function Materiais() {
             }
         }; user();
 
+        const recente = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/recentes`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                setRecentes(data);
+                console.log(data);
+
+            } catch (err) {
+                setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; recente();
+
     }, []);
 
     useEffect(() => {
@@ -218,7 +218,6 @@ export default function Materiais() {
             });
             
             const data = await res.json();
-            console.log(data)
             setMaterias(data)
         } catch (err) {
         console.error(err);
@@ -524,7 +523,7 @@ export default function Materiais() {
             <div className=" rounded-[35px] w-[75%] h-[100%] overflow-hidden bg-white flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="w-[1200px] max-w-[95%] mt-4 ">
                     <div className="w-[92%] mx-auto">
-                        <h1 className="text-[#1E2351] font-medium text-[50px]"> Olá, Maria </h1>
+                        <h1 className="text-[#1E2351] font-medium text-[50px]"> Olá, {user.primeiroNome} </h1>
                         <h1 className="font-medium text-[30px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
                     </div>
 
@@ -645,7 +644,7 @@ export default function Materiais() {
                                             </motion.div>
                                         </div>
                                     )
-                                })};
+                                })}
                             </>
                         )} 
 

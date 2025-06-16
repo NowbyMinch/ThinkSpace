@@ -14,6 +14,36 @@ const data = [
     {dia:"Dia 7", atividades:8},
  ] 
 
+const data2 = [ 
+    {dia:"Dia 1", atividades:2}, 
+    {dia:"Dia 2", atividades:2}, 
+    {dia:"Dia 3", atividades:5},
+    {dia:"Dia 4", atividades:1},
+    {dia:"Dia 5", atividades:4},
+    {dia:"Dia 6", atividades:1},
+    {dia:"Dia 7", atividades:8},
+ ] 
+
+const data3 = [ 
+    {dia:"Dia 1", atividades:2}, 
+    {dia:"Dia 2", atividades:23}, 
+    {dia:"Dia 3", atividades:5},
+    {dia:"Dia 4", atividades:1},
+    {dia:"Dia 5", atividades:1},
+    {dia:"Dia 6", atividades:0},
+    {dia:"Dia 7", atividades:8},
+ ] 
+
+const data4 = [ 
+    {dia:"Dia 1", atividades:2}, 
+    {dia:"Dia 2", atividades:2}, 
+    {dia:"Dia 3", atividades:5},
+    {dia:"Dia 4", atividades:7},
+    {dia:"Dia 5", atividades:7},
+    {dia:"Dia 6", atividades:15},
+    {dia:"Dia 7", atividades:8},
+ ] 
+
 import type { TooltipProps } from "recharts";
 
 

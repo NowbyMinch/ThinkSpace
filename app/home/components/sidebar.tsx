@@ -10,12 +10,19 @@ import { Backdrop3 } from "./backdrop";
 import { useRouter } from "next/navigation";
 import ErrorModal from "@/components/ui/ErrorModal";
 
+type UserData = {
+    primeiroNome?: string;
+    cargo?: string;
+    foto?: string;
+    // add other properties if needed
+};
 
 export const Sidebar = () => {
     const router = useRouter();
     const pathname = usePathname();
     const [message, setMessage] = useState("");
     const [ logoutPop, setLogoutPop ] = useState(false);
+    const [ user, setUser ] = useState<UserData>({})
     
     const handleLogout = async () => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
@@ -51,11 +58,25 @@ export const Sidebar = () => {
             setMessage("Erro ao carregar saudação.");
             console.error(err);
           }
-        };
-    
-        banner();
-      }, []);
+        }; banner();
 
+        const user = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                setUser(data)
+            } catch (err) {
+                setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; user();
+
+      }, []);
+      
     return (
         <>
             {message && (
@@ -86,9 +107,9 @@ export const Sidebar = () => {
 
                                     <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                                         <div className="flex flex-col justify-center items-center">
-                                            <Image width={300} height={500} src="/Profile.png" alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                            <span className="font-medium text-[30px]">Maria Luisa </span>
-                                            <span className="text-[20px]">malu@gmail.com</span>
+                                            <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                            <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                            <span className="text-[20px]"></span>
                                         </div>
 
                                         <h1 className="text-center text-[35px] font-medium">Saindo da conta. Até a próxima sessão!</h1>

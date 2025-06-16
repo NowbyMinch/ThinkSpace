@@ -1,42 +1,100 @@
 "use client";
 
 import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput } from "lucide-react";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const materias = [
+export const materia = [
   {label: "Ciência da Computação", key: "cienciadacomputacao"},
   {label: "Enfermagem", key: "enfermagem"},
   {label: "Geografia", key: "geografia"},
   {label: "Matemática", key: "matematica"},
 ];
 
+type materiaItem = {
+    id?: string;
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    usuarioId?: string;
+    materiais?: any[]; // or specify the correct type if known
+    // add other properties if needed
+};
+
+type UserData = {
+  primeiroNome?: string;
+  cargo?: string;
+  foto?: string;
+  // add other properties if needed
+};
+
 export default function MateriaisClient({ id }: { id: string; }) {
     const [open, setOpen] = useState(false);
     const [openVar, setOpenVar] = useState(false);
     const [input, setInput] = useState("");
-    const [input3, setInput3] = useState("");
-    const [input4, setInput4] = useState("");
+    // const [input3, setInput3] = useState("");
+    // const [input4, setInput4] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const decodedId = decodeURIComponent(id);
     const documentInputRef = useRef<HTMLInputElement>(null);
+    const [ user, setUser ] = useState<UserData>({})
 
     const [query, setQuery] = useState("");
+    
+    const [ materias, setMaterias ] = useState<materiaItem[]>([]);
+    
     const filtered = materias.filter((item) =>
-        item.label.toLowerCase().includes(query.toLowerCase())
+        item.nome?.toLowerCase().includes(query.toLowerCase())
     );
     const isExactMatch = materias.some(
-        (item) => item.label.toLowerCase() === query.toLowerCase()
+        (item) => item.nome?.toLowerCase() === query.toLowerCase()
     );
+    
+    useEffect(() => {
+
+        const materia = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                
+                const data = await res.json();
+                console.log(data)
+                setMaterias(data)
+            } catch (err) {
+            console.error(err);
+            }
+        }; 
+        materia();
+        
+        const user = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                setUser(data)
+            } catch (err) {
+                // setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; user();
+
+    }, []);
+
+
     
     function closing(){
         setOpen(false);
         setOpenVar(false);
         setInput("");
         setQuery("");
-        setInput3("");
-        setInput4("");
+        // setInput3("");
+        // setInput4("");
     }
 
     return( 
@@ -124,17 +182,17 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                             {filtered.length === 0 && (
                                                                 <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
                                                             )}
+
                                                             {filtered.map((materias) => (
-                                                                
                                                                 <li
-                                                                    key={materias.key}
+                                                                    key={materias.id}
                                                                     
                                                                     className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
                                                                     onClick={() => {
-                                                                    setQuery(materias.label);
+                                                                    setQuery(materias.nome ?? "");
                                                                     }}
                                                                 >
-                                                                    <div className="font-medium">{materias.label}</div>
+                                                                    <div className="font-medium">{materias.nome}</div>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -143,7 +201,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                                 </div>
                                                 
-                                                <div className="relative">
+                                                {/* <div className="relative">
                                                     <h2 className="text-[28px] font-medium">Tópicos:</h2>
                                                     <input type="text" value={input3} onChange={(e) => setInput3(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
                                                     <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
@@ -153,9 +211,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                     <h2 className="text-[28px] font-medium">Palavras-chave:</h2>
                                                     <input type="text" value={input4} onChange={(e) => setInput4(e.target.value)} className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
                                                     <div className="absolute w-[100px] h-[30px] rounded-[10px] bg-[#A387DC] bottom-2 left-3 text-white flex justify-center items-center gap-1"> <X className="size-5 text-black opacity-[34%] cursor-pointer"/> Python</div>
-                                                </div>
+                                                </div> */}
                                                 
-                                                <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="border my-auto border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
+                                                <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
                                                     <FileText />
                                                     Enviar
                                                 </motion.button>
@@ -209,7 +267,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 </div>
                             </a>
 
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
+                            {/* <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
                                 <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">02</h1>
 
                                 <div className="mt-[18px] flex justify-between items-center ">
@@ -298,7 +356,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                     <ChevronRight className="size-12 "/>
                                 </div>
-                            </a>
+                            </a> */}
                         </div>
                     </div>
                 </div>
@@ -310,18 +368,18 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                             <div className="flex ml-[15px] mt-[30px] gap-[15px] ">
                                 <div className="w-[28%] ">
-                                    <Image width={300} height={500} src="/Profile.png" className="h-auto w-full rounded-full cursor-pointer " alt="Profile picture" />
+                                    <img src={`${user.foto}`} className="h-auto w-full rounded-full cursor-pointer " alt="Profile picture" />
                                 </div>
 
                                 <div className="w-[68%]">
-                                    <h1 className="text-[30px] font-medium ">Maria Eduarda</h1>
-                                    <h2 className="text-[#828181] font-medium text-[25px]">Estudante</h2>
+                                    <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
+                                    <h2 className="text-[#828181] font-medium text-[25px]">{user.cargo}</h2>
                                     <div className="w-[220px] max-w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
-                                        <div className="w-[45%] h-2 rounded-[25px] bg-purple-600 "></div>
+                                        <div className="w-[0%] h-2 rounded-[25px] bg-purple-600 "></div>
                                     </div>
                                     <div className="flex justify-between w-[220px] max-w-[220px]">
                                         <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
-                                        <h2 className="font-medium text-[18px] text-[#828181]">450px</h2>
+                                        <h2 className="font-medium text-[18px] text-[#828181]">0px</h2>
                                     </div>
                                 </div>
                             </div>

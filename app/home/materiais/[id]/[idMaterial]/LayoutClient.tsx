@@ -4,17 +4,61 @@ import Link from "next/link";
 import { usePathname, redirect } from "next/navigation"
 import { Reply, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Backdrop3 } from "@/app/home/components/backdrop";
+
+
+type UserData = {
+    primeiroNome?: string;
+    cargo?: string;
+    foto?: string;
+    // add other properties if needed
+};
 
 export default function LayoutClient({ id, idMaterial, }: { id: string; idMaterial: string;}) { 
     const pathname = usePathname();
     const [ concluiu, setConcluiu ] = useState(false);
+    // const [message, setMessage] = useState<string | null>(null);
+    const [ user, setUser ] = useState<UserData>({})
+    
 
     const concluir = () => {
         setConcluiu(true);
     }
+
+    useEffect(() => {
+        const user = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                setUser(data)
+            } catch (err) {
+                // setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; user();
+    }, []);
+
+    const [ email, setEmail ] = useState<string>("")
+    const getemail = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setEmail(data)
+        } catch (err) {
+            // setMessage("Erro ao carregar saudação.");
+            console.error(err);
+        }
+    }; getemail();
     
     return (
         <>
@@ -44,9 +88,9 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
 
                                     <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                                         <div className="flex flex-col justify-center items-center">
-                                            <Image width={300} height={500} src="/Profile.png" alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                            <span className="font-medium text-[30px]">Maria Luisa </span>
-                                            <span className="text-[20px]">@malu.jpg</span>
+                                            <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                            <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                            <span className="text-[20px]"></span>
                                         </div>
 
                                         <h1 className="text-center text-[35px] font-medium">Missão cumprida! Todo o módulo de POO I finalizado. +22 XP adicionados ao seu perfil!</h1>
