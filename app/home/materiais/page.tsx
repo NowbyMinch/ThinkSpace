@@ -182,7 +182,6 @@ export default function Materiais() {
             console.error(err);
             }
         };
-        
 
     function closing(){
         setOpen(false);

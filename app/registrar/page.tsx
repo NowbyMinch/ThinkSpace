@@ -103,6 +103,7 @@ export default function RegisterPage() {
 
   const handleSubmit3 = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     const codeString = code.join("");
     const newForm3 = { ...form3, code: codeString, email: form.email };
 

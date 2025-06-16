@@ -52,7 +52,6 @@ export default function LoginPage() {
             body: JSON.stringify(form),
         });
 
-        console.log(form)
         const data = await res.json();
         if (data.message === "Código de redefinição enviado para o e-mail." ){
             setStep(2)
@@ -66,19 +65,19 @@ export default function LoginPage() {
 
     const handleSubmit2 = async (e: React.FormEvent) => {
         e.preventDefault();
-        const codeString = code.join("");
-        const formSubmit = {...form, code: codeString}
-        setForm2(formSubmit)
         
+        const codeString = code.join("");
+        const formSubmit = {email: form.email, code: codeString}
+        setForm2(formSubmit)        
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/verificar-codigo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form2),
+            body: JSON.stringify(formSubmit),
         });
 
-        console.log(form2)
         const data = await res.json();
-        if (data.message !== "E-mail verificado e cadastro concluído."){
+        if (data.message !== "Código válido. Você pode redefinir sua senha."){
             setMessage(data.message)
         }
         console.log(data); 
@@ -105,23 +104,18 @@ export default function LoginPage() {
 
     const handleSubmit3 = async (e: React.FormEvent) => {
         e.preventDefault();
-        setCompleteForm({...completeForm, email: form2.email, code: form2.code});
+        const CompleteForm = ({email: form2.email, code: form2.code, novaSenha: completeForm.novaSenha, confirmarSenha: completeForm.confirmarSenha})
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha/redefinir`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(completeForm),
+            body: JSON.stringify(CompleteForm),
         });
 
-        console.log(completeForm)
         const data = await res.json();
-        if (data.message !== "algo da senha"){
-            setMessage(data.message)
-        }
-        else if (data.message === "deu certo sei la"){
+        if (data.message === "Senha redefinida com sucesso."){
             router.push('/login')
         }
-
         console.log(data); 
     };
     
