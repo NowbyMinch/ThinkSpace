@@ -13,14 +13,39 @@ type UserData = {
   // add other properties if needed
 };
 
+type UsuarioData = {
+  primeiroNome?: string;
+  cargo?: string;
+  foto?: string;
+  areaDeInteresse?: string;
+  atualizadoEm?: string;
+  codigoExpiracao?: string;
+  codigoVerificado?: string;
+  criadoEm?: string;
+  dataNascimento?: string;
+  email?: string;
+  emailVerificado?: boolean;
+  escolaridade?: string;
+  funca?: string; 
+  id?: string;
+  instituicaoId?: string;
+  nomeCompleto?: string;
+  objetivoNaPlataforma?: string;
+  senha?: string;
+  sobrenome?: string;
+  ultimoLogin?: string;
+};
+
 export default function Conta() {
   const [ excluir, setExcluirPop ] = useState(false);
   const [ suspender, setSuspenderPop ] = useState(false);
   const [ user, setUser ] = useState<UserData>({})
   const [email, setEmail] = useState("");
-  // const [message, setMessage] = useState<string | null>(null);
+  const [novoEmail, setNovoEmail] = useState({ novoEmail: "" });
+  const [ senha, setSenha ] = useState({ novaSenha: ""});
 
   useEffect(() => {
+
     const user = async () => {
       try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
@@ -45,6 +70,8 @@ export default function Conta() {
         
         const data = await res.json();
         setEmail(data.email);
+        console.log(data);
+
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -53,6 +80,42 @@ export default function Conta() {
     e();
 
   }, []);
+
+
+  const editarSenha = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/editar-senha`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(senha),
+      });
+
+      const result = await res.json();
+      console.log(result.message); // Matéria excluída com sucesso.
+      
+    } catch (error) {
+      console.error("Erro ao editar a senha:");
+    }
+  };
+
+  const editarEmail = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/editar-email`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novoEmail),
+      });
+
+      const result = await res.json();
+      console.log(result.message); // Matéria excluída com sucesso.
+      
+    } catch (error) {
+      console.error("Erro ao editar a senha:");
+    }
+  };
+
   return (
     <>
       <AnimatePresence initial={false}>
@@ -181,8 +244,7 @@ export default function Conta() {
       </AnimatePresence>
       {/* <div className={`  absolute left-0 top-0 w-full h-full `}>
       </div> */}
-      
-
+z
 
       <div className="ml-10 mt-4 flex flex-col gap-5">
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
@@ -191,18 +253,20 @@ export default function Conta() {
             <input
               type="text"
               defaultValue={email}
+              onChange={(e) => setNovoEmail({ ...novoEmail, novoEmail: e.target.value })}
               className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
             ></input>
           </div>
 
-          {/* <motion.button
+          <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          onClick={editarEmail}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </motion.button> */}
+          </motion.button>
         </div>
 
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
@@ -211,18 +275,20 @@ export default function Conta() {
             <input
             type="text"
               placeholder="************"
+              onChange={(e) => setSenha({ ...senha, novaSenha: e.target.value })}
               className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
             ></input>
           </div>
 
-          {/* <motion.button
+          <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          onClick={editarSenha}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
           >
             Editar
-          </motion.button> */}
+          </motion.button>
         </div>
 
         <div className="flex justify-between w-[1000px] items-center ">
@@ -266,15 +332,15 @@ export default function Conta() {
             Suspender
           </motion.button>
         </div>
-        <motion.button
+        {/* <motion.button
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
-
+        onClick={() => { if(novoEmail){ editarEmail(); } editarSenha();   }}
         id="editar_conta"
         className="mt-3 ml-1 w-[200px] h-[60px] rounded-[30px] text-[25px] font-medium border border-[#1E2351]"
         >
           Salvar
-        </motion.button>
+        </motion.button> */}
       </div>
     </>
   );
