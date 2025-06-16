@@ -158,20 +158,20 @@ export default function Home() {
       }
     }; notificacao();
 
-    const ofensiva = async () => {
-      try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
-          method: 'GET',
-          credentials: 'include',
-        });
+    // const ofensiva = async () => {
+    //   try{
+    //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+    //       method: 'GET',
+    //       credentials: 'include',
+    //     });
         
-        const data = await res.json();
-        console.log(data);
-      } catch (err) {
-        setMessage("Erro ao carregar saudação.");
-        console.error(err);
-      }
-    }; ofensiva();
+    //     const data = await res.json();
+    //     console.log(data);
+    //   } catch (err) {
+    //     setMessage("Erro ao carregar saudação.");
+    //     console.error(err);
+    //   }
+    // }; ofensiva();
     
   }, []);
 
