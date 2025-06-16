@@ -156,7 +156,9 @@ export default function Materiais() {
                 }
             }; 
             materia();
+
         }, []);
+
     
     // Função para criar nova matéria
         const criar = async () => {
@@ -189,6 +191,7 @@ export default function Materiais() {
         setSelected(null);
         setColor("");
         setTitulo("")
+        setCriarMateria({ nome: "", cor: "", icone: "" })
     }
      
     return( 
