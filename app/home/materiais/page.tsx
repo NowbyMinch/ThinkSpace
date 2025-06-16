@@ -114,6 +114,30 @@ export default function Materiais() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
+
+        const verMaterias = async () => {
+            console.log(criarMateria)
+
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(criarMateria),
+                    credentials: "include",
+                });
+                
+                const data = await res.json();
+                console.log(data)
+                if (data.message === "Matéria criada com sucesso."){
+                    closing()
+                }
+                setMessage(data.message)
+            } catch (err) {
+            console.error(err);
+            }
+        };
+
+
     };}, [openPop]);
 
         useEffect(() => {
@@ -151,11 +175,13 @@ export default function Materiais() {
                 if (data.message === "Matéria criada com sucesso."){
                     closing()
                 }
+                setMessage(data.message)
             } catch (err) {
             console.error(err);
             }
         };
-    
+        
+
     function closing(){
         setOpen(false);
         setEditar(false);

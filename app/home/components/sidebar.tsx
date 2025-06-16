@@ -12,7 +12,7 @@ import ErrorModal from "@/components/ui/ErrorModal";
 
 
 export const Sidebar = () => {
-    const route = useRouter();
+    const router = useRouter();
     const pathname = usePathname();
     const [message, setMessage] = useState("");
     const [ logoutPop, setLogoutPop ] = useState(false);
@@ -25,7 +25,7 @@ export const Sidebar = () => {
 
         const data = await res.json();
         if (data.message === "Logout realizado com sucesso"){
-            route.push('/');
+            router.push('/');
         }
         console.log(data); 
     };
