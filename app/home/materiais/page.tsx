@@ -65,13 +65,18 @@ const cor = {
     "#FFA6F1": "ROSA", 
     "#FFACA1": "SALMAO" 
 };
-type materiaData = {
+type materiaItem = {
     id?: string;
     nome?: string;
     cor?: string;
     icone?: string;
     usuarioId?: string;
-    materiais?: Array<number>;
+    materiais?: any[]; // or specify the correct type if known
+    // add other properties if needed
+};
+
+type materiaData = {
+    materiais?: materiaItem[];
     // add other properties if needed
 };
 
@@ -89,12 +94,19 @@ export default function Materiais() {
     const [color, setColor] = useState<string | "">("");
     const [titulo, setTitulo] = useState("");
     const [openPop, setOpenPop] = useState<number | null>(null);
-    // const [materiaIndex, setMateriaIndex] = useState<number | null>(null);
+    const [materiaIndex, setMateriaIndex] = useState<number | null>(null);
     const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [message, setMessage] = useState<string | null>(null);
+    
+    const cores = {
+        ROXO: "#8B81F3",
+        LILAS: "#CAC5FF",
+        ROSA: "#FFA6F1",
+        SALMAO: "#FFACA1",
+    };
 
-    const [ materias, setMaterias ] = useState<materiaData>({});
+    const [ materias, setMaterias ] = useState<materiaItem[]>([]);
     const [ criarMateria, setCriarMateria ] = useState<criar>({});
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -140,48 +152,68 @@ export default function Materiais() {
 
     };}, [openPop]);
 
-        useEffect(() => {
-            const materia = async () => {
-                try{
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-                        method: 'GET',
-                        credentials: 'include',
-                    });
-                    
-                    const data = await res.json();
-                    console.log(data)
-                    setMaterias(data)
-                } catch (err) {
-                console.error(err);
-                }
-            }; 
-            materia();
-
-        }, []);
-
-    
-    // Função para criar nova matéria
-        const criar = async () => {
-            console.log(criarMateria)
-
+    useEffect(() => {
+        const materia = async () => {
             try{
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(criarMateria),
-                    credentials: "include",
+                    method: 'GET',
+                    credentials: 'include',
                 });
                 
                 const data = await res.json();
                 console.log(data)
-                if (data.message === "Matéria criada com sucesso."){
-                    closing()
-                }
-                setMessage(data.message)
+                setMaterias(data)
             } catch (err) {
             console.error(err);
             }
-        };
+        }; 
+        materia();
+
+    }, []);
+
+    
+    // Função para buscar matérias
+    const materia = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            setMaterias(data)
+        } catch (err) {
+        console.error(err);
+        }
+    };
+
+    // Função para criar nova matéria
+    const criar = async () => {
+        console.log(criarMateria)
+
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(criarMateria),
+                credentials: "include",
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            if (data.message === "Matéria criada com sucesso."){
+                closing()
+                
+            }
+            else{
+                setMessage(data.message)
+            }
+        } catch (err) {
+        console.error(err);
+        }
+        materia();
+    };
 
     function closing(){
         setOpen(false);
@@ -435,98 +467,84 @@ export default function Materiais() {
                 </div>
 
                 <div className=" flex justify-center overflow-y-auto mt-5 h-[590px] max-h-[80%] w-[1100px]  max-w-[95%] ">
-                    <div className={`w-[980px] max-w-[100%] ${!materias || !materias.materiais || materias.materiais.length === 0 ?  "": "grid-cols-[1fr_1fr]"} grid gap-[20px] h-fit pt-1 pb-1 `}>
-                        {(
-                            (!materias || !materias.materiais || materias.materiais.length === 0)
-                        ) ? (
-                                <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
-                                <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
-                                    <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
-                                        <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
-                                            Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
-                                        </h1>
+                    <div className={`w-[980px] max-w-[100%] grid-cols-[1fr_1fr] grid gap-[20px] h-fit pt-1 pb-1 `}>
+                    
+                        <motion.div 
+                        whileHover={{ scale:1.01 }}
+                        whileTap={{ scale:0.99 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
 
-                                        <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
-                                        <button onClick={() => setOpen(true)} className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
-                                            <Icons.CirclePlus className="size-8"/> Criar matéria
-                                        </button>
-                                        </Link>
+                        id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
+                            <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
+                            <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
+                        </motion.div>
+
+
+                        {materias.map((material, index) => {
+                        return (
+                            <div key={index}>
+                                <motion.div 
+                                whileHover={{ scale:1.01 }}
+                                whileTap={{ scale:0.99 }}
+                                transition={{ duration: 0.25, ease: "easeInOut" }}
+                                id="materias" className="h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
+                                    <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
+                                        <div className="">
+                                            <AnimatePresence initial={false}>
+                                                <button ref={(el) => { buttonRefs.current[index] = el; }}
+                                                onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
+                                                key={0} className=" " ><Ellipsis className="opacity-[80%] size-8"/>
+                                                </button>
+
+                                                { openPop === index &&(
+                                                    <motion.div 
+                                                    initial={{ scale: 0, opacity: 0}}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
+
+                                                    ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
+                                                        <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+                                                            <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
+                                                            <div className="flex flex-col w-full gap-1 text-base ">
+                                                                <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); setMateriaIndex(index); console.log(index);}}>
+                                                                    <SquarePen/> Editar
+                                                                </button>
+                                                                <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                                                                <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
+                                                            </div>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
                                     </div>
-                                    
-                                </div>
-                                <Image width={300} height={500}
-                                    src="/semmateria.svg"
-                                    alt="Decoração"
-                                    className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
-                                    />
-                                </div>
-                        ) : (
-                            <motion.div 
-                            whileHover={{ scale:1.01 }}
-                            whileTap={{ scale:0.99 }}
-                            transition={{ duration: 0.25, ease: "easeInOut" }}
-    
-                            id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
-                                <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
-                                <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
-                            </motion.div>
-    
-                            // {materiais.map((material, index) => {
-                            //     const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icon.toLowerCase())?.Icon;
-                            //     return (
-                            //         <div key={material.nome + index}>
-                            //             <motion.div 
-                            //             whileHover={{ scale:1.01 }}
-                            //             whileTap={{ scale:0.99 }}
-                            //             transition={{ duration: 0.25, ease: "easeInOut" }}
-                            //             id="materias" className="h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.color }}>
-                            //                 <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
-                            //                     <div className="">
-                            //                         <AnimatePresence initial={false}>
-                            //                             <button ref={(el) => { buttonRefs.current[index] = el; }}
-                            //                             onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                            //                             key={0} className=" " ><Ellipsis className="opacity-[80%] size-8"/>
-                            //                             </button>
-    
-                            //                             { openPop === index &&(
-                            //                                 <motion.div 
-                            //                                 initial={{ scale: 0, opacity: 0}}
-                            //                                 animate={{ scale: 1, opacity: 1 }}
-                            //                                 exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
-    
-                            //                                 ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
-                            //                                     <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
-                            //                                         <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
-                            //                                         <div className="flex flex-col w-full gap-1 text-base ">
-                            //                                             <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); setMateriaIndex(index); console.log(index);}}>
-                            //                                                 <SquarePen/> Editar
-                            //                                             </button>
-                            //                                             <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                            //                                             <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
-                            //                                         </div>
-                            //                                     </div>
-                            //                                 </motion.div>
-                            //                             )}
-                            //                         </AnimatePresence>
-                            //                     </div>
-                            //                 </div>
-                            //                 <Link href={`/home/materiais/${material.nome}`} className="w-full h-full flex justify-center rounded-[28px]" >
-                            //                     <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
-                            //                         <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
-                            //                             <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais}</h2>
-                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: {material.tempo} horas</h2>
-                            //                             <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: {material.ultima}</h2>
-                            //                         </div>
-                            //                         {IconComponent && <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />}
-                            //                     </div>
-                            //                 </Link>
-    
-                            //             </motion.div>
-                            //         </div>
-                            //     );
-                            // })}
-                        )}
+                                    <Link href={`/home/materiais/${material.nome}`} className="w-full h-full flex justify-center rounded-[28px]" >
+                                        <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
+                                            <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
+                                                {/* <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais}</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: {material.tempo} horas</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: {material.ultima}</h2> */}
+                                                <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais? material.materiais: "0"}</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
+                                                <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
+                                            </div>
+                                            
+                                            {(() => {
+                                                const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
+                                                if (IconComponent) {
+                                                    return <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />;
+                                                }
+                                                return null;
+                                            })()}
+                                        </div>
+                                    </Link>
+
+                                </motion.div>
+                            </div>
+                        )
+                        })};
                         
                         
                     </div>
