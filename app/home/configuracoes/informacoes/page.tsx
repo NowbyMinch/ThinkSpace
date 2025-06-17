@@ -69,6 +69,7 @@ export default function Informações() {
         const data = await res.json();
         setUsuario(data.usuario);
         setEscolaridade(usuario.escolaridade)
+        console.log(escolaridade)
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
