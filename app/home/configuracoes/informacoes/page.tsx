@@ -38,6 +38,7 @@ type UsuarioData = {
 export default function Informações() {
   const [ user, setUser ] = useState<UserData>({});
   const [usuario, setUsuario] = useState<UsuarioData>({});
+  const [ escolaridade, setEscolaridade ] = useState("");
 
   
   const [ instituicao, setInstituicao ] = useState<string>("");
@@ -67,6 +68,7 @@ export default function Informações() {
         
         const data = await res.json();
         setUsuario(data.usuario);
+        setEscolaridade(usuario.escolaridade)
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -91,6 +93,7 @@ export default function Informações() {
       }
     }; instituicao();      
   }, []);
+
   
   // const [ configuracoes, setConfiguracoes ] = useState({ primeiroNome: usuario.primeiroNome, sobrenome: usuario.sobrenome, dataNascimento: usuario.dataNascimento?.split('T')[0], instituicaoId: usuario.instituicaoId, nomeCompleto: usuario.nomeCompleto, escolaridade: usuario.escolaridade, funcao: user.cargo });
 
@@ -173,7 +176,7 @@ export default function Informações() {
           </h1>
           <input
             type="text"
-            defaultValue={ usuario?.escolaridade ?? ""}
+            defaultValue={ escolaridade.toLowerCase() ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
             className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
           ></input>
