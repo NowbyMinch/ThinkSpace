@@ -38,7 +38,6 @@ type UsuarioData = {
 export default function Informações() {
   const [ user, setUser ] = useState<UserData>({});
   const [usuario, setUsuario] = useState<UsuarioData>({});
-  const [ escolaridade, setEscolaridade ] = useState("");
 
   
   const [ instituicao, setInstituicao ] = useState<string>("");
@@ -68,8 +67,6 @@ export default function Informações() {
         
         const data = await res.json();
         setUsuario(data.usuario);
-        setEscolaridade(usuario.escolaridade)
-        console.log(escolaridade)
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
