@@ -109,7 +109,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031] items-center">
+            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031] ">
                 <div className="w-[90%]  h-[95%] max-h-[900px] flex flex-col gap-4 items-center">
                     <h1 className="w-[420px] max-w-[100%] ">Seus quizzes</h1>
 
