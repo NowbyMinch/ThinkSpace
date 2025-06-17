@@ -38,6 +38,9 @@ type UsuarioData = {
 export default function Informações() {
   const [ user, setUser ] = useState<UserData>({});
   const [usuario, setUsuario] = useState<UsuarioData>({});
+  const [ escola, setEscola ] = useState("");
+  
+  let escolaridade = "";
 
   
   const [ instituicao, setInstituicao ] = useState<string>("");
@@ -66,6 +69,8 @@ export default function Informações() {
         });
         
         const data = await res.json();
+        escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+        setEscola(escolaridade);
         setUsuario(data.usuario);
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
@@ -140,7 +145,7 @@ export default function Informações() {
           <h1 className="text-[30px] font-medium">Data de Nascimento</h1>
           <input
             type="text"
-            defaultValue={usuario?.dataNascimento?.split('T')[0] ?? ""}
+            defaultValue={(usuario?.dataNascimento?.split('T')[0])?.replaceAll( "-", "/" ) ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
             className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
           ></input>
@@ -174,7 +179,7 @@ export default function Informações() {
           </h1>
           <input
             type="text"
-            defaultValue={ usuario?.escolaridade ?? ""}
+            defaultValue={ escola ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
             className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
           ></input>
