@@ -161,7 +161,7 @@ export default function Informações() {
           </h1>
           <input
             type="text"
-            defaultValue={usuario?.escolaridade ?? ""}
+            defaultValue={((usuario?.escolaridade).replace("_", " ")).toLowerCase() ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
             className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
           ></input>
