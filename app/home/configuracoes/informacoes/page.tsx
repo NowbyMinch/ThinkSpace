@@ -157,11 +157,23 @@ export default function Informações() {
 
         <div className="flex flex-col justify-between w-[1000px] ">
           <h1 className="text-[30px] font-medium">
-            Cargo ou Posição / Nível de escolaridade
+            Cargo ou Posição
           </h1>
           <input
             type="text"
-            defaultValue={ user?.cargo && usuario?.escolaridade ? `${user?.cargo} / ${usuario?.escolaridade}` : ""}
+            defaultValue={ user?.cargo ?? ""}
+            // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
+          ></input>
+        </div>
+
+        <div className="flex flex-col justify-between w-[1000px] ">
+          <h1 className="text-[30px] font-medium">
+            Nível de escolaridade
+          </h1>
+          <input
+            type="text"
+            defaultValue={ usuario?.escolaridade ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
             className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
           ></input>
