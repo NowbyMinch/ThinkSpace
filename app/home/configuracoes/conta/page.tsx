@@ -40,8 +40,8 @@ export default function Conta() {
   const [ excluir, setExcluirPop ] = useState(false);
   const [ suspender, setSuspenderPop ] = useState(false);
   const [ user, setUser ] = useState<UserData>({})
-  const [email, setEmail] = useState("");
-  const [novoEmail, setNovoEmail] = useState({ novoEmail: "" });
+  const [ email, setEmail] = useState("");
+  const [ novoEmail, setNovoEmail] = useState({ novoEmail: "" });
   const [ senha, setSenha ] = useState({ novaSenha: ""});
 
   useEffect(() => {
