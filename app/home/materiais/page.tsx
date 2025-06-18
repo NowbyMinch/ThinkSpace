@@ -4,6 +4,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import {  useState, useEffect, useRef } from 'react';
+import { Backdrop3 } from "../components/backdrop";
+import ErrorModal from "@/components/ui/ErrorModal";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
   Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
@@ -17,7 +20,6 @@ import {
   Ellipsis
 } from "lucide-react";
 import * as Icons from "lucide-react"; 
-
 const icons = [
   // Educação e aprendizado
   { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
@@ -54,10 +56,6 @@ const icons = [
   { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse }, { id: "squareX", Icon: SquareX },
   { id: "squarePen", Icon: SquarePen }
 ];
-import {  useState, useEffect, useRef } from 'react';
-import { Backdrop3 } from "../components/backdrop";
-import ErrorModal from "@/components/ui/ErrorModal";
-
 const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 const cor = { 
     "#8B81F3": "ROXO", 
@@ -75,11 +73,6 @@ type materiaItem = {
     materiais?: any[]; // or specify the correct type if known
     // add other properties if needed
 };
-
-// type materiaData = {
-//     materiais?: materiaItem[];
-//     // add other properties if needed
-// };
 
 type criar = {
     nome?: string;
@@ -109,29 +102,48 @@ type recentesData = {
     // add other properties if needed
 };
 
+type perfil = {
+    avatar?: string,
+    primeiroNome?: string,
+    cargo?: string,
+    xp?: number,
+    progresso?: number,
+    nivel?: string,
+    // add other properties if needed
+};
+
 export default function Materiais() {
+    // Estados de controle de interface
     const [open, setOpen] = useState(false);
-    const [ user, setUser ] = useState<UserData>({})
     const [editar, setEditar] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
     const [color, setColor] = useState<string | "">("");
     const [openPop, setOpenPop] = useState<number | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
+    const [deletarPop, setDeletarPop] = useState(false);
+    const [deletar, setDeletar] = useState("");
+
+    // Dados do usuário
+    const [user, setUser] = useState<UserData>({});
+    const [ perfil, setPerfil ] = useState<perfil | null []>({})
+
+    // Referências de elementos
     const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
-    const [message, setMessage] = useState<string | null>(null);
-    const [ deletarPop, setDeletarPop ] = useState(false)
-    const [ temp, setTemp ] = useState<editar[]>([]);
-    // const [ recentes, setRecentes ] = useState<recentesData[]>([]);
-    const [ deletar, setDeletar ] = useState("")
-    const cores = {
-        ROXO: "#8B81F3",
-        LILAS: "#CAC5FF",
-        ROSA: "#FFA6F1",
-        SALMAO: "#FFACA1",
-    };
 
-    const [ materias, setMaterias ] = useState<materiaItem[]>([]);
-    const [ criarMateria, setCriarMateria ] = useState<criar>({});
+    // Dados de matérias
+    const [materias, setMaterias] = useState<materiaItem[]>([]);
+    const [criarMateria, setCriarMateria] = useState<criar>({});
+    const [temp, setTemp] = useState<editar[]>([]);
+    // const [recentes, setRecentes] = useState<recentesData[]>([]);
+
+    // Constantes
+    const cores = {
+    ROXO: "#8B81F3",
+    LILAS: "#CAC5FF",
+    ROSA: "#FFA6F1",
+    SALMAO: "#FFACA1",
+    };
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -147,7 +159,6 @@ export default function Materiais() {
             setOpenPop(null);
             }
         }
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
@@ -184,6 +195,21 @@ export default function Materiais() {
                 console.error(err);
             }
         }; user();
+
+        const perfil = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                console.log(data)
+            } catch (err) {
+                setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; perfil();
 
         // const recente = async () => {
         //     try{

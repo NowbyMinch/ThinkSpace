@@ -30,29 +30,39 @@ type UserData = {
 };
 
 export default function MateriaisClient({ id }: { id: string; }) {
+    // Estados de controle de interface
     const [open, setOpen] = useState(false);
     const [openVar, setOpenVar] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+
+    // Inputs e referências
     const [input, setInput] = useState("");
     // const [input3, setInput3] = useState("");
     // const [input4, setInput4] = useState("");
-    const [isFocused, setIsFocused] = useState(false);
-    const decodedId = decodeURIComponent(id);
     const documentInputRef = useRef<HTMLInputElement>(null);
-    const [ user, setUser ] = useState<UserData>({})
 
+    // Dados do usuário
+    const [user, setUser] = useState<UserData>({});
+
+    // Query de busca
     const [query, setQuery] = useState("");
-    
-    const [ materias, setMaterias ] = useState<materiaItem[]>([]);
-    
+
+    // Dados de matérias
+    const [materias, setMaterias] = useState<materiaItem[]>([]);
+
+    // Filtros de matérias
     const filtered = materias.filter((item) =>
-        item.nome?.toLowerCase().includes(query.toLowerCase())
+    item.nome?.toLowerCase().includes(query.toLowerCase())
     );
+
     const isExactMatch = materias.some(
-        (item) => item.nome?.toLowerCase() === query.toLowerCase()
+    (item) => item.nome?.toLowerCase() === query.toLowerCase()
     );
+
+    // Outros
+    const decodedId = decodeURIComponent(id);
     
     useEffect(() => {
-
         const materia = async () => {
             try{
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
@@ -84,9 +94,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
             }
         }; user();
 
+        const materiais = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                console.log(data)
+
+            } catch (err) {
+                console.error(err);
+            }
+            
+        }; materiais();
+
     }, []);
-
-
     
     function closing(){
         setOpen(false);
