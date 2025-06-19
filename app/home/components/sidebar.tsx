@@ -193,13 +193,15 @@ export const Sidebar = () => {
                                                 initial={{ scale: 1 }}
                                                 animate={{ opacity: 1 }}
                                             />
-                                            <motion.img src="/Light Bulb.png" width={300} height={500} 
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 0 }}
+                                            <motion.img src="/Light Bulb.png" width={300} height={500} alt="Logo"
+                                            className="w-full absolute opacity-1"
                                             variants={{
-                                                hovered: {scale: 1}
+                                                initial: { scale: 0 },
+                                                hovered: { scale: 1 }
                                             }}
-                                            alt="Logo" className=" scale-100 w-full absolute opacity-1 "/>
+                                            initial="initial"
+                                            animate="initial"
+                                            whileHover="hovered"/>
                                         </>
                                     )}
                                 </motion.div>
