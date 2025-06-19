@@ -1,26 +1,82 @@
 "use client";
 import Image from "next/image";
-import {
-  Flame,
-  Bell,
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  X,
-  Info,
-} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Backdrop } from "./components/backdrop";
 import { Backdrop2 } from "./components/backdrop";
-import { CarouselLinks, CarouselSpacing } from "./components/carousel";
+import { CarouselLinks } from "./components/carousel";
 import { motion, AnimatePresence } from "framer-motion";
 import ErrorModal from '@/components/ui/ErrorModal';
+import Loading from "@/app/home/components/loading";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import {
+  CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
+  Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
+  ChevronsRight, ChevronLeft, AlarmClock, Bell, Book,
+  Bookmark, Calendar, Check, Clipboard, Clock,
+  Code, Cpu, Database, Download, Edit, Eye, File, Filter, Flag,
+  Folder, GitBranch, Globe2, Grid, Hash, Headphones, HelpCircle,
+  Home, Inbox, Info, Key, Layers, Layout, LifeBuoy, Lightbulb, List,
+  Loader, Lock, LogIn, LogOut, Mail, Map, Menu, SquareX, 
+  SquarePen, Flame, ArrowLeft, ArrowRight, Ellipsis
+} from "lucide-react";
+import * as Icons from "lucide-react";
 
-export default function Home() {
+const icons = [
+  // Educação e aprendizado
+  { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
+  { id: "clipboard", Icon: Clipboard }, { id: "file", Icon: File }, { id: "folder", Icon: Folder },
+  { id: "calendar", Icon: Calendar }, { id: "clock", Icon: Clock }, { id: "alarmClock", Icon: AlarmClock },
+  { id: "edit", Icon: Edit }, { id: "download", Icon: Download }, { id: "eye", Icon: Eye },
+  { id: "check", Icon: Check }, { id: "search", Icon: Search }, { id: "filter", Icon: Filter },
+  { id: "helpCircle", Icon: HelpCircle }, { id: "info", Icon: Info }, { id: "lightbulb", Icon: Lightbulb },
+
+  // Programação e lógica
+  { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
+  { id: "gitBranch", Icon: GitBranch }, { id: "hash", Icon: Hash }, { id: "Monitor", Icon: Monitor },
+
+  // Matemática
+  { id: "plus", Icon: Plus }, { id: "minus", Icon: Minus }, { id: "x", Icon: X }, { id: "divide", Icon: Divide },
+
+  // Interface e organização de conhecimento
+  { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "grid", Icon: Grid }, { id: "list", Icon: List },
+  { id: "menu", Icon: Menu }, { id: "loader", Icon: Loader },
+
+  // Comunicação e interações
+  { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "bell", Icon: Bell }, { id: "headphones", Icon: Headphones },
+
+  // Identidade e acesso (login/logout para ambientes de estudo)
+  { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut }, { id: "lock", Icon: Lock }, { id: "key", Icon: Key },
+
+  // Contexto global e navegação de conteúdo
+  { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "map", Icon: Map }, { id: "home", Icon: Home },
+  { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
+  { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
+
+  // Extras úteis
+  { id: "flag", Icon: Flag }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "circlePlus", Icon: CirclePlus },
+  { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse }, { id: "squareX", Icon: SquareX },
+  { id: "squarePen", Icon: SquarePen }
+];
+
+export default function HomePage() {
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   
+  const cores = {
+    ROXO: "#8B81F3",
+    LILAS: "#CAC5FF",
+    ROSA: "#FFA6F1",
+    SALMAO: "#FFACA1",
+};
 
   function opening(){
     setPop(true);
@@ -55,34 +111,56 @@ export default function Home() {
     diaSemana?: number;
     // add other properties if needed
   };
-
   type CalendarioData = {
     mesAtual?: string;
     anoAtual?: string;
     dias?: DiaData[];
     // add other properties if needed
   };
-
   type salasData = {
     salasMembro?: string;
     salasModerador?: string;
     // add other properties if needed
   };
-
   type notificacaoData = {
     userId?: string;
     notificacoes?: Array<number>;
     message?: string;
     // add other properties if needed
   };
+  type materiaItem = {
+    id?: string;
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    usuarioId?: string;
+    materiais?: any[]; // or specify the correct type if known
+    // add other properties if needed
+};
   
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
   const [ salas, setSalas ] = useState<salasData>({})
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
+  const [ loading, setLoading ] = useState(true);
+  const [ materias, setMaterias ] = useState<materiaItem[]>([]);
 
   useEffect(() => {
+    const materia = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setMaterias(data);
+        } catch (err) {
+        console.error(err);
+        } 
+    }; materia();
+    
     const banner = async () => {
       try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
@@ -91,6 +169,7 @@ export default function Home() {
         });
         
         const data = await res.json();
+        setLoading(false);
         setBannerData(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -106,6 +185,7 @@ export default function Home() {
         });
         
         const data = await res.json();
+        setLoading(false);
         setUser(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -121,6 +201,7 @@ export default function Home() {
         });
         
         const data = await res.json();
+        setLoading(false);
         setCalendario(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -136,6 +217,7 @@ export default function Home() {
         });
         
         const data = await res.json();
+        setLoading(false);
         setSalas(data);
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -151,6 +233,7 @@ export default function Home() {
         });
         
         const data = await res.json();
+        setLoading(false);
         setNotificacao(data);
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -166,6 +249,7 @@ export default function Home() {
     //     });
         
     //     const data = await res.json();
+        // setLoading(false);
     //     console.log(data);
     //   } catch (err) {
     //     setMessage("Erro ao carregar saudação.");
@@ -174,6 +258,8 @@ export default function Home() {
     // }; ofensiva();
     
   }, []);
+
+  if (loading ) return <Loading /> 
 
   return (
     <>
@@ -231,34 +317,6 @@ export default function Home() {
                           </div>
 
                           <div className="flex justify-between">
-                            {/* <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">DOM</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                <Check className="text-white" />
-                              </div>
-                            </div>
-
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">SEG</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                <Check className="text-white" />
-                              </div>
-                            </div>
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">TER</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                <X className="text-[#C10000]" />
-                              </div>
-                            </div>
-
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px] font-medium text-[#726BB6]">
-                                QUA
-                              </span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border-[3px] border-[#726BB6] shadow-md bg-[#A59EF0]">
-                                <Check className="text-white" />
-                              </div>
-                            </div> */}
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">DOM</span>
@@ -423,7 +481,87 @@ export default function Home() {
 
             <h1 className="text-[32px] mt-4 mb-4">Seu progresso semanal:</h1>
             <div className=" ">
-              <CarouselSpacing />
+              { materias && materias.length === 0 && (
+
+                <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+                    <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
+                        <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
+                            <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
+                                Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
+                            </h1>
+
+                            <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
+                            <button className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
+                                <Icons.CirclePlus className="size-8"/> Criar matéria
+                            </button>
+                            </Link>
+                        </div>
+                        
+                    </div>
+                    <Image width={300} height={500}
+                        src="/semmateria.svg"
+                        alt="Decoração"
+                        className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
+                        />
+                </div>
+            )}  
+            
+            { materias && materias.length > 0 && (
+                <>
+                  <Carousel className=" flex justify-center ">
+                      <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
+                          {materias.map((material, index) => {
+                              return (
+                                  <CarouselItem key={index} className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
+                                      <Card style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }} className=" h-[200px] rounded-[25px] max-w-[376px] shadow-md border border-[#00000031] ">
+                                          <CardContent className="flex items-center justify-center h-full flex-col ">
+                                              <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                                  <div className=" flex gap-[6px] w-full items-center relative ">
+                                                      <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
+                                                      {(() => {
+                                                          const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
+                                                          if (IconComponent) {
+                                                              return <IconComponent className="size-[40px] text-[#757575]" />;
+                                                          }
+                                                          return null;
+                                                      })()}
+                                                      </div>
+                      
+                                                      <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                                      {material.nome}
+                                                      </h1>
+                                                  </div>
+                      
+                                                  <div className="w-full ">
+                                                      <div className="w-full h-[7px] rounded-full bg-[rgb(30,35,81,14%)] text-[17px] font-medium mt-4">
+                                                          <div className="w-[0%] h-[7px] rounded-full bg-[rgb(30,35,81,75%)] "></div>
+                                                      </div>
+                                                      <div className="flex justify-between ">
+                                                          <span className="font-medium text-[17px]">
+                                                          XP acumulada
+                                                          </span>
+                                                          <span className="font-medium text-[17px]">0xp</span>
+                                                      </div>
+                                                  </div>
+                      
+                                              </Link>
+                                              
+                                          </CardContent>
+                                      </Card>
+                                  </CarouselItem>
+                              )
+                          })}
+              
+                      </CarouselContent>
+                      {materias.length >3 &&(
+                        <>
+                          <CarouselPrevious />
+                          <CarouselNext />
+                        </>
+                      )}
+                  </Carousel>
+                </>
+            )} 
             </div>
 
             <h1 className="text-[32px] mt-4 mb-4">Links úteis:</h1>

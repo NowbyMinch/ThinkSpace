@@ -4,6 +4,7 @@
 import { motion } from 'framer-motion';
 // import { UserSquareIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Loading from '@/app/home/components/loading';
 
 type UserData = {
   primeiroNome?: string;
@@ -11,7 +12,6 @@ type UserData = {
   foto?: string;
   // add other properties if needed
 };
-
 type UsuarioData = {
   primeiroNome?: string;
   cargo?: string;
@@ -39,10 +39,9 @@ export default function Informações() {
   const [ user, setUser ] = useState<UserData>({});
   const [usuario, setUsuario] = useState<UsuarioData>({});
   const [ escola, setEscola ] = useState("");
+  const [ loading, setLoading ] = useState(true);
   
   let escolaridade = "";
-
-  
   const [ instituicao, setInstituicao ] = useState<string>("");
 
   useEffect(() => {
@@ -55,6 +54,7 @@ export default function Informações() {
             
             const data = await res.json();
             setUser(data)
+            setLoading(false);
         } catch (err) {
             // setMessage("Erro ao carregar saudação.");
             console.error(err);
@@ -72,6 +72,7 @@ export default function Informações() {
         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
         setEscola(escolaridade);
         setUsuario(data.usuario);
+        setLoading(false);
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -88,6 +89,7 @@ export default function Informações() {
         const data = await res.json();
         console.log(data.nome);
         setInstituicao(data.nome);
+        setLoading(false);
         // setInstituicao(data.instituicao.nome);
 
       } catch (err) {
@@ -119,6 +121,12 @@ export default function Informações() {
   //     }
   // };
 
+  if (loading) return (
+    <div className="flex justify-center items-center w-full h-full">
+      <div className="animate-spin w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full" />
+    </div>
+  );
+  
   return (
     <>
       <form className="mt-4 ml-10 flex flex-col gap-3 overflow-hidden">

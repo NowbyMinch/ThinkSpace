@@ -3,6 +3,7 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { TooltipProps } from "recharts";
 
 const data = [ 
     {dia:"Dia 1", atividades:0}, 
@@ -13,39 +14,6 @@ const data = [
     {dia:"Dia 6", atividades:0},
     {dia:"Dia 7", atividades:0},
  ] 
-
-const data2 = [ 
-    {dia:"Dia 1", atividades:0}, 
-    {dia:"Dia 2", atividades:0}, 
-    {dia:"Dia 3", atividades:0},
-    {dia:"Dia 4", atividades:0},
-    {dia:"Dia 5", atividades:0},
-    {dia:"Dia 6", atividades:0},
-    {dia:"Dia 7", atividades:0},
- ] 
-
-const data3 = [ 
-    {dia:"Dia 1", atividades:0}, 
-    {dia:"Dia 2", atividades:0}, 
-    {dia:"Dia 3", atividades:0},
-    {dia:"Dia 4", atividades:0},
-    {dia:"Dia 5", atividades:0},
-    {dia:"Dia 6", atividades:0},
-    {dia:"Dia 7", atividades:0},
- ] 
-
-const data4 = [ 
-    {dia:"Dia 1", atividades:0}, 
-    {dia:"Dia 2", atividades:0}, 
-    {dia:"Dia 3", atividades:0},
-    {dia:"Dia 4", atividades:0},
-    {dia:"Dia 5", atividades:0},
-    {dia:"Dia 6", atividades:0},
-    {dia:"Dia 7", atividades:0},
- ] 
-
-import type { TooltipProps } from "recharts";
-
 
 const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
   if (!active || !payload || payload.length === 0) return null;
@@ -87,7 +55,6 @@ const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
                     <YAxis dataKey="atividades"/>
                     <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
                     <Tooltip content={CustomTooltip} />
-
                 </LineChart>
             </div>
         </>

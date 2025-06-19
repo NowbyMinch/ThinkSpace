@@ -20,6 +20,8 @@ import {
   Ellipsis
 } from "lucide-react";
 import * as Icons from "lucide-react"; 
+import Loading from "@/app/home/components/loading";
+
 const icons = [
   // Educação e aprendizado
   { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
@@ -122,10 +124,11 @@ export default function Materiais() {
     const [message, setMessage] = useState<string | null>(null);
     const [deletarPop, setDeletarPop] = useState(false);
     const [deletar, setDeletar] = useState("");
+    const [ loading, setLoading ] = useState(true);
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
-    const [ perfil, setPerfil ] = useState<perfil | null []>({})
+    // const [ perfil, setPerfil ] = useState<perfil | null []>({})
 
     // Referências de elementos
     const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -174,6 +177,7 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
+                setLoading(false);
                 setMaterias(data)
             } catch (err) {
             console.error(err);
@@ -189,6 +193,7 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
+                setLoading(false);
                 setUser(data)
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -204,6 +209,7 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
+                setLoading(false);
                 console.log(data)
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -219,6 +225,7 @@ export default function Materiais() {
         //         });
                 
         //         const data = await res.json();
+                // setLoading(false);
         //         // setRecentes(data);
         //         console.log(data);
 
@@ -243,6 +250,7 @@ export default function Materiais() {
             });
             
             const data = await res.json();
+            setLoading(false);
             setMaterias(data)
         } catch (err) {
         console.error(err);
@@ -262,6 +270,7 @@ export default function Materiais() {
             });
             
             const data = await res.json();
+            setLoading(false);
             console.log(data)
             if (data.message === "Matéria criada com sucesso."){
                 closing()
@@ -323,6 +332,8 @@ export default function Materiais() {
         setCriarMateria({ nome: "", cor: "", icone: "" })
     }
      
+    if (loading) return <Loading />;
+    
     return( 
         <>
         {message && (

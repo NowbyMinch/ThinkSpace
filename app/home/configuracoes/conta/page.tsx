@@ -43,6 +43,9 @@ export default function Conta() {
   const [ email, setEmail] = useState("");
   const [ novoEmail, setNovoEmail] = useState({ novoEmail: "" });
   const [ senha, setSenha ] = useState({ novaSenha: ""});
+  const [ loading, setLoading ] = useState(true);
+  const [ deletar, setDeletar ] = useState("");
+  const [ deletarPop, setDeletarPop] = useState("");
 
   useEffect(() => {
 
@@ -55,6 +58,7 @@ export default function Conta() {
         
         const data = await res.json();
         setUser(data)
+        setLoading(false);
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -71,7 +75,7 @@ export default function Conta() {
         const data = await res.json();
         setEmail(data.email);
         console.log(data);
-
+        setLoading(false);
       } catch (err) {
         // setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -116,6 +120,28 @@ export default function Conta() {
     }
   };
 
+  const deletarConta = async () => {
+    setExcluirPop(false);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/deletar-usuario`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      const result = await res.json();
+      console.log(result.message); // Conta excluída com sucesso.
+      
+    } catch (error) {
+      console.error("Erro ao excluir conta");
+    }
+  };
+
+  if (loading) return (
+    <div className="flex justify-center items-center w-full h-full">
+      <div className="animate-spin w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full" />
+    </div>
+  );
+
   return (
     <>
       <AnimatePresence initial={false}>
@@ -156,14 +182,14 @@ export default function Conta() {
                                     whileTap={{ scale: 0.97 }}
                                     onClick={() => setSuspenderPop(false)}
                                     className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                        Não
+                                      Não
                                     </motion.button>
                                     <motion.button 
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
                                     onClick={() => {setSuspenderPop(false); redirect("/")}}
                                     className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                        Sim
+                                      Sim
                                     </motion.button>
                                 </div>
 
@@ -182,69 +208,67 @@ export default function Conta() {
         )}
         {excluir && (
             <>
-                <motion.div 
-                key="content"
-                initial={{ opacity: 0, scale: 0.85}}
-                animate={{ opacity: 1, scale: 0.94 }}
-                exit={{ opacity: 0, scale: 0.90 }}
-                
-                className={`w-full h-full fixed top-0 left-0 flex justify-center items-center opacity-1 z-[1100] `}>
-                    
-                    <div className="w-full h-full absolute " onClick={() => setExcluirPop(false)}></div>
-                    <motion.div 
-                    key="content"
-                    initial={{ opacity: 0, scale: 0.85}}
-                    animate={{ opacity: 1, scale: 0.94 }}
-                    exit={{ opacity: 0, scale: 0.90 }}
-                    className={`w-[700px] h-[400px] flex  rounded-[40px] z-[1100]  opacity-1 `}>
+              <motion.div 
+              key="content"
+              initial={{ opacity: 0, scale: 0.85}}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.90 }}
+              
+              className={`w-full h-full fixed top-0 left-0 flex justify-center items-center opacity-1 z-[1100] `}>
+                  
+                  <div className="w-full h-full absolute " onClick={() => setExcluirPop(false)}></div>
+                  <motion.div 
+                  key="content"
+                  initial={{ opacity: 0, scale: 0.85}}
+                  animate={{ opacity: 1, scale: 0.94 }}
+                  exit={{ opacity: 0, scale: 0.90 }}
+                  className={`w-[700px] h-[400px] flex  rounded-[40px] z-[1100]  opacity-1 `}>
 
-                        <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
-                            
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
+                      <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
+                          
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
 
-                            <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
-                                <div className="flex flex-col justify-center items-center">
-                                    <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                    <span className="font-medium text-[30px]">{user.primeiroNome} </span>
-                                    <span className="text-[20px]"></span>
-                                </div>
+                          <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                              <div className="flex flex-col justify-center items-center">
+                                  <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                  <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                  <span className="text-[20px]"></span>
+                              </div>
 
-                                <h1 className="text-center text-[35px] font-medium">Você deseja mesmo excluir sua conta do ThinkSpace?</h1>
-                                <div className="w-[60%] flex justify-between mt-auto">
-                                    <motion.button 
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    onClick={() => setExcluirPop(false)}
-                                    className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                        Não
-                                    </motion.button>
-                                    <motion.button 
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    onClick={() => {setExcluirPop(false); redirect("/")}}
-                                    className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                        Sim
-                                    </motion.button>
-                                </div>
+                              <h1 className="text-center text-[35px] font-medium">Você deseja mesmo excluir sua conta do ThinkSpace?</h1>
+                              <div className="w-[60%] flex justify-between mt-auto">
+                                  <motion.button 
+                                  whileHover={{ scale: 1.03 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => setExcluirPop(false)}
+                                  className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                    Não
+                                  </motion.button>
+                                  <motion.button 
+                                  whileHover={{ scale: 1.03 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={deletarConta}
+                                  className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                    Sim
+                                  </motion.button>
+                              </div>
 
-                            </div>
-                        </div>
-                    </motion.div>
-                    
-                    
-                </motion.div>
-                    
-                    
-                <div className="w-full absolute flex justify-center items-center bg-red-500">
-                    <Backdrop3 onClick={() => setExcluirPop(false)}/>
-                </div>
+                          </div>
+                      </div>
+                  </motion.div>
+                  
+                  
+              </motion.div>
+                  
+              <div className="w-full absolute flex justify-center items-center bg-red-500">
+                  <Backdrop3 onClick={() => setExcluirPop(false)}/>
+              </div>
             </>
         )}
       </AnimatePresence>
       {/* <div className={`  absolute left-0 top-0 w-full h-full `}>
       </div> */}
-z
 
       <div className="ml-10 mt-4 flex flex-col gap-5">
         <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">

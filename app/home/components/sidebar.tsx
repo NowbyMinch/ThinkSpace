@@ -10,6 +10,7 @@ import { Backdrop3 } from "./backdrop";
 import { useRouter } from "next/navigation";
 import ErrorModal from "@/components/ui/ErrorModal";
 
+
 type UserData = {
     primeiroNome?: string;
     cargo?: string;
@@ -171,10 +172,11 @@ export const Sidebar = () => {
                                                 alt="Logo"
                                                 className="z-10 w-full absolute"
                                                 variants={{
-                                                    hovered: { scale: 1.1}
+                                                    hovered: { scale: 1}
                                                 }}
-                                                initial={{ opacity: 1 }}
-                                                animate={{ opacity: 1 }}
+                                                whileHover={{ scale: 1.15 }}
+                                                initial={{ opacity: 1, scale: 1 }}
+                                                animate={{ opacity: 1, scale: 1 }}
                                                 />
                                             <motion.img 
                                             src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className=" w-full "/>
