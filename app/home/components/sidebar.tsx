@@ -154,10 +154,12 @@ export const Sidebar = () => {
                         <Link className="relative" href="/home">
                             <Tooltip closeDelay={0} content="Menu Principal" placement="right" className="w-fit text-[18px]" showArrow={true}>
                                 <motion.div
-                                    initial={{ scale: 1 }}
+                                    initial="initial"
+                                    animate="initial"
                                     whileHover="hovered"
                                     whileTap={{ scale: 0.95 }}
                                     variants={{
+                                        initial: { scale: 1 },
                                         hovered: { scale: 1.05}
                                     }}
                                     className="w-16 h-[67px] mt-5 cursor-pointer relative"
@@ -165,45 +167,25 @@ export const Sidebar = () => {
                                     {/* Show only the correct icon */}
                                     {pathname === "/home" ? (
                                         <>
-                                            <motion.img
-                                                src="/Light Bulb.png"
-                                                width={300}
-                                                height={500}
-                                                alt="Logo"
-                                                className="z-10 w-full absolute"
-                                                variants={{
-                                                    hovered: { scale: 1}
-                                                }}
-                                                whileHover={{ scale: 1.15 }}
-                                                initial={{ opacity: 1, scale: 1 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                />
-                                            <motion.img 
-                                            src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className=" w-full "/>
+                                            <motion.img src="/Light Bulb.png" alt="Logo" className="w-full absolute"
+                                            variants={{
+                                                initial: { scale: 1 },
+                                                hovered: { scale: 1.15}
+                                            }}
+                                            />
                                         </>
-                                    
                                     ) : (
                                         <>
-                                            <motion.img
-                                                src="/Light Bulb-off.png"
-                                                width={300}
-                                                height={500}
-                                                alt="Logo"
-                                                className="z-10 w-full absolute"
-                                                initial={{ scale: 1 }}
-                                                animate={{ opacity: 1 }}
-                                            />
-                                            <motion.img src="/Light Bulb.png" width={300} height={500} alt="Logo"
-                                            className="w-full absolute opacity-1"
+                                            <motion.img src="/Light Bulb.png" alt="Logo" className="w-full absolute scale-100"
                                             variants={{
                                                 initial: { scale: 0 },
                                                 hovered: { scale: 1 }
                                             }}
-                                            initial="initial"
-                                            animate="initial"
-                                            whileHover="hovered"/>
+                                            />
                                         </>
                                     )}
+                                    <motion.img src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute"/>
+
                                 </motion.div>
                             </Tooltip>
                         </Link>
