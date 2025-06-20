@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useEffect, useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -102,9 +102,20 @@ const frameworks3 = [
   }
 ]
 
+const frameworks4 = [
+  {
+    value: "Estudante",
+    label: "Estudante",
+  },
+  {
+    value: "Admin",
+    label: "Admin",
+  }
+]
+
 export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState("")
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -163,7 +174,7 @@ interface ComboboxDemoProps {
 }
 
 export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -214,7 +225,7 @@ export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
 }
 
 export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -238,6 +249,145 @@ export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup className="">
               {frameworks3.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px]"
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export function ComboboxDemoSettings2({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8] `}
+        >
+          <span className="w-full flex rounded-[25px]">
+            {value
+              ? frameworks2.find((framework) => framework.value === value.toUpperCase())?.label
+              : "Selecione o nível de escolaridade"}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="w-[500px] p-0 rounded-[25px] ">
+        <Command>
+          <CommandList className="rounded-[25px]">
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup className="">
+              {frameworks2.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px]"
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+              
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+  
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+          
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+    
+  //   }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8] `}
+        >
+          <span className="w-full flex rounded-[25px]">
+            {value
+              ? frameworks4.find((framework) => framework.value === value)?.label
+              : "Selecione o nível de escolaridade"}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="w-[500px] p-0 rounded-[25px] ">
+        <Command>
+          <CommandList className="rounded-[25px]">
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup className="">
+              {frameworks4.map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}

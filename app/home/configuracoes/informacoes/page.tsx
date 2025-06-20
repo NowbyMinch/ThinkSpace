@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 // import { UserSquareIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import Loading from '@/app/home/components/loading';
+import { ComboboxDemoSettings, ComboboxDemoSettings2 } from '../../components/dropdown';
 
 type UserData = {
   primeiroNome?: string;
@@ -37,8 +37,8 @@ type UsuarioData = {
 
 export default function Informações() {
   const [ user, setUser ] = useState<UserData>({});
-  const [usuario, setUsuario] = useState<UsuarioData>({});
   const [ escola, setEscola ] = useState("");
+  const [usuario, setUsuario] = useState<UsuarioData>({});
   const [ loading, setLoading ] = useState(true);
   
   let escolaridade = "";
@@ -171,26 +171,16 @@ export default function Informações() {
 
         <div className="flex flex-col justify-between w-[1000px] ">
           <h1 className="text-[30px] font-medium">
-            Cargo ou Posição
+            Cargo ou Posição 
           </h1>
-          <input
-            type="text"
-            defaultValue={ user?.cargo ?? ""}
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
-          ></input>
+          <ComboboxDemoSettings value={user?.cargo ?? ""} onChange={() => {}} />
         </div>
 
         <div className="flex flex-col justify-between w-[1000px] ">
           <h1 className="text-[30px] font-medium">
-            Nível de escolaridade
+            Nível de escolaridade {escola}
           </h1>
-          <input
-            type="text"
-            defaultValue={ escola ?? ""}
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, funcao: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8]"
-          ></input>
+          <ComboboxDemoSettings2 value={escola ?? ""} onChange={() => {}} />
         </div>
 
         <motion.button

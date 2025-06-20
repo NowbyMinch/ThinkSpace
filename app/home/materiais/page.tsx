@@ -572,7 +572,7 @@ export default function Materiais() {
                                         <span className="text-[20px]"></span>
                                     </div>
 
-                                    <h1 className="text-center text-[35px] font-medium">Deletar matéria?</h1>
+                                    <h1 className="text-center text-[35px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
                                     <div className="w-[60%] flex justify-between mt-auto">
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
