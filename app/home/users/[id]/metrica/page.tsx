@@ -5,6 +5,7 @@ import { Chart } from '@/app/home/components/chart';
 import Image from 'next/image';
 import { ComboboxDemo } from '@/app/home/components/dropdown';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Métricas() {
 
@@ -39,7 +40,7 @@ export default function Métricas() {
     
     return(
         <>
-            <div className="flex w-full justify-center overflow-hidden">
+            <div className="flex w-full justify-center overflow-hidden " >
                 <div className=" mt-[12px] h-[965px] w-[1580px] grid grid-rows-[65%_1fr] gap-4 ml-[20px] mr-[20px]">
                     <div className=" grid grid-cols-[55%_1fr] gap-4 ">
                         
@@ -168,7 +169,35 @@ export default function Métricas() {
 
                     </div>
 
-                    <div className="bg-[#C3A7FA] rounded-[35px] flex justify-center items-center shadow-md border border-[#00000031]">
+                    <div className="w-full h-full bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+                        <div className="ml-10 w-full h-[90%] flex justify-center items-center">
+                            <div className=" flex flex-col justify-center gap-[25%] min-w-[60%] h-full ">
+                                <h1 className="text-[32px] font-medium line-clamp-3 break-words">
+                                    Ao criar seu primeiro material, você desbloqueia o acompanhamento do seu progresso, com metas semanais, conquistas e relatórios de desempenho.
+                                </h1>
+            
+                                <Link href='/home/materiais' className="w-[40%] min-w-[40%] h-[25%] min-h-[25%] rounded-full">
+                                    <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                                    Criar material
+                                    </button>
+                                </Link>
+                            </div>
+
+                            <div className=" w-full h-full flex justify-center items-center overflow-hidden relative">
+                                <Image width={300} height={500}
+                                    src="/metricaMaterial.svg"
+                                    alt="Decoração"
+                                    className=" w-[94%] absolute top-0"
+                                />
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+                    {/* MODELO CASO HAJA MATERIAS  */}
+                    
+                    {/* <div className="bg-[#C3A7FA] rounded-[35px] flex justify-center items-center shadow-md border border-[#00000031]">
                         <div className=" grid grid-cols-[1fr_4fr] gap-4 w-[95%] h-[80%]">
                             <div className=" ">
                                 <h1 className='font-medium '>Matérias:</h1>
@@ -269,7 +298,7 @@ export default function Métricas() {
                             </div>
 
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

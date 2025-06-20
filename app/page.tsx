@@ -30,7 +30,7 @@ const items: AccordionItem[] = [
   },
 ];
 
-export default function Home() {
+export default function landingPage() {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' } )
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -77,7 +77,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="w-screen z-[0] relative">
+            <div className="w-screen z-[0] relative ">
                 <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center`}>
                     <div className="flex w-[90%] max-w-[1700px] h-[120px] justify-between">
                         <div className=" w-full h-full flex items-center ">
