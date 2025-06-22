@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronDown, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -112,6 +112,19 @@ const frameworks4 = [
     label: "Admin",
   }
 ]
+
+const frameworksMaterias = [
+  {
+    value: "Matematica",
+    label: "Matemática",
+  },
+  {
+    value: "Ciencia da Computacao",
+    label: "Ciência da Computaçãodasdsad asdasdsadsadasddsadsa asdasdasdsa",
+  }
+]
+
+
 
 export function ComboboxDemo() {
   const [open, setOpen] = useState(false)
@@ -401,6 +414,95 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
                   <Check
                     className={cn(
                       "ml-auto",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+              
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+  
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+          
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+    
+  //   }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen} >
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+        >
+          <span className="font-normal w-full block text-left rounded-[25px] overflow-hidden text-ellipsis whitespace-nowrap ">
+            {value
+              ? <div className="">{frameworksMaterias.find((framework) => framework.value === value)?.label}</div> 
+              : <div className="text-[#9CA3AF]">Matéria designada</div> 
+              }
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="min-w-[200px] p-0 rounded-[25px] z-[1100]">
+        <Command>
+          <CommandList className="rounded-[25px]">
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup className="">
+              {frameworksMaterias.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px] "
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto ",
                       value === framework.value ? "opacity-100" : "opacity-0"
                     )}
                   />

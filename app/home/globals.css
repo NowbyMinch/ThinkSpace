@@ -191,6 +191,13 @@ h1{
   animation-range-end: 100px;
 }
 
+#topicos{
+  animation: fade-in linear;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 50px;
+}
+
 #bah{
   animation: fade-resumo linear;
   animation-timeline: view();

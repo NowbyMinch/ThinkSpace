@@ -177,13 +177,27 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
-                setLoading(false);
                 setMaterias(data)
             } catch (err) {
             console.error(err);
             }
         }; 
         materia();
+
+        const perfil = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                console.log(data)
+            } catch (err) {
+                setMessage("Erro ao carregar saudação.");
+                console.error(err);
+            }
+        }; perfil();
 
         const user = async () => {
             try{
@@ -201,21 +215,6 @@ export default function Materiais() {
             }
         }; user();
 
-        const perfil = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                setLoading(false);
-                console.log(data)
-            } catch (err) {
-                setMessage("Erro ao carregar saudação.");
-                console.error(err);
-            }
-        }; perfil();
 
         // const recente = async () => {
         //     try{

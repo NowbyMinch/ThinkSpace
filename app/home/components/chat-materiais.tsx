@@ -12,25 +12,24 @@ type UserData = {
 
 export const ChatMateriais = () => {
     const [ user, setUser ] = useState<UserData>({})
-     useEffect(() => {
-
+    useEffect(() => {
         const user = async () => {
-          try{
+            try{
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-              method: 'GET',
-              credentials: 'include',
+                method: 'GET',
+                credentials: 'include',
             });
             
             const data = await res.json();
             setUser(data)
 
-          } catch (err) {
+            } catch (err) {
             // setMessage("Erro ao carregar saudação.");
             console.error(err);
-          }
+            }
         }; user();
     
-      }, []);
+    }, []);
 
     return (
         <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">

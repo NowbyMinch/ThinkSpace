@@ -468,7 +468,12 @@ export default function RegisterPage() {
                                               required
                                               maxLength={1}
                                               onChange={(e) => handleChange(i, e)}
-                                              onKeyDown={(e) => handleKeyDown(i, e)}
+                                              onKeyDown={e => {
+                                                  handleKeyDown(i, e);
+                                                  if (e.key === "Enter") {
+                                                  e.preventDefault();
+                                                  }
+                                              }}
                                               className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
                                             />
                                           ))}
@@ -522,7 +527,12 @@ export default function RegisterPage() {
                                             required
                                             maxLength={1}
                                             onChange={(e) => {handleChange(i, e);}}
-                                            onKeyDown={(e) => handleKeyDown(i, e)}
+                                            onKeyDown={e => {
+                                                handleKeyDown(i, e);
+                                                if (e.key === "Enter") {
+                                                e.preventDefault();
+                                                }
+                                            }}
                                             className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
                                           />
                                         ))}

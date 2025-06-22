@@ -80,8 +80,10 @@ export default function LoginPage() {
         if (data.message !== "Código válido. Você pode redefinir sua senha."){
             setMessage(data.message)
         }
+        else if (data.message === "Código válido. Você pode redefinir sua senha."){
+            setStep(3)
+        }
         console.log(data); 
-        setStep(3)
     };
 
     const reenviar = async (e: React.FormEvent) => {
@@ -115,6 +117,9 @@ export default function LoginPage() {
         const data = await res.json();
         if (data.message === "Senha redefinida com sucesso."){
             router.push('/login')
+        }
+        else {
+            setMessage(data.message);
         }
         console.log(data); 
     };
@@ -201,7 +206,12 @@ export default function LoginPage() {
                                                     required
                                                     maxLength={1}
                                                     onChange={(e) => {handleChange(i, e);}}
-                                                    onKeyDown={(e) => handleKeyDown(i, e)}
+                                                    onKeyDown={e => {
+                                                        handleKeyDown(i, e);
+                                                        if (e.key === "Enter") {
+                                                        e.preventDefault();
+                                                        }
+                                                    }}
                                                     className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
                                                 />
                                                 ))}
