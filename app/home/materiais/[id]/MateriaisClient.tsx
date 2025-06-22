@@ -42,7 +42,7 @@ type CalendarioData = {
 };
 export default function MateriaisClient({ id }: { id: string; }) {
     // Estados de controle de interface
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [openVar, setOpenVar] = useState(false);
     const [openVar2, setOpenVar2] = useState(false);
     const [openVar3, setOpenVar3] = useState(false);
