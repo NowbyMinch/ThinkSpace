@@ -113,18 +113,15 @@ const frameworks4 = [
   }
 ]
 
-const frameworksMaterias = [
-  {
-    value: "Matematica",
-    label: "Matemática",
-  },
-  {
-    value: "Ciencia da Computacao",
-    label: "Ciência da Computaçãodasdsad asdasdsadsadasddsadsa asdasdasdsa",
-  }
-]
-
-
+type materiaItem = {
+    id?: string;
+    nome?: string;
+    cor?: string;
+    icone?: string;
+    usuarioId?: string;
+    materiais?: any[]; // or specify the correct type if known
+    // add other properties if needed
+};
 
 export function ComboboxDemo() {
   const [open, setOpen] = useState(false)
@@ -429,6 +426,32 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
 
 export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materiaItem[]>([]);
+
+  useEffect(() => {
+    // Função para buscar matérias
+    const materia = async () => {
+      try{
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+              method: 'GET',
+              credentials: 'include',
+          });
+          
+          const data = await res.json();
+          setMaterias(data)
+      } catch (err) {
+      console.error(err);
+      }
+    }; materia();
+
+  }, [])
+  
+
+  const frameworksMateria = materias.map((materia) => ({
+    value: materia.nome,
+    label: materia.nome,
+  }));
+
   // const [ user, setUser ] = useState<UserData>({});
   // const [ escola, setEscola ] = useState("");
   // let escolaridade = "";
@@ -477,7 +500,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
         >
           <span className="font-normal w-full block text-left rounded-[25px] overflow-hidden text-ellipsis whitespace-nowrap ">
             {value
-              ? <div className="">{frameworksMaterias.find((framework) => framework.value === value)?.label}</div> 
+              ? <div className="">{frameworksMateria.find((framework) => framework.value === value)?.label as string}</div> 
               : <div className="text-[#9CA3AF]">Matéria designada</div> 
               }
           </span>
@@ -489,7 +512,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
           <CommandList className="rounded-[25px]">
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup className="">
-              {frameworksMaterias.map((framework) => (
+              {frameworksMateria.map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
