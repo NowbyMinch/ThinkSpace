@@ -98,20 +98,14 @@ type UserData = {
     // add other properties if needed
 };
 
-type recentesData = {
+type RecenteData = {
     indice?: number;
     nome?: string;
-    // add other properties if needed
-};
-
-type perfil = {
-    avatar?: string,
-    primeiroNome?: string,
-    cargo?: string,
-    xp?: number,
-    progresso?: number,
-    nivel?: string,
-    // add other properties if needed
+    id?: string;
+    cor?: string;
+    icone?: string;
+    ultimaRevisao?: number;
+    tempoAtivo?: number;
 };
 
 export default function Materiais() {
@@ -125,6 +119,7 @@ export default function Materiais() {
     const [deletarPop, setDeletarPop] = useState(false);
     const [deletar, setDeletar] = useState("");
     const [ loading, setLoading ] = useState(true);
+    const [ recente, setRecente ] = useState<RecenteData>()
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -181,23 +176,7 @@ export default function Materiais() {
             } catch (err) {
             console.error(err);
             }
-        }; 
-        materia();
-
-        const perfil = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                console.log(data)
-            } catch (err) {
-                setMessage("Erro ao carregar saudação.");
-                console.error(err);
-            }
-        }; perfil();
+        }; materia();
 
         const user = async () => {
             try{
@@ -215,24 +194,22 @@ export default function Materiais() {
             }
         }; user();
 
-
-        // const recente = async () => {
-        //     try{
-        //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/recentes`, {
-        //         method: 'GET',
-        //         credentials: 'include',
-        //         });
+        const recentes = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/recentes`, {
+                method: 'GET',
+                credentials: 'include',
+                });
                 
-        //         const data = await res.json();
-                // setLoading(false);
-        //         // setRecentes(data);
-        //         console.log(data);
+                const data = await res.json();
+                setRecente(data.materiasRecentes[0]);
+                console.log(data)
 
-        //     } catch (err) {
-        //         setMessage("Erro ao carregar saudação.");
-        //         console.error(err);
-        //     }
-        // }; recente();
+            } catch (err) {
+                console.error(err);
+            }
+            
+        }; recentes();
 
     }, []);
 
@@ -782,7 +759,7 @@ export default function Materiais() {
                         
                         <div className="ml-[15px] mt-[30px] w-[380px] max-w-[95%]">
                             <h1 className="text-[34px] w-fit font-medium leading-6">Materiais recentes</h1>
-                            <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] ">Ciência da computação</h1>
+                            <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] " >{recente?.nome}</h1>
                         </div>
 
                         <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%]  overflow-hidden">

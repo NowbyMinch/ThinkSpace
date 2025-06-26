@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply } from "lucide-react";
+import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply, ArrowLeft } from "lucide-react";
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -40,6 +40,16 @@ type CalendarioData = {
     dias?: DiaData[];
     // add other properties if needed
 };
+type RecenteData = {
+    indice?: number;
+    nome: string;
+    id?: string;
+    cor?: string;
+    icone?: string;
+    ultimaRevisao?: number;
+    tempoAtivo?: number;
+};
+
 export default function MateriaisClient({ id }: { id: string; }) {
     // Estados de controle de interface
     const [open, setOpen] = useState(false);
@@ -50,14 +60,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ materiaDesignada, setMateriaDesignada] = useState("");
     let topico: string;
     
-    
-    
     // Inputs e referências
     const [input, setInput] = useState("");
+    const [assuntoInput, setAssuntoInput] = useState("");
     const [topicoInput, setTopicoInput] = useState("");
     const documentInputRef = useRef<HTMLInputElement>(null);
     const [ topicos, setTopicos ] = useState<string []>([]);
     const [ assunto, setAssunto ] = useState("");
+    const [ recente, setRecente ] = useState<RecenteData[]>([])
 
 
     // Dados do usuário
@@ -73,7 +83,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const filtered = materias.filter((item) =>
     item.nome?.toLowerCase().includes(query.toLowerCase())
     );
-
     const isExactMatch = materias.some(
     (item) => item.nome?.toLowerCase() === query.toLowerCase()
     );
@@ -155,10 +164,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
         setMateriaDesignada("");
         setTopicoInput("");
         setTopicos([]);
+        setAssunto("");
+        setAssuntoInput("");
         // setInput3("");
         // setInput4("");
     }
-    
     function voltar(){
         setOpenVar(false);
         setOpenVar2(false);
@@ -168,6 +178,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
         setMateriaDesignada("");
         setTopicoInput("");
         setTopicos([]);
+        setAssunto("");
+        setAssuntoInput("");
         // setInput3("");
         // setInput4("");
     }
@@ -185,15 +197,21 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <div className="w-full h-full absolute" onClick={() => closing()}></div>
                             <div id="white-box" className={` w-[1250px] h-[600px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} ${openVar || openVar2 || openVar3? 'h-[650px]' : 'h-[600px]'} `}>
 
-                                <div className="absolute top-10 right-10 flex gap-2 z-[1100]">
+                                <div className="absolute w-[95%] top-10 flex justify-between gap-2 z-[1100]">
                                     <motion.button 
-                                    whileTap={{ scale:0.98 }}
-                                    whileHover={{ scale:1.02 }}
+                                    whileTap={{ scale:0.95 }}
+                                    whileHover={{ scale:1.05 }}
                                     onClick={voltar}
-                                    className={`flex bg-[#A39CEC] cursor-pointer justify-center items-center text-white h-fit text-[20px] py-1 px-4 rounded-full  ${ openVar || openVar2 || openVar3? "block": "hidden"}`}>
-                                        <Reply/> Voltar
+                                    className={`flex cursor-pointer justify-center items-center text-white h-fit text-[20px] rounded-full  ${ openVar || openVar2 || openVar3? "block": "hidden"}`}>
+                                        <ArrowLeft className="size-10 text-black"/> 
                                     </motion.button>
-                                    <X className="size-10 cursor-pointer" onClick={() => closing()}/>
+                                    <motion.button 
+                                    whileTap={{ scale:0.95 }}
+                                    whileHover={{ scale:1.05 }}
+                                    onClick={closing}
+                                    className={`flex cursor-pointer justify-center ml-auto items-center text-white h-fit text-[20px] rounded-full `}>
+                                        <X className="size-10 text-black"/> 
+                                    </motion.button>
                                 </div>
                 
                                 <div className="w-[80%] h-[85%] flex flex-col gap-14 z-[1000]">
@@ -385,12 +403,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
 
 
-                                        <div className={`w-full h-full flex gap-12 items-center  ${ openVar3? "block": "hidden"}`}>
+                                        <div className={`w-full h-full flex gap-12 items-center ${ openVar3? "block": "hidden"}`}>
                                             <div className="w-[50%] h-[97.95%] flex flex-col gap-4 ">
                                                 <div className="h-fit flex flex-col gap-1">
                                                     <h1 className="font-medium text-[50px] leading-[60px] ">Assunto:</h1>
                                                     <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
-                                                        <input type="text"onChange={e => setAssunto(e.target.value)}  placeholder="Adicione um tópico" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                                                        <input type="text" value={assuntoInput} onChange={e => setAssuntoInput(e.target.value)}  placeholder="Diga o assunto" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
                                                         />
 
                                                     </div>
