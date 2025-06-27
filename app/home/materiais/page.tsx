@@ -174,7 +174,7 @@ export default function Materiais() {
                 const data = await res.json();
                 setMaterias(data)
             } catch (err) {
-            console.error(err);
+                console.error(err);
             }
         }; materia();
 
@@ -202,8 +202,10 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
-                setRecente(data.materiasRecentes[0]);
-                console.log(data)
+
+                if (data.materiasRecentes){
+                    setRecente(data.materiasRecentes[0]);
+                }
 
             } catch (err) {
                 console.error(err);
@@ -690,7 +692,7 @@ export default function Materiais() {
                                                         </AnimatePresence>
                                                     </div>
                                                 </div>
-                                                <Link href={`/home/materiais/${material.nome}`} className="w-full h-full flex justify-center rounded-[28px]" >
+                                                <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
                                                     <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
                                                         <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
                                                             {/* <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
@@ -717,6 +719,7 @@ export default function Materiais() {
                                         </div>
                                     )
                                 })}
+                                
                             </>
                         )} 
 
@@ -762,8 +765,9 @@ export default function Materiais() {
                             <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] " >{recente?.nome}</h1>
                         </div>
 
-                        <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%]  overflow-hidden">
-                            <Link href="/home/materiais/Ciência da Computação/Eng. 20Comp 20 II/Material" className=" flex gap-3 px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
+
+                        {/* <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%]  overflow-hidden">
+                            <Link href="/home/materiais/" className=" flex gap-3 px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
 
                                 <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
 
@@ -779,7 +783,7 @@ export default function Materiais() {
 
   
                             <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</motion.button>
-                        </div>
+                        </div> */}
                     </div>
                 </div> 
             </div>

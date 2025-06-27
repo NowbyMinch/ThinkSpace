@@ -77,35 +77,34 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [query, setQuery] = useState("");
 
     // Dados de matérias
-    const [materias, setMaterias] = useState<materiaItem[]>([]);
+    const [materia, setMateria] = useState<materiaItem>();
 
-    // Filtros de matérias
-    const filtered = materias.filter((item) =>
-    item.nome?.toLowerCase().includes(query.toLowerCase())
-    );
-    const isExactMatch = materias.some(
-    (item) => item.nome?.toLowerCase() === query.toLowerCase()
-    );
+    // USEFULL STRUCTURE ---- Filtros de matérias
+    // const filtered = materias.filter((item) =>
+    // item.nome?.toLowerCase().includes(query.toLowerCase())
+    // );
+    // const isExactMatch = materias.some(
+    // (item) => item.nome?.toLowerCase() === query.toLowerCase()
+    // );
 
     // Outros
     const decodedId = decodeURIComponent(id);
     
     useEffect(() => {
-        const materia = async () => {
+        const materia = async (id: string) => {
             try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
                 
                 const data = await res.json();
                 console.log(data)
-                setMaterias(data)
+                setMateria(data)
             } catch (err) {
             console.error(err);
             }
-        }; 
-        materia();
+        }; materia(decodedId);
         
         const user = async () => {
             try{
@@ -511,7 +510,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     <div className="w-[1200px] mt-4 max-w-[95%]">
                         <div className="">
                             <h1 className="text-[45px] w-fit font-medium ">Materiais de Estudo</h1>
-                            <h1 className="text-[35px] italic w-fit font-medium text-[#9767F8] ">{decodedId}</h1>
+                            <h1 className="text-[35px] italic w-fit font-medium text-[#9767F8] ">{materia?.nome}</h1>
                         </div>
 
                         <div className="mt-[50px] overflow-hidden flex flex-row gap-5 justify-center">
@@ -526,7 +525,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="bg-[#9B79E0] border border-[#716BAF] w-[14%] h-[60px] rounded-full text-white text-[24px] z-[900]">Criar novo</motion.button>
                         </div>
 
-                        <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
+                        
+
+                        {/* <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
                             <a href={`/home/materiais/${id}/Eng. Comp II/Material`} id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
                                 <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
 
@@ -540,97 +541,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 </div>
                             </a>
 
-                            {/* <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">02</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">02</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">03</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">04</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">05</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">06</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a>
-
-                            <a href="" id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">07</h1>
-
-                                <div className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </a> */}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
