@@ -99,7 +99,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 });
                 
                 const data = await res.json();
-                console.log(data)
                 setMateria(data)
             } catch (err) {
             console.error(err);
