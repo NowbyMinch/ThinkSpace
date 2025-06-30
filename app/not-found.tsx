@@ -1,8 +1,3 @@
-"use client";
-import FloatingImages from "@/app/components/FloatingImages";
-import {motion, AnimatePresence} from "framer-motion";
-
-
 export default function Custom404() {
   return (
     <>
