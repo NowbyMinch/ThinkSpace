@@ -22,7 +22,6 @@ type materiaItem = {
     materiais?: any[]; // or specify the correct type if known
     // add other properties if needed
 };
-
 type UserData = {
   primeiroNome?: string;
   cargo?: string;
@@ -67,7 +66,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const documentInputRef = useRef<HTMLInputElement>(null);
     const [ topicos, setTopicos ] = useState<string []>([]);
     const [ assunto, setAssunto ] = useState("");
-    const [ recente, setRecente ] = useState<RecenteData[]>([])
+    const [ recente, setRecente ] = useState<RecenteData[]>([]);
 
 
     // Dados do usuário
@@ -314,9 +313,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
                                         </div>
 
-
-
-
                                         <div className={`w-full h-full flex gap-12 items-center  ${ openVar2? "block": "hidden"}`}>
                                             <div className="w-[50%] h-[97.95%] flex flex-col gap-4 ">
                                                 <div className="h-fit flex flex-col gap-1">
@@ -397,9 +393,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             
                                             </div>
                                         </div>
-
-
-
 
                                         <div className={`w-full h-full flex gap-12 items-center ${ openVar3? "block": "hidden"}`}>
                                             <div className="w-[50%] h-[97.95%] flex flex-col gap-4 ">

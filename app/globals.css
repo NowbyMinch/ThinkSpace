@@ -58,13 +58,20 @@
   }
 }
 
-html{
+html, body{
   scroll-behavior: smooth;
+  color: #2F2F2F;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: red;
 }
 
 body {
-  color: #2F2F2F;
   background-color: #EFEFEF; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 @font-face {
