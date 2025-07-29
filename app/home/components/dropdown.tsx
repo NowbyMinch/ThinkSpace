@@ -194,7 +194,7 @@ export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
           role="combobox"
           className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
         >
-          <span className="w-full flex rounded-[25px]">
+          <span className="block w-full truncate text-left">
             {value
               ? frameworks2.find((framework) => framework.value === value)?.label
               : "Selecione o nível de escolaridade"}
@@ -245,10 +245,10 @@ export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
           role="combobox"
           className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
         >
-          <span className="w-full flex rounded-[25px]">
+          <span className="block w-full truncate text-left">
             {value
               ? frameworks3.find((framework) => framework.value === value)?.label
-              : "Selecione o nível de escolaridade"}
+              : "Selecione o seu objetivo na plataforma"}
           </span>
         </Button>
       </PopoverTrigger>
