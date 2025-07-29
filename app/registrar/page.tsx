@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(1);
+  const [ subStep, setSubStep] = useState(4);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("usuario");
@@ -36,6 +36,12 @@ export default function RegisterPage() {
     }, 700);
   }
 
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const handleScrollToTop = () => {
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/registrar`, {
@@ -49,6 +55,7 @@ export default function RegisterPage() {
     if (data.message === "Dados iniciais recebidos. Escolha a função (administrador ou usuário comum)."){
       setSubStep(2)
       setForm2({ ...form2, email: form.email })
+      handleScrollToTop();
     }
     else{
       setMessage(data.message)
@@ -91,6 +98,7 @@ export default function RegisterPage() {
     const data = await res.json();
     if (data.message === "Função definida. Complete o cadastro."){
       setSubStep(3)
+      handleScrollToTop();
     }
     else{
       setMessage(data.message)
@@ -119,6 +127,7 @@ export default function RegisterPage() {
     console.log(newForm3);
     if (data.message === "E-mail verificado e cadastro concluído.") {
       final();
+      handleScrollToTop();
     }
     else{
       setMessage(data.message)
@@ -189,7 +198,7 @@ export default function RegisterPage() {
       <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF]">
           <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
             <AnimatePresence >
-              <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white rounded-[35px] overflow-y-auto relative">
+              <div ref={scrollContainerRef} className=" flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white rounded-[35px] overflow-y-auto relative">
                 {(() => {
                   if (subStep < 5) {
                     return (
@@ -200,7 +209,7 @@ export default function RegisterPage() {
                               if (subStep === 4) {
                                 return (
                                   <>
-                                    <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>
+                                    <h1 className='text-[40px] lg:text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>
                                   </>
                                 )
                               }
@@ -480,7 +489,7 @@ export default function RegisterPage() {
                                 <form onSubmit={(e) => { e.preventDefault()}} className='flex flex-col justify-center items-center gap-[25px] '>
                                   <div className="w-[55%] flex flex-col  h-[350px] max-h-[90%] ">
                                     <div className="flex flex-col items-center gap-4 w-full h-full">
-                                      <h2 className="text-gray-700 text-[25px]">Digite o seu código de administrador geral da plataforma:</h2>
+                                      <h2 className="text-gray-700 text-[20px] lg:text-[26px]">Digite o seu código de administrador geral da plataforma:</h2>
                                       <div className="flex flex-col items-center gap-3 w-full h-full">
                                         <div className="flex gap-3">
                                           {[...Array(5)].map((_, i) => (
@@ -536,12 +545,12 @@ export default function RegisterPage() {
                           }
                           else if (subStep === 4) {
                             return (
-                              <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col ">
-                                <form onSubmit={handleSubmit3} method="POST" className=' flex flex-col justify-center items-center gap-20 '>
-                                  <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
-                                    <div className="flex flex-col items-center gap-4 w-full h-full">
-                                      <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
-                                      <div className="flex gap-3  w-full h-full">
+                                <div className="max-w-[90%] mb-10 flex gap-20 justify-center items-center flex-col ">
+                                <form onSubmit={handleSubmit3} method="POST" className='max-w-[90%] flex flex-col justify-center items-center gap-20 '>
+                                  <div className=" flex flex-col gap-4 h-[350px] max-h-[90%] ">
+                                    <div className="flex flex-col items-center gap-4 w-full h-full ">
+                                      <h2 className="text-gray-700 break-words text-center text-[20px]  lg:text-[26px]">Digite o seu código de verificação:</h2>
+                                      <div className="flex gap-3 max-w-[765px] h-full ">
                                         {[...Array(5)].map((_, i) => (
                                           <input
                                             key={i}
@@ -557,13 +566,13 @@ export default function RegisterPage() {
                                                 e.preventDefault();
                                                 }
                                             }}
-                                            className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
+                                            className="codigo h-[200px] w-full rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
                                           />
                                         ))}
                                       </div>
                                       <button onClick={reenviar} className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
                                     </div>
-                                  </div>
+                                  </div> 
                                   <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
                                       <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
                                         <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} onClick={() => setSubStep(subStep - 1)} className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>

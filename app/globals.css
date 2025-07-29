@@ -231,3 +231,10 @@ body {
   animation: subtleFloat 6s ease-in-out infinite;
   will-change: transform;
 }
+
+
+@media(max-width:490px){
+  .codigo{
+    height: 100px;
+  }
+}

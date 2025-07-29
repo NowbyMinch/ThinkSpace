@@ -85,7 +85,7 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
 
-          id='date-box' className="absolute right-0 z-10 mt-2 w-[65%] rounded-[25px] border border-gray-700 bg-white p-4 shadow-xl origin-top-right">
+          id='date-box' className="absolute right-0 z-10 mt-2 lg:w-[65%] min-w-[210px] rounded-[25px] border border-gray-700 bg-white p-4 shadow-xl origin-top-right">
             <div className="mb-3 flex items-center justify-between px-2 ">
               <button type='button' onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}>
                 <ChevronLeft size={20} />
