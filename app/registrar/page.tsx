@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(1);
+  const [ subStep, setSubStep] = useState(2);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("usuario");
@@ -332,7 +332,7 @@ export default function RegisterPage() {
                                           key="usuario"
                                           onClick={() => setCategoria("usuario")}
                                           type='submit'
-                                          className=" w-full max-lg:h-[250px] flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
+                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
                                           <motion.div
                                             variants={{
                                               hovered: { paddingLeft: "35px" }
@@ -361,7 +361,7 @@ export default function RegisterPage() {
                                           key="restrito"
                                           type='submit'
                                           onClick={() => setCategoria("restrito")}
-                                          className=" w-full max-lg:h-[250px] flex items-end bg-[#9767F8] mt-9 lg:mt-0 rounded-[20px] group overflow-hidden relative ">
+                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] mt-9 lg:mt-0 rounded-[20px] group overflow-hidden relative ">
                                           <motion.div
                                             variants={{
                                               hovered: { paddingLeft: "35px" }
