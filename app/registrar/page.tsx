@@ -195,7 +195,7 @@ export default function RegisterPage() {
                     return (
                       <>
                         <div className="max-w-[90%] flex justify-center items-center">
-                          <div className="flex items-center flex-col w-[80%] ">
+                          <div className="flex items-center flex-col w-[90%] ">
                             {(() => {
                               if (subStep === 4) {
                                 return (
@@ -241,64 +241,67 @@ export default function RegisterPage() {
                         {(() => {
                           if (subStep === 1) {
                             return (
-                              <div className="w-[70%] mb-14">
-                                <form onSubmit={handleSubmit} 
-                                  method='POST'
-                                  className='flex flex-col justify-center gap-20 h-fit'>
-                                  <div className=" block lg:flex justify-center items-center gap-20 h-full ">
-                                    <div className="mx-auto lg:w-[50%] flex flex-col gap-4">
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
-                                        <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                              <div className="min-w-[70%] max-w-[90%]  flex justify-center items-center">
+                                <div className="w-[90%] mb-14">
+                                  <form onSubmit={handleSubmit} 
+                                    method='POST'
+                                    className='flex flex-col justify-center gap-20 h-fit'>
+                                    <div className=" block lg:flex justify-center items-center gap-20 h-full ">
+                                      <div className="mx-auto lg:w-[50%] flex flex-col gap-4">
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
+                                          <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        </div>
+
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Sobrenome</label>
+                                          <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        </div>
+
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Email</label>
+                                          <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        </div>
                                       </div>
 
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Sobrenome</label>
-                                        <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
-                                      </div>
+                                      <div className="mx-auto lg:w-[50%] mt-4 lg:mt-0 flex flex-col gap-4">
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
+                                          <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
+                                        </div>
 
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Email</label>
-                                        <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Senha</label>
+                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        </div>
+
+                                        <div className="flex flex-col gap-1">
+                                          <label htmlFor="" className='text-[26px] ml-3'>Repita a senha</label>
+                                          <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        </div>
                                       </div>
                                     </div>
 
-                                    <div className="mx-auto lg:w-[50%] mt-4 lg:mt-0 flex flex-col gap-4">
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
-                                        <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
+                                    <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
+                                      <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                        type='button'
+                                        onClick={() => router.back()}
+                                        className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                       </div>
 
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Senha</label>
-                                        <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                      <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                        <motion.button
+                                          whileTap={{ scale: 0.99 }}
+                                          whileHover={{ scale: 1.01 }}
+                                          transition={{ duration: 0.2, ease: "easeInOut" }}
+                                          type='submit'
+                                          className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
                                       </div>
+                                    </motion.div>
+                                  </form>
+                                </div>
 
-                                      <div className="flex flex-col gap-1">
-                                        <label htmlFor="" className='text-[26px] ml-3'>Repita a senha</label>
-                                        <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
-                                    <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
-                                      <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
-                                      type='button'
-                                      onClick={() => router.back()}
-                                      className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
-                                    </div>
-
-                                    <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
-                                      <motion.button
-                                        whileTap={{ scale: 0.99 }}
-                                        whileHover={{ scale: 1.01 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        type='submit'
-                                        className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
-                                    </div>
-                                  </motion.div>
-                                </form>
                               </div>
                             );
                           }

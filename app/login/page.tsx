@@ -37,7 +37,7 @@ export default function LoginPage() {
       )}
       
       <div className="w-[100%] h-[100vh] flex justify-center bg-white">
-          <div className="logincontainer w-[1600px] h-fit py-5 m-auto max-w-[90%]  mx-auto flex lg:flex-row flex-col justify-center items-center">
+          <div className="logincontainer w-[1600px] h-fit py-5 m-auto max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
             <AnimatePresence >
               <motion.div 
               key="loginimage"
@@ -49,7 +49,7 @@ export default function LoginPage() {
                 <Image src="/loginimage.svg" alt="Login Image" className='w-full' width={300} height={500}/>
               </motion.div>
 
-              <motion.div key="login" className="login w-[80%] lg:w-[50%] flex justify-center items-center">
+              <motion.div key="login" className="login w-[90%] lg:w-[50%] flex justify-center items-center">
                 <div className=" flex flex-col w-[500px] gap-[20px] max-w-[100%] ">
                   <div className="">
                     <h1 className='entrar text-[40px] lg:text-[60px] font-bold leading-none text-[#EB7262]'>Entrar</h1>
