@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(4);
+  const [ subStep, setSubStep] = useState(1);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("usuario");
