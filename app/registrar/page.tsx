@@ -194,35 +194,37 @@ export default function RegisterPage() {
                   if (subStep < 5) {
                     return (
                       <>
-                        <div className="flex items-center flex-col w-[45%] max-w-[80%] ">
-                          {(() => {
-                            if (subStep === 4) {
-                              return (
-                                <>
-                                  <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>
-                                </>
-                              )
-                            }
-                            else if ( subStep === 3 && categoria === "restrito") {
-                              return (
-                                <>
-                                  <div className='text-[60px] font-bold text-[#EB7262] text-center'>Área do Administrador Geral </div>
-                                </>
-                              )
-                            }
-                            else if (subStep < 5) {
-                              return (
-                                <>
-                                  <div className='text-[60px] font-bold text-[#EB7262]'>Primeiro acesso</div>
-                                </>
-                              )
-                            }
-                          })()}
-                          <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center '>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
-                        
+                        <div className="max-w-[90%] flex justify-center items-center">
+                          <div className="flex items-center flex-col w-[80%] ">
+                            {(() => {
+                              if (subStep === 4) {
+                                return (
+                                  <>
+                                    <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Código de verificação</h1>
+                                  </>
+                                )
+                              }
+                              else if ( subStep === 3 && categoria === "restrito") {
+                                return (
+                                  <>
+                                    <div className='text-[60px] font-bold text-[#EB7262] text-center'>Área do Administrador Geral </div>
+                                  </>
+                                )
+                              }
+                              else if (subStep < 5) {
+                                return (
+                                  <>
+                                    <div className=' text-center text-[60px] font-bold text-[#EB7262]'>Primeiro acesso</div>
+                                  </>
+                                )
+                              }
+                            })()}
+                            <h2 className='text-[25px] text-[rgba(55,71,79,0.84)] text-center '>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
+                          
+                          </div>
                         </div>
 
-                        <div className="w-[40%] h-14 mt-8 mb-10 flex justify-center items-center ">
+                        <div className="max-w-[80%] w-[700px] h-14 mt-8 mb-10 flex justify-center items-center ">
                           <div className="bg-[#D9D9D9] w-full h-[4px] flex relative">
 
                             <div className={` ${subStep === 1 ? "w-[0%]" : subStep === 2 ? "w-[25%]" : subStep === 3 ? "w-[50%]" : subStep === 4 && !finalizar? "w-[75%]" : subStep === 4 && finalizar? "w-[100%]" : "" } transition-all ease-in-out duration-500 h-[4px] rounded-full bg-[#9767F8] relative`}>
@@ -239,12 +241,12 @@ export default function RegisterPage() {
                         {(() => {
                           if (subStep === 1) {
                             return (
-                              <div className="w-[70%] mb-16">
+                              <div className="w-[70%] mb-14">
                                 <form onSubmit={handleSubmit} 
                                   method='POST'
-                                  className='flex flex-col justify-center gap-20 h-[350px]'>
-                                  <div className="flex justify-center items-center gap-20 h-full mt-24">
-                                    <div className="w-[50%] flex flex-col gap-4">
+                                  className='flex flex-col justify-center gap-20 h-fit'>
+                                  <div className=" block lg:flex justify-center items-center gap-20 h-full ">
+                                    <div className="mx-auto lg:w-[50%] flex flex-col gap-4">
                                       <div className="flex flex-col gap-1">
                                         <label htmlFor="" className='text-[26px] ml-3'>Primeiro nome</label>
                                         <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
@@ -261,7 +263,7 @@ export default function RegisterPage() {
                                       </div>
                                     </div>
 
-                                    <div className="w-[50%] flex flex-col gap-4">
+                                    <div className="mx-auto lg:w-[50%] mt-4 lg:mt-0 flex flex-col gap-4">
                                       <div className="flex flex-col gap-1">
                                         <label htmlFor="" className='text-[26px] ml-3'>Data de nascimento</label>
                                         <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
@@ -279,15 +281,15 @@ export default function RegisterPage() {
                                     </div>
                                   </div>
 
-                                  <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto ">
-                                    <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
+                                  <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
+                                    <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
                                       <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
                                       type='button'
                                       onClick={() => router.back()}
                                       className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                     </div>
 
-                                    <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
+                                    <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
                                       <motion.button
                                         whileTap={{ scale: 0.99 }}
                                         whileHover={{ scale: 1.01 }}

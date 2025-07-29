@@ -37,7 +37,7 @@ export default function LoginPage() {
       )}
       
       <div className="w-[100%] h-[100vh] flex justify-center bg-white">
-          <div className="logincontainer w-[1600px] h-full max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
+          <div className="logincontainer w-[1600px] h-fit py-5 m-auto max-w-[90%]  mx-auto flex lg:flex-row flex-col justify-center items-center">
             <AnimatePresence >
               <motion.div 
               key="loginimage"
@@ -45,12 +45,12 @@ export default function LoginPage() {
               animate={{opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.9, ease: "easeInOut", type: "spring", bounce: 0.4}}
-              className="loginimage  w-[50%] flex items-center h-fit">
+              className="loginimage w-[50%] flex items-center h-fit">
                 <Image src="/loginimage.svg" alt="Login Image" className='w-full' width={300} height={500}/>
               </motion.div>
 
               <motion.div key="login" className="login w-[80%] lg:w-[50%] flex justify-center items-center">
-                <div className=" flex flex-col w-[500px] gap-[5%] max-w-[90%] ">
+                <div className=" flex flex-col w-[500px] gap-[20px] max-w-[100%] ">
                   <div className="">
                     <h1 className='entrar text-[40px] lg:text-[60px] font-bold leading-none text-[#EB7262]'>Entrar</h1>
                     <h2 className='bemvindo text-[20px] lg:text-[26px]'>Bem-vindo de volta! Pronto para mais um dia de aprendizado?</h2>
