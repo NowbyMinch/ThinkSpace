@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(1);
+  const [ subStep, setSubStep] = useState(5);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("usuario");
@@ -547,7 +547,7 @@ export default function RegisterPage() {
                             return (
                                 <div className="max-w-[90%] mb-10 flex gap-20 justify-center items-center flex-col ">
                                 <form onSubmit={handleSubmit3} method="POST" className='max-w-[90%] flex flex-col justify-center items-center gap-20 '>
-                                  <div className=" flex flex-col gap-4 h-[350px] max-h-[90%] ">
+                                  <div className="fourthbox flex flex-col gap-4 h-[350px] max-h-[90%] ">
                                     <div className="flex flex-col items-center gap-4 w-full h-full ">
                                       <h2 className="text-gray-700 break-words text-center text-[20px]  lg:text-[26px]">Digite o seu código de verificação:</h2>
                                       <div className="flex gap-3 max-w-[765px] h-full ">
@@ -604,17 +604,17 @@ export default function RegisterPage() {
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
 
-                      className="w-[70%] mb-16 flex justify-center items-center">
-                        <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
-                          <div className="flex flex-col items-center gap-4 w-full h-full">
+                      className="min-w-[70%] max-w-[90%] h-full  flex justify-center items-center">
+                        <div className=" min-w-[54%] w-[620px] max-w-[90%] flex flex-col gap-4 h-fit ">
+                          <div className="flex flex-col items-center gap-4 w-full h-full ">
                             <Image alt='Cadastro Concluído' width={200} height={200} src="/cadastroconcluido.svg" className='w-[650px] ' />
-                            <h1 className='text-[55px] font-bold text-[#EB7262]'>Cadastro concluído!</h1>
-                            <h2 className="text-gray-700 text-[22px] text-center">Agora é só fazer login com suas credenciais e aproveitar tudo o que o aplicativo tem a oferecer. Bem-vindo(a) à sua nova jornada de aprendizado! 🚀📚</h2>
+                            <h1 className='text-[40px] leading-none lg:text-[60px] text-center font-bold text-[#EB7262]'>Cadastro concluído!</h1>
+                            <h2 className="text-gray-700 text-[20px] lg:text-[26px] text-center">Agora é só fazer login com suas credenciais e aproveitar tudo o que o aplicativo tem a oferecer. Bem-vindo(a) à sua nova jornada de aprendizado! 🚀📚</h2>
 
                             <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
-                            className='bg-[#9767F8] w-[55%] py-2 rounded-full text-white text-[25px]'><a href="/login">Retornar ao login</a></motion.button>
+                            className='bg-[#9767F8] w-[55%] py-2 rounded-full text-white text-[20px] lg:text-[26px]'><a href="/login">Retornar ao login</a></motion.button>
 
                           </div>
                         </div>
