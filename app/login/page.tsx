@@ -37,7 +37,7 @@ export default function LoginPage() {
       )}
       
       <div className="w-[100%] h-[100vh] flex justify-center bg-white">
-          <div className="logincontainer w-[1600px] h-fit py-5 m-auto max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
+          <div className="logincontainer w-[1600px] py-5 m-auto max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
             <AnimatePresence >
               <motion.div 
               key="loginimage"
@@ -45,40 +45,40 @@ export default function LoginPage() {
               animate={{opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.9, ease: "easeInOut", type: "spring", bounce: 0.4}}
-              className="loginimage w-[50%] flex items-center h-fit">
+              className="loginimage min-w-[50%] max-w-[50%] flex items-center h-fit">
                 <Image src="/loginimage.svg" alt="Login Image" className='w-full' width={300} height={500}/>
               </motion.div>
 
-              <motion.div key="login" className="login w-[90%] lg:w-[50%] flex justify-center items-center">
-                <div className=" flex flex-col w-[500px] gap-[20px] max-w-[100%] ">
+              <motion.div key="login" className="login  w-[90%] lg:max-w-[50%] flex justify-center items-center">
+                <div className=" flex flex-col w-[500px] gap-[20px] max-w-[100%] h-full ">
                   <div className="">
-                    <h1 className='entrar text-[40px] lg:text-[60px] font-bold leading-none text-[#EB7262]'>Entrar</h1>
-                    <h2 className='bemvindo text-[20px] lg:text-[26px]'>Bem-vindo de volta! Pronto para mais um dia de aprendizado?</h2>
+                    <h1 className='entrar text-[30px] font-bold leading-none text-[#EB7262]'>Entrar</h1>
+                    <h2 className='bemvindo text-[18px] '>Bem-vindo de volta! Pronto para mais um dia de aprendizado?</h2>
                   </div>
                   
                   <form onSubmit={handleSubmit} className='flex flex-col gap-[5%] ' >
                     <div className="flex flex-col gap-4 items-end">
                       <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                       <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                      <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[18px]'>Esqueceu a senha?</a>
+                      <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[15px]'>Esqueceu a senha?</a>
                     </div>
 
                     <motion.button 
                     whileTap={{scale: 0.99}}
                     whileHover={{scale: 1.01}}
                     transition={{ duration: 0.2, ease: "easeInOut"}}
-                    type='submit' className='loginbotao bg-[#804EE5] py-[10px] text-white text-[25px] rounded-[25px] shadow-md'>Entrar</motion.button>
+                    type='submit' className='loginbotao bg-[#804EE5] py-[10px] text-white text-[18px] rounded-[25px] shadow-md'>Entrar</motion.button>
 
                   </form>
 
                   <div className="flex flex-col gap-4 mt-10">
                     <div className="flex justify-center items-center mt-[-15px] ">
                       <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
-                      <span className='w-[33%] flex justify-center items-center text-[18px] text-center'>Ou continue com</span>
+                      <span className='w-[33%] flex justify-center items-center text-[15px] text-center'>Ou continue com</span>
                       <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
                     </div>
             
-                    <div className=" flex justify-center gap-4 h-[60px] ">
+                    <div className=" flex justify-center gap-4 h-[50px] ">
                       <a className="flex p-2 bg-[#804EE5] rounded-full h-full cursor-pointer">
                         <Image src="/google.svg" alt="Google Logo" className='w-full' width={300} height={500}/>
                       </a>
@@ -91,7 +91,7 @@ export default function LoginPage() {
             
                     </div>
 
-                    <h2 className='text-[20px] w-full text-center'>Não tem uma conta? <a href="/registrar" className='text-[#3881AF]'> Registre-se</a></h2>
+                    <h2 className='text-[15px] w-full text-center'>Não tem uma conta? <a href="/registrar" className='text-[#3881AF]'> Registre-se</a></h2>
                   </div>
                 </div>
           

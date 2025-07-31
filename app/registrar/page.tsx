@@ -13,7 +13,7 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [ subStep, setSubStep] = useState(5);
+  const [ subStep, setSubStep] = useState(1);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("usuario");
@@ -223,69 +223,75 @@ export default function RegisterPage() {
                               else if (subStep < 5) {
                                 return (
                                   <>
-                                    <div className=' text-center text-[40px] lg:text-[60px] font-bold text-[#EB7262]'>Primeiro acesso</div>
+                                    <div className=' text-center text-[40px] lg:text-[40px] font-bold text-[#EB7262]'>Primeiro acesso</div>
                                   </>
                                 )
                               }
                             })()}
-                            <h2 className='text-[20px] lg:text-[26px] text-[rgba(55,71,79,0.84)] text-center '>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
+                            <h2 className='text-[20px] lg:text-[22px] text-[rgba(55,71,79,0.84)] text-center '>Crie sua conta em poucos minutos e comece a explorar a plataforma rapidamente!</h2>
                           
                           </div>
                         </div>
 
-                        <div className="max-w-[80%] w-[700px] h-14 mt-8 mb-10 flex justify-center items-center ">
+                        <div className="max-w-[80%] w-[700px] h-14 mt-8 mb-8 flex justify-center items-center ">
                           <div className="bg-[#D9D9D9] w-full h-[4px] flex relative">
 
                             <div className={` ${subStep === 1 ? "w-[0%]" : subStep === 2 ? "w-[25%]" : subStep === 3 ? "w-[50%]" : subStep === 4 && !finalizar? "w-[75%]" : subStep === 4 && finalizar? "w-[100%]" : "" } transition-all ease-in-out duration-500 h-[4px] rounded-full bg-[#9767F8] relative`}>
                             </div>
 
-                            <div className="w-12 h-12 bg-[#9767F8] rounded-full absolute top-[-20px] flex justify-center items-center text-white text-[25px]">1</div>
+                            <div className="w-10
+                             h-10
+                             bg-[#9767F8] rounded-full absolute top-[-20px] flex justify-center items-center text-white text-[22px]">1</div>
 
-                            <div className={`${subStep > 2 ? fade(setPurple) : "bg-[#D9D9D9]"} ${purple ? "bg-[#9767F8]" : "bg-[#D9D9D9]"} transition-all ease-in-out duration-300 w-12 h-12 rounded-full absolute top-[-20px] left-[50%] translate-x-[-50%] flex justify-center items-center text-white text-[25px]`}>2</div>
+                            <div className={`${subStep > 2 ? fade(setPurple) : "bg-[#D9D9D9]"} ${purple ? "bg-[#9767F8]" : "bg-[#D9D9D9]"} transition-all ease-in-out duration-300 w-10
+                             h-10
+                             rounded-full absolute top-[-20px] left-[50%] translate-x-[-50%] flex justify-center items-center text-white text-[22px]`}>2</div>
 
-                            <div className={`${finalizar ? fade(setPurple2) : "bg-[#D9D9D9]"} ${purple2 ? "bg-[#9767F8]" : "bg-[#D9D9D9]"} w-12 h-12 duration-300 rounded-full absolute top-[-20px] left-[100%] translate-x-[-100%] flex justify-center items-center text-white text-[25px]`}>3</div>
+                            <div className={`${finalizar ? fade(setPurple2) : "bg-[#D9D9D9]"} ${purple2 ? "bg-[#9767F8]" : "bg-[#D9D9D9]"} w-10
+                             h-10
+                             duration-300 rounded-full absolute top-[-20px] left-[100%] translate-x-[-100%] flex justify-center items-center text-white text-[22px]`}>3</div>
                           </div>
                         </div>
 
                         {(() => {
                           if (subStep === 1) {
                             return (
-                              <div className="min-w-[70%] max-w-[90%]  flex justify-center items-center">
-                                <div className="w-[90%] mb-14">
+                              <div className=" w-full max-w-[90%] flex justify-center items-center ">
+                                <div className="w-[90%]">
                                   <form onSubmit={handleSubmit} 
                                     method='POST'
-                                    className='flex flex-col justify-center gap-20 h-fit'>
+                                    className='flex flex-col justify-center gap-10 h-fit'>
                                     <div className=" block lg:flex justify-center items-center gap-20 h-full ">
-                                      <div className="mx-auto lg:w-[50%] flex flex-col gap-4">
+                                      <div className="mx-auto lg:w-[50%] max-w-[550px] flex flex-col gap-4 ">
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className=' text-[20px] lg:text-[26px]'>Primeiro nome</label>
+                                          <label htmlFor="" className=' text-[20px] lg:text-[22px]'>Primeiro nome</label>
                                           <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px] lg:text-[26px]'>Sobrenome</label>
+                                          <label htmlFor="" className='text-[20px] lg:text-[22px]'>Sobrenome</label>
                                           <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px] lg:text-[26px]'>Email</label>
+                                          <label htmlFor="" className='text-[20px] lg:text-[22px]'>Email</label>
                                           <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
 
-                                      <div className="mx-auto lg:w-[50%] mt-4 lg:mt-0 flex flex-col gap-4">
+                                      <div className="mx-auto lg:w-[50%] max-w-[550px] mt-4 lg:mt-0 flex flex-col gap-4 ">
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px] lg:text-[26px]'>Data de nascimento</label>
+                                          <label htmlFor="" className='text-[20px] lg:text-[22px]'>Data de nascimento</label>
                                           <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px] lg:text-[26px]'>Senha</label>
+                                          <label htmlFor="" className='text-[20px] lg:text-[22px]'>Senha</label>
                                           <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px] lg:text-[26px]'>Repita a senha</label>
+                                          <label htmlFor="" className='text-[20px] lg:text-[22px]'>Repita a senha</label>
                                           <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
@@ -296,7 +302,7 @@ export default function RegisterPage() {
                                         <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
                                         type='button'
                                         onClick={() => router.back()}
-                                        className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                        className='bg-[#804EE5] py-[8px] text-white text-[22px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                       </div>
 
                                       <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
@@ -305,7 +311,7 @@ export default function RegisterPage() {
                                           whileHover={{ scale: 1.01 }}
                                           transition={{ duration: 0.2, ease: "easeInOut" }}
                                           type='submit'
-                                          className='bg-[#804EE5] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Próximo</motion.button>
+                                          className='bg-[#804EE5] py-[8px] text-white text-[22px] rounded-[25px] shadow-md'>Próximo</motion.button>
                                       </div>
                                     </motion.div>
                                   </form>
@@ -487,7 +493,7 @@ export default function RegisterPage() {
                             return (
                               <div className="w-[70%] mb-16 flex gap-20 justify-center items-center flex-col">
                                 <form onSubmit={(e) => { e.preventDefault()}} className='flex flex-col justify-center items-center gap-[25px] '>
-                                  <div className="w-[55%] flex flex-col  h-[350px] max-h-[90%] ">
+                                  <div className="w-[55%] flex flex-col h-[350px] max-h-[90%] ">
                                     <div className="flex flex-col items-center gap-4 w-full h-full">
                                       <h2 className="text-gray-700 text-[20px] lg:text-[26px]">Digite o seu código de administrador geral da plataforma:</h2>
                                       <div className="flex flex-col items-center gap-3 w-full h-full">
