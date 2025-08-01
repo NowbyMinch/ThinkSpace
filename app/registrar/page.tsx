@@ -198,12 +198,12 @@ export default function RegisterPage() {
       <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF]">
           <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
             <AnimatePresence >
-              <div ref={scrollContainerRef} className=" flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white rounded-[35px] overflow-y-auto relative">
+              <div ref={scrollContainerRef} className=" flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white rounded-[35px] overflow-y-auto relative ">
                 {(() => {
                   if (subStep < 5) {
                     return (
                       <>
-                        <div className="max-w-[90%] flex justify-center items-center">
+                        <div className="max-w-[90%] flex justify-center items-center ">
                           <div className="flex items-center flex-col w-[90%] ">
                             {(() => {
                               if (subStep === 4) {
@@ -553,7 +553,7 @@ export default function RegisterPage() {
                           }
                           else if (subStep === 4) {
                             return (
-                                <div className="max-w-[90%] mb-10 flex gap-20 justify-center items-center flex-col ">
+                              <div className="max-w-[90%] mb-10 flex gap-20 justify-center items-center flex-col ">
                                 <form onSubmit={handleSubmit3} method="POST" className='max-w-[90%] flex flex-col justify-center items-center gap-7 '>
                                   <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                                     <div className="flex flex-col items-center gap-4 w-full h-full ">

@@ -131,19 +131,22 @@ export default function LoginPage() {
             )}
             <div className="w-[100%] h-[100vh] flex justify-center bg-[#A87CFF] ">
                 <div className="w-[1730px] h-full max-w-[90%] flex justify-center items-center ">
-                <AnimatePresence >
-                    <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] py-10 bg-white overflow-y-auto rounded-[35px] relative">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="w-[100%] mb-16 flex justify-center h-full">
+                    <AnimatePresence >
+                        <div className="flex flex-col w-full items-center h-[900px] max-h-[90%] bg-white overflow-y-auto rounded-[35px] relative ">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="w-[100%] flex flex-col  h-full items-center overflow-y-auto ">
 
-                        <div className="w-[100%]  flex flex-col mt-10 items-center gap-4 max-h-[90%] ">
-                            <div className="flex flex-col items-center gap-10 w-full max-w-[100%] h-full ">
-                                <div className="flex flex-col justify-center items-center w-[45%] ">
-                                    <h1 className='text-[60px] font-bold text-[#EB7262] text-center'>Esqueceu a senha?</h1>
-                                    <h2 className="text-gray-700 text-[25px] text-center ">
-                                        {step === 1? "Insira o seu email e enviaremos um código de verificação para você voltar a acessar a sua conta.": 
-                                        step === 2? "Um e-mail de confirmação foi enviado. Digite o código de verificação para redefinir sua senha com segurança." : 
-                                        step === 3? "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos." : ""}
-                                    </h2>
+                            <div className="h-fit flex flex-col items-center gap-4 max-w-[90%] my-auto py-4 ">
+                                <div className="max-w-[90%] flex justify-center items-center ">
+                                    <div className="flex items-center flex-col w-[90%] ">
+                                        <h1 className='text-[30px] font-bold text-[#EB7262] text-center'>Esqueceu a senha?</h1>
+                                        <h2 className="text-gray-700 text-[18px] text-center ">
+                                            {step === 1? "Insira o seu email e enviaremos um código de verificação para você voltar a acessar a sua conta.": 
+                                            step === 2? "Um e-mail de confirmação foi enviado. Digite o código de verificação para redefinir sua senha com segurança." : 
+                                            step === 3? "Crie uma nova senha com pelo menos 8 caracteres, incluindo letras, números e símbolos." : ""}
+                                        </h2>
+                                        {/* <div className="w-[90%] max-w-[600px] ">
+                                        </div> */}
+                                    </div>
                                 </div>
                                 
                                 {step === 1 && (
@@ -151,17 +154,36 @@ export default function LoginPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    onSubmit={handleSubmit} className='flex flex-col gap-8 w-full max-w-[500px]'>
+                                    onSubmit={handleSubmit} className='flex flex-col gap-8 w-full max-w-[500px] '>
                                         <div className="flex flex-col gap-4 justify-center items-center">
-                                            <input type="email" onChange={(e) => {setForm({...form, email: e.target.value})}} required placeholder='Digite seu email' className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="email" onChange={(e) => {setForm({...form, email: e.target.value})}} required placeholder='Digite seu email' className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
                                         </div>
                                         
-                                        <div className="flex justify-center items-center gap-10 ">
+                                        <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                            type='button'
+                                            onClick={() => router.back()}
+                                            className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                            </div>
+
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                            <motion.button
+                                            whileTap={{ scale: 0.99 }}
+                                            whileHover={{ scale: 1.01 }}
+                                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                                            type='submit'
+                                            className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Enviar código</motion.button>
+                                            </div>
+                                        </motion.div>
+
+
+                                        {/* <div className="flex justify-center items-center gap-10 ">
                                             <div className="flex flex-col gap-10 max-w-[90%] ">
                                                 <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
                                                 type='button'
                                                 onClick={() => router.back()}
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                             </div>
 
                                             <div className="flex flex-col gap-10 max-w-[90%] ">
@@ -170,9 +192,9 @@ export default function LoginPage() {
                                                 whileHover={{ scale: 1.01 }}
                                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                                                 type='submit'
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Enviar código</motion.button>
+                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Enviar código</motion.button>
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div className="flex justify-center items-center mt-[-15px] ">
                                             <div className="h-[1px] w-full bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
@@ -180,7 +202,7 @@ export default function LoginPage() {
                                             <div className="h-[1px] w-full bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
                                         </div>
 
-                                        <h2 className="text-[20px] w-full text-center flex gap-1 justify-center items-center mt-[-15px]">Volte ao
+                                        <h2 className="text-[18px] w-full text-center flex gap-1 justify-center items-center mt-[-15px]">Volte ao
                                             <a href="/login" className="text-[#3881AF]">Login</a>
                                         </h2>
                                     </motion.form>
@@ -192,64 +214,66 @@ export default function LoginPage() {
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }} 
                                     onSubmit={handleSubmit2}
-                                    className='flex flex-col justify-center items-center gap-20 w-[70%]'>
-                                        <div className="w-[55%] flex flex-col gap-4 h-[350px] max-h-[90%] ">
+                                    className='flex flex-col justify-center items-center gap-14 w-full '>
+                                        <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                                             <div className="flex flex-col items-center gap-4 w-full h-full">
-                                            <h2 className="text-gray-700 text-[25px]">Digite o seu código de verificação:</h2>
-                                            <div className="flex gap-3  w-full h-full">
-                                                {[...Array(5)].map((_, i) => (
-                                                <input
-                                                    key={i}
-                                                    ref={(el) => { inputRefs.current[i] = el!; }}
-                                                    type="text"
-                                                    inputMode="numeric"
-                                                    required
-                                                    maxLength={1}
-                                                    onChange={(e) => {handleChange(i, e);}}
-                                                    onKeyDown={e => {
-                                                        handleKeyDown(i, e);
-                                                        if (e.key === "Enter") {
-                                                        e.preventDefault();
-                                                        }
-                                                    }}
-                                                    className="w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
-                                                />
-                                                ))}
-                                            </div>
-                                            <button onClick={reenviar} type='button' className=' text-[#3881AF] w-fit text-[18px] -mt-36 cursor-pointer'>Reenviar Código</button>
+                                                <h2 className="text-gray-700 text-[18px]">Digite o seu código de verificação:</h2>
+                                                <div className="flex gap-1 max-w-[765px]  ">
+                                                    {[...Array(5)].map((_, i) => (
+                                                    <input
+                                                        key={i}
+                                                        ref={(el) => { inputRefs.current[i] = el!; }}
+                                                        type="text"
+                                                        inputMode="numeric"
+                                                        required
+                                                        maxLength={1}
+                                                        onChange={(e) => {handleChange(i, e);}}
+                                                        onKeyDown={e => {
+                                                            handleKeyDown(i, e);
+                                                            if (e.key === "Enter") {
+                                                            e.preventDefault();
+                                                            }
+                                                        }}
+                                                        className="codigo w-full h-[200px] rounded-[10px] text-center text-[70px] transition-all ease-in-out duration-300 focus:bg-[#9767f834] font-semibold bg-[#d9d9d9c5] outline-[rgba(151,103,248,0.6)]"
+                                                    />
+                                                    ))}
+                                                </div>
+                                                <button onClick={reenviar} type='button' className=' text-[#3881AF] w-fit text-[18px]  cursor-pointer'>Reenviar Código</button>
                                             </div>
                                         </div>
                                         
-                                        <div className="flex justify-center items-center gap-10 ">
-                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                        <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
                                                 <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
                                                 type='button'
                                                 onClick={() => setStep(step - 1)}
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                                className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                             </div>
 
-                                            <div className="flex flex-col gap-10 max-w-[90%] ">
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
                                                 <motion.button
                                                 whileTap={{ scale: 0.99 }}
                                                 whileHover={{ scale: 1.01 }}
                                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                                                 type='submit'
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md  '>Confirmar senha</motion.button>
+                                                className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Enviar código</motion.button>
                                             </div>
-                                        </div>
+                                        </motion.div>
+                                        
                                     </motion.form>
+                                        
                                 )}
-                                
+
                                 {step === 3 && (
                                     <motion.form 
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }} 
                                     onSubmit={handleSubmit3}
-                                    className='flex flex-col gap-8 w-full max-w-[500px] justify-center items-center  h-[100%]'>
-                                        <div className="w-full flex flex-col gap-4 h-full">
-                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setCompleteForm({...completeForm, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setCompleteForm({...completeForm, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                    className='flex flex-col gap-8 w-full max-w-[500px] justify-center items-center '>
+                                        <div className="w-full flex flex-col gap-4 ">
+                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setCompleteForm({...completeForm, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setCompleteForm({...completeForm, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
 
                                             {/* <div className={`h-[96px] overflow-hidden w-fit transition-all duration-300 ease-in-out min-w-10 min-h-2 `}>
                                                 modelo
@@ -259,34 +283,40 @@ export default function LoginPage() {
                                             </div> */}
                                         </div>
                                         
-                                        <div className="flex justify-center items-center gap-10 ">
-                                            <div className="flex flex-col gap-10 max-w-[90%] ">
-                                                <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
-                                                type='button'
-                                                onClick={() => setStep(step - 1)}
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                        <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} 
+                                            type='button'
+                                            onClick={() => setStep(step - 1)}
+                                            className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Voltar</motion.button>
                                             </div>
 
-                                            <div className="flex flex-col gap-10 max-w-[90%] ">
-                                                <motion.button
-                                                whileTap={{ scale: 0.99 }}
-                                                whileHover={{ scale: 1.01 }}
-                                                transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                type='submit'
-                                                className='bg-[#804EE5] w-[200px] py-[8px] text-white text-[25px] rounded-[25px] shadow-md  '>Confirmar senha</motion.button>
+                                            <div className="flex flex-col w-[200px] gap-10 max-w-[95%] ">
+                                            <motion.button
+                                            whileTap={{ scale: 0.99 }}
+                                            whileHover={{ scale: 1.01 }}
+                                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                                            type='submit'
+                                            className='bg-[#804EE5] py-[8px] text-white text-[18px] rounded-[25px] shadow-md'>Confirmar senha</motion.button>
                                             </div>
-                                        </div>
+                                        </motion.div>
+
                                     </motion.form>
                                 )}
                             </div>
+                            
+
+                            {/* <div className="max-w-[90%] bg-red-500  h-full justify-center flex flex-col items-center gap-10 ">
+                            </div> */}
+
+
+                            {/* <div className="max-w-[90%] bg-blue-500 flex flex-col mt-10 items-center gap-4 max-h-[90%] ">
+                            </div> */}
+
+                        </motion.div>
+                        
                         </div>
-
-                    </motion.div>
-                    
-                    </div>
-                </AnimatePresence>
-
-                
+                    </AnimatePresence>
                 </div>
             </div>
         </>
