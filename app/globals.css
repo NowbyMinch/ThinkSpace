@@ -61,7 +61,7 @@
 html, body{
   scroll-behavior: smooth;
   color: #2F2F2F;
-  height: 100%;
+  height: screen;
   margin: 0;
   padding: 0;
   background-color: red;

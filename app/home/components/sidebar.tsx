@@ -91,7 +91,7 @@ export const Sidebar = () => {
                         initial={{ opacity: 0, scale: 0.85}}
                         animate={{ opacity: 1, scale: 0.94 }}
                         exit={{ opacity: 0, scale: 0.90 }}
-                        className={`w-full h-full fixed flex justify-center items-center  opacity-1 z-[1100] `}>
+                        className={`w-full h-full fixed flex justify-center items-center opacity-1 z-[1100] `}>
                             
                             <div className="w-full h-full absolute" onClick={() => setLogoutPop(false)}></div>
                             <motion.div 
@@ -146,8 +146,8 @@ export const Sidebar = () => {
                 )}
             </AnimatePresence>
 
-            <div className=" min-w-[118px] h-[calc(100vh-24px)] min-h-fit flex flex-col items-center mt-[12px] ml-4 z-[100]">
-                <nav className="bg-white min-w-[118px] min-h-fit h-[calc(100vh-24px)] flex flex-col  items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
+            <div className=" w-[80px] h-[100vh] min-h-fit flex flex-col justify-center items-center ml-2  z-[100]">
+                <nav className="bg-white min-w-[80px] min-h-fit h-[98%]  flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
                     
                     <div className=" h-[92%] max-h-[1000px] px-1 flex flex-col justify-between items-center overflow-hidden ">
 
@@ -162,7 +162,7 @@ export const Sidebar = () => {
                                         initial: { scale: 1 },
                                         hovered: { scale: 1.05}
                                     }}
-                                    className="w-16 h-[67px] mt-5 cursor-pointer relative"
+                                    className="w-[55px] h-[55px] mt-5 cursor-pointer relative"
                                 >
                                     {/* Show only the correct icon */}
                                     {pathname === "/home" ? (
@@ -190,7 +190,7 @@ export const Sidebar = () => {
                             </Tooltip>
                         </Link>
 
-                        <div className="flex flex-col items-center gap-[45px]">
+                        <div className="flex flex-col items-center gap-[5px]">
                             <Link href="/home/materiais" className="">
                                 {(() => {
                                     if (pathname == "/home/materiais") {
@@ -205,7 +205,7 @@ export const Sidebar = () => {
                                                         whileTap={{ scale: 0.95}}
                                                         transition={{ duration: 0.2, ease: "easeInOut" }}
                                                         className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                            <NotebookPen className= "size-[45px] cursor-pointer text-white "/>
+                                                            <NotebookPen className= "size-[28px] cursor-pointer text-white "/>
                                                         </motion.button>
 
                                                     </Tooltip>
@@ -218,8 +218,8 @@ export const Sidebar = () => {
                                             <motion.button 
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}}
-                                            id="side_pop" className="relative p-[15px] rounded-full "> 
-                                                <NotebookPen className= "size-[45px] cursor-pointer text-black "/>
+                                            id="side_pop" className="relative p-[15px]  rounded-full "> 
+                                                <NotebookPen className= "size-[28px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -232,7 +232,7 @@ export const Sidebar = () => {
                                     whileHover={{ scale: 1.05}}
                                     whileTap={{ scale: 0.95}}
                                     id="side_pop" className="relative p-[15px] rounded-full "> 
-                                        <User className= "size-[45px] cursor-pointer text-black "/>
+                                        <User className= "size-[28px] cursor-pointer text-black "/>
                                     </motion.button>
                                 </Tooltip>
                             </Link>
@@ -252,7 +252,7 @@ export const Sidebar = () => {
                                                         animate={{ scale: 1 }}
                                                         transition={{ duration: 0.2, ease: "easeInOut" }}
                                                         id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                            <ChartLine className= "size-[45px] cursor-pointer text-white "/>
+                                                            <ChartLine className= "size-[28px] cursor-pointer text-white "/>
                                                         </motion.button>
 
                                                     </Tooltip>
@@ -266,7 +266,7 @@ export const Sidebar = () => {
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}} 
                                             id="side_pop" onMouseDown={() => {console.log(pathname)}} className="relative p-[15px] rounded-full "> 
-                                                <ChartLine className= "size-[45px] cursor-pointer text-black "/>
+                                                <ChartLine className= "size-[28px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -279,7 +279,7 @@ export const Sidebar = () => {
                                     whileHover={{ scale: 1.05}}
                                     whileTap={{ scale: 0.95}}
                                     id="side_pop" className="relative p-[15px] rounded-full "> 
-                                        <CalendarDays className= "size-[45px] cursor-pointer text-black "/>
+                                        <CalendarDays className= "size-[28px] cursor-pointer text-black "/>
                                     </motion.button>
                                 </Tooltip>
                             </Link>
@@ -299,7 +299,7 @@ export const Sidebar = () => {
                                                             transition={{ duration: 0.2, ease: "easeInOut" }}
                                                             id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
 
-                                                                <Cog className= "size-[45px] cursor-pointer text-white "/>
+                                                                <Cog className= "size-[28px] cursor-pointer text-white "/>
                                                                 
                                                             </motion.button>
                                                     </Tooltip>
@@ -315,7 +315,7 @@ export const Sidebar = () => {
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}}
                                             id="side_pop" className="relative p-[15px] rounded-full "> 
-                                                <Cog className= "size-[45px] cursor-pointer text-black "/>
+                                                <Cog className= "size-[28px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -329,7 +329,7 @@ export const Sidebar = () => {
                             whileHover={{ scale: 1.05}}
                             whileTap={{ scale: 0.95}}
                             onClick={ () => setLogoutPop(true)} id="side_pop" className="relative p-[15px] rounded-full "> 
-                                <LogOut className= "size-[45px] cursor-pointer text-black "/>
+                                <LogOut className= "size-[28px] cursor-pointer text-black "/>
                             </motion.button>
                         </Tooltip>
                     </div>

@@ -294,7 +294,7 @@ export function ComboboxDemoSettings2({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[58px] outline-[#9767F8] `}
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8] `}
         >
           <span className="w-full flex rounded-[25px]">
             {value
@@ -382,7 +382,7 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[58px] outline-[#9767F8] `}
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8] `}
         >
           <span className="w-full flex rounded-[25px]">
             {value
