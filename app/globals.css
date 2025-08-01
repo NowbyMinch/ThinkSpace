@@ -235,10 +235,10 @@ body {
 
 @media(max-width:490px){
   .codigo{
-    height: 100px;
+    height: 90px;
   }
 
   .fourthbox{
-    height: 250px;
+    height: 190px;
   }
 }

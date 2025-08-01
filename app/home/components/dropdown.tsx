@@ -192,7 +192,7 @@ export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
+          className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
         >
           <span className="block w-full truncate text-left">
             {value
@@ -243,7 +243,7 @@ export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[60px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
+          className={`${value ? "" : "text-[rgba(0,0,0,0.6)]"} font-normal text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)] hover:bg-white `}
         >
           <span className="block w-full truncate text-left">
             {value
@@ -294,7 +294,7 @@ export function ComboboxDemoSettings2({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8] `}
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[58px] outline-[#9767F8] `}
         >
           <span className="w-full flex rounded-[25px]">
             {value
@@ -382,7 +382,7 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[60px] outline-[#9767F8] `}
+          className={`font-normal rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[60%] text-[25px] h-[58px] outline-[#9767F8] `}
         >
           <span className="w-full flex rounded-[25px]">
             {value
