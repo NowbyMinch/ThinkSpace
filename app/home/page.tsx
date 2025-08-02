@@ -458,14 +458,14 @@ export default function HomePage() {
         <div className=" grid grid-cols-[62%_1fr] mt-3 pb-3 gap-[30px] ">
           <div className=" ">
             <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
-              <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
+              <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
                 <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
-                    <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
+                    <h1 className="text-[26px] font-medium line-clamp-3 break-words">
                       {bannerData.mensagem} {bannerData.relatorio} 
                     </h1>
 
-                    <a href={`/home/${bannerData.relatorioUrl}`} className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
-                      <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                    <a href={`/home/${bannerData.relatorioUrl}`} className="w-[35%] min-w-[35%] h-[26%] min-h-[26%] rounded-full">
+                      <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
                         Saiba mais!
                       </button>
                     </a>
