@@ -77,7 +77,7 @@ export default function landingPage() {
 
     return (
         <>
-            <div className="w-screen z-[0] relative overflow-x-hidden  p-0 m-0">
+            <div className=" z-[0] relative overflow-x-hidden  p-0 m-0">
                 <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center align items-center`}>
                     <div className="flex w-[90%] max-w-[1700px] max-h-[120px] h-max justify-between ">
                         <div className=" w-full h-full flex items-center ">
