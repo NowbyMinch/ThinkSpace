@@ -7,17 +7,17 @@ export default function Notificação() {
 
   return (
     <>
-      <div className="ml-10 mt-4 w-[95%] border-b border-[rgba(0,0,0,0.33)] pb-4">
-        <div className="relative flex items-center w-[820px] gap-2">
-          <div className="min-w-[602px] max-w-[602px]">
-            <h1 className="font-medium text-[35px]">Comentários</h1>
-            <h2 className="text-[25px]">
+      <div className=" mt-4 w-[100%] border-b border-[rgba(0,0,0,0.33)] pb-4 ">
+        <div className="relative flex items-center gap-5 ">
+          <div className="lg:min-w-[650px] lg:max-w-[650px]  min-w-[70%] max-w-[70%] ">
+            <h1 className="font-medium text-[25px]">Comentários</h1>
+            <h2 className="text-[18px]">
               Notificações para comentários em suas postagens e respostas para
               seus comentários.
             </h2>
           </div>
 
-          <div className="flex flex-col gap-2 ">
+          <div className="flex flex-col gap-2 w-fit ">
             <div className="flex gap-2 ">
               <motion.label
               whileHover={{ scale:1.01 }}
@@ -40,7 +40,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Comentários</h2>
+              <h2 className="text-[20px] font-medium">Comentários</h2>
             </div>
 
             <div className="flex gap-2 ">
@@ -65,17 +65,18 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Respostas</h2>
+              <h2 className="text-[20px] font-medium">Respostas</h2>
             </div>
           </div>
+
         </div>
       </div>
 
-      <div className="ml-10 mt-4 w-[95%] border-b border-[rgba(0,0,0,0.33)] pb-4">
-        <div className="relative flex items-center w-[820px] gap-2">
-          <div className="min-w-[602px] max-w-[602px]">
-            <h1 className="font-medium text-[35px]">Lembretes</h1>
-            <h2 className="text-[25px]">
+      <div className=" mt-4 w-[100%]  border-b border-[rgba(0,0,0,0.33)] pb-4">
+        <div className="relative flex items-center gap-5">
+          <div className="lg:min-w-[650px] lg:max-w-[650px]  min-w-[70%] max-w-[70%] ">
+            <h1 className="font-medium text-[25px]">Lembretes</h1>
+            <h2 className="text-[20px]">
               Notificações para lembrar de atividades e estudos da semana.
             </h2>
           </div>
@@ -103,7 +104,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Atividades</h2>
+              <h2 className="text-[20px] font-medium">Atividades</h2>
             </div>
 
             <div className="flex gap-2 ">
@@ -128,18 +129,18 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Estudos</h2>
+              <h2 className="text-[20px] font-medium">Estudos</h2>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div className="ml-10 mt-4 w-[95%] border-b border-[rgba(0,0,0,0.33)] pb-4">
-        <div className="relative flex items-center w-[820px] gap-2">
-          <div className="min-w-[602px] max-w-[602px]">
-            <h1 className="font-medium text-[35px]">Postagens</h1>
-            <h2 className="text-[25px]">
+      <div className=" mt-4 w-[100%] border-b border-[rgba(0,0,0,0.33)] pb-4">
+        <div className="relative flex items-center gap-5">
+          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+            <h1 className="font-medium text-[25px]">Postagens</h1>
+            <h2 className="text-[20px]">
               Notificações para novas postagens em salas de estudos seguidas e
               postagens destaque.
             </h2>
@@ -168,7 +169,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Postagens</h2>
+              <h2 className="text-[20px] font-medium">Postagens</h2>
             </div>
 
             <div className="flex gap-2 ">
@@ -193,7 +194,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Destaques</h2>
+              <h2 className="text-[20px] font-medium">Destaques</h2>
             </div>
           </div>
 
@@ -201,13 +202,13 @@ export default function Notificação() {
         </div>
       </div>
 
-      <div className="ml-10 mt-4 w-[95%] border-b border-[rgba(0,0,0,0.33)] pb-4">
-        <div className="relative flex items-center w-[820px] gap-2">
-          <div className="min-w-[602px] max-w-[602px]">
-            <h1 className="font-medium text-[35px]">
+      <div className=" mt-4 w-[100%] border-b border-[rgba(0,0,0,0.33)] pb-4">
+        <div className="relative flex items-center gap-5">
+          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+            <h1 className="font-medium text-[25px]">
               Mais atividades sobre você
             </h1>
-            <h2 className="text-[25px]">Notificações de novos seguidores.</h2>
+            <h2 className="text-[20px]">Notificações de novos seguidores.</h2>
           </div>
 
           <div className="flex flex-col gap-2 ">
@@ -233,7 +234,7 @@ export default function Notificação() {
 
               </motion.label>
               
-              <h2 className="text-[26px] font-medium">Seguidores</h2>
+              <h2 className="text-[20px] font-medium">Seguidores</h2>
             </div>
           </div>
 

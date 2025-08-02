@@ -129,54 +129,54 @@ export default function Informações() {
   
   return (
     <>
-      <form className=" ml-10 flex flex-col gap-3 overflow-hidden">
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px]">
+      <form className="  flex flex-col gap-4 overflow-hidden ">
+        <div className="flex flex-col justify-between lg:w-[50%]  max-w-[550px]">
           <h1 className="text-[20px] font-medium">Primeiro nome</h1>
           <input
             type="text"
             defaultValue={usuario.primeiroNome}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, primeiroNome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px]">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Sobrenome</h1>
           <input
             type="text"
             defaultValue={usuario.sobrenome }
             // onChange={(e) => setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px] ">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
           <h1 className="text-[20px] font-medium">Data de Nascimento</h1>
           <input
             type="text"
             defaultValue={(usuario?.dataNascimento?.split('T')[0])?.replaceAll( "-", "/" ) ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px] ">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
           <h1 className="text-[20px] font-medium">Instituição</h1>
           <input
             type="text"
             defaultValue={instituicao}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, instituicaoId: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px] ">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
           <h1 className="text-[20px] font-medium">
             Cargo ou Posição 
           </h1>
           <ComboboxDemoSettings value={user?.cargo ?? ""} onChange={() => {}} />
         </div>
 
-        <div className="flex flex-col justify-between w-[50%] max-w-[550px] ">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
           <h1 className="text-[20px] font-medium">
             Nível de escolaridade {escola}
           </h1>

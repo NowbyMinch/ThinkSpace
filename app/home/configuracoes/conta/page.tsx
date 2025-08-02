@@ -171,7 +171,7 @@ export default function Conta() {
                             <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                                 <div className="flex flex-col justify-center items-center">
                                     <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                    <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                    <span className="font-medium text-[20px]">{user.primeiroNome} </span>
                                     <span className="text-[20px]"></span>
                                 </div>
 
@@ -201,7 +201,7 @@ export default function Conta() {
                 </motion.div>
                     
                     
-                <div className="w-full absolute flex justify-center items-center bg-red-500">
+                <div className="w-full absolute flex justify-center items-center ">
                     <Backdrop3 onClick={() => setSuspenderPop(false)}/>
                 </div>
             </>
@@ -232,7 +232,7 @@ export default function Conta() {
                           <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
                               <div className="flex flex-col justify-center items-center">
                                   <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                  <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                  <span className="font-medium text-[20px]">{user.primeiroNome} </span>
                                   <span className="text-[20px]"></span>
                               </div>
 
@@ -261,7 +261,7 @@ export default function Conta() {
                   
               </motion.div>
                   
-              <div className="w-full absolute flex justify-center items-center bg-red-500">
+              <div className="w-full absolute flex justify-center items-center ">
                   <Backdrop3 onClick={() => setExcluirPop(false)}/>
               </div>
             </>
@@ -270,15 +270,15 @@ export default function Conta() {
       {/* <div className={`  absolute left-0 top-0 w-full h-full `}>
       </div> */}
 
-      <div className="ml-10 mt-4 flex flex-col gap-5">
-        <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="flex flex-col justify-between w-[400px] gap-4">
-            <h1 className="font-medium text-[30px]">Endereço de Email</h1>
+      <div className=" mt-4 flex flex-col gap-5">
+        <div className="flex gap-5 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%] gap-4">
+            <h1 className="font-medium text-[20px]">Endereço de Email</h1>
             <input
               type="text"
               defaultValue={email}
               onChange={(e) => setNovoEmail({ ...novoEmail, novoEmail: e.target.value })}
-              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
+              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
             ></input>
           </div>
 
@@ -287,20 +287,20 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={editarEmail}
             id="editar_conta"
-            className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
+            className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
           >
             Editar
           </motion.button>
         </div>
 
-        <div className="flex justify-between w-[1000px] items-center border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="flex flex-col justify-between w-[400px] gap-4">
-            <h1 className="font-medium text-[30px]">Senha</h1>
+        <div className="flex gap-5 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%] gap-4">
+            <h1 className="font-medium text-[20px]">Senha</h1>
             <input
             type="text"
               placeholder="************"
               onChange={(e) => setSenha({ ...senha, novaSenha: e.target.value })}
-              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-[100%] text-[25px] h-[60px] outline-[#9767F8]"
+              className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
             ></input>
           </div>
 
@@ -309,16 +309,16 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={editarSenha}
             id="editar_conta"
-            className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
+            className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
           >
             Editar
           </motion.button>
         </div>
 
-        <div className="flex justify-between w-[1000px] items-center ">
-          <div className="w-[80%]">
-            <h1 className="font-medium text-[30px]">Excluir sua conta</h1>
-            <p className="text-[25px] ">
+        <div className="flex gap-5 w-full items-center ">
+          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+            <h1 className="font-medium text-[20px]">Excluir sua conta</h1>
+            <p className="text-[18px] ">
               Ao excluir a sua conta, você não poderá mais acessar os seus
               estudos ou fazer login em nossa plataforma. Sua conta no
               ThinkSpace foi criada em 10:00, 10 de jan. de 2025.
@@ -330,16 +330,16 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={() => setExcluirPop(true)}
           id="editar_conta"
-          className="font-medium border border-[#1E2351] rounded-[10px] w-[100px] h-[55px] text-[24px]"
+          className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
           >
             Excluir
           </motion.button>
         </div>
 
-        <div className="flex justify-between w-[1000px] items-center ">
-          <div className="w-[80%]">
-            <h1 className="font-medium text-[30px]">Suspender a conta</h1>
-            <p className="text-[25px] ">
+        <div className="flex gap-5 w-full items-center ">
+          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+            <h1 className="font-medium text-[20px]">Suspender a conta</h1>
+            <p className="text-[18px] ">
               Ao suspender sua conta, você não poderá acessar seus estudos nem
               fazer login em nossa plataforma. Caso a suspensão ultrapasse 3
               meses, sua conta será excluída.
@@ -351,7 +351,7 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={() => setSuspenderPop(true)}
           id="editar_conta"
-          className="font-medium border border-[#1E2351] rounded-[10px] w-[120px] h-[55px] text-[24px]"
+          className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
           >
             Suspender
           </motion.button>
@@ -361,7 +361,7 @@ export default function Conta() {
         whileTap={{ scale: 0.99 }}
         onClick={() => { if(novoEmail){ editarEmail(); } editarSenha();   }}
         id="editar_conta"
-        className="mt-3 ml-1 w-[200px] h-[60px] rounded-[30px] text-[25px] font-medium border border-[#1E2351]"
+        className="mt-3 ml-1 w-[200px] h-[58px] rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
         >
           Salvar
         </motion.button> */}

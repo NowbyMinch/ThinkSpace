@@ -146,7 +146,7 @@ export const Sidebar = () => {
                 )}
             </AnimatePresence>
 
-            <div className=" w-[80px] h-[100vh] min-h-fit flex flex-col justify-center items-center ml-2  z-[100]">
+            <div className=" w-[80px] h-[100vh] min-h-fit hidden lg:flex flex-col justify-center items-center ml-2  z-[100]">
                 <nav className="bg-white min-w-[80px] min-h-fit h-[98%]  flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
                     
                     <div className=" h-[92%] max-h-[1000px] px-1 flex flex-col justify-between items-center overflow-hidden ">
