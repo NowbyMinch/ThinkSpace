@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut } from "lucide-react";
+import { NotebookPen, User, ChartLine, CalendarDays, Cog, LogOut, ChevronUp } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef  } from "react";
 import {Tooltip} from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
@@ -24,6 +24,9 @@ export const Sidebar = () => {
     const [message, setMessage] = useState("");
     const [ logoutPop, setLogoutPop ] = useState(false);
     const [ user, setUser ] = useState<UserData>({})
+    const [ visible, setVisible ] = useState(false);
+    const bottomBar = useRef<HTMLDivElement>(null);
+
     
     const handleLogout = async () => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
@@ -43,22 +46,48 @@ export const Sidebar = () => {
         // add other properties if needed
       };
       
-      const [ bannerData, setBannerData ] = useState<BannerData>({})
+    const [ bannerData, setBannerData ] = useState<BannerData>({})
+
+    const bar = () => {
+        if (!visible){
+            console.log(visible + " tornando visível")
+            
+            if (bottomBar.current) {
+                bottomBar.current.style.width = "90%";
+            }
+            setTimeout(() => {
+                setVisible(!visible)
+            }, 100);
+            
+
+        }
+        else {
+            console.log( visible + " tornando invisível" )
+            setVisible(!visible)
+            
+            setTimeout(() => {
+                if (bottomBar.current) {
+                    bottomBar.current.style.width = "65px";
+                }
+            }, 400);
+            
+        }
+    };
     
-      useEffect(() => {
+    useEffect(() => {
         const banner = async () => {
-          try{
+            try{
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
-              method: 'GET',
-              credentials: 'include',
+                method: 'GET',
+                credentials: 'include',
             });
             
             const data = await res.json();
             setBannerData(data)
-          } catch (err) {
+            } catch (err) {
             setMessage("Erro ao carregar saudação.");
             console.error(err);
-          }
+            }
         }; banner();
 
         const user = async () => {
@@ -76,8 +105,8 @@ export const Sidebar = () => {
             }
         }; user();
 
-      }, []);
-      
+    }, []);
+    
     return (
         <>
             {message && (
@@ -139,15 +168,15 @@ export const Sidebar = () => {
                         </motion.div>
                             
                             
-                        <div className="w-full absolute flex justify-center items-center bg-red-500">
+                        <div className="w-full absolute flex justify-center items-center ">
                             <Backdrop3 onClick={() => setLogoutPop(false)}/>
                         </div>
                     </>
                 )}
             </AnimatePresence>
 
-            <div className=" w-[80px] h-[100vh] min-h-fit hidden lg:flex flex-col justify-center items-center ml-2  z-[100]">
-                <nav className="bg-white min-w-[80px] min-h-fit h-[98%]  flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
+            <div className=" w-[80px] h-[100vh] min-h-fit hidden lg:flex flex-col justify-center items-center ml-2 z-[100]">
+                <nav className="bg-white min-w-[80px] min-h-fit h-[98%] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
                     
                     <div className=" h-[92%] max-h-[1000px] px-1 flex flex-col justify-between items-center overflow-hidden ">
 
@@ -204,8 +233,8 @@ export const Sidebar = () => {
                                                         whileHover={{ scale: 1.05}}
                                                         whileTap={{ scale: 0.95}}
                                                         transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                        className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                            <NotebookPen className= "size-[28px] cursor-pointer text-white "/>
+                                                        className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
+                                                            <NotebookPen className= "size-[24px] cursor-pointer text-white "/>
                                                         </motion.button>
 
                                                     </Tooltip>
@@ -218,8 +247,8 @@ export const Sidebar = () => {
                                             <motion.button 
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}}
-                                            id="side_pop" className="relative p-[15px]  rounded-full "> 
-                                                <NotebookPen className= "size-[28px] cursor-pointer text-black "/>
+                                            id="side_pop" className="relative p-[10px]  rounded-full "> 
+                                                <NotebookPen className= "size-[24px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -231,8 +260,8 @@ export const Sidebar = () => {
                                     <motion.button 
                                     whileHover={{ scale: 1.05}}
                                     whileTap={{ scale: 0.95}}
-                                    id="side_pop" className="relative p-[15px] rounded-full "> 
-                                        <User className= "size-[28px] cursor-pointer text-black "/>
+                                    id="side_pop" className="relative p-[10px] rounded-full "> 
+                                        <User className= "size-[24px] cursor-pointer text-black "/>
                                     </motion.button>
                                 </Tooltip>
                             </Link>
@@ -251,8 +280,8 @@ export const Sidebar = () => {
                                                         initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
                                                         animate={{ scale: 1 }}
                                                         transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                        id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
-                                                            <ChartLine className= "size-[28px] cursor-pointer text-white "/>
+                                                        id="side_pop" className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
+                                                            <ChartLine className= "size-[24px] cursor-pointer text-white "/>
                                                         </motion.button>
 
                                                     </Tooltip>
@@ -265,8 +294,8 @@ export const Sidebar = () => {
                                             <motion.button 
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}} 
-                                            id="side_pop" onMouseDown={() => {console.log(pathname)}} className="relative p-[15px] rounded-full "> 
-                                                <ChartLine className= "size-[28px] cursor-pointer text-black "/>
+                                            id="side_pop" onMouseDown={() => {console.log(pathname)}} className="relative p-[10px] rounded-full "> 
+                                                <ChartLine className= "size-[24px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -278,8 +307,8 @@ export const Sidebar = () => {
                                     <motion.button 
                                     whileHover={{ scale: 1.05}}
                                     whileTap={{ scale: 0.95}}
-                                    id="side_pop" className="relative p-[15px] rounded-full "> 
-                                        <CalendarDays className= "size-[28px] cursor-pointer text-black "/>
+                                    id="side_pop" className="relative p-[10px] rounded-full "> 
+                                        <CalendarDays className= "size-[24px] cursor-pointer text-black "/>
                                     </motion.button>
                                 </Tooltip>
                             </Link>
@@ -297,9 +326,9 @@ export const Sidebar = () => {
                                                             initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
                                                             animate={{ scale: 1 }}
                                                             transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                            id="side_pop" className="relative p-[15px] rounded-full bg-[#A39CEC]"> 
+                                                            id="side_pop" className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
 
-                                                                <Cog className= "size-[28px] cursor-pointer text-white "/>
+                                                                <Cog className= "size-[24px] cursor-pointer text-white "/>
                                                                 
                                                             </motion.button>
                                                     </Tooltip>
@@ -314,8 +343,8 @@ export const Sidebar = () => {
                                             <motion.button 
                                             whileHover={{ scale: 1.05}}
                                             whileTap={{ scale: 0.95}}
-                                            id="side_pop" className="relative p-[15px] rounded-full "> 
-                                                <Cog className= "size-[28px] cursor-pointer text-black "/>
+                                            id="side_pop" className="relative p-[10px] rounded-full "> 
+                                                <Cog className= "size-[24px] cursor-pointer text-black "/>
                                             </motion.button>
                                         </Tooltip>
                                     )
@@ -328,13 +357,210 @@ export const Sidebar = () => {
                             <motion.button 
                             whileHover={{ scale: 1.05}}
                             whileTap={{ scale: 0.95}}
-                            onClick={ () => setLogoutPop(true)} id="side_pop" className="relative p-[15px] rounded-full "> 
-                                <LogOut className= "size-[28px] cursor-pointer text-black "/>
+                            onClick={ () => setLogoutPop(true)} id="side_pop" className="relative p-[10px] rounded-full "> 
+                                <LogOut className= "size-[24px] cursor-pointer text-black "/>
                             </motion.button>
                         </Tooltip>
                     </div>
                 </nav>
             </div>
+
+            <motion.div
+            ref={bottomBar}
+            className={`${visible? "h-[85px] ": "left-[50%] translate-x-[-50%]"}    w-[65px] left-[50%] translate-x-[-50%] fixed bottom-0 rounded-tl-[10px] rounded-tr-[10px] min-h-fit flex flex-col justify-center items-center z-[100] overflow-hidden `}>
+                <div className="bg-[#D9D9D9] w-[65px] h-[25px] rounded-tl-[10px] lg:hidden rounded-tr-[10px] mt-auto flex justify-center items-center cursor-pointer" onClick={() => bar()}>
+                    <ChevronUp className={` ${visible? "rotate-[180deg]": ""} transition-all ease-in-out duration-400 `}/>
+                </div>
+
+                <nav className={`${visible? "mb-[5px]": "-mb-[75px]" } lg:hidden transition-all ease-in-out duration-400 bg-white w-full min-h-fit h-[75px] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px]`}>
+                    
+                    <div className=" h-full w-full flex justify-between px-5 items-center overflow-hidden ">
+
+                        <Link className="relative" href="/home">
+                            <Tooltip closeDelay={0} content="Menu Principal" placement="right" className="w-fit text-[18px] " showArrow={true}>
+                                <motion.div
+                                    initial="initial"
+                                    animate="initial"
+                                    whileHover="hovered"
+                                    whileTap={{ scale: 0.95 }}
+                                    variants={{
+                                        initial: { scale: 1 },
+                                        hovered: { scale: 1.05}
+                                    }}
+                                    className="w-[36px] h-[36px] mb-2 cursor-pointer relative"
+                                >
+                                    {/* Show only the correct icon */}
+                                    {pathname === "/home" ? (
+                                        <>
+                                            <motion.img src="/Light Bulb.png" alt="Logo" className="w-full absolute"
+                                            variants={{
+                                                initial: { scale: 1 },
+                                                hovered: { scale: 1.15}
+                                            }}
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <motion.img src="/Light Bulb.png" alt="Logo" className="w-full absolute scale-100"
+                                            variants={{
+                                                initial: { scale: 0 },
+                                                hovered: { scale: 1 }
+                                            }}
+                                            />
+                                        </>
+                                    )}
+                                    <motion.img src="/Light Bulb-off.png" width={300} height={500} alt="Logo" className=" z-10 w-full absolute"/>
+
+                                </motion.div>
+                            </Tooltip>
+                        </Link>
+
+                        <div className="flex items-center ">
+                            <Link href="/home/materiais" className="">
+                                {(() => {
+                                    if (pathname == "/home/materiais") {
+                                        return (
+                                            <>
+                                                <AnimatePresence>
+                                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                        <motion.button 
+                                                        initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                        animate={{ scale: 1 }}
+                                                        whileHover={{ scale: 1.05}}
+                                                        whileTap={{ scale: 0.95}}
+                                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                        className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
+                                                            <NotebookPen className= "size-[24px] cursor-pointer text-white "/>
+                                                        </motion.button>
+
+                                                    </Tooltip>
+                                                </AnimatePresence>
+                                            </>
+                                        )
+                                    }
+                                    return (
+                                        <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                            <motion.button 
+                                            whileHover={{ scale: 1.05}}
+                                            whileTap={{ scale: 0.95}}
+                                            id="side_pop" className="relative p-[10px]  rounded-full "> 
+                                                <NotebookPen className= "size-[24px] cursor-pointer text-black "/>
+                                            </motion.button>
+                                        </Tooltip>
+                                    )
+                                })()}
+                            </Link>
+                            
+                            <Link href="/home">
+                                <Tooltip closeDelay={0} content="Comunidades" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                    <motion.button 
+                                    whileHover={{ scale: 1.05}}
+                                    whileTap={{ scale: 0.95}}
+                                    id="side_pop" className="relative p-[10px] rounded-full "> 
+                                        <User className= "size-[24px] cursor-pointer text-black "/>
+                                    </motion.button>
+                                </Tooltip>
+                            </Link>
+
+                            <Link href={`/home/${bannerData.relatorioUrl}`}>
+                                {(() => {
+                                    if (pathname.endsWith("/metrica") && pathname.startsWith("/home/users/")) {
+                                        return (
+                                            <>
+                                                <AnimatePresence>
+                                                    <Tooltip closeDelay={0} content="Métricas" placement="right" className="w-fit text-[18px]" showArrow={true}>
+
+                                                        <motion.button 
+                                                        whileHover={{ scale: 1.05}}
+                                                        whileTap={{ scale: 0.95}}
+                                                        initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                        animate={{ scale: 1 }}
+                                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                        id="side_pop" className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
+                                                            <ChartLine className= "size-[24px] cursor-pointer text-white "/>
+                                                        </motion.button>
+
+                                                    </Tooltip>
+                                                </AnimatePresence>
+                                            </>
+                                        )
+                                    }
+                                    return (
+                                        <Tooltip closeDelay={0}  content="Métricas" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                            <motion.button 
+                                            whileHover={{ scale: 1.05}}
+                                            whileTap={{ scale: 0.95}} 
+                                            id="side_pop" onMouseDown={() => {console.log(pathname)}} className="relative p-[10px] rounded-full "> 
+                                                <ChartLine className= "size-[24px] cursor-pointer text-black "/>
+                                            </motion.button>
+                                        </Tooltip>
+                                    )
+                                })()}
+                            </Link>
+
+                            <Link href="/home">
+                                <Tooltip closeDelay={0} content="Calendário" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                    <motion.button 
+                                    whileHover={{ scale: 1.05}}
+                                    whileTap={{ scale: 0.95}}
+                                    id="side_pop" className="relative p-[10px] rounded-full "> 
+                                        <CalendarDays className= "size-[24px] cursor-pointer text-black "/>
+                                    </motion.button>
+                                </Tooltip>
+                            </Link>
+
+                            <Link href="/home/configuracoes/informacoes">
+                                {(() => {
+                                    if (pathname == "/home/configuracoes/informacoes" || pathname == "/home/configuracoes/notificacao" || pathname == "/home/configuracoes/personalizacao" || pathname == "/home/configuracoes/conta") {
+                                        return (
+                                            <>
+                                                <AnimatePresence>
+                                                    <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                            <motion.button 
+                                                            whileHover={{ scale: 1.05}}
+                                                            whileTap={{ scale: 0.95}}
+                                                            initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
+                                                            animate={{ scale: 1 }}
+                                                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                                                            id="side_pop" className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
+
+                                                                <Cog className= "size-[24px] cursor-pointer text-white "/>
+                                                                
+                                                            </motion.button>
+                                                    </Tooltip>
+
+                                                </AnimatePresence>
+                                            </>
+                                        )
+                                    }
+                                    
+                                    return (
+                                        <Tooltip closeDelay={0} content="Configuração" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                            <motion.button 
+                                            whileHover={{ scale: 1.05}}
+                                            whileTap={{ scale: 0.95}}
+                                            id="side_pop" className="relative p-[10px] rounded-full "> 
+                                                <Cog className= "size-[24px] cursor-pointer text-black "/>
+                                            </motion.button>
+                                        </Tooltip>
+                                    )
+                                })()}
+                            </Link>
+
+                        </div>
+                            
+                        <Tooltip closeDelay={0} content="Sair" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                            <motion.button 
+                            whileHover={{ scale: 1.05}}
+                            whileTap={{ scale: 0.95}}
+                            onClick={ () => setLogoutPop(true)} id="side_pop" className="relative p-[10px] rounded-full "> 
+                                <LogOut className= "size-[24px] cursor-pointer text-black "/>
+                            </motion.button>
+                        </Tooltip>
+                    </div>
+                </nav>
+
+            </motion.div>
         </>
     );
 };

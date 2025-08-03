@@ -58,8 +58,8 @@ export default function LoginPage() {
                   
                   <form onSubmit={handleSubmit} className='flex flex-col gap-1 ' >
                     <div className="flex flex-col gap-4 items-end">
-                      <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                      <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                      <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] text-[18px] border-2 border-[rgba(10,8,9,0.6)]'/>
+                      <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] text-[18px] border-2 border-[rgba(10,8,9,0.6)]'/>
                       <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[15px] '>Esqueceu a senha?</a>
                     </div>
 

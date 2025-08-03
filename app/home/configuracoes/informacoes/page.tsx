@@ -129,14 +129,14 @@ export default function Informações() {
   
   return (
     <>
-      <form className="  flex flex-col gap-4 overflow-hidden ">
-        <div className="flex flex-col justify-between lg:w-[50%]  max-w-[550px]">
+      <form className=" flex flex-col gap-4 overflow-hidden w-[90%]">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Primeiro nome</h1>
           <input
             type="text"
             defaultValue={usuario.primeiroNome}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, primeiroNome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
@@ -145,7 +145,7 @@ export default function Informações() {
             type="text"
             defaultValue={usuario.sobrenome }
             // onChange={(e) => setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
@@ -155,7 +155,7 @@ export default function Informações() {
             type="text"
             defaultValue={(usuario?.dataNascimento?.split('T')[0])?.replaceAll( "-", "/" ) ?? ""}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
@@ -165,7 +165,7 @@ export default function Informações() {
             type="text"
             defaultValue={instituicao}
             // onChange={(e) => setConfiguracoes({ ...configuracoes, instituicaoId: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[20px] h-[58px] outline-[#9767F8]"
+            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           ></input>
         </div>
 
@@ -189,7 +189,7 @@ export default function Informações() {
         type='submit'
         id="editar_conta"
         // onClick={editarConfiguracoes}
-        className="mt-2 mb-1 ml-1 w-[200px] h-[58px] rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
+        className="mt-2 mb-1 ml-1 py-2 px-10 w-min h-min rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
         >
           Salvar
         </motion.button>

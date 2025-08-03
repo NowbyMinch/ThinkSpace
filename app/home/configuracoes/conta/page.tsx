@@ -197,9 +197,7 @@ export default function Conta() {
                         </div>
                     </motion.div>
                     
-                    
                 </motion.div>
-                    
                     
                 <div className="w-full absolute flex justify-center items-center ">
                     <Backdrop3 onClick={() => setSuspenderPop(false)}/>
@@ -258,7 +256,6 @@ export default function Conta() {
                       </div>
                   </motion.div>
                   
-                  
               </motion.div>
                   
               <div className="w-full absolute flex justify-center items-center ">
@@ -270,10 +267,10 @@ export default function Conta() {
       {/* <div className={`  absolute left-0 top-0 w-full h-full `}>
       </div> */}
 
-      <div className=" mt-4 flex flex-col gap-5">
-        <div className="flex gap-5 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%] gap-4">
-            <h1 className="font-medium text-[20px]">Endereço de Email</h1>
+      <div className=" mt-4 flex flex-col gap-5 ">
+        <div className="flex gap-2 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] w-full gap-4">
+            <h1 className="font-medium text-[25px]">Endereço de Email</h1>
             <input
               type="text"
               defaultValue={email}
@@ -287,14 +284,15 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={editarEmail}
             id="editar_conta"
-            className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
+            className="font-medium border border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
             Editar
           </motion.button>
+
         </div>
 
-        <div className="flex gap-5 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
-          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%] gap-4">
+        <div className="flex gap-2 w-full items-end border-b pb-5 border-b-[rgb(0,0,0,30%)]">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] w-full gap-4">
             <h1 className="font-medium text-[20px]">Senha</h1>
             <input
             type="text"
@@ -309,14 +307,15 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={editarSenha}
             id="editar_conta"
-            className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
+            className="font-medium border border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
             Editar
           </motion.button>
+
         </div>
 
-        <div className="flex gap-5 w-full items-center ">
-          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+        <div className="flex gap-2 w-full items-center ">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] w-full gap-4">
             <h1 className="font-medium text-[20px]">Excluir sua conta</h1>
             <p className="text-[18px] ">
               Ao excluir a sua conta, você não poderá mais acessar os seus
@@ -330,14 +329,15 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={() => setExcluirPop(true)}
           id="editar_conta"
-          className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
+          className="font-medium border  border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
             Excluir
           </motion.button>
+
         </div>
 
-        <div className="flex gap-5 w-full items-center ">
-          <div className="lg:min-w-[650px] lg:max-w-[650px] min-w-[70%] max-w-[70%]">
+        <div className="flex gap-2 w-full items-center ">
+          <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] w-full gap-4">
             <h1 className="font-medium text-[20px]">Suspender a conta</h1>
             <p className="text-[18px] ">
               Ao suspender sua conta, você não poderá acessar seus estudos nem
@@ -351,7 +351,7 @@ export default function Conta() {
           whileTap={{ scale: 0.98 }}
           onClick={() => setSuspenderPop(true)}
           id="editar_conta"
-          className="font-medium border border-[#1E2351] rounded-[10px] px-6 py-3 text-[18px]"
+          className="font-medium border border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
             Suspender
           </motion.button>

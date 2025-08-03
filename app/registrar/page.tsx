@@ -267,17 +267,17 @@ export default function RegisterPage() {
                                       <div className="mx-auto lg:w-[50%] max-w-[550px] flex flex-col gap-2 ">
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className=' text-[20px]'>Primeiro nome</label>
-                                          <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[20px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="text" onChange={e => setForm({ ...form, primeiroNome: e.target.value })} required placeholder='Digite seu primeiro nome' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px] '>Sobrenome</label>
-                                          <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[20px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="text" onChange={e => setForm({ ...form, sobrenome: e.target.value })} required placeholder='Digite seu sobrenome' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px] '>Email</label>
-                                          <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[20px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="email" onChange={e => setForm({ ...form, email: e.target.value })} required placeholder='Digite seu email' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
 
@@ -289,12 +289,12 @@ export default function RegisterPage() {
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px]'>Senha</label>
-                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[20px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px]'>Repita a senha</label>
-                                          <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[20px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
                                       </div>
                                     </div>
@@ -421,7 +421,7 @@ export default function RegisterPage() {
 
                                       <div className="flex flex-col gap-1">
                                         <label htmlFor="" className='text-[20px]'>Área de interesse</label>
-                                        <input type="text" onChange={e => setForm2({ ...form2, areaDeInteresse: e.target.value })} required placeholder='Digite a sua área de interesse' className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        <input type="text" onChange={e => setForm2({ ...form2, areaDeInteresse: e.target.value })} required placeholder='Digite a sua área de interesse' className='p-3 text-[18px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                       </div>
                                     </div>
 
@@ -439,7 +439,7 @@ export default function RegisterPage() {
 
                                       <div className="flex flex-col gap-1">
                                         <label htmlFor="" className='text-[20px]'>Instituição de ensino</label>
-                                        <input type="text" onChange={e => setForm2({ ...form2, instituicaoNome: e.target.value })} required placeholder='Digite o nome da sua instituição' className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                        <input type="text" onChange={e => setForm2({ ...form2, instituicaoNome: e.target.value })} required placeholder='Digite o nome da sua instituição' className='p-3 text-[18px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                       </div>
                                     </div>
 

@@ -141,7 +141,7 @@ export default function landingPage() {
                     </div>
                 </header>
                 
-                <main className="flex justify-center items-center flex-col gap-[150px] ">
+                <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden">
                     <div className="w-full relative flex justify-center h-fit ">
                         <div className="w-full h-full z-[-10] ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>

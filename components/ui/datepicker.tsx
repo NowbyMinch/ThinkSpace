@@ -67,7 +67,7 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
               setCalendarMonth(prevMonth);
             }
           }}
-          className=" rounded-[25px] border-2 border-[rgba(10,8,9,0.6)] w-full p-3 text-[20px] pr-10 shadow-sm outline-[rgba(151,103,248,0.6)]"
+          className=" rounded-[25px] border-2 border-[rgba(10,8,9,0.6)] w-full p-3 text-[18px] pr-10 shadow-sm outline-[rgba(151,103,248,0.6)]"
         />
         <button
           type="button"
