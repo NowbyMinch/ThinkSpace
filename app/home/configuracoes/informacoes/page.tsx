@@ -129,7 +129,7 @@ export default function Informações() {
   
   return (
     <>
-      <form className=" flex flex-col gap-4 overflow-hidden w-[90%]">
+      <form className="mt-4 flex flex-col gap-4 overflow-hidden w-[90%]">
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Primeiro nome</h1>
           <input
