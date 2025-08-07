@@ -1,18 +1,51 @@
 "use client";
 import {ChatMateriais} from "@/app/home/components/chat-materiais";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { marked } from 'marked';
 
 // import { PageProps } from "../type";
 // { params }: PageProps 
 
+
 export default function MaterialClient() {
+    const [ resumo, setResumo ] = useState("");
+    const params = useParams();
+    const idMaterial = params?.idMaterial as string;
+    const html = resumo ? marked.parse(resumo) : '';
+
+
+    useEffect(() => {
+        const Resumo = async (id: string) => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos/${id}`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                setResumo(data.resumoIA);
+                console.log(data)
+               
+            } catch (err) {
+                console.error(err);
+            }
+            
+        }; Resumo(idMaterial);
+    
+    }, []);
+
     return( 
         <>  
             <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] justify-center ">
                 <div className=" w-[1150px] max-w-[95%] h-[95%] flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
                         <h1 className=" text-[25px] font-medium h-[4%]">Resumo <span className=" text-[#726BB6]">IA</span></h1>
-                        <div className=" h-[96%] flex flex-col gap-8">
-                            <div className=" flex flex-col gap-4">
+                        <div className=" h-[96%] flex flex-col gap-8 ">
+                            
+                            <p className="text-[18px]" dangerouslySetInnerHTML={{ __html: html }} />
+
+                            {/* <div className=" flex flex-col gap-4">
                                 <h1 className=" text-[35px] font-semibold">Resumo sobre Programação Orientada a Objetos (POO):</h1>
                                 <h2 className=" text-[25px] font-semibold">Introdução à Programação Orientada a Objetos (POO)</h2>
                             </div>
@@ -45,7 +78,7 @@ export default function MaterialClient() {
 
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

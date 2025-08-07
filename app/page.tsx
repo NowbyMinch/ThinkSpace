@@ -79,7 +79,7 @@ export default function landingPage() {
         <>
             <div className=" z-[0] relative overflow-x-hidden  p-0 m-0">
                 <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center align items-center`}>
-                    <div className="flex w-[90%] max-w-[1700px] max-h-[120px] h-max justify-between ">
+                    <div className="flex w-[90%] max-w-[1700px] max-h-[120px]  h-max justify-between ">
                         <div className=" w-full h-full flex items-center ">
                             <a className="cursor-pointer ">
                                 <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
@@ -143,7 +143,7 @@ export default function landingPage() {
                 
                 <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden">
                     <div className="w-full relative flex justify-center h-fit ">
-                        <div className="w-full h-full z-[-10] ">
+                        <div className="w-full h-full z-[-10] pt-10 ">
                             <Image width={300} height={500} src="/landingpage/background.svg" alt="Banner" className="w-full mt-[-28px] "/>
                         </div>
 

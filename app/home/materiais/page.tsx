@@ -592,13 +592,13 @@ export default function Materiais() {
             <Backdrop3 onClick={() => closing()}/>
         )}
 
-        <div className="flex mt-[12px] mb-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px] ">
+        <div className="w-full mx-[10px] lg:mx-[20px] h-[calc(100vh-24px)] my-[10px] gap-4 rounded-[35px] flex justify-center items-center overflow-hidden ">
             
             <div className=" rounded-[35px] w-[75%] h-[100%] overflow-hidden bg-white flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="w-[1200px] max-w-[95%] mt-4 ">
                     <div className="w-[92%] mx-auto">
-                        <h1 className="text-[#1E2351] font-medium text-[50px]"> Olá, {user.primeiroNome} </h1>
-                        <h1 className="font-medium text-[30px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
+                        <h1 className="text-[#1E2351] font-medium text-[30px]"> Olá, {user.primeiroNome} </h1>
+                        <h1 className="font-medium text-[18px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
                     </div>
 
                     <div className=" mt-[25px] overflow-hidden flex flex-col items-center ">
@@ -608,7 +608,7 @@ export default function Materiais() {
                             <div className="w-[980px] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
 
                             <div className="relative w-[84%] max-w-[90%]">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full  text-[25px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
                             </div>
                         </div>
@@ -650,7 +650,7 @@ export default function Materiais() {
 
                                 id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
                                     <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
-                                    <h2 className="text-[35px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
+                                    <h2 className="text-[30px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
                                 </motion.div>
 
                                 {materias.map((material, index) => {
@@ -695,14 +695,10 @@ export default function Materiais() {
                                                 <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
                                                     <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
                                                         <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
-                                                            {/* <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: {material.materiais}</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: {material.tempo} horas</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: {material.ultima}</h2> */}
-                                                            <h2 className="text-[35px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
-                                                            <h2 className="text-[22px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
+                                                            <h2 className="text-[30px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
+                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
+                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
+                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
                                                         </div>
                                                         
                                                         {(() => {
@@ -737,10 +733,10 @@ export default function Materiais() {
                 </div> */}
             </div>
 
-            <div className="bg-white rounded-[35px] w-[25%] flex justify-center shadow-md border border-[#00000031] ">
+            <div className="bg-white rounded-[35px] h-full w-[25%] flex justify-center shadow-md border border-[#00000031] ">
                  
                 <div className="w-full  h-full flex justify-center items-center">   
-                    <div className="w-[95%] h-[95%] flex items-center flex-col">
+                    <div className="w-[95%] h-[95%] flex flex-col">
                         
                         <div className="flex gap-[15px] justify-center items-center w-[380px] max-w-[95%] overflow-hidden max-h-[110px]">
                             
@@ -748,8 +744,8 @@ export default function Materiais() {
 
                             <div className="w-[70%] ">
                                 <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
-                                <h2 className="text-[#828181] font-medium text-[25px]">{user.cargo}</h2>
-                                <div className="w-[220px] h-2 rounded-[25px] bg-[#1e235138]">
+                                <h2 className="text-[#828181] font-medium text-[18px]">{user.cargo}</h2>
+                                <div className="w-[220px] h-2 rounded-[18px] bg-[#1e235138]">
                                     <div className="w-[0%] h-2 rounded-[25px] bg-purple-600 "></div>
                                 </div>
                                 <div className="flex justify-between w-[220px]">
@@ -761,8 +757,8 @@ export default function Materiais() {
                         </div>
                         
                         <div className="ml-[15px] mt-[30px] w-[380px] max-w-[95%]">
-                            <h1 className="text-[34px] w-fit font-medium leading-6">Materiais recentes</h1>
-                            <h1 className="text-[26px] italic w-fit font-medium text-[#9767F8] " >{recente?.nome}</h1>
+                            <h1 className="text-[30px] w-fit font-medium leading-6">Materiais recentes</h1>
+                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente?.nome}</h1>
                         </div>
 
 
@@ -788,6 +784,8 @@ export default function Materiais() {
                 </div> 
             </div>
         </div>
+
+        
         </>
     );
 };

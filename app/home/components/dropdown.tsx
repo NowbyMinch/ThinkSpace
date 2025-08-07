@@ -429,6 +429,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   const [materias, setMaterias] = useState<materiaItem[]>([]);
 
   useEffect(() => {
+    
     // Função para buscar matérias
     const materia = async () => {
       try{

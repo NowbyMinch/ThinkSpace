@@ -42,23 +42,8 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                 console.error(err);
             }
         }; user();
+        
     }, []);
-
-    const [ email, setEmail ] = useState<string>("")
-    const getemail = async () => {
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
-            method: 'GET',
-            credentials: 'include',
-            });
-            
-            const data = await res.json();
-            setEmail(data)
-        } catch (err) {
-            // setMessage("Erro ao carregar saudação.");
-            console.error(err);
-        }
-    }; getemail();
     
     return (
         <>

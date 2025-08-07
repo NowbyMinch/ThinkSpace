@@ -7,7 +7,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
     const pathname = usePathname()
     return(
         <>
-            <div className=" w-full mx-[10px] lg:mx-[20px] h-[calc(100vh-24px)] my-auto bg-white shadow-md rounded-[35px] border border-[#00000031] flex justify-center items-center overflow-hidden">
+            <div className=" w-full mx-[10px] lg:mx-[20px] h-[calc(100vh-24px)] my-[10px] bg-white shadow-md rounded-[35px] border border-[#00000031] flex justify-center items-center overflow-hidden">
                 <div className="w-[96%] h-[94%] overflow-hidden flex flex-col">
                     <div className=" h-[120px] ">
                         <h1 className="flex font-medium text-[30px]">Configurações</h1>
