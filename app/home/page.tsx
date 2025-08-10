@@ -76,7 +76,9 @@ export default function HomePage() {
     LILAS: "#CAC5FF",
     ROSA: "#FFA6F1",
     SALMAO: "#FFACA1",
-};
+  };
+  const cor = [ "#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1" ];
+
 
   function opening(){
     setPop(true);
@@ -117,11 +119,6 @@ export default function HomePage() {
     dias?: DiaData[];
     // add other properties if needed
   };
-  type salasData = {
-    salasMembro?: string;
-    salasModerador?: string;
-    // add other properties if needed
-  };
   type notificacaoData = {
     userId?: string;
     notificacoes?: Array<number>;
@@ -136,16 +133,34 @@ export default function HomePage() {
     usuarioId?: string;
     materiais?: any[]; // or specify the correct type if known
     // add other properties if needed
-};
-  
+  };
+  type Sala = {
+  id: string;
+  nome: string;
+  descricao: string;
+  topicos: string[];
+  banner: string;
+  moderadorId: string;
+  assuntoId: string | null;
+  criadoEm: string;
+  };
+  type SalasResponse = {
+    salasMembro: Sala[];
+    salasModerador: Sala[];
+  };
+
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
-  const [ salas, setSalas ] = useState<salasData>({})
+  const [ salas, setSalas ] = useState<Sala[]>([])
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
   const [ loading, setLoading ] = useState(true);
   const [ materias, setMaterias ] = useState<materiaItem[]>([]);
-
+  
+  useEffect(() => {
+    console.log("Salas updated:", salas);
+  }, [salas]);
+  
   useEffect(() => {
     const materia = async () => {
         try{
@@ -216,11 +231,13 @@ export default function HomePage() {
           credentials: 'include',
         });
         
-        const data = await res.json();
-        setLoading(false);
-        setSalas(data);
+        const data: SalasResponse = await res.json();
+        const todasSalas = [...data.salasMembro, ...data.salasModerador];
+
+        setSalas(todasSalas);
+      
       } catch (err) {
-        setMessage("Erro ao carregar saudação.");
+        setMessage("Erro ao carregar salas de estudo.");
         console.error(err);
       }
     }; salasDeEstudo();
@@ -256,7 +273,7 @@ export default function HomePage() {
     //     console.error(err);
     //   }
     // }; ofensiva();
-    
+
   }, []);
 
   if (loading ) return <Loading /> 
@@ -464,8 +481,8 @@ export default function HomePage() {
                       {bannerData.mensagem} {bannerData.relatorio} 
                     </h1>
 
-                    <a href={`/home/${bannerData.relatorioUrl}`} className="w-[35%] min-w-[35%] h-[26%] min-h-[26%] rounded-full">
-                      <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
+                    <a href={`/home/${bannerData.relatorioUrl}`} className=" rounded-full">
+                      <button className=" px-4 min-h-[56px] bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
                         Saiba mais!
                       </button>
                     </a>
@@ -483,17 +500,17 @@ export default function HomePage() {
             <div className=" ">
               { materias && materias.length === 0 && (
 
-                <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
-                    <div className="ml-10 w-[60%]  h-[90%] flex justify-center items-center">
-                        <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
-                            <h1 className="text-[32px]  font-medium line-clamp-2 break-words">
+                <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
+                    <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
+                        <div className=" flex flex-col py-2 justify-between w-full h-full  ">
+                            <h1 className="text-[30px] h-fit font-medium line-clamp-3 break-words">
                                 Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
                             </h1>
 
-                            <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
-                            <button className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
-                                <Icons.CirclePlus className="size-8"/> Criar matéria
-                            </button>
+                            <Link href="/home/materiais" className=" rounded-full">
+                              <button className="py-3 px-4 bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[18px] shadow-md leading-5 ">
+                                  <Icons.CirclePlus className="size-8"/> Criar matéria
+                              </button>
                             </Link>
                         </div>
                         
@@ -515,7 +532,7 @@ export default function HomePage() {
                                   <CarouselItem key={index} className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
                                       <Card style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }} className=" h-[200px] rounded-[25px] max-w-[376px] shadow-md border border-[#00000031] ">
                                           <CardContent className="flex items-center justify-center h-full flex-col ">
-                                              <Link href="/home/materiais/Rede de computadores" className=" mt-6 w-[98%]">
+                                              <Link href={`/home/materiais/${material.id}`} className=" mt-6 w-[98%]">
                                                   <div className=" flex gap-[6px] w-full items-center relative ">
                                                       <div className="w-[60px] h-[60px] rounded-full min-w-[60px] bg-white flex justify-center items-center ">
                                                       {(() => {
@@ -642,7 +659,7 @@ export default function HomePage() {
             </h1>
             <div id="scroll" className="h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
               
-              { salas.salasMembro?.length === 0 && salas.salasModerador?.length === 0 && (
+              { salas.length === 0 && salas.length === 0 && (
                 <div className="w-full h-[500px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
                   <div className="w-[90%] h-[35%]  flex justify-center items-center">
                       <h1 className="text-[32px] font-medium line-clamp-3 break-words">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
@@ -667,64 +684,76 @@ export default function HomePage() {
                   </div>
                 </div>
               )}
-              { salas.salasMembro?.length === 0 || salas.salasModerador?.length === 0 &&  (
+              { ( salas.length > 0 || salas.length > 0 ) &&  (
                 <>
-                  <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
-                    <div className="w-[90%] ">
-                      <div className="flex gap-[8px]">
-                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">
-                          Idiomas
-                        </h2>
-                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
-                          Espanhol
-                        </h2>
-                      </div>
+                  
+                  {salas.map((sala, index) =>{
+                    return (
+                      <div key={index} className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
+                        <div className="w-[90%] ">
+                          <div className="flex gap-[8px]">
+                            {sala.topicos.map((topico, index) =>{
+                              const randomColor = cor[Math.floor(Math.random() * cor.length)];
+                              return (
+                                <h2 key={index} style={{ backgroundColor: randomColor}} className="text-[18px] px-3 text-white rounded-full ">
+                                  {topico}
+                                </h2>
+                              )
+                            })}
+                            {/* <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
+                              Espanhol
+                            </h2> */}
+                          </div>
 
-                      <div className="w-full leading-[55px]">
-                        <h1 className="font-medium text-[40px]">ImaginAccíon</h1>
-                        <Image width={300} height={500}
-                          src="/Imaginaccion.svg"
-                          alt="Sala de Estudo"
-                          className="w-full rounded-[25px] shadow-md"
-                        />
-                        <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
-                      </div>
+                          <div className="w-full leading-[55px]">
+                            <h1 className="font-medium text-[40px]">{sala.nome}</h1>
+                            <div className="h-[150px] w-full ">
+                              <Image width={300} height={500}
+                                src={sala.banner}
+                                alt="Sala de Estudo"
+                                className="w-full h-full object-cover rounded-[25px] shadow-md"
+                              />
+                            </div>
+                            <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
+                          </div>
 
-                      <div className="flex items-center ">
-                        <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                          <Image width={300} height={500}
-                            src="/imaginuser4.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/imaginuser3.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/imaginuser2.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/imaginuser1.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
-                            alt="Usuário"
-                          />
+                          <div className="flex items-center ">
+                            <div className="relative w-[160px] h-[50px] flex cursor-pointer">
+                              <Image width={300} height={500}
+                                src="/imaginuser4.svg"
+                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"
+                                alt="Usuário"
+                              />
+                              <Image width={300} height={500}
+                                src="/imaginuser3.svg"
+                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
+                                alt="Usuário"
+                              />
+                              <Image width={300} height={500}
+                                src="/imaginuser2.svg"
+                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
+                                alt="Usuário"
+                              />
+                              <Image width={300} height={500}
+                                src="/imaginuser1.svg"
+                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
+                                alt="Usuário"
+                              />
+                            </div>
+
+                            <div className="flex justify-between  items-center h-[44px] w-full ">
+                              <h2 className="text-[20px]">+50 estudantes</h2>
+                              <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">
+                                Visitar
+                              </button>
+                            </div>
+                          </div>
                         </div>
-
-                        <div className="flex justify-between  items-center h-[44px] w-full ">
-                          <h2 className="text-[20px]">+50 estudantes</h2>
-                          <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">
-                            Visitar
-                          </button>
-                        </div>
                       </div>
-                    </div>
-                  </div>
+                    )
+                  })}
 
-                  <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
+                  {/* <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
                     <div className="w-[90%] ">
                       <div className="flex gap-[8px]">
                         <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">
@@ -777,7 +806,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </>
               )}
 

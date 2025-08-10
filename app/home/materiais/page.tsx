@@ -164,6 +164,7 @@ export default function Materiais() {
     };}, [openPop]);
 
     useEffect(() => {
+        
         const materia = async () => {
             try{
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {

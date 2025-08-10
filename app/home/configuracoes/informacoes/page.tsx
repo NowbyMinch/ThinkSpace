@@ -178,7 +178,7 @@ export default function Informações() {
 
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
           <h1 className="text-[20px] font-medium">
-            Nível de escolaridade {escola}
+            Nível de escolaridade 
           </h1>
           <ComboboxDemoSettings2 value={escola ?? ""} onChange={() => {}} />
         </div>

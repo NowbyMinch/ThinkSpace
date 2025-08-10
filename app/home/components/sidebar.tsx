@@ -222,7 +222,7 @@ export const Sidebar = () => {
                         <div className="flex flex-col items-center gap-[18px]">
                             <Link href="/home/materiais" className="">
                                 {(() => {
-                                    if (pathname == "/home/materiais") {
+                                    if ( pathname.startsWith("/home/materiais") ) {
                                         return (
                                             <>
                                                 <AnimatePresence>

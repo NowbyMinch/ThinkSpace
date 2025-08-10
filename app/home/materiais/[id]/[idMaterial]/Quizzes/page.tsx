@@ -1,4 +1,5 @@
 "use client";
+import { ChatMateriais } from "@/app/home/components/chat-materiais";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useState } from "react";
@@ -109,71 +110,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031] ">
-                <div className="w-[90%]  h-[95%] max-h-[900px] flex flex-col gap-4 items-center">
-                    <h1 className="w-[420px] max-w-[100%] ">Seus quizzes</h1>
-
-                    <div className="flex flex-col gap-1 items-center w-[420px] max-w-[99%] h-[100%] relative  overflow-hidden">
-
-                        <motion.div 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01 }} 
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-
-                        className=" flex items-center gap-4 px-2 w-[99%] ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                            <h1 className="text-[65px] font-bold text-[#A78CDC] leading-[70px]">01</h1>
-                            <h2 className="w-full text-[30px] font-medium leading-[30px]">Bloco de revisão 1</h2>
-                        </motion.div>
-
-                        <motion.div 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01 }} 
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className=" flex items-center gap-4 px-2 w-[99%] ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                            <h1 className="text-[65px] font-bold text-[#A78CDC] leading-[70px]">02</h1>
-                            <h2 className="w-full text-[30px] font-medium leading-[30px]">Bloco de revisão 2</h2>
-                        </motion.div>
-
-                        <motion.div 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01 }} 
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className=" flex items-center gap-4 px-2 w-[99%] ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                            <h1 className="text-[65px] font-bold text-[#A78CDC] leading-[70px]">03</h1>
-                            <h2 className="w-full text-[30px] font-medium leading-[30px]">Bloco de revisão 3</h2>
-                        </motion.div>
-
-                        <motion.div 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01 }} 
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className=" flex items-center gap-4 px-2 w-[99%] ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                            <h1 className="text-[65px] font-bold text-[#A78CDC] leading-[70px]">04</h1>
-                            <h2 className="w-full text-[30px] font-medium leading-[30px]">Bloco de revisão 4</h2>
-                        </motion.div>
-
-                        <motion.div 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01 }} 
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className=" flex items-center gap-4 px-2 w-[99%] ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                            <h1 className="text-[65px] font-bold text-[#A78CDC] leading-[70px]">05</h1>
-                            <h2 className="w-full text-[30px] font-medium leading-[30px]">Bloco de revisão 5</h2>
-                        </motion.div>
-
-                        <motion.button 
-                        whileTap={{ scale: 0.99 }} 
-                        whileHover={{ scale: 1.01, backgroundColor: "#A78CDC", color: "#fff" }} 
-                        transition={{ 
-                            backgroundColor: { duration: 0.15, ease: "easeInOut" }
-                        }}  
-                        className="flex gap-2 h-[60px] items-center justify-center border border-[#1E2351] text-[22px] w-[420px] max-w-[99%] rounded-[20px] mt-auto shadow-md">
-                            Criar novo bloco de revisão <Plus className="size-7"/>
-                        </motion.button>
-
-                    </div>
-                </div>
-            </div>
+            <ChatMateriais />
         </>
     );
 };

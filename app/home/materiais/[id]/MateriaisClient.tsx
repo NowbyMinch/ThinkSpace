@@ -1,12 +1,14 @@
 "use client";
 
-import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply, ArrowLeft } from "lucide-react";
+import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply, ArrowLeft, Trash } from "lucide-react";
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ComboboxDemoMateria, ComboboxDemoSettings } from "../../components/dropdown";
 import ErrorModal from "@/components/ui/ErrorModal";
-
+import Loading from "@/app/home/components/loading";
+import { Backdrop3 } from "../../components/backdrop";
+import { useRouter } from "next/navigation";
 
 type materiaItem = {
     id?: string;
@@ -55,6 +57,7 @@ type Material = {
 };
     
 export default function MateriaisClient({ id }: { id: string; }) {
+    const router = useRouter();
     // Estados de controle de interface
     const [open, setOpen] = useState(false);
     const [openVar, setOpenVar] = useState(false);
@@ -62,7 +65,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [openVar3, setOpenVar3] = useState(false);
     const [ calendario, setCalendario ] = useState<CalendarioData>({})
     const [ materiaDesignada, setMateriaDesignada] = useState("");
-    let topico: string;
+    const [ deletar, setDeletar] = useState(false);
     
     // Inputs e referências
     const [input, setInput] = useState("");
@@ -71,9 +74,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const documentInputRef = useRef<HTMLInputElement>(null);
     const [ topicos, setTopicos ] = useState<string []>([]);
     const [ assunto, setAssunto ] = useState("");
-    const [ recente, setRecente ] = useState<RecenteData[]>([]);
+    const [ loading, setLoading ] = useState(true);
     const [message, setMessage] = useState<string | null>(null);
     const [ materiaisNome, setMateriaisNome ] = useState<Array<{ id: string; titulo?: string }>>([]);
+    const [ deletarId, setDeletarId ] = useState("");
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -93,7 +97,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/escolha-tipo-material`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tipoMaterial: "QUIZZ" }),
+                body: JSON.stringify({ tipoMaterial: "COMPLETO" }),
                 credentials: "include",
             });
             
@@ -123,36 +127,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
         }
         Tipo();
     };
-
-    const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: "QUIZZ", assuntoId: "", descricao: "", quantidadeQuestoes: 10, quantidadeFlashcards: 10}
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify( dados ),
-                credentials: "include",
-            });
-            
-            const data = await res.json();
-            console.log("DATA 1: ", data)
-            
-            const resumo = {nomeDesignado: input, materiaId: data.material.materiaId, topicos: topicos}
-            const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-ia-topicos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify( resumo ),
-                credentials: "include",
-            });
-            
-            const data2 = await res2.json();
-            console.log("DATA 2: ", data2)
-
-
-        } catch (err) {
-        console.error(err);
-        }
-    };
     
     // USEFULL STRUCTURE ---- Filtros de matérias
     // const filtered = materias.filter((item) =>
@@ -175,6 +149,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 
                 const data = await res.json();
                 setMateria(data)
+                setLoading(false);
+
             } catch (err) {
             console.error(err);
             }
@@ -222,17 +198,87 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 const materiaisFiltrados = data.materiais.filter(
                     (material: any) => material.materiaId === id
                 );
-
+    
                 setMateriaisNome(materiaisFiltrados);
-
-
+    
+    
             } catch (err) {
                 console.error(err);
             }
             
         }; materiais();
-
+        
     }, []);
+    
+    const materiais = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            
+            const materiaisFiltrados = data.materiais.filter(
+                (material: any) => material.materiaId === id
+            );
+
+            setMateriaisNome(materiaisFiltrados);
+
+
+        } catch (err) {
+            console.error(err);
+        }
+        
+    }; 
+    
+    const criar = async () => {
+        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: "COMPLETO", assuntoId: "", descricao: "", quantidadeQuestoes: 10, quantidadeFlashcards: 10}
+        try{
+            setLoading(true);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify( dados ),
+                credentials: "include",
+            });
+            
+            const data = await res.json();
+            console.log("DATA 1: ", data.material.id)
+
+            const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-ia-topicos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: data.material.id }),
+                credentials: "include",
+            });
+            
+            const data2 = await res2.json();
+            console.log("DATA 2: ", data2)
+            setLoading(false);
+            router.push(`/home/materiais/${id}/${data.material.id}/Material`);
+            
+
+        } catch (err) {
+        console.error(err);
+        }
+    };
+    
+    const Deletar = async (id: string) => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${id}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+
+            const result = await res.json();
+            materiais();
+        
+        } catch (error) {
+            console.error("Erro ao deletar o material.");
+        }
+    };
     
     function closing(){
         setOpen(false);
@@ -263,6 +309,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
         // setInput3("");
         // setInput4("");
     }
+
+    if (loading) return <Loading />;
 
     return( 
         <>
@@ -590,6 +638,66 @@ export default function MateriaisClient({ id }: { id: string; }) {
                         </div>
                 </motion.div>
             )}
+            {deletar && (
+                <>
+                    <motion.div 
+                    key="content"
+                    initial={{ opacity: 0, scale: 0.85}}
+                    animate={{ opacity: 1, scale: 0.94 }}
+                    exit={{ opacity: 0, scale: 0.90 }}
+                    className={`w-full h-full fixed flex justify-center items-center opacity-1 z-[1100] `}>
+                        
+                        <div className="w-full h-full absolute" onClick={() => setDeletar(false)}></div>
+                        <motion.div 
+                        key="content"
+                        initial={{ opacity: 0, scale: 0.85}}
+                        animate={{ opacity: 1, scale: 0.94 }}
+                        exit={{ opacity: 0, scale: 0.90 }}
+                        className={`w-[700px] h-[380px] flex rounded-[40px] z-[1100]  opacity-1 `}>
+
+                            <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
+                                
+                                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
+                                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
+
+                                <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                                    <div className="flex flex-col justify-center items-center">
+                                        <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                        <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                        <span className="text-[20px]"></span>
+                                    </div>
+
+                                    <h1 className="text-center text-[35px] font-medium">Deseja mesmo deletar esse material?</h1>
+                                    <div className="w-[60%] flex justify-between mt-auto">
+                                        <motion.button 
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        onClick={() => setDeletar(false)}
+                                        className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                            Voltar
+                                        </motion.button>
+                                        <motion.button 
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        onClick={() => {setDeletar(false); Deletar(deletarId)}}
+                                        className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                            Deletar
+                                        </motion.button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </motion.div>
+                        
+                        
+                    </motion.div>
+                        
+                        
+                    <div className="w-full absolute flex justify-center items-center ">
+                        <Backdrop3 onClick={() => setDeletar(false)}/>
+                    </div>
+                </>
+            )} 
         </AnimatePresence>
 
         <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} ></div>
@@ -632,13 +740,25 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                     }
                                 })()}
 
-                                <div className="mt-[18px] flex justify-between items-center ">
+                                <motion.div 
+                                whileHover="delete"
+                                className="mt-[18px] flex justify-between items-center ">
                                     <div className="">
                                         <h2 className="text-[30px] font-medium leading-[30px]">{material.titulo}</h2>
                                         <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
                                     </div>
-                                    <ChevronRight className="size-12 "/>
-                                </div>
+                                    <div className="flex items-center">
+                                        <motion.div 
+                                        initial={{ scale: 0}}
+                                        variants={{
+                                            delete: { scale:1}
+                                        }} className="div" onClick={(e) => {e.preventDefault() ;setDeletar(true); setDeletarId(material.id); }}> 
+                                            <Trash className="size-8 text-red-500"/>
+                                        </motion.div>
+
+                                        <ChevronRight className="size-12 "/>
+                                    </div>
+                                </motion.div>
                             </a>
                         ))}
                     </div>
