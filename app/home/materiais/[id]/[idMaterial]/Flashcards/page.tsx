@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import Loading from "@/app/home/components/loading";
 
 // import { PageProps } from "../type";
 // { params }: PageProps 
@@ -17,27 +19,46 @@ const questoes = [
     {questao: "Questão 5", resposta: "Resposta 5"},
     {questao: "Questão 6", resposta: "Resposta 6"},
     {questao: "Questão 7", resposta: "Resposta 7"},
+    {questao: "Questão 8", resposta: "Resposta 8"},
 ]
 
+type flashcards = {
+    pergunta: string,
+    resposta: string,
+    // add other properties if needed
+};
+
 export default function MaterialClient() {
+    const params = useParams();
+    const idMaterial = params?.idMaterial as string;
+    const [flashcards, setFlashcards] = useState<FlashcardsApiResponse>({ flashcards: [] });
     const [flipped, setFlipped] = useState(false);
-    const [ cardstate, setCardstate ] = useState<number[]>(Array(questoes.length).fill(0));
+    const [questaoIndex, setQuestaoIndex] = useState(0);
+    const [falta, setFalta] = useState(true);
+    const [cardstate, setCardstate] = useState<number[]>([]);
+    const [loading, setLoading] = useState(true);
+    type FlashcardsApiResponse = {
+        flashcards: flashcards[];
+        // add other properties if needed
+    };
+    useEffect(() => {
+        if (flashcards.flashcards.length > 0) {
+            setCardstate(Array(flashcards.flashcards.length).fill(0));
+        }
+    }, [flashcards]);
+
     const acertos = cardstate.filter(v => v === 1).length;
     const erros = cardstate.filter(v => v === 2).length;
     const revisar = cardstate.filter(v => v === 3).length;
-    const [questaoIndex, setQuestaoIndex] = useState(0);
-    const [ falta, setFalta ] = useState(true);
-    useEffect(() => {
-        let count: number = 0;
-        cardstate.forEach((state) => {
-            if (state == 0){
-                count = count + 1;
-            }
-        });
-        if (count == 0){
-            setFalta(false);
-        }   
 
+    useEffect(() => {
+        let count = 0;
+        cardstate.forEach((state) => {
+            if (state == 0) count++;
+        });
+        if (cardstate.length > 0 && count == 0) {
+            setFalta(false);
+        }
     }, [cardstate]);
 
     useEffect(() => {
@@ -45,11 +66,38 @@ export default function MaterialClient() {
             setTimeout(() =>{
                 setFalta(true);
                 setQuestaoIndex(0);
-                setCardstate(Array(questoes.length).fill(0))
+                setCardstate(Array(flashcards.flashcards.length).fill(0))
             },3000)
         }
     }, [falta]);
+    
+    useEffect(() => {
 
+        const Flashcards = async (id:string) => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards/${id}`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+                console.log(data.flashcards)
+                setFlashcards(data);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+            }; 
+            
+        }; Flashcards(idMaterial);
+        
+    }, []);
+
+    useEffect(() => {
+        console.log(flashcards.flashcards);
+    }, [flashcards]);
+    
+    if (loading) return <Loading />;
+    
     return( 
         <>  
             <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031]  ">
@@ -110,26 +158,24 @@ export default function MaterialClient() {
                                 </AnimatePresence>
 
                                 <div className="absolute w-full h-full backface-hidden bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-semibold shadow-lg">
-                                    {questoes[questaoIndex]?.questao}
+                                    {flashcards.flashcards[questaoIndex]?.pergunta}
                                 </div>
 
                                 <div className="absolute w-full h-full backface-hidden bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-medium shadow-md"
                                     style={{ transform: "rotateY(180deg)" }}
                                     >
-                                    {questoes[questaoIndex]?.resposta}
+                                    {flashcards.flashcards[questaoIndex]?.resposta}
                                 </div>
 
                             </motion.div>
 
-                            <h1 className="">{questaoIndex + 1}/{questoes.length}</h1>
-
+                            <h1 className="">{questaoIndex + 1}/{flashcards.flashcards.length}</h1>
                         </div>
-
                         <motion.div 
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97}}
                         transition={{ duration: 0.3, ease: "easeInOut"}}
-                        onClick={() => {if (questaoIndex + 1 !== questoes.length){ setQuestaoIndex(questaoIndex + 1); } else {return} }}
+                        onClick={() => {setFlipped(false); if (flipped){ setTimeout(() => {if (questaoIndex + 1 !== flashcards.flashcards.length){ setQuestaoIndex(questaoIndex + 1); } else {return};}, 300) } else { if (questaoIndex + 1 !== flashcards.flashcards.length){ setQuestaoIndex(questaoIndex + 1); } else {return}; }}} 
                         className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer">
                             <ArrowRight className=""/>
                         </motion.div>
@@ -151,7 +197,7 @@ export default function MaterialClient() {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 1; // 1 = acertei
                                     return novo;
-                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
+                                }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Acertei</span>
                                 </motion.button>
@@ -167,7 +213,7 @@ export default function MaterialClient() {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 2; // 1 = errei
                                     return novo;
-                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
+                                }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Errei</span>
                                 </motion.button>
@@ -182,7 +228,7 @@ export default function MaterialClient() {
                                     const novo = [...prev];
                                     novo[questaoIndex] = 3; // 1 = revisar
                                     return novo;
-                                }); if (questaoIndex !== questoes.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
+                                }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
                                 className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
                                     <span className="line-clamp-1 break-words">Revisar</span>
                                 </motion.button>

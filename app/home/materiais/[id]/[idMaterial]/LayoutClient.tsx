@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, redirect } from "next/navigation"
+import { usePathname, redirect, useParams } from "next/navigation"
 import { Reply, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Backdrop3 } from "@/app/home/components/backdrop";
+import Loading from "@/app/home/components/loading";
 
 
 type UserData = {
@@ -21,11 +22,14 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
     const [ concluiu, setConcluiu ] = useState(false);
     // const [message, setMessage] = useState<string | null>(null);
     const [ user, setUser ] = useState<UserData>({})
+    const [ documento, setDocumento ] = useState(false);
+    const [ loading, setLoading ] = useState(true);
     
 
     const concluir = () => {
         setConcluiu(true);
     }
+    
 
     useEffect(() => {
         const user = async () => {
@@ -43,7 +47,29 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
             }
         }; user();
         
+        const material = async () => {
+            try{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${idMaterial}`, {
+                method: 'GET',
+                credentials: 'include',
+                });
+                
+                const data = await res.json();
+
+                if (data.material.origem === "DOCUMENTO"){
+                    setDocumento(true);
+                }
+                setLoading(false);
+
+            } catch (err) {
+                console.error(err);
+            }
+            
+        }; material();
+
     }, []);
+    
+    if (loading) return ;
     
     return (
         <>
@@ -120,16 +146,112 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
             <div className="flex w-full h-full relative overflow-hidden ">
                 <div className="flex flex-col w-full h-full relative overflow-hidden">
                     <div className="flex gap-6">
-                        <Link href={`/home/materiais/${id}/${idMaterial}/Material`} className="flex items-center">
+                        
+                        {documento && (
+                            <>
+                                <Link href={`/home/materiais/${id}/${idMaterial}/Material`}>
+                                    {(() => {
+                                        if (pathname == `/home/materiais/${id}/${idMaterial}/Material`) {
+                                            return (
+                                                <>
+                                                    <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ">Material</h2>
+                                                    <AnimatePresence>
+                                                        <motion.div 
+                                                        initial={{scale: 0 }}
+                                                        animate={{scale: 1}}
+                                                        exit={{scale: 1}}
+                                                        className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[4px] bg-[#A39CEC]`}></motion.div> 
+                                                    </AnimatePresence>
+                                                </>
+                                            )
+                                        }
+                                        return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Material</h2>
+                                        }
+                                    )()}
+
+                                </Link>
+                            </>
+                        )}
+                        
+                        <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`}>
                             {(() => {
-                                if (pathname == `/home/materiais/${id}/${idMaterial}/Material`) {
-                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Material</h2>
+                                if (pathname == `/home/materiais/${id}/${idMaterial}/Resumo`) {
+                                    return (
+                                        <>
+                                            <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ">Resumo</h2>
+                                            <AnimatePresence>
+                                                <motion.div 
+                                                initial={{scale: 0 }}
+                                                animate={{scale: 1}}
+                                                exit={{scale: 1}}
+                                                className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[4px] bg-[#A39CEC]`}></motion.div> 
+                                            </AnimatePresence>
+                                        </>
+                                    )
                                 }
-                                return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Material</h2>
+                                return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Resumo</h2>
                                 }
                             )()}
-                            
-                        </Link>    
+
+                        </Link>
+                        
+                        <Link href={`/home/materiais/${id}/${idMaterial}/Flashcards`}>
+                            {(() => {
+                                if (pathname == `/home/materiais/${id}/${idMaterial}/Flashcards`) {
+                                    return (
+                                        <>
+                                            <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ">Flashcards</h2>
+                                            <AnimatePresence>
+                                                <motion.div 
+                                                initial={{scale: 0 }}
+                                                animate={{scale: 1}}
+                                                exit={{scale: 1}}
+                                                className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[4px] bg-[#A39CEC]`}></motion.div> 
+                                            </AnimatePresence>
+                                        </>
+                                    )
+                                }
+                                return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Flashcards</h2>
+                                }
+                            )()}
+
+                        </Link>
+                        
+                        <Link href={`/home/materiais/${id}/${idMaterial}/Quizzes`}>
+                            {(() => {
+                                if (pathname == `/home/materiais/${id}/${idMaterial}/Quizzes`) {
+                                    return (
+                                        <>
+                                            <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ">Quizzes</h2>
+                                            <AnimatePresence>
+                                                <motion.div 
+                                                initial={{scale: 0 }}
+                                                animate={{scale: 1}}
+                                                exit={{scale: 1}}
+                                                className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[4px] bg-[#A39CEC]`}></motion.div> 
+                                            </AnimatePresence>
+                                        </>
+                                    )
+                                }
+                                return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Quizzes</h2>
+                                }
+                            )()}
+
+                        </Link>
+
+                        {/* {documento && (
+                            <Link href={`/home/materiais/${id}/${idMaterial}/Material`} className="flex items-center">
+                                {(() => {
+                                    if (pathname == `/home/materiais/${id}/${idMaterial}/Material`) {
+                                        return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center">Material</h2>
+                                    }
+                                    return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Material</h2>
+                                    }
+                                )()}
+                                
+                            </Link>    
+                        )}
+
                         <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`} className="flex items-center">
                             {(() => {
                                 if (pathname == `/home/materiais/${id}/${idMaterial}/Resumo`) {
@@ -158,9 +280,9 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                                 return <h2 className="text-[25px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Quizzes</h2>
                                 }
                             )()}
-                        </Link>     
+                        </Link>      */}
                     </div>
-                    <div className={` ${pathname === `/home/materiais/${id}/${idMaterial}/Resumo` ? "ml-[106px] w-[78px]" : pathname === `/home/materiais/${id}/${idMaterial}/Flashcards` ? "ml-[209px] w-[104px]" : pathname === `/home/materiais/${id}/${idMaterial}/Quizzes` ? "ml-[336px] w-[75px]" : pathname === `/home/materiais/${id}/${idMaterial}/Material` ? "w-[83px]" : "" } transition-all ease-in-out duration-300 bg-[#A39CEC] h-[3px] rounded-full `}></div>
+                    {/* <div className={` ${pathname === `/home/materiais/${id}/${idMaterial}/Resumo` ? "ml-[106px] w-[78px]" : pathname === `/home/materiais/${id}/${idMaterial}/Flashcards` ? "ml-[209px] w-[104px]" : pathname === `/home/materiais/${id}/${idMaterial}/Quizzes` ? "ml-[336px] w-[75px]" : pathname === `/home/materiais/${id}/${idMaterial}/Material` ? "w-[83px]" : "" } transition-all ease-in-out duration-300 bg-[#A39CEC] h-[3px] rounded-full `}></div> */}
                 </div>
 
                 <Link href={``} className="mr-4">

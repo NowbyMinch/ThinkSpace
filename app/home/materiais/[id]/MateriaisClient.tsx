@@ -78,6 +78,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [message, setMessage] = useState<string | null>(null);
     const [ materiaisNome, setMateriaisNome ] = useState<Array<{ id: string; titulo?: string }>>([]);
     const [ deletarId, setDeletarId ] = useState("");
+    const [ tipo, setTipo ] = useState("");
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -89,7 +90,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [materia, setMateria] = useState<materiaItem>();
 
     // Criar Material
-    const [ nome, setNome ] = useState<string | null>(null);
 
     const Tipo = async () => {
 
@@ -102,7 +102,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
             
             const data = await res.json();
-            console.log(data)
+            setTipo(data.tipoMaterial);
             
         } catch (err) {
         console.error(err);
@@ -120,7 +120,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
             
             const data = await res.json();
-            console.log(data)
             
         } catch (err) {
         console.error(err);
@@ -198,7 +197,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 const materiaisFiltrados = data.materiais.filter(
                     (material: any) => material.materiaId === id
                 );
-    
+                console.log(materiaisFiltrados);
+
                 setMateriaisNome(materiaisFiltrados);
     
     
@@ -232,9 +232,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
         }
         
     }; 
-    
+
     const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: "COMPLETO", assuntoId: "", descricao: "", quantidadeQuestoes: 10, quantidadeFlashcards: 10}
+        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, assuntoId: "", descricao: "", quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""}
         try{
             setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
@@ -245,17 +245,41 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
             
             const data = await res.json();
-            console.log("DATA 1: ", data.material.id)
+            console.log("DATA 1: ", data)
 
-            const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-ia-topicos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: data.material.id }),
-                credentials: "include",
-            });
-            
-            const data2 = await res2.json();
-            console.log("DATA 2: ", data2)
+            if (tipo === "COMPLETO"){
+                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-ia-topicos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                });
+                
+                const data2 = await res2.json();
+                console.log("RESUMO: ", data2)
+                
+                const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                });
+                
+                const data3 = await res3.json();
+                console.log("FLASHCARDS: ", data3)
+                
+                const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                });
+                
+                const data4 = await res4.json();
+                console.log("QUIZZES: ", data4)
+
+            }
+
             setLoading(false);
             router.push(`/home/materiais/${id}/${data.material.id}/Material`);
             

@@ -177,6 +177,7 @@ export default function Materiais() {
             } catch (err) {
                 console.error(err);
             }
+            
         }; materia();
 
         const user = async () => {
@@ -594,7 +595,6 @@ export default function Materiais() {
         )}
 
         <div className="w-full mx-[10px] lg:mx-[20px] h-[calc(100vh-24px)] my-[10px] gap-4 rounded-[35px] flex justify-center items-center overflow-hidden ">
-            
             <div className=" rounded-[35px] w-[75%] h-[100%] overflow-hidden bg-white flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="w-[1200px] max-w-[95%] mt-4 ">
                     <div className="w-[92%] mx-auto">
