@@ -3,6 +3,7 @@ import {ChatMateriais} from "@/app/home/components/chat-materiais";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { marked } from 'marked';
+import Loading from "@/app/home/components/loading";
 
 // import { PageProps } from "../type";
 // { params }: PageProps 
@@ -10,6 +11,7 @@ import { marked } from 'marked';
 
 export default function MaterialClient() {
     const [ resumo, setResumo ] = useState("");
+    const [ loading, setLoading ] = useState(true);
     const params = useParams();
     const idMaterial = params?.idMaterial as string;
     const html = resumo ? marked.parse(resumo) : '';
@@ -25,7 +27,8 @@ export default function MaterialClient() {
                 
                 const data = await res.json();
                 setResumo(data.resumoIA);
-                console.log(data)
+                console.log(data);
+                setLoading(false);
                
             } catch (err) {
                 console.error(err);
@@ -34,6 +37,9 @@ export default function MaterialClient() {
         }; Resumo(idMaterial);
     
     }, []);
+
+    if (!idMaterial) return null;
+    if (loading) return <Loading />;
 
     return( 
         <>  
@@ -85,7 +91,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <ChatMateriais />
+            <ChatMateriais idMaterial={idMaterial} />
         </>
     );
 };

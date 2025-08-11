@@ -76,9 +76,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ assunto, setAssunto ] = useState("");
     const [ loading, setLoading ] = useState(true);
     const [message, setMessage] = useState<string | null>(null);
-    const [ materiaisNome, setMateriaisNome ] = useState<Array<{ id: string; titulo?: string }>>([]);
+    const [ materiaisNome, setMateriaisNome ] = useState<Array<{ id: string; titulo?: string; origem: string }>>([]);
     const [ deletarId, setDeletarId ] = useState("");
     const [ tipo, setTipo ] = useState("");
+    const [ origem, setOrigem ] = useState("");
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -120,7 +121,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
             
             const data = await res.json();
-            
+            setOrigem(origemValor);
+
         } catch (err) {
         console.error(err);
         }
@@ -197,7 +199,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 const materiaisFiltrados = data.materiais.filter(
                     (material: any) => material.materiaId === id
                 );
-                console.log(materiaisFiltrados);
 
                 setMateriaisNome(materiaisFiltrados);
     
@@ -248,7 +249,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.log("DATA 1: ", data)
 
             if (tipo === "COMPLETO"){
-                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-ia-topicos`, {
+                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: data.material.id }),
@@ -281,7 +282,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
             }
 
             setLoading(false);
-            router.push(`/home/materiais/${id}/${data.material.id}/Material`);
+            if (origem === "DOCUMENTO"){
+                router.push(`/home/materiais/${id}/${data.material.id}/Material`);
+            }
+            else{
+                router.push(`/home/materiais/${id}/${data.material.id}/Resumo`);
+            }
             
 
         } catch (err) {
@@ -296,7 +302,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 credentials: "include",
             });
 
-            const result = await res.json();
+            const data = await res.json();
+            console.log(data);
             materiais();
         
         } catch (error) {
@@ -748,9 +755,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                     <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
                         {materiaisNome.map((material, index) => (
-
-                            <a key={index} href={`/home/materiais/${id}/${material.id}/Material`} id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                
+                            <a key={index} href={`${material.origem === "DOCUMENTO" ? `/home/materiais/${id}/${material.id}/Material` : `/home/materiais/${id}/${material.id}/Resumo` }`} id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
                                 {(() => {
                                     if (index < 9){
                                         return (
@@ -784,6 +789,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                     </div>
                                 </motion.div>
                             </a>
+
                         ))}
                     </div>
                     

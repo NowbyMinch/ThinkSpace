@@ -11,17 +11,6 @@ import Loading from "@/app/home/components/loading";
 // import { PageProps } from "../type";
 // { params }: PageProps 
 
-const questoes = [
-    {questao: "Questão 1", resposta: "Resposta 1"},
-    {questao: "Questão 2", resposta: "Resposta 2"},
-    {questao: "Questão 3", resposta: "Resposta 3"},
-    {questao: "Questão 4", resposta: "Resposta 4"},
-    {questao: "Questão 5", resposta: "Resposta 5"},
-    {questao: "Questão 6", resposta: "Resposta 6"},
-    {questao: "Questão 7", resposta: "Resposta 7"},
-    {questao: "Questão 8", resposta: "Resposta 8"},
-]
-
 type flashcards = {
     pergunta: string,
     resposta: string,
@@ -97,6 +86,7 @@ export default function MaterialClient() {
     }, [flashcards]);
     
     if (loading) return <Loading />;
+    if (!idMaterial) return null;
     
     return( 
         <>  
@@ -157,11 +147,11 @@ export default function MaterialClient() {
                                     )}
                                 </AnimatePresence>
 
-                                <div className="absolute w-full h-full backface-hidden bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-semibold shadow-lg">
+                                <div className="absolute w-full h-full backface-hidden text-center bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-semibold shadow-lg">
                                     {flashcards.flashcards[questaoIndex]?.pergunta}
                                 </div>
 
-                                <div className="absolute w-full h-full backface-hidden bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-medium shadow-md"
+                                <div className="absolute w-full h-full backface-hidden text-center bg-white rounded-[25px] flex items-center justify-center p-6 text-xl font-medium shadow-md"
                                     style={{ transform: "rotateY(180deg)" }}
                                     >
                                     {flashcards.flashcards[questaoIndex]?.resposta}
@@ -240,7 +230,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <ChatMateriais />
+            <ChatMateriais idMaterial={idMaterial} />
         </>
     );
 };

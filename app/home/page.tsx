@@ -115,8 +115,9 @@ export default function HomePage() {
   };
   type CalendarioData = {
     mesAtual?: string;
-    anoAtual?: string;
+    anoAtual?: number;
     dias?: DiaData[];
+    diaAtual?: number;
     // add other properties if needed
   };
   type notificacaoData = {
@@ -146,7 +147,6 @@ export default function HomePage() {
   };
   type SalasResponse = {
     salasMembro: Sala[];
-    salasModerador: Sala[];
   };
 
   const [ bannerData, setBannerData ] = useState<BannerData>({})
@@ -232,7 +232,7 @@ export default function HomePage() {
         });
         
         const data: SalasResponse = await res.json();
-        const todasSalas = [...data.salasMembro, ...data.salasModerador];
+        const todasSalas = [...data.salasMembro];
 
         setSalas(todasSalas);
       
@@ -590,65 +590,66 @@ export default function HomePage() {
 
           <div className=" overflow-hidden ">
             <div className=" bg-white h-[230px] rounded-[35px] shadow-md bg border border-[#00000031]">
-              <div className=" w-full flex h-[50%] text-center justify-center gap-20 items-center ">
-                <div className="flex justify-center items-center">
+              <div className=" w-full flex h-[50%] text-center justify-center gap-20 items-center relative">
+                {/* <div className="flex justify-center items-center">
                   <ArrowLeft className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351] " />
-                </div>
+                </div> */}
 
                 <h1 className="text-[42px] font-bold ">{calendario.mesAtual} {calendario.anoAtual}</h1>
+                <img src="/Vector.svg" alt="" className="absolute w-full rotate-[150deg] "/>
 
-                <div className="flex justify-center items-center">
+                {/* <div className="flex justify-center items-center">
                   <ArrowRight className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351]" />
-                </div>
+                </div> */}
               </div>
 
               <div className=" w-full grid grid-flow-col h-[50%] text-center items-center">
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[12]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[12]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 4]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 4]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[13]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[13]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 3]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 3]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[14]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[14]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 2]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 2]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className=" translate-y-[-10px] flex justify-center">
                   <div className="w-[65px] rounded-[15px] py-2 justify-center bg-[#CCB2FF] shadow-md">
-                    <h2 className="text-[16px]">{calendario.dias?.[15]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[15]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 1]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 1]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[16]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[16]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[17]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[17]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
-                    <h2 className="text-[16px]">{calendario.dias?.[18]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[18]?.diaNumero}</h1>
+                    <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 3]?.diaSemana}.</h2>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 3]?.diaNumero}</h1>
                   </div>
                 </div>
               </div>

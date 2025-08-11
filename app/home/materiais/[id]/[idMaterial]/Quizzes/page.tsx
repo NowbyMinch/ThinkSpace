@@ -1,7 +1,7 @@
 "use client";
 import { ChatMateriais } from "@/app/home/components/chat-materiais";
 import Loading from "@/app/home/components/loading";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ type quizz = {
     correta: string;
     pergunta: string;
 };
+const letraPorIndice = ["A", "B", "C", "D"];
 
 export default function MaterialClient() {
     const params = useParams();
@@ -22,6 +23,55 @@ export default function MaterialClient() {
     const [quizzes, setQuizzes] = useState<quizz[]>([]);
     const barlength = (questaoIndex / (quizzes.length - 1) ) * 100;
     const [ loading, setLoading ] = useState(true);
+    const [ questoesFeitas, setQuestoesFeitas ] = useState<string[]>([]); 
+    const [ acertou, setAcertou ] = useState<string[]>([]); 
+    const [selected, setSelected] = useState<string | null>(null);
+    const [disabled, setDisabled] = useState(false);
+
+    
+    const handleClick = (indice: number) => {
+        if (disabled) return;
+
+        const letra = letraPorIndice[indice];
+        setSelected(letra);
+        setDisabled(true);
+
+        if (quizzes[questaoIndex].correta === letra) {
+        setAcertou((prev) => [...prev, "1"]);
+        }
+        setQuestoesFeitas((prev) => [...prev, "1"]);
+
+        setTimeout(() => {
+        if (questaoIndex !== quizzes.length - 1) {
+            setQuestaoIndex((prev) => prev + 1);
+        }
+        setSelected(null);
+        setDisabled(false);
+        }, 1200);
+    };
+
+    const getBackgroundColor = (indice: number) => {
+        if (!selected) return "white";
+        const letra = letraPorIndice[indice];
+        if (letra === quizzes[questaoIndex].correta) {
+        return selected === letra ? "#7BC396" : "white"; // verde para o certo se selecionado
+        } else {
+        return selected === letra ? "#CF848E" : "white"; // vermelho para errado se selecionado
+        }
+    };
+
+    const getColor = (indice: number) => {
+        console.log(selected)
+        if (!selected) return "black";
+        const letra = letraPorIndice[indice];
+        if (letra === quizzes[questaoIndex].correta) {
+            return selected === letra ? "white" : "black";
+        } 
+        else {
+            return selected === letra ? "white" : "black";
+        } 
+        
+    };
 
     useEffect(() => {
         const quizzes = async (id:string) => {
@@ -35,7 +85,7 @@ export default function MaterialClient() {
                 console.log(data)
                 setQuizzes(data.quizzes);
                 setLoading(false);
-                
+
             } catch (err) {
                 console.error(err);
             }; 
@@ -44,6 +94,7 @@ export default function MaterialClient() {
         
     }, []);
     
+    if (!idMaterial) return null;
     if (loading) return <Loading />;
 
     return( 
@@ -61,55 +112,62 @@ export default function MaterialClient() {
 
                             <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center ">
                                 <h1 className="text-[30px] text-center line-clamp-2 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
-                                <div className="w-full  flex flex-col gap-[5%]">
-                                    <div className="flex max-w-[100%]  gap-[5%]">
-                                        <motion.button 
-                                        whileTap={{ scale: 0.99 }}
-                                        whileHover={{ scale: 1.01, backgroundColor: "#A39CEC", color: "#FFFFFF"}}
-                                        transition={{ 
-                                            backgroundColor: { duration: 0.15, ease: "easeInOut" }
-                                        }}  
-                                        onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                                        className=" bg-white text-left overflow-hidden border-[2px] w-[50%] max-w-[50%] h-fit min-h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium ">
-                                            <span className="p-3 w-full line-clamp-3 h-full break-words">{quizzes[questaoIndex]?.alternativas[0]} </span>
+                                <div className="w-full flex flex-col gap-[5%]">
+                                    <div className="flex max-w-[100%] gap-[5%]">
+                                        {[0, 1].map((i) => (
+                                        <motion.button
+                                            key={i}
+                                            whileTap={{ scale: 0.99 }}
+                                            whileHover={{
+                                            scale: disabled ? 1 : 1.01,
+                                            backgroundColor: disabled
+                                                ? getBackgroundColor(i)
+                                                : "#A39CEC",
+                                            color: disabled ? getColor(i) : "#FFFFFF",  
+                                            }}
+                                            transition={{
+                                            backgroundColor: { duration: 0.4, ease: "easeInOut" },
+                                            }}
+                                            onClick={() => handleClick(i)}
+                                            disabled={disabled}
+                                            style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
+                                            className=" text-left overflow-hidden border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[180px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
+                                        >
+                                            <span className="p-4 w-full line-clamp-3 h-full break-words">
+                                            {quizzes[questaoIndex]?.alternativas[i]}
+                                            </span>
                                         </motion.button>
-                                        
-                                        <motion.button 
-                                        whileTap={{ scale: 0.99 }}
-                                        whileHover={{ scale: 1.01, backgroundColor: "#A39CEC", color: "#FFFFFF"}}
-                                        transition={{ 
-                                            backgroundColor: { duration: 0.15, ease: "easeInOut" }
-                                        }}  
-                                        onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                                        className=" bg-white border-[2px] w-[50%] max-w-[50%] h-fit min-h-[100px] max-h-[95%] text-left rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
-                                            <span className="p-3 break-words">{quizzes[questaoIndex]?.alternativas[1]}</span>
-                                        </motion.button>
+                                        ))}
                                     </div>
 
-                                    <div className="flex max-w-[100%]  gap-[5%]">
-                                        <motion.button 
-                                        whileTap={{ scale: 0.99 }}
-                                        whileHover={{ scale: 1.01, backgroundColor: "#A39CEC", color: "#FFFFFF"}}
-                                        transition={{ 
-                                            backgroundColor: { duration: 0.15, ease: "easeInOut" }
-                                        }}  
-                                        onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                                        className=" bg-white border-[2px] w-[50%] max-w-[50%] h-fit min-h-[100px] max-h-[95%] text-left rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium ">
-                                            <span className="p-3 break-words">{quizzes[questaoIndex]?.alternativas[2]}</span>
+                                    <div className="flex max-w-[100%] gap-[5%]">
+                                        {[2, 3].map((i) => (
+                                        <motion.button
+                                            key={i}
+                                            whileTap={{ scale: 0.99 }}
+                                            whileHover={{
+                                            scale: disabled ? 1 : 1.01,
+                                            backgroundColor: disabled
+                                                ? getBackgroundColor(i)
+                                                : "#A39CEC",
+                                            color: disabled ? getColor(i) : "#FFFFFF",  
+                                            }}
+                                            transition={{
+                                            backgroundColor: { duration: 0.4, ease: "easeInOut" },
+                                            }}
+                                            onClick={() => handleClick(i)}
+                                            disabled={disabled}
+                                            style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
+                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[180px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
+                                        >
+                                            <span className="p-4 w-full line-clamp-3 h-full break-words">
+                                            {quizzes[questaoIndex]?.alternativas[i]}
+                                            </span>
                                         </motion.button>
-                                        
-                                        <motion.button 
-                                        whileTap={{ scale: 0.99 }}
-                                        whileHover={{ scale: 1.01, backgroundColor: "#A39CEC", color: "#FFFFFF"}}
-                                        transition={{ 
-                                            backgroundColor: { duration: 0.15, ease: "easeInOut" }
-                                        }}  
-                                        onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                                        className=" bg-white border-[2px] w-[50%] max-w-[50%] h-fit min-h-[100px] max-h-[95%] text-left rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
-                                            <span className="p-3 break-words">{quizzes[questaoIndex]?.alternativas[3]}</span>
-                                        </motion.button>
+                                        ))}
                                     </div>
-                                </div>
+                                    </div>
+                                
 
                             </div>
 
@@ -137,7 +195,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <ChatMateriais />
+            <ChatMateriais idMaterial={idMaterial}/>
         </>
     );
 };

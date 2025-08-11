@@ -1,6 +1,5 @@
 "use client";
 
-
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -119,7 +118,7 @@ export default function Materiais() {
     const [deletarPop, setDeletarPop] = useState(false);
     const [deletar, setDeletar] = useState("");
     const [ loading, setLoading ] = useState(true);
-    const [ recente, setRecente ] = useState<RecenteData>()
+    const [ recente, setRecente ] = useState<RecenteData[]>([])
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -188,7 +187,6 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
-                setLoading(false);
                 setUser(data)
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -206,8 +204,9 @@ export default function Materiais() {
                 const data = await res.json();
 
                 if (data.materiasRecentes){
-                    setRecente(data.materiasRecentes[0]);
+                    setRecente(data.materiasRecentes);
                 }
+                setLoading(false);
 
             } catch (err) {
                 console.error(err);
@@ -230,7 +229,6 @@ export default function Materiais() {
             });
             
             const data = await res.json();
-            setLoading(false);
             setMaterias(data)
         } catch (err) {
         console.error(err);
@@ -250,7 +248,6 @@ export default function Materiais() {
             });
             
             const data = await res.json();
-            setLoading(false);
             console.log(data)
             if (data.message === "Matéria criada com sucesso."){
                 closing()
@@ -759,28 +756,33 @@ export default function Materiais() {
                         
                         <div className="ml-[15px] mt-[30px] w-[380px] max-w-[95%]">
                             <h1 className="text-[30px] w-fit font-medium leading-6">Materiais recentes</h1>
-                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente?.nome}</h1>
+                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0].nome}</h1>
+                        </div>
+                        
+                        
+                        <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%] overflow-hidden">
+                            {recente.map((materia, index) => {
+                                return(
+                                    <Link key={index} href="/home/materiais/" className=" flex gap-3 px-2 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
+
+                                        <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1 < 10 ? `0${index + 1}`: `${index + 1}` }</h1>
+
+                                        <div className="flex justify-between items-center w-full">
+                                            <div className=" ">
+                                                <h2 className="text-[28px] font-medium leading-[30px]">{materia.nome}</h2>
+                                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                            </div>
+
+                                            <ChevronRight className="size-12 "/>
+                                        </div>
+                                    </Link>
+
+                                )
+                            })}
+    
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</motion.button>
                         </div>
 
-
-                        {/* <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%]  overflow-hidden">
-                            <Link href="/home/materiais/" className=" flex gap-3 px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
-
-                                <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">01</h1>
-
-                                <div className="flex justify-between items-center w-full">
-                                    <div className=" ">
-                                        <h2 className="text-[28px] font-medium leading-[30px]">Eng. Comp II</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-
-                                    <ChevronRight className="size-12 "/>
-                                </div>
-                            </Link>
-
-  
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</motion.button>
-                        </div> */}
                     </div>
                 </div> 
             </div>
