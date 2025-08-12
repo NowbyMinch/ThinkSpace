@@ -736,7 +736,7 @@ export default function Materiais() {
                 <div className="w-full  h-full flex justify-center items-center">   
                     <div className="w-[95%] h-[95%] flex flex-col">
                         
-                        <div className="flex gap-[15px] justify-center items-center w-[380px] max-w-[95%] overflow-hidden max-h-[110px]">
+                        <div className="flex gap-[15px] justify-center items-center w-[380px] max-w-[95%] max-h-[110px]">
                             
                             <img src={`${user.foto}`} className="w-[28%] max-w-[380px] rounded-full cursor-pointer" alt="Profile picture" />
 
