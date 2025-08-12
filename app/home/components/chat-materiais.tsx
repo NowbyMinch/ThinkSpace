@@ -27,7 +27,8 @@ type Historico = {
 export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
     const [ user, setUser ] = useState<UserData>({})
     const [ mensagem, setMensagem ] = useState("");
-    const [ historico, setHistorico ] = useState<Historico[]>([]);
+    const [ historicoUsuario, setHistoricoUsuario ] = useState<Historico[]>([]);
+    const [ historicoBot, setHistoricoBot ] = useState<Historico[]>([]);
     const [ loading, setLoading ] = useState(true);
     const [ insideLoading, setInsideLoading ] = useState(false);
 
@@ -40,7 +41,17 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
             });
             
             const data = await res.json();
-            setHistorico(data.mensagensChatbox);
+            setHistoricoUsuario(data.mensagensUsuario);
+
+            setInsideLoading(true);
+            const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/chatbox/mensagens-IA/${idMaterial}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: "include",
+            });
+            
+            const data2 = await res2.json();
+            setHistoricoBot(data2.mensagensIa);
             setLoading(false);
             setInsideLoading(false);
 
@@ -48,8 +59,6 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
         console.error(err);
         }
     };
-
-
     
     useEffect(() => {
         const user = async () => {
@@ -81,8 +90,9 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
             });
             
             const data = await res.json();
+            console.log("Enviando ",data)
             ReceberMensagem();
-
+            
         } catch (err) {
         console.error(err);
         }
@@ -94,9 +104,9 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
         <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">
             <div id="messages" className="w-[95%] max-w-[600px] flex flex-col gap-[18px] pr-1 h-[89%] overflow-y-auto mt-6 pb-4 rounded-lg ">
 
-                {historico.map((mensagem, index) => (
+                {historicoUsuario.map((mensagem, index) => (
                     <React.Fragment key={index}>
-                    
+
                         <div className="flex gap-2 ml-auto justify-end">
                         <div className="bg-[#FF9F93] max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tr-none flex justify-center items-center shadow-md">
                             <p className="text-[20px] break-words text-white">{mensagem.mensagemUsuario}</p>
@@ -107,20 +117,21 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
                         </div>
 
                         <div className="flex gap-2 mr-auto">
-                        <div className="shadow-md h-min rounded-full w-[65px]">
-                            <img alt="Profile Picture" src="/IApicture.svg" className="rounded-full w-full" width={800} height={800} />
+                            <div className="shadow-md h-min rounded-full w-[65px]">
+                                <img alt="Profile Picture" src="/IApicture.svg" className="rounded-full w-full" width={800} height={800} />
+                            </div>
+                            <div className="bg-[#A39CEC] max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tl-none flex justify-center items-center shadow-md">
+                                <p className="text-[20px] break-words text-white">{historicoBot[index]?.mensagemIa }</p>
+                            </div>
                         </div>
-                        <div className="bg-[#A39CEC] max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tl-none flex justify-center items-center shadow-md">
-                            <p className="text-[20px] break-words text-white">{mensagem.mensagemIa}</p>
-                        </div>
-                        </div>
+
                     </React.Fragment>
                 ))}
 
                 {insideLoading && <LoadingMessage />}
 
             </div>
-            <form onSubmit={(e) => {e.preventDefault(); setInsideLoading(true); Mensagem(); setMensagem("");}} className="w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center">
+            <form onSubmit={(e) => {e.preventDefault(); Mensagem(); setMensagem("");}} className="w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center">
                 <input value={mensagem} onChange={(e) => {setMensagem(e.target.value); }} type="text" placeholder="Pergunte a assistente IA" className="w-[80%] pr-3 h-full break-words whitespace-nowrap overflow-hidden overflow-ellipsis rounded-full max-h-[74px] pl-4 text-[20px] border-2 border-[rgba(0,0,0,0.19)] outline-[rgba(151,103,248,0.6)]"/>
                 <motion.button 
                 whileHover={{ scale: 1.02 }}

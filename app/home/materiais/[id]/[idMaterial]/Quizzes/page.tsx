@@ -1,10 +1,12 @@
 "use client";
 import { ChatMateriais } from "@/app/home/components/chat-materiais";
 import Loading from "@/app/home/components/loading";
-import { color, motion } from "framer-motion";
+import { color, motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import ErrorModal from "@/components/ui/ErrorModal";
+
 
 // import { PageProps } from "../type";
 // { params }: PageProps 
@@ -14,63 +16,47 @@ type quizz = {
     correta: string;
     pergunta: string;
 };
+type Final = {
+    finalizado: boolean;
+    mensagem: string;
+    respondidas: number;
+    respostasQuiz: [];
+    totalQuestoes: number;
+};
+
 const letraPorIndice = ["A", "B", "C", "D"];
 
 export default function MaterialClient() {
     const params = useParams();
     const idMaterial = params?.idMaterial as string;
+    const [message, setMessage] = useState<string | null>(null);
     const [questaoIndex, setQuestaoIndex] = useState(0);
     const [quizzes, setQuizzes] = useState<quizz[]>([]);
-    const barlength = (questaoIndex / (quizzes.length - 1) ) * 100;
+    const barlength = (questaoIndex / (quizzes.length ) ) * 100;
     const [ loading, setLoading ] = useState(true);
-    const [ questoesFeitas, setQuestoesFeitas ] = useState<string[]>([]); 
-    const [ acertou, setAcertou ] = useState<string[]>([]); 
+    let acertou = 0;
     const [selected, setSelected] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
 
+    const [ estado, setEstado ] = useState<Final>();
+
+    // setTopicos(prev => [...prev, topicoInput]);
+    const [ finalizado, setFinalizado ] = useState(false);
+    const [ finalizadoPop, setFinalizadoPop ] = useState(false);
     
-    const handleClick = (indice: number) => {
-        if (disabled) return;
+    const final = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/respostas-quiz/${idMaterial}`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setEstado(data);
 
-        const letra = letraPorIndice[indice];
-        setSelected(letra);
-        setDisabled(true);
-
-        if (quizzes[questaoIndex].correta === letra) {
-        setAcertou((prev) => [...prev, "1"]);
+        } catch (err) {
+            console.error(err);
         }
-        setQuestoesFeitas((prev) => [...prev, "1"]);
-
-        setTimeout(() => {
-        if (questaoIndex !== quizzes.length - 1) {
-            setQuestaoIndex((prev) => prev + 1);
-        }
-        setSelected(null);
-        setDisabled(false);
-        }, 1200);
-    };
-
-    const getBackgroundColor = (indice: number) => {
-        if (!selected) return "white";
-        const letra = letraPorIndice[indice];
-        if (letra === quizzes[questaoIndex].correta) {
-        return selected === letra ? "#7BC396" : "white"; // verde para o certo se selecionado
-        } else {
-        return selected === letra ? "#CF848E" : "white"; // vermelho para errado se selecionado
-        }
-    };
-
-    const getColor = (indice: number) => {
-        console.log(selected)
-        if (!selected) return "black";
-        const letra = letraPorIndice[indice];
-        if (letra === quizzes[questaoIndex].correta) {
-            return selected === letra ? "white" : "black";
-        } 
-        else {
-            return selected === letra ? "white" : "black";
-        } 
-        
     };
 
     useEffect(() => {
@@ -93,12 +79,170 @@ export default function MaterialClient() {
         }; quizzes(idMaterial);
         
     }, []);
+
+    useEffect(() => {
+        final();
+    }, []);
+
+    const xpQuiz = async (totalQuestoes: number, certas: number) => {
+        try{
+            console.log(totalQuestoes, certas);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/calcular-xp-quiz/${idMaterial}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify( {totalQuestoes: totalQuestoes, certas: certas} ),
+                credentials: "include",
+            });
+                
+            const data = await res.json();
+            console.log("XPPPPPPP", data);
+
+        } catch (err) {
+            console.error(err);
+
+        }
+    };
     
+    useEffect(() => {
+        console.log("haha", estado);
+        
+        if (estado?.finalizado === true){
+            // setFinalizadoPop(true);
+            // setTimeout(() =>{
+            //     setFinalizadoPop(false);
+            // }, 3000);
+            // setTimeout(() =>{
+            //     setQuestaoIndex(0);
+            // }, 3000);
+            
+            setDisabled(true);
+            for (let i = 0; i < estado?.totalQuestoes!; i ++){
+                if (estado?.respostasQuiz[i] === quizzes[i]?.correta){
+                    acertou ++;
+                    console.log("ACERTOU!")
+                };
+            };
+            console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
+            xpQuiz(estado?.totalQuestoes, acertou);
+            
+        }
+
+        else{
+            if (estado?.respondidas! > 0){
+                setQuestaoIndex(estado?.respondidas!);
+            }
+        }
+    }, [estado]);
+
+    useEffect(() => {
+        if (finalizado) {
+            setDisabled(true);
+        }
+    }, [finalizado]);
+
+    const questao = async (indice: number) => {
+        const letra = letraPorIndice[indice];
+        try{
+            const resposta = {questaoIndex: questaoIndex, resposta: letra};
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/responder-questao/${idMaterial}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify( resposta ),
+                credentials: "include",
+            });
+                
+            const data = await res.json();
+            console.log("QUESTAO", data);
+
+        } catch (err) {
+        console.error(err);
+
+        }
+    };
+
+    const handleClick = (indice: number) => {
+        if (disabled) return;
+        final();
+
+        const letra = letraPorIndice[indice];
+        setSelected(letra);
+        setDisabled(true);
+        questao(indice);
+
+        setTimeout(() => {
+        if (questaoIndex !== quizzes.length - 1) {
+            setQuestaoIndex((prev) => prev + 1);
+        };
+        
+        setSelected(null);
+        if (!finalizado){
+            setDisabled(false);
+        }
+        }, 1200);
+    };
+
+    const getBackgroundColor = (indice: number) => {
+        const letra = letraPorIndice[indice];
+        if (!finalizado){
+            if (!selected) return "white";
+            if (letra === quizzes[questaoIndex]?.correta) {
+            return selected === letra ? "#7BC396" : "white"; // verde para o certo se selecionado
+            } else {
+            return selected === letra ? "#CF848E" : "white"; // vermelho para errado se selecionado
+            }
+        }
+        else{
+            const marcada = estado?.respostasQuiz[questaoIndex];
+            const correta = quizzes[questaoIndex]?.correta;
+
+            if (marcada === correta){
+                return letra === correta ? "#7BC396" : "white";
+            }
+            else{
+                if (letra === marcada) return "#CF848E";
+                if (letra === correta) return "#7BC396";
+                return "white";
+            }
+        }
+    };
+
+    const getColor = (indice: number) => {
+        const letra = letraPorIndice[indice];
+        if (!finalizado){
+            if (!selected) return "black";
+            const letra = letraPorIndice[indice];
+            if (letra === quizzes[questaoIndex]?.correta) {
+                return selected === letra ? "white" : "black";
+            } 
+            else {
+                return selected === letra ? "white" : "black";
+            } 
+        }
+        else{
+            const marcada = estado?.respostasQuiz[questaoIndex];
+            const correta = quizzes[questaoIndex]?.correta;
+
+            if (marcada === correta) {
+                // Acertou → correta branca
+                return letra === correta ? "white" : "black";
+            } else {
+                // Errou → marcada e correta brancas
+                if (letra === marcada || letra === correta) return "white";
+                return "black";
+            }
+        }
+
+        
+    };
+
     if (!idMaterial) return null;
     if (loading) return <Loading />;
 
     return( 
         <>  
+            {message && (
+                <ErrorModal message={message} onClose={() => setMessage(null)} />
+            )}
             <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center  shadow-md border border-[#00000031]">
                 <div className="w-[1200px] max-w-[90%] h-[850px] max-h-[92%] mt-[35px] mb-[35px] relative flex justify-center items-center">
                     <div className="w-full h-[10px] rounded-full bg-[rgba(16,19,46,0.14)] absolute top-0">
@@ -106,11 +250,19 @@ export default function MaterialClient() {
                     </div>
 
                     <div className="w-full h-[75%] bg-[#F7F7FF] rounded-[25px] border-[2px] shadow-md border-[rgba(60,49,91,0.24)] flex justify-center items-center">
-                        <div className="w-[95%] h-[90%] relative flex justify-center items-center">
-                            <h2 className="absolute top-0 left-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex + 1}/{quizzes.length}</h2>
+                        <div className="w-[95%] h-[90%] relative flex justify-center items-center"> 
+
+                            {(() =>{
+                                if (questaoIndex == 10){
+                                    return <h2 className="absolute top-0 left-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex }/{quizzes.length}</h2>
+                                }
+                                else{
+                                    return <h2 className="absolute top-0 left-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex + 1}/{quizzes.length}</h2>
+                                }
+                            })()}
                             <h2 className="absolute top-0 right-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Quiz</h2>
 
-                            <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center ">
+                            <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center relative">
                                 <h1 className="text-[30px] text-center line-clamp-2 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
                                 <div className="w-full flex flex-col gap-[5%]">
                                     <div className="flex max-w-[100%] gap-[5%]">
@@ -130,8 +282,8 @@ export default function MaterialClient() {
                                             }}
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
-                                            style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
-                                            className=" text-left overflow-hidden border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[180px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
+                                            style={{ backgroundColor: getBackgroundColor(i), color: getColor(i)} }
+                                            className=" text-left overflow-hidden border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[200px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
                                         >
                                             <span className="p-4 w-full line-clamp-3 h-full break-words">
                                             {quizzes[questaoIndex]?.alternativas[i]}
@@ -158,36 +310,63 @@ export default function MaterialClient() {
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
-                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[180px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
-                                        >
+                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[200px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
                                             <span className="p-4 w-full line-clamp-3 h-full break-words">
-                                            {quizzes[questaoIndex]?.alternativas[i]}
+                                                {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>
                                         ))}
                                     </div>
-                                    </div>
+                                </div>
                                 
+                                <AnimatePresence>
+                                    {finalizadoPop && (
+                                        <>
+                                            <motion.div 
+                                            initial={{ scale: 0.5, opacity: 0, y: 10}}
+                                            animate={{ scale: 1, opacity: 1, y: 0}}
+                                            exit={{ opacity:0, scale: 0.9, transition: {duration: 0.15, ease: "easeInOut"} }}
+                                            className="absolute w-full h-full z-[1000] bg-[#B9B4F0] rounded-[25px] flex items-center justify-center text-xl font-semibold ">
+                                                <div className="w-[95%] h-[90%] flex justify-center items-center relative rounded-[25px] bg-white overflow-hidden">
+                                                    <div className="w-[110%] left-[-90px] top-[-100px] absolute rounded-[25px]">
+                                                        <img width={300} height={500} src="/concluiu-flashcards.svg" className="w-full " alt="Logo"/>
+                                                    </div>
+                                                    <div className="w-[70%] h-[80%] flex flex-col justify-center items-center ">
+                                                        <h1 className="text-[35px] text-center">Parabéns! Você completou o quizz e ganhou mais 15XP. Revise suas respostas e continue subindo no ranking.</h1>
+                                                    </div>
 
+                                                </div>
+                                            </motion.div>
+                                        
+                                        </>
+                                        
+                                    )}
+                                </AnimatePresence>
                             </div>
+                            
+                            {finalizado && (
+                                <>
+                                    <motion.div 
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97}}
+                                    transition={{ duration: 0.3, ease: "easeInOut"}}
+                                    onClick={() => {if (questaoIndex !== 0){ setQuestaoIndex(questaoIndex - 1); console.log(questaoIndex)} else {return} }}
+                                    className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 left-0">
+                                        <ArrowLeft className=""/>
+                                    </motion.div>
 
-                            <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97}}
-                            transition={{ duration: 0.3, ease: "easeInOut"}}
-                            onClick={() => {if (questaoIndex !== 0){ setQuestaoIndex(questaoIndex - 1); console.log(questaoIndex)} else {return} }}
-                            className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 left-0">
-                                <ArrowLeft className=""/>
-                            </motion.div>
+                                    <motion.div 
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97}}
+                                    transition={{ duration: 0.3, ease: "easeInOut"}}
+                                    onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
+                                    className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 right-0">
+                                        <ArrowRight className=""/>
+                                    </motion.div>
+                                </>
 
-                            <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97}}
-                            transition={{ duration: 0.3, ease: "easeInOut"}}
-                            onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                            className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 right-0">
-                                <ArrowRight className=""/>
-                            </motion.div>
+                            )}
+                            
 
                         </div>
                     </div>

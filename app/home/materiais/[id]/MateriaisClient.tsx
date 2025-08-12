@@ -73,7 +73,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [topicoInput, setTopicoInput] = useState("");
     const documentInputRef = useRef<HTMLInputElement>(null);
     const [ topicos, setTopicos ] = useState<string []>([]);
-    const [ assunto, setAssunto ] = useState("");
     const [ loading, setLoading ] = useState(true);
     const [message, setMessage] = useState<string | null>(null);
     const [ materiaisNome, setMateriaisNome ] = useState<Array<{ id: string; titulo?: string; origem: string }>>([]);
@@ -121,6 +120,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
             
             const data = await res.json();
+            console.log("Data: ",data)
+            console.log("origemValor: ",origemValor)
+            console.log("origem: ",origem)
             setOrigem(origemValor);
 
         } catch (err) {
@@ -235,7 +237,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     }; 
 
     const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, assuntoId: "", descricao: "", quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""}
+        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""}
         try{
             setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
@@ -249,15 +251,37 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.log("DATA 1: ", data)
 
             if (tipo === "COMPLETO"){
-                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                });
+
+                if (origem === "TOPICOS"){
+                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: data.material.id }),
+                        credentials: "include",
+                    });
+                    const data2 = await res2.json();
+                    console.log("RESUMO: ", data2)
+
+                } else if (origem === "ASSUNTO"){
+                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: data.material.id }),
+                        credentials: "include",
+                    });
+                    const data2 = await res2.json();
+                    console.log("RESUMO: ", data2)
                 
-                const data2 = await res2.json();
-                console.log("RESUMO: ", data2)
+                } else {
+                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: data.material.id }),
+                        credentials: "include",
+                    });
+                    const data2 = await res2.json();
+                    console.log("RESUMO: ", data2)
+                }
                 
                 const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`, {
                     method: 'POST',
@@ -321,7 +345,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
         setMateriaDesignada("");
         setTopicoInput("");
         setTopicos([]);
-        setAssunto("");
         setAssuntoInput("");
         // setInput3("");
         // setInput4("");
@@ -335,7 +358,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
         setMateriaDesignada("");
         setTopicoInput("");
         setTopicos([]);
-        setAssunto("");
         setAssuntoInput("");
         // setInput3("");
         // setInput4("");
@@ -395,7 +417,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </div>
                                     </motion.button>
                                     
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO")}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO"); console.log( )}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
                                         <ScrollText  className=" text-white size-[130px] stroke-1"/>
                                         <div  className="flex flex-col items-center ">
                                             <h1  className="text-[45px] font-medium text-white">Assuntos</h1>
@@ -529,28 +551,20 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                             
                                                             </motion.div>
                                                         ))}
-                                                        
-
                                                     </AnimatePresence>
-
                                                 </div>
-
                                             </div>
                                         </div>
-
                                         <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
                                             <div className="h-[87px] ">
                                                 <h2 className="text-[28px] font-medium">Nome do Material</h2>
                                                 <input type="text" value={input} onChange={(e) => {setInput(e.target.value);}} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
                                             </div>
-                                            
                                             <div className="relative ">
                                                 <h2 className="text-[28px] font-medium">Matéria designada:</h2>
 
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
-
                                             </div>
-                                            
                                             <motion.button
                                                 whileTap={{ scale: 0.95 }}
                                                 whileHover={{ scale: 1.02 }}
@@ -591,8 +605,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                         setTopicoInput("");
                                                         }
                                                     }}
-                                                    placeholder="Pergunte a assistente IA" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
-                                                    />
+                                                    placeholder="Adicionar um tópico" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
 
                                                     <motion.button 
                                                     whileHover={{ scale: 1.02 }}
@@ -654,7 +667,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                             </div>
                                             
-                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
+                                                closing();
+                                                console.log(assuntoInput);
+                                                console.log(topicos);
+                                                console.log(input);
+                                                console.log(materiaDesignada);
+                                                criar();
+                                            }}>
                                                 <FileText />
                                                 Enviar
                                             </motion.button>
