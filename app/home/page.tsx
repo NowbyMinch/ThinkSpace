@@ -635,21 +635,21 @@ export default function HomePage() {
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) ]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
                   <div className="w-[65px] rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 3]?.diaSemana}.</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 3]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
                   </div>
                 </div>
               </div>
