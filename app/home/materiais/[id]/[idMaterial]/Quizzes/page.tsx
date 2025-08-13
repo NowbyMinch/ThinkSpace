@@ -40,7 +40,7 @@ export default function MaterialClient() {
     const [message, setMessage] = useState<string | null>(null);
     const [questaoIndex, setQuestaoIndex] = useState(0);
     const [quizzes, setQuizzes] = useState<quizz[]>([]);
-    const barlength = (questaoIndex / (quizzes.length ) ) * 100;
+    const barlength = (questaoIndex / (quizzes.length - 1) ) * 100;
     const [ loading, setLoading ] = useState(true);
     const [selected, setSelected] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
