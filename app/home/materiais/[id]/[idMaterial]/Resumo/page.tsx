@@ -11,6 +11,7 @@ import Loading from "@/app/home/components/loading";
 
 export default function MaterialClient() {
     const [ resumo, setResumo ] = useState("");
+    const [ origem, setOrigem ] = useState("");
     const [ loading, setLoading ] = useState(true);
     const params = useParams();
     const idMaterial = params?.idMaterial as string;
@@ -18,25 +19,59 @@ export default function MaterialClient() {
 
 
     useEffect(() => {
-        const Resumo = async (id: string) => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos/${id}`, {
-                method: 'GET',
-                credentials: 'include',
+        const Origem = async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${idMaterial}`, {
+                    method: 'GET',
+                    credentials: 'include',
                 });
-                
+                const data = await res.json();
+                setOrigem(data.material.origem);
+            } catch (err) {
+                console.error(err);
+                setLoading(false);
+            }
+        };
+
+        Origem();
+    }, [idMaterial]);
+
+    useEffect(() => {
+        const Resumo = async () => {
+            if (!origem) return;
+
+            try {
+                let url = "";
+
+                if (origem === "TOPICOS") {
+                    console.log("Rodando topicos");
+                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos/${idMaterial}`;
+                } else if (origem === "ASSUNTO") {
+                    console.log("Rodando Assunto");
+                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto/${idMaterial}`;
+                } else {
+                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento/${idMaterial}`;
+                }
+
+                const res = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
                 const data = await res.json();
                 setResumo(data.resumoIA);
                 console.log(data);
-                setLoading(false);
-               
+                
             } catch (err) {
                 console.error(err);
+            } finally {
+                setLoading(false);
             }
-            
-        }; Resumo(idMaterial);
-    
-    }, []);
+        };
+
+        Resumo();
+    }, [origem, idMaterial]);
+
 
     if (!idMaterial) return null;
     if (loading) return <Loading />;

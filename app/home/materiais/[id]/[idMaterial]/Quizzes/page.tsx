@@ -40,7 +40,7 @@ export default function MaterialClient() {
     const [message, setMessage] = useState<string | null>(null);
     const [questaoIndex, setQuestaoIndex] = useState(0);
     const [quizzes, setQuizzes] = useState<quizz[]>([]);
-    const barlength = (questaoIndex / (quizzes.length ) ) * 100;
+    const barlength = (questaoIndex / (quizzes.length - 1) ) * 100;
     const [ loading, setLoading ] = useState(true);
     const [selected, setSelected] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
@@ -161,7 +161,7 @@ export default function MaterialClient() {
     const handleClick = (indice: number) => {
         if (disabled) return;
 
-        if (estado?.respondidas === estado?.totalQuestoes) {
+        if ((estado?.respondidas! + 1) === (estado?.totalQuestoes!)) {
             for (let i = 0; i < estado?.totalQuestoes!; i ++){
                 if (estado?.respostasQuiz[i] === quizzes[i]?.correta){
                     acertou ++;
@@ -198,7 +198,7 @@ export default function MaterialClient() {
         if (!finalizado){
             if (!selected) return "white";
             if (letra === quizzes[questaoIndex]?.correta) {
-            return selected === letra ? "#7BC396" : "white"; // verde para o certo se selecionado
+            return selected === letra ? "#7BC396" : "#FFF"; // verde para o certo se selecionado
             } else {
             return selected === letra ? "#CF848E" : "white"; // vermelho para errado se selecionado
             }
@@ -295,9 +295,10 @@ export default function MaterialClient() {
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i)} }
-                                            className=" text-left overflow-hidden border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[200px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
+                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
                                         >
-                                            <span className="p-4 w-full line-clamp-3 h-full break-words">
+                                            
+                                            <span className="p-4 w-full line-clamp-5 h-full break-words">
                                             {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>
@@ -322,8 +323,8 @@ export default function MaterialClient() {
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
-                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[200px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
-                                            <span className="p-4 w-full line-clamp-3 h-full break-words">
+                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
+                                            <span className="p-4 w-full line-clamp-5 h-fit break-words">
                                                 {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>

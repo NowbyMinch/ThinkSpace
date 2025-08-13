@@ -91,23 +91,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
     // Criar Material
 
-    // const Tipo = async () => {
+    const Tipo = async () => {
 
-    //     try{
-    //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/escolha-tipo-material`, {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ tipoMaterial: "COMPLETO" }),
-    //             credentials: "include",
-    //         });
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/escolha-tipo-material`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tipoMaterial: "COMPLETO" }),
+                credentials: "include",
+            });
             
-    //         const data = await res.json();
-    //         setTipo(data.tipoMaterial);
+            const data = await res.json();
+            setTipo(data.tipoMaterial);
             
-    //     } catch (err) {
-    //     console.error(err);
-    //     }
-    // };
+        } catch (err) {
+        console.error(err);
+        }
+    };
 
     // Função para criar nova material
     const Origem = async (origemValor: string) => {
@@ -122,6 +122,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.log("Data: ",data);
             console.log("origemValor: ",origemValor);
             setOrigem(origemValor);
+            Tipo();
 
         } catch (err) {
         console.error(err);
@@ -240,11 +241,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
     }; 
 
     const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""};
+        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: "", assunto: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""};
         console.log(assuntoInput);
 
         try{
-            setLoading(true);
+            console.log(dados)
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -254,6 +255,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
             
             const data = await res.json();
             console.log("DATA 1: ", data)
+            if (data.message !== "Campos obrigatórios ausentes para criação por tópicos." 
+                && data.message !== "Campos obrigatórios ausentes para criação por assunto." 
+                && data.message !== "Nome designado, nome da matéria e tópicos são obrigatórios." ){
+                closing();
+                setLoading(true);
+            } else{
+                setMessage(data.message);
+                return;
+            }
 
             if (tipo === "COMPLETO"){
                 if (origem === "TOPICOS"){
@@ -310,11 +320,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
             }
 
             setLoading(false);
-            if (origem === "DOCUMENTO"){
-                router.push(`/home/materiais/${id}/${data.material.id}/Material`);
-            }
-            else{
-                router.push(`/home/materiais/${id}/${data.material.id}/Resumo`);
+            if (data.message !== "Campos obrigatórios ausentes para criação por tópicos."){
+                if (origem === "DOCUMENTO"){
+                    router.push(`/home/materiais/${id}/${data.material.id}/Material`);
+                }
+                else{
+                    router.push(`/home/materiais/${id}/${data.material.id}/Resumo`);
+                }
             }
             
 
@@ -575,7 +587,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 id="editar_conta"
                                                 className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2"
                                                 onClick={() => {
-                                                    closing();
                                                     console.log(topicos);
                                                     console.log(input);
                                                     console.log(materiaDesignada);
@@ -672,7 +683,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
                                             
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                closing();
                                                 console.log(assuntoInput);
                                                 console.log(topicos);
                                                 console.log(input);
