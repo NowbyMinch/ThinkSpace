@@ -91,23 +91,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
     // Criar Material
 
-    const Tipo = async () => {
+    // const Tipo = async () => {
 
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/escolha-tipo-material`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tipoMaterial: "COMPLETO" }),
-                credentials: "include",
-            });
+    //     try{
+    //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/escolha-tipo-material`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ tipoMaterial: "COMPLETO" }),
+    //             credentials: "include",
+    //         });
             
-            const data = await res.json();
-            setTipo(data.tipoMaterial);
+    //         const data = await res.json();
+    //         setTipo(data.tipoMaterial);
             
-        } catch (err) {
-        console.error(err);
-        }
-    };
+    //     } catch (err) {
+    //     console.error(err);
+    //     }
+    // };
 
     // Função para criar nova material
     const Origem = async (origemValor: string) => {
@@ -121,14 +121,18 @@ export default function MateriaisClient({ id }: { id: string; }) {
             const data = await res.json();
             console.log("Data: ",data);
             console.log("origemValor: ",origemValor);
-            console.log("origem: ",origem);
             setOrigem(origemValor);
 
         } catch (err) {
         console.error(err);
         }
-        Tipo();
+        // Tipo();
     };
+    
+    useEffect(() => {
+        console.log("Origem: ", origem);
+        
+    }, [origem]);
     
     // USEFULL STRUCTURE ---- Filtros de matérias
     // const filtered = materias.filter((item) =>

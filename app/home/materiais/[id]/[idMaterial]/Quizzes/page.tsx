@@ -23,6 +23,14 @@ type Final = {
     respostasQuiz: [];
     totalQuestoes: number;
 };
+type Xp = {
+    mensagem: string;
+    nivel: string;
+    progresso: string;
+    xp: number;
+    xpAnterior: number;
+    xpFinal: number;
+};
 
 const letraPorIndice = ["A", "B", "C", "D"];
 
@@ -34,15 +42,17 @@ export default function MaterialClient() {
     const [quizzes, setQuizzes] = useState<quizz[]>([]);
     const barlength = (questaoIndex / (quizzes.length ) ) * 100;
     const [ loading, setLoading ] = useState(true);
-    let acertou = 0;
     const [selected, setSelected] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
+    const [ xp, setXP ] = useState<Xp>();
+    let acertou = 0;
 
     const [ estado, setEstado ] = useState<Final>();
 
     // setTopicos(prev => [...prev, topicoInput]);
     const [ finalizado, setFinalizado ] = useState(false);
     const [ finalizadoPop, setFinalizadoPop ] = useState(false);
+
     
     const final = async () => {
         try{
@@ -95,37 +105,21 @@ export default function MaterialClient() {
             });
                 
             const data = await res.json();
+            setXP(data);
             console.log("XPPPPPPP", data);
 
         } catch (err) {
             console.error(err);
-
         }
     };
-    
+
     useEffect(() => {
-        console.log("haha", estado);
-        
         if (estado?.finalizado === true){
-            // setFinalizadoPop(true);
-            // setTimeout(() =>{
-            //     setFinalizadoPop(false);
-            // }, 3000);
-            // setTimeout(() =>{
-            //     setQuestaoIndex(0);
-            // }, 3000);
-            
             setFinalizado(true);
-            console.log("Finalizado de fato")
             setDisabled(true);
-            for (let i = 0; i < estado?.totalQuestoes!; i ++){
-                if (estado?.respostasQuiz[i] === quizzes[i]?.correta){
-                    acertou ++;
-                    console.log("ACERTOU!")
-                };
-            };
-            console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
-            xpQuiz(estado?.totalQuestoes, acertou);
+                  
+            // console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
+            // xpQuiz(estado?.totalQuestoes, acertou);
             
         }
 
@@ -134,6 +128,7 @@ export default function MaterialClient() {
                 setQuestaoIndex(estado?.respondidas!);
             }
         }
+
     }, [estado]);
 
     useEffect(() => {
@@ -155,6 +150,7 @@ export default function MaterialClient() {
                 
             const data = await res.json();
             console.log("QUESTAO", data);
+            final()
 
         } catch (err) {
         console.error(err);
@@ -164,17 +160,31 @@ export default function MaterialClient() {
 
     const handleClick = (indice: number) => {
         if (disabled) return;
-        final();
 
+        if (estado?.respondidas === estado?.totalQuestoes) {
+            for (let i = 0; i < estado?.totalQuestoes!; i ++){
+                if (estado?.respostasQuiz[i] === quizzes[i]?.correta){
+                    acertou ++;
+                };
+            };
+            xpQuiz(estado?.totalQuestoes!,acertou);
+            setFinalizadoPop(true);
+            setTimeout(() =>{
+                setFinalizadoPop(false);
+            }, 3000);
+
+        };
+
+        final();
         const letra = letraPorIndice[indice];
         setSelected(letra);
         setDisabled(true);
         questao(indice);
 
         setTimeout(() => {
-        if (questaoIndex !== quizzes.length - 1) {
-            setQuestaoIndex((prev) => prev + 1);
-        };
+        // if (questaoIndex !== quizzes.length - 1) {
+        //     setQuestaoIndex((prev) => prev + 1);
+        // };
         
         setSelected(null);
         if (!finalizado){
@@ -334,7 +344,7 @@ export default function MaterialClient() {
                                                         <img width={300} height={500} src="/concluiu-flashcards.svg" className="w-full " alt="Logo"/>
                                                     </div>
                                                     <div className="w-[70%] h-[80%] flex flex-col justify-center items-center ">
-                                                        <h1 className="text-[35px] text-center">Parabéns! Você completou o quizz e ganhou mais 15XP. Revise suas respostas e continue subindo no ranking.</h1>
+                                                        <h1 className="text-[35px] text-center">Parabéns! Você completou o quizz e ganhou mais {xp?.xp}XP. Revise suas respostas e continue subindo no ranking.</h1>
                                                     </div>
 
                                                 </div>
