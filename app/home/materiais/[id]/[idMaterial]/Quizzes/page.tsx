@@ -115,6 +115,8 @@ export default function MaterialClient() {
             //     setQuestaoIndex(0);
             // }, 3000);
             
+            setFinalizado(true);
+            console.log("Finalizado de fato")
             setDisabled(true);
             for (let i = 0; i < estado?.totalQuestoes!; i ++){
                 if (estado?.respostasQuiz[i] === quizzes[i]?.correta){

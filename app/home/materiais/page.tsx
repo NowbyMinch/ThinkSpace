@@ -350,7 +350,6 @@ export default function Materiais() {
                                                 <motion.button 
                                                 whileTap={{ scale: 0.95 }} 
                                                 whileHover={{ scale: 1.02 }}
-
                                                 key={color} style={{backgroundColor: color}} onClick={() => {setCriarMateria({...criarMateria, cor: cor[color as keyof typeof cor] }); setColor(color); } } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></motion.button>
                                             ))}
                                         </div>
@@ -756,7 +755,7 @@ export default function Materiais() {
                         
                         <div className="ml-[15px] mt-[30px] w-[380px] max-w-[95%]">
                             <h1 className="text-[30px] w-fit font-medium leading-6">Materiais recentes</h1>
-                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0].nome}</h1>
+                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1>
                         </div>
                         
                         

@@ -118,11 +118,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 body: JSON.stringify({ origem: origemValor }),
                 credentials: "include",
             });
-            
             const data = await res.json();
-            console.log("Data: ",data)
-            console.log("origemValor: ",origemValor)
-            console.log("origem: ",origem)
+            console.log("Data: ",data);
+            console.log("origemValor: ",origemValor);
+            console.log("origem: ",origem);
             setOrigem(origemValor);
 
         } catch (err) {
@@ -237,7 +236,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
     }; 
 
     const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""}
+        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""};
+        console.log(assuntoInput);
+
         try{
             setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
@@ -251,7 +252,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.log("DATA 1: ", data)
 
             if (tipo === "COMPLETO"){
-
                 if (origem === "TOPICOS"){
                     const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`, {
                         method: 'POST',
@@ -401,7 +401,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <div className="w-[80%] h-[85%] flex flex-col gap-14 z-[1000]">
                                 <h1 className={`text-center text-[45px] font-medium ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>Como você deseja criar a matéria?</h1>
                                 <div className="flex w-[100%] h-[100%] justify-between ">
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar(true); Origem("DOCUMENTO")}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar(true); Origem("DOCUMENTO");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
                                         <BookOpenText  className=" text-white size-[130px] stroke-1"/>
                                         <div  className="flex flex-col items-center ">
                                             <h1  className="text-[45px] font-medium text-white">Documentos</h1>
@@ -409,7 +409,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </div>
                                     </motion.button>
                                     
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar2(true); Origem("TOPICOS")}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar2(true); Origem("TOPICOS");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
                                         <FileText  className=" text-white size-[130px] stroke-1"/>
                                         <div  className="flex flex-col items-center ">
                                             <h1  className="text-[45px] font-medium text-white">Tópicos</h1>
@@ -417,7 +417,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </div>
                                     </motion.button>
                                     
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO"); console.log( )}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
                                         <ScrollText  className=" text-white size-[130px] stroke-1"/>
                                         <div  className="flex flex-col items-center ">
                                             <h1  className="text-[45px] font-medium text-white">Assuntos</h1>
