@@ -148,6 +148,11 @@ export default function HomePage() {
   type SalasResponse = {
     salasMembro: Sala[];
   };
+  type ofensiva = {
+    dias: string[];
+    status: number[];
+    message: string;
+  };
 
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
@@ -156,6 +161,7 @@ export default function HomePage() {
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
   const [ loading, setLoading ] = useState(true);
   const [ materias, setMaterias ] = useState<materiaItem[]>([]);
+  const [ ofensiva, setOfensiva ] = useState<ofensiva>();
   
   useEffect(() => {
     console.log("Salas updated:", salas);
@@ -258,24 +264,28 @@ export default function HomePage() {
       }
     }; notificacao();
 
-    // const ofensiva = async () => {
-    //   try{
-    //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
-    //       method: 'GET',
-    //       credentials: 'include',
-    //     });
+    const Ofensiva = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+          method: 'GET',
+          credentials: 'include',
+        });
         
-    //     const data = await res.json();
-        // setLoading(false);
-    //     console.log(data);
-    //   } catch (err) {
-    //     setMessage("Erro ao carregar saudação.");
-    //     console.error(err);
-    //   }
-    // }; ofensiva();
+        const data = await res.json();
+        setLoading(false);
+        setOfensiva(data);
+      } catch (err) {
+        setMessage("Erro ao carregar a ofensiva.");
+        console.error(err);
+      }
+    }; Ofensiva();
 
   }, []);
 
+
+  useEffect(() =>{
+    console.log("UseEffect ofensiva: ", ofensiva);
+  }, [ofensiva]);
   if (loading ) return <Loading /> 
 
   return (
@@ -337,36 +347,176 @@ export default function HomePage() {
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">DOM</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[0]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[0]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SEG</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[1]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[1]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">TER</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[2]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[2]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">QUA</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[3]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[3]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
                             
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">QUI</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[4]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[4]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
 
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SEX</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[5]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[5]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SAB</span>
-                              <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]"></div>
+                              {(() => {
+                                if (ofensiva?.status[6]! === 0){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    </div>
+                                  )
+                                } else if (ofensiva?.status[6]! === 1 ){
+                                  return (
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    </div>
+                                  )
+                                }
+                                else {
+                                  return(
+                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                      <Check className="text-white stroke-3 size-8 "/>
+                                    </div>
+                                  )
+                                }
+                              })()}
                             </div>
                           </div>
                         </div>

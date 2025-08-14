@@ -242,6 +242,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     }; 
 
     const [file, setFile] = useState<globalThis.File | null>(null);
+
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
         if (!selectedFile) return;
@@ -249,110 +250,100 @@ export default function MateriaisClient({ id }: { id: string; }) {
     };
 
     const criar = async () => {
-         if (!file) {
-            console.error("No file selected");
-            return;
-        }
-        const formData = new FormData();
-        formData.append("file", file); // PDF binary
-        formData.append("nomeMateria", materiaDesignada);
-        formData.append("topicos", topicos.join(","));
-        formData.append("tipoMaterial", tipo);
-        formData.append("descricao", "");
-        formData.append("assunto", assuntoInput);
-        formData.append("quantidadeQuestoes", "10");
-        formData.append("quantidadeFlashcards", "10");
+        try {
+            // 1️⃣ Montar payload JSON
+            const payload = {
+            nomeDesignado: input,
+            nomeMateria: materiaDesignada,
+            topicos: topicos, // array de strings
+            tipoMaterial: tipo,
+            descricao: "",
+            assunto: assuntoInput,
+            quantidadeQuestoes: 10, // número
+            quantidadeFlashcards: 10, // número
+            };
 
-        try{
-            console.log("Formdata", formData);
+            // DEBUG: ver o JSON
+            console.log("Payload JSON:", payload);
+
+            // 2️⃣ Enviar para o backend
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: formData,
-                credentials: "include",
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+            credentials: "include",
             });
-            
+
             const data = await res.json();
-            console.log("DATA 1: ", data)
-            if (data.message !== "Campos obrigatórios ausentes para criação por tópicos." 
-                && data.message !== "Campos obrigatórios ausentes para criação por assunto." 
-                && data.message !== "Nome designado, nome da matéria e tópicos são obrigatórios." && data.message !== "request entity too large"){
-                closing();
-                setLoading(true);
-            } else{
-                setMessage(data.message);
-                return;
+            console.log("DATA 1:", data);
+
+            // 3️⃣ Checar erros
+            if (
+            data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
+            data.message === "Campos obrigatórios ausentes para criação por assunto." ||
+            data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." ||
+            data.message === "request entity too large"
+            ) {
+            setMessage(data.message);
+            return;
             }
 
-            if (tipo === "COMPLETO"){
-                if (origem === "TOPICOS"){
-                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: data.material.id }),
-                        credentials: "include",
-                    });
-                    const data2 = await res2.json();
-                    console.log("RESUMO: ", data2)
+            closing();
+            setLoading(true);
 
-                } else if (origem === "ASSUNTO"){
-                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: data.material.id }),
-                        credentials: "include",
-                    });
-                    const data2 = await res2.json();
-                    console.log("RESUMO: ", data2)
-                
-                } else {
-                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: data.material.id }),
-                        credentials: "include",
-                    });
-                    const data2 = await res2.json();
-                    console.log("RESUMO: ", data2)
-                }
-                
-                const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                });
-                
-                const data3 = await res3.json();
-                console.log("FLASHCARDS: ", data3)
-                
-                const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                });
-                
-                const data4 = await res4.json();
-                console.log("QUIZZES: ", data4)
+            // 4️⃣ Processar materiais COMPLETO
+            if (tipo === "COMPLETO") {
+            let resumoEndpoint = "";
+            let flashcardsEndpoint = "";
+            let quizzesEndpoint = "";
+            if (origem === "DOCUMENTO") {resumoEndpoint = "resumo-documento"; flashcardsEndpoint = "flashcards-pdf"; quizzesEndpoint = "quizzes-pdf"}
+            if (origem === "TOPICOS") {resumoEndpoint = "resumo-topicos"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
+            if (origem === "ASSUNTO") {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
 
+            if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
+                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${resumoEndpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: data.material.id }),
+                credentials: "include",
+                });
+                const data2 = await res2.json();
+                console.log("RESUMO:", data2);
+
+                // Flashcards
+                const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${flashcardsEndpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: data.material.id }),
+                credentials: "include",
+                });
+                console.log("FLASHCARDS:", await res3.json());
+
+                // Quizzes
+                const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${quizzesEndpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: data.material.id }),
+                credentials: "include",
+                });
+                console.log("QUIZZES:", await res4.json());
+            }
             }
 
             setLoading(false);
-            if (data.message !== "Campos obrigatórios ausentes para criação por tópicos."){
-                if (origem === "DOCUMENTO"){
-                    router.push(`/home/materiais/${id}/${data.material.id}/Material`);
-                }
-                else{
-                    router.push(`/home/materiais/${id}/${data.material.id}/Resumo`);
-                }
-            }
-            
+
+            // 5️⃣ Redirecionar
+            const redirectPath =
+            origem === "DOCUMENTO"
+                ? `/home/materiais/${id}/${data.material.id}/Material`
+                : `/home/materiais/${id}/${data.material.id}/Resumo`;
+            router.push(redirectPath);
 
         } catch (err) {
-        console.error(err);
+            console.error(err);
         }
     };
+
     
     const Deletar = async (id: string) => {
         try {
@@ -480,7 +471,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
                                         </div>
 
-                                        <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
+                                        <form onSubmit={(e) => {e.preventDefault(); } } encType="multipart/form-data" className="w-[45%] h-[90%] flex flex-col gap-5 ">
                                             <div className="">
                                                 <h2 className="text-[28px] font-medium"> Nome do material</h2>
                                                 <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
@@ -526,17 +517,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 </div> */}
                                             </div>
                                             
-                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                console.log(topicos);
-                                                console.log(input);
-                                                console.log(materiaDesignada);
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
                                                 criar();
                                             }}>
                                                 <FileText />
                                                 Enviar
                                             </motion.button>
                                         
-                                        </div>
+                                        </form>
                                     </div>
 
                                     <div className={`w-full h-full flex gap-12 items-center  ${ openVar2? "block": "hidden"}`}>
@@ -610,9 +598,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 id="editar_conta"
                                                 className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2"
                                                 onClick={() => {
-                                                    console.log(topicos);
-                                                    console.log(input);
-                                                    console.log(materiaDesignada);
                                                     criar();
                                                 }}>
                                                 <FileText />
@@ -706,10 +691,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
                                             
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                console.log(assuntoInput);
-                                                console.log(topicos);
-                                                console.log(input);
-                                                console.log(materiaDesignada);
                                                 criar();
                                             }}>
                                                 <FileText />

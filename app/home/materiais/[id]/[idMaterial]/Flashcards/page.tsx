@@ -26,6 +26,8 @@ export default function MaterialClient() {
     const [falta, setFalta] = useState(true);
     const [cardstate, setCardstate] = useState<number[]>([]);
     const [loading, setLoading] = useState(true);
+    const [ origem, setOrigem ] = useState("");
+
     type FlashcardsApiResponse = {
         flashcards: flashcards[];
         // add other properties if needed
@@ -61,18 +63,46 @@ export default function MaterialClient() {
     }, [falta]);
     
     useEffect(() => {
-
-        const Flashcards = async (id:string) => {
+        const material = async (id:string) => {
             try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${id}`, {
                 method: 'GET',
                 credentials: 'include',
                 });
                 
                 const data = await res.json();
-                console.log(data.flashcards)
-                setFlashcards(data);
-                setLoading(false);
+                setOrigem(data.material.origem);
+            } catch (err) {
+                console.error(err);
+            }; 
+            
+        }; material(idMaterial);
+        
+    }, []);
+    
+    useEffect(() => {
+        const Flashcards = async (id:string) => {
+            try{
+                if (origem === "DOCUMENTO"){
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards-pdf/${id}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    });
+                    
+                    const data = await res.json();
+                    setFlashcards(data);
+                    setLoading(false);
+                } else{
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards/${id}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    });
+                    
+                    const data = await res.json();
+                    setFlashcards(data);
+                    setLoading(false);
+                }
+
             } catch (err) {
                 console.error(err);
             }; 

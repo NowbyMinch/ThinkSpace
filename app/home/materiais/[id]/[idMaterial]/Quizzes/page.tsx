@@ -45,6 +45,8 @@ export default function MaterialClient() {
     const [selected, setSelected] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
     const [ xp, setXP ] = useState<Xp>();
+    const [ origem, setOrigem ] = useState("");
+    
     let acertou = 0;
 
     const [ estado, setEstado ] = useState<Final>();
@@ -70,17 +72,49 @@ export default function MaterialClient() {
     };
 
     useEffect(() => {
-        const quizzes = async (id:string) => {
+        const material = async (id:string) => {
             try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${id}`, {
                 method: 'GET',
                 credentials: 'include',
                 });
                 
                 const data = await res.json();
-                console.log(data)
-                setQuizzes(data.quizzes);
-                setLoading(false);
+                setOrigem(data.material.origem);
+            } catch (err) {
+                console.error(err);
+            }; 
+            
+        }; material(idMaterial);
+        
+    }, []);
+
+    useEffect(() => {
+        const quizzes = async (id:string) => {
+            try{
+                if (origem === "DOCUMENTO"){
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes-pdf/${id}`, {
+                        method: 'GET',
+                        credentials: 'include',
+                    });
+
+                    const data = await res.json();
+                    console.log(data)
+                    setQuizzes(data.quizzes);
+                    setLoading(false);
+
+                } else{
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes/${id}`, {
+                        method: 'GET',
+                        credentials: 'include',
+                    });
+
+                    const data = await res.json();
+                    console.log(data)
+                    setQuizzes(data.quizzes);
+                    setLoading(false);
+                }
+                    
 
             } catch (err) {
                 console.error(err);
@@ -275,7 +309,7 @@ export default function MaterialClient() {
                             <h2 className="absolute top-0 right-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Quiz</h2>
 
                             <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center relative">
-                                <h1 className="text-[30px] text-center line-clamp-2 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
+                                <h1 className="text-[30px] text-center line-clamp-3 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
                                 <div className="w-full flex flex-col gap-[5%]">
                                     <div className="flex max-w-[100%] gap-[5%]">
                                         {[0, 1].map((i) => (
