@@ -9,6 +9,7 @@ import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Backdrop3 } from "../../components/backdrop";
 import { useRouter } from "next/navigation";
+import { File } from "buffer";
 
 type materiaItem = {
     id?: string;
@@ -240,16 +241,34 @@ export default function MateriaisClient({ id }: { id: string; }) {
         
     }; 
 
+    const [file, setFile] = useState<globalThis.File | null>(null);
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0];
+        if (!selectedFile) return;
+        setFile(selectedFile);
+    };
+
     const criar = async () => {
-        const dados = {nomeDesignado: input, nomeMateria: materiaDesignada, topicos: topicos, tipoMaterial: tipo, descricao: "", assunto: assuntoInput, quantidadeQuestoes: 10, quantidadeFlashcards: 10, file: ""};
-        console.log(assuntoInput);
+         if (!file) {
+            console.error("No file selected");
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", file); // PDF binary
+        formData.append("nomeMateria", materiaDesignada);
+        formData.append("topicos", topicos.join(","));
+        formData.append("tipoMaterial", tipo);
+        formData.append("descricao", "");
+        formData.append("assunto", assuntoInput);
+        formData.append("quantidadeQuestoes", "10");
+        formData.append("quantidadeFlashcards", "10");
 
         try{
-            console.log(dados)
+            console.log("Formdata", formData);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify( dados ),
+                body: formData,
                 credentials: "include",
             });
             
@@ -257,7 +276,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.log("DATA 1: ", data)
             if (data.message !== "Campos obrigatórios ausentes para criação por tópicos." 
                 && data.message !== "Campos obrigatórios ausentes para criação por assunto." 
-                && data.message !== "Nome designado, nome da matéria e tópicos são obrigatórios." ){
+                && data.message !== "Nome designado, nome da matéria e tópicos são obrigatórios." && data.message !== "request entity too large"){
                 closing();
                 setLoading(true);
             } else{
@@ -455,7 +474,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 onClick={() => documentInputRef.current?.click()}
                                                 className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
                                                     <FileInput className="size-[110px] stroke-1 opacity-[75%]"/>
-                                                    <input ref={documentInputRef} type="file" className="absolute right-[9999px]"/>
+                                                    <input ref={documentInputRef} type="file" onChange={handleFileChange} className="absolute right-[9999px]"/>
                                                     <h1 className="text-[30px] opacity-[75%]">Faça o upload do material</h1>
                                                 </motion.button>
                                             </div>
@@ -505,10 +524,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                     </ul>
                                                     )}
                                                 </div> */}
-
                                             </div>
                                             
-                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => closing()}>
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
+                                                console.log(topicos);
+                                                console.log(input);
+                                                console.log(materiaDesignada);
+                                                criar();
+                                            }}>
                                                 <FileText />
                                                 Enviar
                                             </motion.button>
