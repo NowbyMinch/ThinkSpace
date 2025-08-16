@@ -253,80 +253,79 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
         try {
             let res: Response;
-            
             if (origem === "DOCUMENTO") {
-            const formData = new FormData();
-            formData.append("nomeDesignado", input);
-            formData.append("nomeMateria", materiaDesignada);
-            formData.append("topicos", JSON.stringify(topicos));
-            formData.append("tipoMaterial", tipo);
-            formData.append("descricao", "");
-            formData.append("assunto", assuntoInput);
-            formData.append("quantidadeQuestoes", "10");
-            formData.append("quantidadeFlashcards", "10");
-            if (file) {
-                formData.append("file", file, file.name);
-            }
+                const formData = new FormData();
+                formData.append("nomeDesignado", input);
+                formData.append("nomeMateria", materiaDesignada);
+                formData.append("topicos", JSON.stringify(topicos));
+                formData.append("tipoMaterial", tipo);
+                formData.append("descricao", "");
+                formData.append("assunto", assuntoInput);
+                formData.append("quantidadeQuestoes", "10");
+                formData.append("quantidadeFlashcards", "10");
+                if (file) {
+                    formData.append("file", file, file.name);
+                }
 
-            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                method: "POST",
-                body: formData, // ✅ Só FormData aqui
-                credentials: "include",
-            });
+                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                    method: "POST",
+                    body: formData, // ✅ Só FormData aqui
+                    credentials: "include",
+                });
 
             } else {
-            const payload = {
-                nomeDesignado: input,
-                nomeMateria: materiaDesignada,
-                topicos: topicos,
-                tipoMaterial: tipo,
-                descricao: "",
-                assunto: assuntoInput,
-                quantidadeQuestoes: 10,
-                quantidadeFlashcards: 10,
-            };
+                const payload = {
+                    nomeDesignado: input,
+                    nomeMateria: materiaDesignada,
+                    topicos: topicos,
+                    tipoMaterial: tipo,
+                    descricao: "",
+                    assunto: assuntoInput,
+                    quantidadeQuestoes: 10,
+                    quantidadeFlashcards: 10,
+                };
 
-            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload), // ✅ Só string aqui
-                credentials: "include",
-            });
-            console.log(payload);
-            }
+                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload), // ✅ Só string aqui
+                    credentials: "include",
+                });
+                console.log(payload);
+                }
 
-            // DEBUG: ver o JSON
+                // DEBUG: ver o JSON
 
-            // let fetchOptions;
+                // let fetchOptions;
 
-            // if (origem === "DOCUMENTO") {
-            // fetchOptions = {
-            //     method: "POST",
-            //     body: payload, // FormData direto
-            //     credentials: "include"
-            // };
-            // } else {
-            // fetchOptions = {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify(payload),
-            //     credentials: "include"
-            // };
-            // }
+                // if (origem === "DOCUMENTO") {
+                // fetchOptions = {
+                //     method: "POST",
+                //     body: payload, // FormData direto
+                //     credentials: "include"
+                // };
+                // } else {
+                // fetchOptions = {
+                //     method: "POST",
+                //     headers: { "Content-Type": "application/json" },
+                //     body: JSON.stringify(payload),
+                //     credentials: "include"
+                // };
+                // }
 
-            // Backend
-            // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, fetchOptions);
+                // Backend
+                // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, fetchOptions);
 
-            const data = await res.json();
-            console.log("DATA 1:", data);
+                const data = await res.json();
+                console.log("DATA 1:", data);
 
             // Checar erros
             if (
-            data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
-            data.message === "Campos obrigatórios ausentes para criação por assunto." ||
-            data.message === "Campos obrigatórios ausentes para criação por documento." ||
-            data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." 
-            ) {
+                data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
+                data.message === "Campos obrigatórios ausentes para criação por assunto." ||
+                data.message === "Campos obrigatórios ausentes para criação por documento." ||
+                data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." 
+                ) {
             setMessage(data.message);
             return;
             }

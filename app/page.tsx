@@ -304,8 +304,16 @@ export default function landingPage() {
 
                         </div>
                     </div>
-                    
-                    <div className="w-full pb-20 flex justify-center relative ">
+
+
+
+
+
+
+
+
+
+                    {/* <div className="w-full pb-20 flex justify-center relative ">
                         <div className="w-[1500px] flex justify-center items-center ">
                             <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px] max-w-[80%] flex flex-row justify-center">
                                 <div className="w-full flex flex-col gap-12 relative ">
@@ -404,7 +412,7 @@ export default function landingPage() {
                             <Image id="aprender" width={300} height={800} src="Vector 2.svg" alt="Banner" className=" w-full"/>
                         </div>
 
-                    </div>
+                    </div> */}
 
                     <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
                         <div className="w-[45%] h-full relative ">
