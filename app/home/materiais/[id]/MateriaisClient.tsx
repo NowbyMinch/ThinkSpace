@@ -295,7 +295,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 }
 
                 // DEBUG: ver o JSON
-
                 // let fetchOptions;
 
                 // if (origem === "DOCUMENTO") {
@@ -324,6 +323,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
                 data.message === "Campos obrigatórios ausentes para criação por assunto." ||
                 data.message === "Campos obrigatórios ausentes para criação por documento." ||
+                data.message === "Internal server error" ||
                 data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." 
                 ) {
             setMessage(data.message);
