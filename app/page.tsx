@@ -17,7 +17,7 @@ const items: AccordionItem[] = [
   {
     title: "O que torna o ThinkSpace diferente das outras plataformas de estudo?",
     content:
-      "ThinkSpace oferece uma abordagem personalizada e gamificada para o aprendizado.",
+      "ThinkSpace centraliza materiais de estudo, gera conteúdos automaticamente, conecta uma comunidade global e personaliza o aprendizado para cada aluno, tornando a experiência prática e interativa.",
   },
   {
     title: "Como eu posso acessar a plataforma?",
