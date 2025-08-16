@@ -250,39 +250,82 @@ export default function MateriaisClient({ id }: { id: string; }) {
     };
 
     const criar = async () => {
+
         try {
-            // 1️⃣ Montar payload JSON
+            let res: Response;
+            
+            if (origem === "DOCUMENTO") {
+            const formData = new FormData();
+            formData.append("nomeDesignado", input);
+            formData.append("nomeMateria", materiaDesignada);
+            formData.append("topicos", JSON.stringify(topicos));
+            formData.append("tipoMaterial", tipo);
+            formData.append("descricao", "");
+            formData.append("assunto", assuntoInput);
+            formData.append("quantidadeQuestoes", "10");
+            formData.append("quantidadeFlashcards", "10");
+            if (file) {
+                formData.append("file", file, file.name);
+            }
+
+            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                method: "POST",
+                body: formData, // ✅ Só FormData aqui
+                credentials: "include",
+            });
+
+            } else {
             const payload = {
-            nomeDesignado: input,
-            nomeMateria: materiaDesignada,
-            topicos: topicos, // array de strings
-            tipoMaterial: tipo,
-            descricao: "",
-            assunto: assuntoInput,
-            quantidadeQuestoes: 10, // número
-            quantidadeFlashcards: 10, // número
+                nomeDesignado: input,
+                nomeMateria: materiaDesignada,
+                topicos: topicos,
+                tipoMaterial: tipo,
+                descricao: "",
+                assunto: assuntoInput,
+                quantidadeQuestoes: 10,
+                quantidadeFlashcards: 10,
             };
 
-            // DEBUG: ver o JSON
-            console.log("Payload JSON:", payload);
-
-            // 2️⃣ Enviar para o backend
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-            credentials: "include",
+            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload), // ✅ Só string aqui
+                credentials: "include",
             });
+            console.log(payload);
+            }
+
+            // DEBUG: ver o JSON
+
+            // let fetchOptions;
+
+            // if (origem === "DOCUMENTO") {
+            // fetchOptions = {
+            //     method: "POST",
+            //     body: payload, // FormData direto
+            //     credentials: "include"
+            // };
+            // } else {
+            // fetchOptions = {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify(payload),
+            //     credentials: "include"
+            // };
+            // }
+
+            // Backend
+            // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, fetchOptions);
 
             const data = await res.json();
             console.log("DATA 1:", data);
 
-            // 3️⃣ Checar erros
+            // Checar erros
             if (
             data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
             data.message === "Campos obrigatórios ausentes para criação por assunto." ||
-            data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." ||
-            data.message === "request entity too large"
+            data.message === "Campos obrigatórios ausentes para criação por documento." ||
+            data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." 
             ) {
             setMessage(data.message);
             return;
@@ -291,7 +334,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             closing();
             setLoading(true);
 
-            // 4️⃣ Processar materiais COMPLETO
+            // Processar materiais
             if (tipo === "COMPLETO") {
             let resumoEndpoint = "";
             let flashcardsEndpoint = "";
@@ -301,6 +344,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
             if (origem === "ASSUNTO") {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
 
             if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
+                console.log(data.material.id);
+                
                 const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${resumoEndpoint}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

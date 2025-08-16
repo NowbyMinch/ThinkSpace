@@ -72,7 +72,6 @@ export default function MaterialClient() {
         Resumo();
     }, [origem, idMaterial]);
 
-
     if (!idMaterial) return null;
     if (loading) return <Loading />;
 

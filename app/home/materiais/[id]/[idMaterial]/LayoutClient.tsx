@@ -24,12 +24,10 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
     const [ user, setUser ] = useState<UserData>({})
     const [ documento, setDocumento ] = useState(false);
     const [ loading, setLoading ] = useState(true);
-    
 
     const concluir = () => {
         setConcluiu(true);
     }
-    
 
     useEffect(() => {
         const user = async () => {
