@@ -82,10 +82,10 @@ export default function landingPage() {
                     <div className="flex w-[90%] max-w-[1700px] max-h-[120px]  h-max justify-between ">
                         <div className=" w-full h-full flex items-center ">
                             <a className="cursor-pointer ">
-                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
+                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
                             </a>
                         </div>
-                        <div className=" w-full flex justify-center items-center ">  
+                        <div className="lg:flex w-full hidden justify-center items-center ">  
                             <div id="links-header" className="flex justify-between gap-2">
                                 <motion.a 
                                 whileHover={{ scale: 1.03 }}
@@ -120,16 +120,16 @@ export default function landingPage() {
                                 </motion.a>
                             </div>
                         </div>
-                        <div className=" w-full flex justify-end ">
-                            <div className="flex items-center gap-8 ">
+                        {/* <div className=" w-full flex justify-end ">
+                            <div className="flex items-center gap-2 ">
                                 <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
-                                    <button className="text-[20px] ">Entrar</button>
+                                    <button className="text-[18px] ">Entrar</button>
                                 </Link>
                                 <motion.button 
                                 whileTap={{ scale: 0.99 }} 
                                 whileHover={{ scale: 1.01 }}
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className="text-[20px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
+                                className="text-[18px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
                                     <Link href="/registrar">
                                         Registre-se
                                     </Link>
@@ -137,23 +137,22 @@ export default function landingPage() {
                                 </motion.button>
                             </div>
 
-                        </div>
+                        </div> */}
                     </div>
                 </header>
                 
                 <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[120px] `} ></div>
 
                 <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden ">
-                    <div className="w-full relative flex justify-center h-fit ">
+                    <div className="w-full relative flex justify-center  ">
                         <div className="w-full  object-center flex justify-center items-start overflow-hidden z-[-10] ">
                             <img src="/landingpage/background.png" className=" min-w-[800px] -mt-20 w-full"/>
                         </div>
 
                         <div className="w-[1570px] h-[88%] flex max-w-[80%] absolute ">
                             <div className="flex max-w-[50%]">
-                                <div className="w-[600px] h-[80%] text-[70px] flex flex-col gap-4 justify-center items-start ">  
-
-                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[65px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[60px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[60px]">eficiente</span></h1>
+                                <div className="w-[550px] text-[70px] h-fit  flex flex-col gap-4 justify-center  items-start ">  
+                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[60px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[55px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[55px]">eficiente</span></h1>
                                     <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                     <motion.button 
@@ -170,50 +169,50 @@ export default function landingPage() {
                         </div>
                     </div>
 
-                    <div className="w-[1300px] max-w-[80%] flex flex-col justify-center items-center gap-7 mt-[-200px]">   
-                        <div  className="w-full text-[55px] flex justify-between items-center">
+                    <div className="w-[1300px] max-w-[90%] flex flex-col justify-center items-center gap-7 ">   
+                        <div className="w-full text-[55px] flex justify-between items-center">
                             <h1 id="title">Nossas funcionalidades</h1>
                             <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
                         </div>
 
-                        <div className="grid grid-rows-[1fr_46%] w-[78%] h-[720px] gap-6">
+                        <div className="grid grid-rows-[1fr_46%] w-full h-[730px] gap-6">
                             <div className="grid grid-cols-3 gap-5">
                                 <div id="func-boxes" className="bg-[#B697F5] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func1.svg" alt="Funcionalidade 1" className="absolute top-0 right-0 w-[90%] "/>
-                                    <div className="h-[60%] w-[80%] flex flex-col ">
-                                        <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Quizzes</h1>
+                                    <Image width={300} height={500} src="/landingpage/func1.svg" alt="Funcionalidade 1" className="absolute top-0 right-0 w-[75%] "/>
+                                    <div className="h-[55%] w-[80%] flex flex-col z-10">
+                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Quizzes</h1>
                                         <p className="text-[18px] break-words line-clamp-5">Descubra quizzes feitos pela comunidade ou crie os seus próprios para testar conhecimentos e compartilhar com outras pessoas.</p>
                                     </div>
                                 </div>
                                 <div id="func-boxes" className="bg-[#FFB0F3] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func2.svg" alt="Funcionalidade 2" className="absolute top-0 right-0 w-[90%] "/>
-                                    <div className="h-[60%] w-[80%] flex flex-col ">
-                                        <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Comunidade </h1>
+                                    <Image width={300} height={500} src="/landingpage/func2.svg" alt="Funcionalidade 2" className="absolute top-0 right-0 w-[75%] "/>
+                                    <div className="h-[55%] w-[80%] flex flex-col z-10 ">
+                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Comunidade </h1>
                                         <p className="text-[18px] break-words line-clamp-5">Uma comunidade aberta para trocar ideias, compartilhar conteúdos e se conectar com pessoas que compartilham seus interesses.</p>
                                     </div>
                                 </div>
                                 <div id="func-boxes" className="bg-[#9678FF] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-4 right-0 w-[90%] "/>
-                                    <div className="h-[60%] w-[80%] flex flex-col ">
-                                        <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Materiais</h1>
+                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-4 right-0 w-[75%] "/>
+                                    <div className="h-[55%] w-[80%] flex flex-col z-10 ">
+                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Materiais</h1>
                                         <p className="text-[18px] break-words line-clamp-5">Geração automática de materiais de estudo com IA, a partir de documentos enviados ou tópicos personalizados.</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="grid grid-cols-[1fr_1fr] gap-6">
                                 <div id="func-boxes" className="bg-[#A67EF6] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func4.svg" alt="Funcionalidade 4" className="absolute top-[-15px] right-[0] w-[85%] "/>
+                                    <Image width={300} height={500} src="/landingpage/func4.svg" alt="Funcionalidade 4" className="absolute top-[-15px] right-[0] w-[75%] "/>
                                     <div className="h-[59%] w-[80%] flex flex-col ">
-                                        <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Métricas</h1>
+                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Métricas</h1>
                                         <p className="text-[18px] break-words w-[75%] line-clamp-4">Acompanhe seu progresso, visualize suas conquistas e descubra insights que ajudam você a aprender melhor a cada dia.</p>
                                     </div>
                                 </div>                                
                                 <div id="func-boxes" className="bg-[#FF80EB] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <div className="absolute top-[-30px] right-[-95px] w-[105%] h-[100%]">
-                                        <Image width={800} height={800} src="/landingpage/func5.svg" alt="Funcionalidade 5" className=" w-full "/>
+                                    <div className="absolute top-[-30px] right-[-95px]  h-[100%]">
+                                        <Image width={800} height={800} src="/landingpage/func5.svg" alt="Funcionalidade 5" className=" w-[105%] -mr-36"/>
                                     </div>
                                     <div className="h-[62%] w-[80%] flex flex-col ">
-                                        <h1 className="text-[40px] font-bold line-clamp-1 break-words ">Calendário</h1>
+                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Calendário</h1>
                                         <p className="text-[18px] break-words w-[70%] line-clamp-4">Organize sua rotina, planeje seus estudos e nunca perca um prazo com um calendário feito para acompanhar seu ritmo.</p>
                                     </div>
                                 </div>                                
@@ -221,12 +220,12 @@ export default function landingPage() {
                         </div>
                     </div>
                     
-                    <div ref={el => { sectionRefs.current[1] = el; }} className="w-[1300px]  max-w-[80%] flex flex-row justify-center ">
-                        <div className="w-[50%] flex flex-col gap-12">
-                            <h1 id="title" className="w-full">Aprender nunca foi tão fácil
-                                <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[40%]" src="/landingpage/aprendervec.svg" alt="Vector"/>
+                    <div ref={el => { sectionRefs.current[1] = el; }} className="w-[1300px] sm:h-[550px] sm:gap-0 gap-4 max-w-[90%] flex flex-col sm:flex-row justify-center ">
+                        <div className="w-full flex flex-col gap-10 ">
+                            <h1 id="title" className="w-full ">Aprender nunca foi tão fácil
+                                <Image width={300} height={500} className="absolute top-0 left-[-38px] w-[30%] -z-10" src="/landingpage/aprendervec.svg" alt="Vector"/>
                             </h1>
-                            <p id="animate" className="text-[22px]">Nossa missão é simples: tornar o estudo mais inteligente, acessível e personalizado para todos os estudantes, em qualquer fase da vida.
+                            <p id="animate" className="text-[18px]">Nossa missão é simples: tornar o estudo mais inteligente, acessível e personalizado para todos os estudantes, em qualquer fase da vida.
                                 Na ThinkSpace, criamos planos de estudo estratégicos, pensados para economizar tempo, reduzir o estresse e ajudar cada pessoa a alcançar seus objetivos com mais foco e confiança.
                                 Acreditamos que aprender não precisa ser complicado — e com o plano certo, tudo flui melhor.
                             </p>
@@ -234,30 +233,26 @@ export default function landingPage() {
                             whileTap={{ scale: 0.98 }} 
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.2, ease: "easeInOut" }}
-                            className="w-[255px] max-w-[43%] text-[#704FE6] text-[20px] p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] cursor-pointer  ">
+                            className=" text-[#704FE6] text-[18px] w-fit p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] cursor-pointer  ">
                                 <span className="line-clamp-2 break-words">Comece a estudar</span>
                                 <div className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </div>
                             </motion.button>
                         </div>
 
-                        <div id="animate" className=" w-[50%] flex flex-col ">
-                            <div className="h-[570px] flex justify-end relative ">
-                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec1.svg" alt="Banner" className="absolute top-0 w-[45%] "/>
-                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec2.svg" alt="Banner" className="absolute top-[25%] w-[75%] "/>
-                                <Image id="aprender" width={300} height={800} src="/landingpage/aprendervec3.svg" alt="Banner" className="absolute bottom-0 w-[80%] "/>
-                            </div>
+                        <div id="animate" className=" w-full sm:h-full flex h-[370px] justify-center">
+                            <img src="/landingpage/facil.svg" alt="Banner" className=" h-full "/>
                         </div>
 
                     </div>
 
                     <div className="w-full h-[850px] bg-[#9767F8] flex flex-col justify-center items-center ">
-                        <div className="w-[1300px] h-[80%] max-w-[80%] relative flex flex-col items-center ">
+                        <div className="w-[1300px] h-[80%] max-w-[95%]  relative flex flex-col items-center ">
                             <Image width={300} height={800} src="/landingpage/materiaisvec.svg" alt="Banner" className="absolute w-full top-0"/>
                             
-                            <div className="flex flex-col items-center gap-[100px] w-full h-full">
-                                <h1 id="animate" className="text-white text-center text-[50px] w-[80%]">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
+                            <div className="flex flex-col items-center gap-[100px] w-full h-full ">
+                                <h1 id="animate" className="text-white text-center text-[30px] w-[750px] max-w-full h-fit">Nossos materiais tornam o aprendizado divertido e acessível para estudantes de todas as idades.</h1>
                                 
-                                <div className="flex w-full gap-2 justify-center items-center">
+                                <div className="flex w-full h-full gap-2 justify-center items-center">
 
                                     <button className="embla__prev h-min" onClick={scrollPrev}>
                                         <ChevronLeft className="bg-[rgba(255,255,255,0.10)] size-12 p-2 rounded-full text-white"/>
@@ -267,30 +262,30 @@ export default function landingPage() {
                                         <div className="embla__viewport " ref={emblaRef}>
                                             <div className="embla__container ">
 
-                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center">
                                                     <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white  text-[30px] leading-8 text-center flex justify-center ">Professora de Ciências</h1>
-                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Ajuda pré-universitários a explorarem o mundo com curiosidade e foco no vestibular.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Professora de Ciências</h1>
+                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Ajuda pré-universitários a explorarem o mundo com curiosidade e foco no vestibular.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center">
                                                     <Image src="/landingpage/materiais-img2.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Mentora de Artes</h1>
-                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Inspira estudantes a desenvolverem a criatividade através do desenho e expressão visual.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Mentora de Artes</h1>
+                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Inspira estudantes a desenvolverem a criatividade através do desenho e expressão visual.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center">
                                                     <Image src="/landingpage/materiais-img3.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Professor de Matemática</h1>
-                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Ensina com entusiasmo, conectando o raciocínio lógico ao dia a dia universitário.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Professor de Matemática</h1>
+                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Ensina com entusiasmo, conectando o raciocínio lógico ao dia a dia universitário.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center">
                                                     <Image src="/landingpage/materiais-img4.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Estudante amante de leitura</h1>
-                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Descobre novos mundos através dos livros e compartilha conhecimento com alegria.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Estudante amante de leitura</h1>
+                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Descobre novos mundos através dos livros e compartilha conhecimento com alegria.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-6 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center">
                                                     <Image src="/landingpage/materiais-img5.svg" className=" max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[30px] leading-8 text-center flex justify-center ">Estudante autodidata em tecnologia</h1>
-                                                    <h2 className="text-white max-w-[96%] text-center text-[20px]">Aprende por conta própria sobre programação e inovação, com sede de descobertas.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Estudante programadora autodidata</h1>
+                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Aprende por conta própria sobre programação e inovação, com sede de descobertas.</h2>
                                                 </div>
                                                 
 
@@ -306,14 +301,6 @@ export default function landingPage() {
 
                         </div>
                     </div>
-
-
-
-
-
-
-
-
 
                     {/* <div className="w-full pb-20 flex justify-center relative ">
                         <div className="w-[1500px] flex justify-center items-center ">
@@ -416,13 +403,13 @@ export default function landingPage() {
 
                     </div> */}
 
-                    <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[500px]  flex gap-[150px] ">
-                        <div className="w-[45%] h-full relative ">
-                            <h1 id="title" className="absolute top-0 right-0 ">Perguntas Frequentes</h1>
-                            <Image src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[735px] " width={300} height={500}/>
+                    <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[635px] flex gap-[150px] relative">
+                        <div className="w-full h-full absolute ">
+                            <img src="/landingpage/perguntasvec.svg" alt="Perguntas Frequentes Vector" className="w-[800px] -z-100" />
                         </div>
 
-                        <div className="w-[45%] flex flex-col  ">
+                        <div className=" w-[1100px] max-w-[90%] mx-auto flex items-center flex-col gap-5 ">
+                            <h1 id="title" className="">Perguntas Frequentes</h1>
                             {items.map((item, index) => (
                                 <motion.div
                                 id="perguntas"
@@ -430,7 +417,7 @@ export default function landingPage() {
                                 whileTap={{ scale: 0.99 }} 
                                 whileHover={{ scale: 1.01 }}
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className="border w-[550px] max-w-[85%] min-h-[82px] border-[rgba(18,18,18,0.14)] rounded-[20px] mb-4 overflow-hidden shadow-md"
+                                className="border w-[550px] max-w-full min-h-[82px] border-[rgba(18,18,18,0.14)] bg-white rounded-[20px] mb-4 overflow-hidden shadow-md"
                                 >
                                     {/* Header */}
                                     <button

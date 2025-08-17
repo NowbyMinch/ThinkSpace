@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply, ArrowLeft, Trash } from "lucide-react";
+import { X, Search, ChevronRight, BookOpenText, FileText, ScrollText, FileInput, SendHorizonal, Reply, ArrowLeft, Trash, ArrowRight } from "lucide-react";
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -80,6 +80,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ deletarId, setDeletarId ] = useState("");
     const [ tipo, setTipo ] = useState("");
     const [ origem, setOrigem ] = useState("");
+    const [ quantidadeQuestoes, setQuantidadeQuestoes] = useState(0);
+    const [ quantidadeFlashcards, setQuantidadeFlashcards] = useState(0);
+    const [value, setValue] = useState(10);
+    const [value2, setValue2] = useState(10);
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -89,9 +93,42 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
     // Dados de matérias
     const [materia, setMateria] = useState<materiaItem>();
+    
+    const handleDecrease = (number: number) => {
+        if (number === 1){
+            setValue((prev) => Math.max(1, prev - 1));
+        } else{
+            setValue2((prev) => Math.max(1, prev - 1));
+        }
+    };
+    
+    const handleIncrease = (number: number) => {
+        if (number === 1){
+            setValue((prev) => Math.max(1, prev + 1));
+        } else{
+            setValue2((prev) => Math.max(1, prev + 1));
+        }
+    };
+    
+    const handleChange = (e: any,number:number) => {
+        if (number === 1){
+            let num = parseInt(e.target.value, 10);
+            if (isNaN(num)) num = 1;
+            if (num < 1) num = 1;
+            if (num > 25) num = 25;
+            setValue(num);
+
+        } else{
+            let num = parseInt(e.target.value, 10);
+            if (isNaN(num)) num = 1;
+            if (num < 1) num = 1;
+            if (num > 25) num = 25;
+            setValue2(num);
+        }
+    };
 
     // Criar Material
-
+    
     const Tipo = async () => {
 
         try{
@@ -261,8 +298,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 formData.append("tipoMaterial", tipo);
                 formData.append("descricao", "");
                 formData.append("assunto", assuntoInput);
-                formData.append("quantidadeQuestoes", "10");
-                formData.append("quantidadeFlashcards", "10");
+                formData.append("quantidadeQuestoes", value.toString());
+                formData.append("quantidadeFlashcards", value2.toString());
                 if (file) {
                     formData.append("file", file, file.name);
                 }
@@ -272,7 +309,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     body: formData, // ✅ Só FormData aqui
                     credentials: "include",
                 });
-
             } else {
                 const payload = {
                     nomeDesignado: input,
@@ -281,10 +317,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     tipoMaterial: tipo,
                     descricao: "",
                     assunto: assuntoInput,
-                    quantidadeQuestoes: 10,
-                    quantidadeFlashcards: 10,
+                    quantidadeQuestoes: value,
+                    quantidadeFlashcards: value2,
                 };
-
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -292,31 +327,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     credentials: "include",
                 });
                 console.log(payload);
-                }
+            }
 
-                // DEBUG: ver o JSON
-                // let fetchOptions;
-
-                // if (origem === "DOCUMENTO") {
-                // fetchOptions = {
-                //     method: "POST",
-                //     body: payload, // FormData direto
-                //     credentials: "include"
-                // };
-                // } else {
-                // fetchOptions = {
-                //     method: "POST",
-                //     headers: { "Content-Type": "application/json" },
-                //     body: JSON.stringify(payload),
-                //     credentials: "include"
-                // };
-                // }
-
-                // Backend
-                // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, fetchOptions);
-
-                const data = await res.json();
-                console.log("DATA 1:", data);
+            const data = await res.json();
+            console.log("DATA 1:", data);
 
             // Checar erros
             if (
@@ -324,13 +338,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 data.message === "Campos obrigatórios ausentes para criação por assunto." ||
                 data.message === "Campos obrigatórios ausentes para criação por documento." ||
                 data.message === "Internal server error" ||
-                data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." 
+                data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." ||
+                data.message === "Nome designado e nome da matéria são obrigatórios." 
                 ) {
             setMessage(data.message);
             return;
             }
 
             closing();
+            console.log("Loading true")
             setLoading(true);
 
             // Processar materiais
@@ -525,7 +541,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 <h2 className="text-[28px] font-medium">Matéria designada:</h2>
                                                 
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
-
+                                                
                                                 {/* USEFULL STRUCTURE  */}
 
                                                 {/* <div className=" w-full relative">
@@ -561,6 +577,59 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 </div> */}
                                             </div>
                                             
+                                            <div className="w-full flex justify-between">
+                                                <div className="">
+                                                    <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
+                                                    
+                                                    <div className="flex w-full justify-between ">
+                                                        <button
+                                                        onClick={() => handleDecrease(1)}
+                                                        className="p-2 bg-[#A387DC] rounded-full">
+                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
+                                                        </button>
+                                                        
+                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
+                                                            <input 
+                                                            value={value}
+                                                            onChange={(e) => handleChange(e,1)}
+                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
+                                                        </div>
+
+                                                        <button 
+                                                        onClick={() => handleIncrease(1)}
+                                                        className="p-2 bg-[#A387DC] rounded-full">
+                                                            <ArrowRight className="size-6 text-white"/>
+                                                        </button>
+                                                    
+                                                    </div>
+                                                </div> 
+                                                
+                                                <div className="">
+                                                    <h2 className="text-[20px] font-medium"> Quantidade de flashcards</h2>
+                                                    <div className="flex w-full justify-between ">
+                                                        <button
+                                                        onClick={() => handleDecrease(2)}
+                                                        className="p-2 bg-[#A387DC] rounded-full">
+                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
+                                                        </button>
+                                                        
+                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
+                                                            <input 
+                                                            value={value2}
+                                                            onChange={(e) => handleChange(e,2)}
+                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
+                                                        </div>
+
+                                                        <button 
+                                                        onClick={() => handleIncrease(2)}
+                                                        className="p-2 bg-[#A387DC] rounded-full">
+                                                            <ArrowRight className="size-6 text-white"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
                                                 criar();
                                             }}>

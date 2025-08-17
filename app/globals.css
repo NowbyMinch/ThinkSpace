@@ -117,7 +117,7 @@ body {
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 160px;
-  font-size: 55px;
+  font-size: 30px;
 }
 
 #aprender{
@@ -194,7 +194,6 @@ body {
   display: flex;
   width: 100%;
   height: 100%;
-
 }
 
 .embla__viewport{
@@ -205,6 +204,40 @@ body {
 .embla__slide {
   flex: 0 0 25%;  /* Slide covers 80% of the viewport */
   height: 100%;
+}
+
+@media(max-width:980px){
+  .embla__slide {
+    flex: 0 0 33%;  /* Slide covers 80% of the viewport */
+    height: 100%;
+  }
+
+}
+
+@media(max-width:768px){
+  .embla__slide {
+    flex: 0 0 50%;  /* Slide covers 80% of the viewport */
+    height: 100%;
+  }
+
+}
+
+@media(max-width:680px){
+  .embla__slide {
+    flex: 0 0 100%;  /* Slide covers 80% of the viewport */
+    height: 100%;
+  }
+  .embla{
+    width: 60%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .embla_text{
+    width: 55%;
+  }
 }
 
 @keyframes date-pop {

@@ -3,7 +3,8 @@
 const nextConfig = {
   experimental: { serverActions: {} },
   images: {
-    domains: ['ui-avatars.com'],
+    domains: ['ui-avatars.com', 'i.imgur.com'], 
+
   },
 };
 

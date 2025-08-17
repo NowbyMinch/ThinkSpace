@@ -154,11 +154,11 @@ export default function MaterialClient() {
                   
             // console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
             // xpQuiz(estado?.totalQuestoes, acertou);
-            
         }
 
         else{
             if (estado?.respondidas! > 0){
+                
                 setQuestaoIndex(estado?.respondidas!);
             }
         }
@@ -324,7 +324,7 @@ export default function MaterialClient() {
                                             color: disabled ? getColor(i) : "#FFFFFF",  
                                             }}
                                             transition={{
-                                            backgroundColor: { duration: 0.4, ease: "easeInOut" },
+                                            backgroundColor: { duration: 0.2, ease: "easeInOut" },
                                             }}
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
@@ -352,7 +352,7 @@ export default function MaterialClient() {
                                             color: disabled ? getColor(i) : "#FFFFFF",  
                                             }}
                                             transition={{
-                                            backgroundColor: { duration: 0.4, ease: "easeInOut" },
+                                            backgroundColor: { duration: 0.2, ease: "easeInOut" },
                                             }}
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}

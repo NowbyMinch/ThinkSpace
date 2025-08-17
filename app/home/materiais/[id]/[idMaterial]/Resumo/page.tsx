@@ -80,7 +80,7 @@ export default function MaterialClient() {
             <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] justify-center ">
                 <div className=" w-[1150px] max-w-[95%] h-[95%] flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
-                        <h1 className=" text-[25px] font-medium h-[4%]">Resumo <span className=" text-[#726BB6]">IA</span></h1>
+                        <h1 className=" text-[25px] font-medium h-fit">Resumo <span className=" text-[#726BB6]">IA</span></h1>
                         <div className=" h-[96%] flex flex-col gap-8 ">
                             
                             <p className="text-[18px]" dangerouslySetInnerHTML={{ __html: html }} />
