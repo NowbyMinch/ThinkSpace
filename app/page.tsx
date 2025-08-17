@@ -120,7 +120,7 @@ export default function landingPage() {
                                 </motion.a>
                             </div>
                         </div>
-                        {/* <div className=" w-full flex justify-end ">
+                        <div className=" w-full flex justify-end ">
                             <div className="flex items-center gap-2 ">
                                 <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
                                     <button className="text-[18px] ">Entrar</button>
@@ -129,15 +129,14 @@ export default function landingPage() {
                                 whileTap={{ scale: 0.99 }} 
                                 whileHover={{ scale: 1.01 }}
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className="text-[18px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
+                                className="text-[18px] p-[5px_15px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
                                     <Link href="/registrar">
                                         Registre-se
                                     </Link>
                                     <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
                                 </motion.button>
                             </div>
-
-                        </div> */}
+                        </div>
                     </div>
                 </header>
                 
