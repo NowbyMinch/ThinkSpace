@@ -855,11 +855,11 @@ export default function HomePage() {
                               Espanhol
                             </h2> */}
                           </div>
-
+                              
                           <div className="w-full leading-[55px]">
                             <h1 className="font-medium text-[40px]">{sala.nome}</h1>
                             <div className="h-[150px] w-full ">
-                              <Image width={300} height={500}
+                              <img 
                                 src={sala.banner}
                                 alt="Sala de Estudo"
                                 className="w-full h-full object-cover rounded-[25px] shadow-md"
