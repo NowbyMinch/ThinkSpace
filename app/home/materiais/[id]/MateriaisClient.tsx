@@ -125,6 +125,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
             if (num > 25) num = 25;
             setValue2(num);
         }
+        console.log("Value1",value);
+        console.log("Value2",value2);
     };
 
     // Criar Material
