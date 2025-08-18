@@ -143,22 +143,22 @@ export default function landingPage() {
                 <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[120px] `} ></div>
 
                 <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden ">
-                    <div className="w-full relative flex justify-center  ">
-                        <div className="w-full  object-center flex justify-center items-start overflow-hidden z-[-10] ">
-                            <img src="/landingpage/background.png" className=" min-w-[800px] -mt-20 w-full"/>
+                    <div className="w-full relative flex justify-center ">
+                        <div className="w-full object-center flex justify-center items-center overflow-hidden ">
+                            <img src="/landingpage/background.png" className=" min-w-[800px] md:-mt-10 lg:-mt-16 xl:-mt-20 2xl:-mt-28 w-full"/>
                         </div>
 
-                        <div className="w-[1570px] h-[88%] flex max-w-[80%] absolute ">
-                            <div className="flex max-w-[50%]">
-                                <div className="w-[550px] text-[70px] h-fit  flex flex-col gap-4 justify-center  items-start ">  
-                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[60px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[55px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[55px]">eficiente</span></h1>
-                                    <p className="text-[25px] text-white line-clamp-1 break-words">O jeito inteligente de aprender mais em menos tempo.</p>
+                        <div className="w-[400px] flex max-w-[80%] absolute left-[10%]">
+                            <div className="flex w-full">
+                                <div className="w-[400px] text-[70px] h-fit flex flex-col gap-4 justify-center items-start ">  
+                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[40px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[40px]">eficiente</span></h1>
+                                    <p className="text-[25px] text-white break-words">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                     <motion.button 
                                     whileTap={{ scale: 0.98 }} 
                                     whileHover={{ scale: 1.02 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                                    className="w-[250px] max-w-[43%] text-white text-[20px] p-[10px] rounded-full flex gap-4 items-center justify-center cursor-pointer 
+                                    className=" text-white text-[20px] p-[10px_10px]  rounded-full flex gap-4 items-center justify-center cursor-pointer 
                                     bg-[#BF9FFF] ">
                                         <span className="line-clamp-2 break-words">Comece a estudar</span>
                                         <div className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </div>
@@ -166,9 +166,10 @@ export default function landingPage() {
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                    <div className="w-[1300px] max-w-[90%] flex flex-col justify-center items-center gap-7 ">   
+                    <div className="w-[1300px] max-w-[90%] flex flex-col justify-center items-center gap-7 -mt-[150px]">   
                         <div className="w-full text-[55px] flex justify-between items-center">
                             <h1 id="title">Nossas funcionalidades</h1>
                             <Image id="func-vector" width={500} height={300} src="/landingpage/func-vector.svg" alt="Vector" className="w-[350px]"/>
