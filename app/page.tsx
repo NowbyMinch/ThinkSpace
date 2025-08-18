@@ -79,7 +79,7 @@ export default function landingPage() {
         <>
             <div className=" z-[0] relative overflow-x-hidden p-0 m-0">
                 <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center align items-center`}>
-                    <div className="flex w-[90%] max-w-[1700px] max-h-[120px]  h-max justify-between ">
+                    <div className="flex w-[90%] max-w-[1700px] max-h-[120px] h-max justify-between ">
                         <div className=" w-full h-full flex items-center ">
                             <a className="cursor-pointer ">
                                 <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
@@ -143,28 +143,27 @@ export default function landingPage() {
                 <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[120px] `} ></div>
 
                 <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden ">
-                    <div className="w-full relative flex justify-center ">
+                    <div className="w-full relative flex justify-center items-center">
                         <div className="w-full object-center flex justify-center items-center overflow-hidden ">
                             <img src="/landingpage/background.png" className=" min-w-[800px] md:-mt-10 lg:-mt-16 xl:-mt-20 2xl:-mt-28 w-full"/>
                         </div>
 
-                        <div className="w-[400px] flex max-w-[80%] absolute left-[10%]">
-                            <div className="flex w-full">
-                                <div className="w-[400px] text-[70px] h-fit flex flex-col gap-4 justify-center items-start ">  
-                                    <h1 className="overflow-ellipsis line-clamp-3 break-words w-full text-[40px] text-white">Estude de maneira mais <span id="conf" className=" text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className=" text-[#5F3AC4] text-[40px]">eficiente</span></h1>
-                                    <p className="text-[25px] text-white break-words">O jeito inteligente de aprender mais em menos tempo.</p>
+                        <div className="absolute flex justify-center h-[85%] w-[90%] ">
+                            <div className=" w-[500px] max-w-[80%] ml-[7%] mr-auto text-[70px] h-fit flex flex-col gap-2 justify-center items-start ">  
+                                <h1 className="title overflow-ellipsis line-clamp-4 break-words w-full text-[40px] text-white leading-none">Estude de maneira mais <span id="conf" className="title text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className="title text-[#5F3AC4] text-[40px] ">eficiente</span></h1>
+                                <p className=" text-[18px] text-white break-words w-[80%]">O jeito inteligente de aprender mais em menos tempo.</p>
 
-                                    <motion.button 
-                                    whileTap={{ scale: 0.98 }} 
-                                    whileHover={{ scale: 1.02 }}
-                                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                                    className=" text-white text-[20px] p-[10px_10px]  rounded-full flex gap-4 items-center justify-center cursor-pointer 
-                                    bg-[#BF9FFF] ">
-                                        <span className="line-clamp-2 break-words">Comece a estudar</span>
-                                        <div className="bg-white p-3 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-5"/> </div>
-                                    </motion.button>
-                                </div>
+                                <motion.button 
+                                whileTap={{ scale: 0.98 }} 
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.2, ease: "easeInOut" }}
+                                className=" text-white text-[18px] p-[6px_6px] rounded-full flex gap-4 items-center justify-center cursor-pointer 
+                                bg-[#BF9FFF] ">
+                                    <span className="line-clamp-2 break-words ">Comece a estudar</span>
+                                    <div className="bg-white p-2 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-3"/> </div>
+                                </motion.button>
                             </div>
+
                         </div>
 
                     </div>
@@ -457,7 +456,47 @@ export default function landingPage() {
                     </div>
                 </main>
                     
-                <footer className="w-full h-[300px] flex justify-center items-center">
+
+                <footer className={`w-[1300px] max-w-full h-[200px] flex justify-center items-center mx-auto `}>
+                    <div className="flex w-full h-full relative justify-center">
+                        <div className=" w-fit h-full flex items-center absolute left-2 ">
+                            <a className="cursor-pointer hidden md:flex">
+                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
+                            </a>
+                        </div>
+                        
+                        <div className=" w-fit flex overflow-hidden gap-2">
+                            <div className="flex flex-col justify-center items-center ">
+                                <div className=" flex justify-center items-center gap-4 ">
+                                    <a href="/termos-de-uso">Termos de uso</a>
+                                    <a href="/politica-de-privacidade">Política de privacidade</a>
+                                    <a href="">Suporte</a>
+                                </div>
+                                
+                                <div className="w-full flex justify-center items-center gap-4 mt-2">
+                                    <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
+                                </div>
+                            </div>
+
+                            <div className=" flex justify-center items-center">
+                                <motion.a 
+                                href="https://www.instagram.com/thinkspace__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                target="_blank" rel="noopener noreferrer"
+                                whileTap={{ scale: 0.98 }} 
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.2, ease: "easeInOut" }}
+
+                                className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
+                                    <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
+                                    <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
+                                </motion.a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+
+                {/* <footer className="w-full h-[300px] flex justify-center items-center">
                     <div className="w-[34%] h-[140px] flex justify-center  items-center">
                         <Image width={300} height={500} src="/landingpage/logo1.png" className="h-full w-auto" alt="Logo"/>
                     </div>
@@ -488,7 +527,7 @@ export default function landingPage() {
                             <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
                         </motion.a>
                     </div>
-                </footer>
+                </footer> */}
             </div>
         </>
     )

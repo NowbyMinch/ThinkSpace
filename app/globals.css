@@ -276,3 +276,7 @@ body {
     height: 190px;
   }
 }
+
+.title{
+  font-size: clamp(2rem, 3vw, 4rem);
+}
