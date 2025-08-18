@@ -278,5 +278,17 @@ body {
 }
 
 .title{
-  font-size: clamp(2rem, 3vw, 4rem);
+  font-size: clamp(2rem, 3vw, 5rem);
+}
+
+.jeito{
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+}
+
+.comece{
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+}
+
+.back_title{
+  gap: clamp(0.5rem, 2vw, 1.5rem);
 }

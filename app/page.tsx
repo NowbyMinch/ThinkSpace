@@ -149,17 +149,17 @@ export default function landingPage() {
                         </div>
 
                         <div className="absolute flex justify-center h-[85%] w-[90%] ">
-                            <div className=" w-[500px] max-w-[80%] ml-[7%] mr-auto text-[70px] h-fit flex flex-col gap-2 justify-center items-start ">  
+                            <div className="back_title w-[580px] max-w-[80%] ml-[7%] mr-auto text-[70px] h-fit flex flex-col justify-center items-start ">  
                                 <h1 className="title overflow-ellipsis line-clamp-4 break-words w-full text-[40px] text-white leading-none">Estude de maneira mais <span id="conf" className="title text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className="title text-[#5F3AC4] text-[40px] ">eficiente</span></h1>
-                                <p className=" text-[18px] text-white break-words w-[80%]">O jeito inteligente de aprender mais em menos tempo.</p>
+                                <p className="jeito text-[18px] text-white break-words w-[80%]">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                 <motion.button 
                                 whileTap={{ scale: 0.98 }} 
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className=" text-white text-[18px] p-[6px_6px] rounded-full flex gap-4 items-center justify-center cursor-pointer 
+                                className=" text-white text-[18px] p-[10px_10px] rounded-full flex gap-2 items-center justify-center cursor-pointer 
                                 bg-[#BF9FFF] ">
-                                    <span className="line-clamp-2 break-words ">Comece a estudar</span>
+                                    <span className="comece line-clamp-2 break-words ">Comece a estudar</span>
                                     <div className="bg-white p-2 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-3"/> </div>
                                 </motion.button>
                             </div>
