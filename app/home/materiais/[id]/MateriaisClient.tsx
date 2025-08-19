@@ -306,6 +306,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     formData.append("file", file, file.name);
                 }
 
+                // 🔥 Debug: mostra tudo do FormData
+                for (const [key, val] of formData.entries()) {
+                    console.log(key, val);
+                }
+
+                // OU converte em objeto (sem arquivos)
+                const formObj = Object.fromEntries(formData.entries());
+                console.log("FormData como objeto:", formObj);
+
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                     method: "POST",
                     body: formData, // ✅ Só FormData aqui
