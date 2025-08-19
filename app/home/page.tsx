@@ -148,10 +148,9 @@ export default function HomePage() {
   type SalasResponse = {
     salasMembro: Sala[];
   };
-  type ofensiva = {
-    dias: string[];
-    status: number[];
-    message: string;
+  type Ofensiva = {
+    data: string;
+    status: number;
   };
 
   const [ bannerData, setBannerData ] = useState<BannerData>({})
@@ -161,7 +160,7 @@ export default function HomePage() {
   const [ notificacao, setNotificacao ] = useState<notificacaoData>({})
   const [ loading, setLoading ] = useState(true);
   const [ materias, setMaterias ] = useState<materiaItem[]>([]);
-  const [ ofensiva, setOfensiva ] = useState<ofensiva>();
+  const [ ofensiva, setOfensiva ] = useState<Ofensiva[]>([]);
   
   useEffect(() => {
     console.log("Salas updated:", salas);
@@ -266,14 +265,14 @@ export default function HomePage() {
 
     const Ofensiva = async () => {
       try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/metrica/semanal`, {
           method: 'GET',
           credentials: 'include',
         });
         
         const data = await res.json();
         setLoading(false);
-        setOfensiva(data);
+        setOfensiva(data.diasSemana);
       } catch (err) {
         setMessage("Erro ao carregar a ofensiva.");
         console.error(err);
@@ -285,6 +284,7 @@ export default function HomePage() {
 
   useEffect(() =>{
     console.log("UseEffect ofensiva: ", ofensiva);
+
   }, [ofensiva]);
   if (loading ) return <Loading /> 
 
@@ -303,11 +303,11 @@ export default function HomePage() {
         
       </AnimatePresence>
 
-      <div className=" w-[1580px] max-w-[85%] mx-auto h-full pb-8 max-h-full  ">
+      <div className=" w-[1580px] max-w-[90%] lg:max-w-[88%] mx-auto h-full  pb-8 max-h-full  ">
         <div className="h-[82px] mt-[15px] flex justify-between ">
-          <div className="flex gap-[20px] ">
+          <div className="flex gap-[10px] ">
 
-            <div id="pop" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
+            <div id="pop" className=" relative w-[60px] h-[60px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => opening()}
                 onMouseLeave={() => closing()}
@@ -319,9 +319,6 @@ export default function HomePage() {
                     { pop && (
                       <div className="w-[70px] h-[100px]"></div>
                     )}
-
-                  </AnimatePresence>
-                  <AnimatePresence initial={false}>
                     { pop && (
                       
                       <motion.div 
@@ -348,12 +345,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">DOM</span>
                               {(() => {
-                                if (ofensiva?.status[0]! === 0){
+                                if (ofensiva[0]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[0]! === 1 ){
+                                } else if (ofensiva[0]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -373,12 +370,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SEG</span>
                               {(() => {
-                                if (ofensiva?.status[1]! === 0){
+                                if (ofensiva[1].status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[1]! === 1 ){
+                                } else if (ofensiva[1]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -398,12 +395,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">TER</span>
                               {(() => {
-                                if (ofensiva?.status[2]! === 0){
+                                if (ofensiva[2]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[2]! === 1 ){
+                                } else if (ofensiva[2]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -423,12 +420,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">QUA</span>
                               {(() => {
-                                if (ofensiva?.status[3]! === 0){
+                                if (ofensiva[3]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[3]! === 1 ){
+                                } else if (ofensiva[3]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -448,12 +445,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">QUI</span>
                               {(() => {
-                                if (ofensiva?.status[4]! === 0){
+                                if (ofensiva[4]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[4]! === 1 ){
+                                } else if (ofensiva[4]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -473,12 +470,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SEX</span>
                               {(() => {
-                                if (ofensiva?.status[5]! === 0){
+                                if (ofensiva[5]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[5]! === 1 ){
+                                } else if (ofensiva[5]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -497,12 +494,12 @@ export default function HomePage() {
                             <div className="flex flex-col text-center ">
                               <span className="text-[20px]">SAB</span>
                               {(() => {
-                                if (ofensiva?.status[6]! === 0){
+                                if (ofensiva[6]?.status! === 0){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
                                     </div>
                                   )
-                                } else if (ofensiva?.status[6]! === 1 ){
+                                } else if (ofensiva[6]?.status! === 1 ){
                                   return (
                                     <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
                                       <X className="text-[#C10000] stroke-3 size-8"/>
@@ -532,10 +529,11 @@ export default function HomePage() {
                   </AnimatePresence>
                 </div>
               </div>
-              <Flame className=" size-[45px] text-[#cc6b5f] fill-[#e19786]" />
+
+              <Flame className=" size-[32px] text-[#cc6b5f] fill-[#e19786]" />
             </div>
 
-            <div id="pop2" className=" relative w-[72px] h-[72px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
+            <div id="pop2" className=" relative w-[60px] h-[60px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => opening2()}
                 onMouseLeave={() => closing2()}
@@ -547,10 +545,6 @@ export default function HomePage() {
                     { pop2 && (
                       <div className="w-[70px] h-[100px]"></div>
                     )}
-
-                  </AnimatePresence>
-                  
-                  <AnimatePresence initial={false}>
                     { pop2 && (
                       <motion.div
                       key="content"
@@ -601,54 +595,55 @@ export default function HomePage() {
                 </div>
 
               </div>
-              <Bell className="size-[45px] text-[rgba(0,0,0,31%)]" />
+              <Bell className="size-[32px] text-[rgba(0,0,0,31%)]" />
             </div>
           </div>
 
           <div className="flex gap-2">
             <div className="text-end flex flex-col justify-center">
-              <h1 className="font-medium leading-[40px] text-[35px]">
+              <h1 className="font-medium leading-none text-[clamp(1.6rem,3vw,1.875rem)]">
                 {user.primeiroNome}
               </h1>
-              <h2 className="font-medium text-[22px] text-[#828181]">
+              <h2 className="font-medium text-[20px] text-[#828181]">
                 {user.cargo}
               </h2>
             </div>
             <img
             src={`${user.foto}`}
-            className="rounded-full cursor-pointer transition-all w-[75px] h-[75px] shadow-md"
+            className="rounded-full cursor-pointer transition-all w-[60px] h-[60px] shadow-md"
             alt="Foto de perfil"
             />
           </div>
         </div>
 
-        <div className=" grid grid-cols-[62%_1fr] mt-3 pb-3 gap-[30px] ">
-          <div className=" ">
-            <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
-              <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
-                <div className=" flex flex-col justify-center gap-[25%] w-full h-full  ">
-                    <h1 className="text-[26px] font-medium line-clamp-3 break-words">
+        <div className="w-full flex lg:flex-row flex-col mt-3 pb-3 gap-[30px] ">
+          <div className="w-full lg:w-[60%]">
+            <div className="w-full h-[230px] bg-[#CCB2FF] overflow-hidden shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
+              <div className="z-10 ml-[4%] w-[60%] h-[90%] flex justify-center items-center">
+                <div className=" flex flex-col justify-between w-full h-[90%] ">
+                    <h1 className="banner_title text-[22px] font-medium break-words">
                       {bannerData.mensagem} {bannerData.relatorio} 
                     </h1>
 
                     <a href={`/home/${bannerData.relatorioUrl}`} className=" rounded-full">
-                      <button className=" px-4 min-h-[56px] bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
+                      <button className="banner_button bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
                         Saiba mais!
                       </button>
                     </a>
                 </div>
                 
               </div>
+
               <Image width={300} height={500}
                   src="/meta.svg"
                   alt="Decoração"
-                  className=" w-[350px] max-w-[40%] absolute h-full right-0 object-cover  "
+                  className="banner h-full absolute  right-0 object-cover  "
                 />
             </div>
 
-            <h1 className="text-[32px] mt-4 mb-4">Seu progresso semanal:</h1>
-            <div className=" ">
-              { materias && materias.length === 0 && (
+            <h1 className="text-[30px] mt-4 mb-4">Seu progresso semanal:</h1>
+            <div className="w-full ">
+            { materias && materias.length === 0 && (
 
                 <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
                     <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
@@ -675,12 +670,23 @@ export default function HomePage() {
             
             { materias && materias.length > 0 && (
                 <>
-                  <Carousel className=" flex justify-center ">
-                      <CarouselContent className=" gap-4 min-h-[200px] w-[960px] pr-1 pl-1 ">
+                  <Carousel className="w-full" opts={{ align: "start" }}>
+                    <CarouselContent className="gap-4 min-h-[200px]">
                           {materias.map((material, index) => {
                               return (
-                                  <CarouselItem key={index} className=" md:basis-[32%] lg:basis-[32%] max-w-[376px] cursor-pointer">
-                                      <Card style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }} className=" h-[200px] rounded-[25px] max-w-[376px] shadow-md border border-[#00000031] ">
+                                  <CarouselItem
+                                    key={index}
+                                    className="basis-full sm:basis-[49%] lg:basis-[32.2%] cursor-pointer"
+                                  >
+                                    <Card
+                                      style={{
+                                        backgroundColor:
+                                          material.cor && cores[material.cor as keyof typeof cores]
+                                            ? cores[material.cor as keyof typeof cores]
+                                            : "#FFFFFF",
+                                      }}
+                                      className="h-[200px] rounded-[25px] shadow-md border border-[#00000031] w-full"
+                                    >
                                           <CardContent className="flex items-center justify-center h-full flex-col ">
                                               <Link href={`/home/materiais/${material.id}`} className=" mt-6 w-[98%]">
                                                   <div className=" flex gap-[6px] w-full items-center relative ">
@@ -705,7 +711,7 @@ export default function HomePage() {
                                                       </div>
                                                       <div className="flex justify-between ">
                                                           <span className="font-medium text-[17px]">
-                                                          XP acumulada
+                                                          XP 
                                                           </span>
                                                           <span className="font-medium text-[17px]">0xp</span>
                                                       </div>
@@ -731,84 +737,124 @@ export default function HomePage() {
             )} 
             </div>
 
-            <h1 className="text-[32px] mt-4 mb-4">Links úteis:</h1>
+            <h1 className="text-[30px] mt-4 mb-4">Links úteis:</h1>
 
             <div className="">
-              <CarouselLinks />
+              <Carousel className="w-full" opts={{ align: "start" }}>
+                  <CarouselContent className="gap-4 min-h-[200px]">
+                    
+                    <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer" >
+                      <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
+                        <CardContent className="flex items-center justify-center h-full flex-col p-0">
+                            <div className="w-[92%] h-[95%] ">
+                                <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center object-cover">
+                                    <Image src="/trajetoria.svg" width={300} height={500} alt="Link Útil" className=" h-full w-full " />
+                                </div>  
+                                <p className="text-white text-[18px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
+                            </div>
+
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                    
+                    <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer" >
+                      <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
+                        <CardContent className="flex items-center justify-center h-full flex-col p-0">
+                            <div className="w-[92%] h-[95%] ">
+                                <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center object-cover">
+                                    <Image src="/eficiente.svg" width={300} height={500} alt="Link Útil" className=" h-full w-full bg-red-500 -mb-24" />
+                                </div>  
+                                <p className="text-white text-[18px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
+                            </div>
+
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                    
+                    <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer" >
+                      <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
+                        <CardContent className="flex items-center justify-center h-full flex-col p-0">
+                            <div className="w-[92%] h-[95%] ">
+                                <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center object-cover">
+                                    <Image src="/trajetoria.svg" width={300} height={500} alt="Link Útil" className=" h-full w-full" />
+                                </div>  
+                                <p className="text-white text-[18px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
+                            </div>
+
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+
+                  </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             </div>
           </div>
 
-          <div className=" overflow-hidden ">
-            <div className=" bg-white h-[230px] rounded-[35px] shadow-md bg border border-[#00000031]">
-              <div className=" w-full flex h-[50%] text-center justify-center gap-20 items-center relative">
-                {/* <div className="flex justify-center items-center">
-                  <ArrowLeft className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351] " />
-                </div> */}
-
-                <h1 className="text-[42px] font-bold ">{calendario.mesAtual} {calendario.anoAtual}</h1>
+          <div className="lg:w-[40%] w-full overflow-hidden ">
+            <div className=" bg-white h-[230px] flex flex-col justify-center items-center rounded-[35px] shadow-md bg border border-[#00000031]">
+              <div className=" w-full flex h-[40%] text-center justify-center gap-20 items-center relative">
+                <h1 className="text-[30px] font-bold ">{calendario.mesAtual} {calendario.anoAtual}</h1>
                 <img src="/Vector.svg" alt="" className="absolute w-full rotate-[150deg] "/>
-
-                {/* <div className="flex justify-center items-center">
-                  <ArrowRight className="p-2 size-[70px] rounded-full cursor-pointer border border-[#1E2351]" />
-                </div> */}
               </div>
 
-              <div className=" w-full grid grid-flow-col h-[50%] text-center items-center">
+              <div className=" w-[96%] flex flex-row justify-between h-[40%] text-center items-center">
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 4]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 4]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 4]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 3]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 3]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 3]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 2]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 2]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 2]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className=" translate-y-[-10px] flex justify-center">
-                  <div className="w-[65px] rounded-[15px] py-2 justify-center bg-[#CCB2FF] shadow-md">
+                  <div className="w-[60px] rounded-[15px] py-2 justify-center bg-[#CCB2FF] shadow-md">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 1]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 1]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) - 1]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) ]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) ]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 1]?.diaNumero}</h1>
                   </div>
                 </div>
 
                 <div className="  flex justify-center">
-                  <div className="w-[65px] rounded-[15px]  justify-center  ">
+                  <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 3]?.diaSemana}</h2>
-                    <h1 className="font-bold text-[44px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
+                    <h1 className="font-bold text-[32px]">{calendario.dias?.[(calendario.diaAtual ?? 0) + 2]?.diaNumero}</h1>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h1 className="text-[32px] mt-4 mb-4 ">
+            <h1 className="text-[30px] mt-4 mb-4 ">
               Salas de estudo recentes:
             </h1>
-            <div id="scroll" className="h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
+            <div id="scroll" className="max-h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
               
               { salas.length === 0 && salas.length === 0 && (
                 <div className="w-full h-[500px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
@@ -837,11 +883,10 @@ export default function HomePage() {
               )}
               { ( salas.length > 0 || salas.length > 0 ) &&  (
                 <>
-                  
                   {salas.map((sala, index) =>{
                     return (
-                      <div key={index} className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
-                        <div className="w-[90%] ">
+                      <div key={index} className="bg-white w-full h-[350px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
+                        <div className="w-[90%] h-[90%] flex flex-col justify-between ">
                           <div className="flex gap-[8px]">
                             {sala.topicos.map((topico, index) =>{
                               const randomColor = cor[Math.floor(Math.random() * cor.length)];
@@ -851,13 +896,10 @@ export default function HomePage() {
                                 </h2>
                               )
                             })}
-                            {/* <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
-                              Espanhol
-                            </h2> */}
                           </div>
                               
                           <div className="w-full leading-[55px]">
-                            <h1 className="font-medium text-[40px]">{sala.nome}</h1>
+                            <h1 className="font-medium text-[30px]">{sala.nome}</h1>
                             <div className="h-[150px] w-full ">
                               <img 
                                 src={sala.banner}
@@ -893,8 +935,8 @@ export default function HomePage() {
                             </div>
 
                             <div className="flex justify-between  items-center h-[44px] w-full ">
-                              <h2 className="text-[20px]">+50 estudantes</h2>
-                              <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">
+                              <h2 className="text-[18px]">+50 estudantes</h2>
+                              <button className="p-[5px_15px] h-full rounded-full bg-blue-950 text-white text-[18px] shadow-md">
                                 Visitar
                               </button>
                             </div>

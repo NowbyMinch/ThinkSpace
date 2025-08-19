@@ -61,15 +61,6 @@ import {
 //   { id: "squarePen", Icon: SquarePen }
 // ];
 
-type materiaItem = {
-    id?: string;
-    nome?: string;
-    cor?: string;
-    icone?: string;
-    usuarioId?: string;
-    materiais?: any[]; // or specify the correct type if known
-    // add other properties if needed
-};
 
 // const cores = {
 //     ROXO: "#8B81F3",

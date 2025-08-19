@@ -378,3 +378,21 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.banner_title{
+  font-size: clamp( 1.3rem, 2vw, 1.875rem);
+}
+
+.banner_button{
+  padding-right: clamp(0.625rem, 1vw, 1rem );
+  padding-left: clamp(0.625rem, 1vw, 1rem );
+  padding-top: clamp(0.625rem, 1vw, 0.8rem );
+  padding-bottom: clamp(0.625rem, 1vw, 0.8rem );
+}
+
+@media(max-width:500px){
+  .banner{
+    margin-right: -85px;
+  }
+  
+}
