@@ -279,16 +279,58 @@ body {
 
 .title{
   font-size: clamp(2rem, 3vw, 5rem);
+  width: clamp( 14.375rem, 20vw , 36.25rem);
 }
 
 .jeito{
-  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  width: clamp( 15.5rem, 20vw , 39rem);
 }
 
 .comece{
-  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
 }
 
 .back_title{
   gap: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.preco_box{
+  height: clamp( 26rem, 45vw, 35rem);
+}
+
+.valor{
+  font-size: clamp( 20px, 2vw, 30px);
+}
+
+.valoR{
+  font-size: clamp( 85px, 5vw, 105px);
+  line-height: clamp( 70px, 3vw, 80px);
+}
+
+.preco_img{
+  width: clamp(314px, 35vw, 120%);
+}
+
+@media(max-width:767px){
+  .preco_box{
+    height: fit-content;
+  }
+}
+
+@media(max-width:560px){
+  .box{
+    flex-direction: column;
+    justify-content: end;
+    min-height: 270px;
+  }
+  .ul_preco{
+    min-width: 290px;
+  }
+}
+
+@media(min-width:768px){
+  .ul_preco{
+    height: clamp(212px, 1vw, 216px);
+  }
 }

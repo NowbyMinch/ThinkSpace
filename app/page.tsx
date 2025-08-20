@@ -100,7 +100,7 @@ export default function landingPage() {
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 
-                                className="cursor-pointer" onClick={() => scrollToSection(1)} >
+                                className="cursor-pointer leading-none text-center text-nowrap" onClick={() => scrollToSection(1)} >
                                     Sobre nós
                                 </motion.a>
 
@@ -145,7 +145,7 @@ export default function landingPage() {
                 
                 <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[100px] `} ></div>
 
-                <main className="flex justify-center items-center flex-col gap-[150px] overflow-hidden ">
+                <main className="flex justify-center items-center flex-col gap-[80px] md:gap-[150px] overflow-hidden ">
                     <div className="w-full relative flex justify-center items-center">
                         <div className="w-full object-center flex justify-center items-center overflow-hidden ">
                             <img src="/landingpage/background.png" className=" min-w-[800px] md:-mt-10 lg:-mt-16 xl:-mt-20 2xl:-mt-28 w-full"/>
@@ -153,8 +153,8 @@ export default function landingPage() {
 
                         <div className="absolute flex justify-center h-[85%] w-[90%] ">
                             <div className="back_title w-[580px] max-w-[80%] ml-[7%] mr-auto text-[70px] h-fit flex flex-col justify-center items-start ">  
-                                <h1 className="title overflow-ellipsis line-clamp-4 break-words w-full text-[40px] text-white leading-none">Estude de maneira mais <span id="conf" className="title text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className="title text-[#5F3AC4] text-[40px] ">eficiente</span></h1>
-                                <p className="jeito text-[18px] text-white break-words w-[80%]">O jeito inteligente de aprender mais em menos tempo.</p>
+                                <h1 className="title overflow-ellipsis  line-clamp-4 break-words w-full text-[40px] text-white leading-none">Estude de maneira mais <span id="conf" className="title text-[#FF92EE] text-[40px]">rápida</span> e <span id="conf" className="title text-[#5F3AC4] text-[40px] ">eficiente</span></h1>
+                                <p className="jeito text-[18px] text-white break-words w-full">O jeito inteligente de aprender mais em menos tempo.</p>
 
                                 <motion.button 
                                 whileTap={{ scale: 0.98 }} 
@@ -179,41 +179,41 @@ export default function landingPage() {
 
                         <div className="flex flex-col w-full md:h-[740px] gap-5">
                             <div className="h-full flex md:flex-row flex-col gap-5">
-                                <div id="func-boxes" className="w-[33%] bg-[#B697F5]  shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func1.svg" alt="Funcionalidade 1" className="absolute top-0 right-0 w-[90%] md:w-[85%] lg:w-[75%] "/>
-                                    <div className="  w-[80%] min-h-[50%] flex flex-col z-10 mb-5">
-                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Quizzes</h1>
+                                <div id="func-boxes" className="w-full md:w-[33%] bg-[#B697F5] h-[200px] md:h-full shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-center md:justify-end items-center">
+                                    <Image width={300} height={500} src="/landingpage/func1.svg" alt="Funcionalidade 1" className="absolute md:top-0 -bottom-16 hidden right-0 md:flex w-[100%] md:w-[85%] lg:w-[75%] "/>
+                                    <div className=" w-[90%] md:w-[80%] md:min-h-[50%] flex flex-col z-10 md:mb-5">
+                                        <h1 className="text-[25px] font-bold line-clamp-1 break-words ">Quizzes</h1>
                                         <p className="text-[18px] break-words ">Descubra quizzes feitos pela comunidade ou crie os seus próprios para testar conhecimentos e compartilhar com outras pessoas.</p>
                                     </div>
                                 </div>
-                                <div id="func-boxes" className="w-[33%] bg-[#FFB0F3]  shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func2.svg" alt="Funcionalidade 2" className="absolute top-0 right-0 w-[90%] md:w-[85%] lg:w-[75%] "/>
-                                    <div className="  w-[80%] min-h-[50%] flex flex-col z-1 mb-5">
-                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Comunidade </h1>
+                                <div id="func-boxes" className="w-full md:w-[33%] bg-[#FFB0F3] h-[200px] md:h-full shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-center md:justify-end items-center">
+                                    <Image width={300} height={500} src="/landingpage/func2.svg" alt="Funcionalidade 2" className="absolute md:top-0 -bottom-16 hidden right-0 md:flex w-[100%] md:w-[85%] lg:w-[75%] "/>
+                                    <div className=" w-[90%] md:w-[80%] md:min-h-[50%] flex flex-col z-10 md:mb-5">
+                                        <h1 className="text-[25px] font-bold line-clamp-1 break-words ">Comunidade </h1>
                                         <p className="text-[18px] break-words ">Uma comunidade aberta para trocar ideias, compartilhar conteúdos e se conectar com pessoas que compartilham seus interesses.</p>
                                     </div>
                                 </div>
-                                <div id="func-boxes" className="w-[33%] bg-[#9678FF]  shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute top-4 right-0 w-[90%] md:w-[85%] lg:w-[75%] "/>
-                                    <div className="  w-[80%] min-h-[50%] flex flex-col z-10 mb-5">
-                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Materiais</h1>
+                                <div id="func-boxes" className="w-full md:w-[33%] bg-[#9678FF] h-[200px] md:h-full shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-center md:justify-end items-center">
+                                    <Image width={300} height={500} src="/landingpage/func3.svg" alt="Funcionalidade 3" className="absolute md:top-4 -bottom-16 hidden right-0 md:flex w-[100%] md:w-[85%] lg:w-[75%] "/>
+                                    <div className=" w-[90%] md:w-[80%] md:min-h-[50%] flex flex-col z-10 md:mb-5">
+                                        <h1 className="text-[25px] font-bold line-clamp-1 break-words ">Materiais</h1>
                                         <p className="text-[18px] break-words ">Geração automática de materiais de estudo com IA, a partir de documentos enviados ou tópicos personalizados.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="min-h-[46%] flex gap-5 flex-col md:flex-row">
-                                <div id="func-boxes" className="bg-[#A67EF6] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func4.svg" alt="Funcionalidade 4" className="absolute top-[-15px] right-[0] w-[90%] md:w-[85%] lg:w-[75%]"/>
-                                    <div className="  w-[80%] min-h-[50%] flex flex-col mb-5">
-                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Métricas</h1>
+                                <div id="func-boxes" className="bg-[#A67EF6] shadow-md h-[200px] md:h-full rounded-[45px] relative overflow-hidden flex flex-col justify-center md:justify-end items-center">
+                                    <Image width={300} height={500} src="/landingpage/func4.svg" alt="Funcionalidade 4" className="absolute md:flex hidden top-[-15px] right-[0] w-[90%] md:w-[85%] lg:w-[75%]"/>
+                                    <div className=" w-[90%] md:w-[80%] md:min-h-[50%] flex flex-col md:mb-5 ">
+                                        <h1 className="text-[25px] font-bold line-clamp-1 break-words ">Métricas</h1>
                                         <p className="text-[18px] break-words ">Acompanhe seu progresso, visualize suas conquistas e descubra insights que ajudam você a aprender melhor a cada dia.</p>
                                     </div>
                                 </div>    
-                                <div id="func-boxes" className="bg-[#FF80EB] shadow-md rounded-[45px] relative overflow-hidden flex flex-col justify-end items-center">
-                                    <Image width={300} height={500} src="/landingpage/func5.svg" alt="Funcionalidade 5" className="absolute top-[-15px] right-[0] w-[90%] md:w-[85%] lg:w-[75%] "/>
-                                    <div className="  w-[80%] min-h-[50%] flex flex-col mb-5">
-                                        <h1 className="text-[30px] font-bold line-clamp-1 break-words ">Calendário</h1>
+                                <div id="func-boxes" className="bg-[#FF80EB] shadow-md h-[200px] md:h-full rounded-[45px] relative overflow-hidden flex flex-col justify-center md:justify-end items-center">
+                                    <Image width={300} height={500} src="/landingpage/func5.svg" alt="Funcionalidade 5" className="absolute md:flex hidden top-[-15px] right-[0] w-[90%] md:w-[85%] lg:w-[75%] "/>
+                                    <div className=" w-[90%] md:w-[80%] md:min-h-[50%] flex flex-col md:mb-5 ">
+                                        <h1 className="text-[25px] font-bold line-clamp-1 break-words ">Calendário</h1>
                                         <p className="text-[18px] break-words ">Organize sua rotina, planeje seus estudos e nunca perca um prazo com um calendário feito para acompanhar seu ritmo.</p>
                                     </div>
                                 </div>                               
@@ -303,106 +303,137 @@ export default function landingPage() {
                         </div>
                     </div>
 
-                    {/* <div className="w-full pb-20 flex justify-center relative ">
-                        <div className="w-[1500px] flex justify-center items-center ">
-                            <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px] max-w-[80%] flex flex-row justify-center">
-                                <div className="w-full flex flex-col gap-12 relative ">
-                                    <h1 id="title" className="preco w-full">Nossos planos</h1>
-                                    <div className="h-[575px] flex justify-center items-center gap-10 relative ">
-                                        <motion.div
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        id="title"
-                                        className="w-[420px] rounded-[45px] h-full bg-[#B697F5] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#a98ee4] flex flex-col items-center gap-10">
-                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
-                                                <Image src="/landingpage/gratis.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
-                                            </div>
-                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
-                                                <span className="leading-none text-[40px]">R$</span>
-                                                <span className="text-[105px] font-medium leading-[85px]">00</span>
-                                                <span className="leading-none ">,</span>
-                                                <span className="mb-auto text-[35px] font-medium">00</span>
-                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
-                                            </div>
+                    <div className="w-full pb-20 flex justify-center relative">
+                        <div ref={el => { sectionRefs.current[2] = el; }} className="w-[1300px] max-w-[90%] flex flex-row justify-center">
+                            <div className="w-full flex flex-col gap-12 relative ">
+                                <h1 id="title" className="preco w-full">Nossos planos</h1>
+                                <div className="flex justify-between flex-col md:flex-row md:gap-0 gap-6 items-center relative preco_box ">
+                                    <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                    id="title"
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#B697F5] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#a98ee4] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                        <div className="absolute preco_img top-[-65px] left-[-60px] h-[35%] -z-10">
+                                            <Image src="/landingpage/gratis.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                        </div>
 
-                                            <div className=" w-[90%] flex items-end ">
-                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
-                                                    <li>5 Salas de estudos</li>
-                                                    <li>Até 10 materiais de estudo por mês</li>
-                                                    <li>Sem acesso à chat IA</li>
-                                                    <li>Ambiente com anúncios</li>
-                                                </ul>
-                                            </div>
+                                        <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
+                                            <span className="leading-none valor">R$</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">00</span>
+                                            <span className="leading-none valor">,</span>
+                                            <span className="mb-auto font-medium valor">00</span>
+                                            <span className="leading-none -ml-3 valor">/mensal</span>
+                                        </div>
 
-                                        </motion.div>
+                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                            <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
+                                                <li>5 Salas de estudos</li>
+                                                <li>Até 10 materiais de estudo por mês</li>
+                                                <li>Sem acesso à chat IA</li>
+                                                <li>Ambiente com anúncios</li>
+                                            </ul>
+                                        </div>
 
-                                        <motion.div
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        id="title"
-                                        className="w-[420px] rounded-[45px] h-full bg-[#FFB0F3] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#e59eda] flex flex-col items-center gap-10">
-                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
-                                                <Image src="/landingpage/basico.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
-                                            </div>
-                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
-                                                <span className="leading-none text-[40px]">R$</span>
-                                                <span className="text-[105px] font-medium leading-[85px]">12</span>
-                                                <span className="leading-none ">,</span>
-                                                <span className="mb-auto text-[35px] font-medium">90</span>
-                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
-                                            </div>
+                                    </motion.div>
+                                    <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                    id="title"
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#FFB0F3] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#e59eda] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                        <div className="absolute preco_img top-[-65px] left-[-55px] h-[35%] -z-10">
+                                            <Image src="/landingpage/basico.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                        </div>
 
-                                            <div className=" w-[90%] flex items-end ">
-                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
-                                                    <li>Acesso ilimitado a salas de estudo</li>
-                                                    <li>30 Materiais de estudo por mês</li>
-                                                    <li>Inteligência Artificial limitada</li>
-                                                    <li>Ambiente 100% livre de anúncios</li>
-                                                </ul>
-                                            </div>
+                                        <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
+                                            <span className="leading-none valor">R$</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">12</span>
+                                            <span className="leading-none valor">,</span>
+                                            <span className="mb-auto font-medium valor">90</span>
+                                            <span className="leading-none -ml-3 valor">/mensal</span>
+                                        </div>
 
-                                        </motion.div>
+                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                            <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
+                                                <li>Acesso ilimitado a salas de estudo</li>
+                                                <li>30 Materiais de estudo por mês</li>
+                                                <li>Inteligência Artificial limitada</li>
+                                                <li>Ambiente 100% livre de anúncios</li>
+                                            </ul>
+                                        </div>
 
-                                        <motion.div
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        id="title"
-                                        className="w-[420px] rounded-[45px] h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#876de7] flex flex-col items-center gap-10">
-                                            <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%]   ">
-                                                <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
-                                            </div>
-                                            <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
-                                                <span className="leading-none text-[40px]">R$</span>
-                                                <span className="text-[105px] font-medium leading-[85px]">19</span>
-                                                <span className="leading-none ">,</span>
-                                                <span className="mb-auto text-[35px] font-medium">90</span>
-                                                <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
-                                            </div>
+                                    </motion.div>
+                                    <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                    id="title"
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                        <div className="absolute preco_img top-[-72px] left-[-53px] h-[35%] -z-10">
+                                            <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                        </div>
 
-                                            <div className=" w-[90%] flex items-end ">
-                                                <ul className="text-[23px] text-[#000] list-disc pl-3">
-                                                    <li>Acesso ilimitado a salas de estudo</li>
-                                                    <li>Materiais de estudo sempre disponíveis</li>
-                                                    <li>Inteligência Artificial sem limites</li>
-                                                    <li>Ambiente 100% livre de anúncios</li>
-                                                </ul>
-                                            </div>
+                                        <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
+                                            <span className="leading-none valor">R$</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">19</span>
+                                            <span className="leading-none valor">,</span>
+                                            <span className="mb-auto font-medium valor">90</span>
+                                            <span className="leading-none -ml-3 valor">/mensal</span>
+                                        </div>
 
-                                        </motion.div>
+                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                            <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
+                                                <li>Acesso ilimitado a salas de estudo</li>
+                                                <li>Materiais de estudo sempre disponíveis</li>
+                                                <li>Inteligência Artificial sem limites</li>
+                                                <li>Ambiente 100% livre de anúncios</li>
+                                            </ul>
+                                        </div>
 
-                                    </div>
+                                    </motion.div>
+                                    
+
+                                    {/* 
+                                    <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                    id="title"
+                                    className="w-full md:w-[32%] rounded-[45px] h-[32%] md:h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] border-[#876de7] flex flex-col items-center gap-10">
+                                        <div className="absolute w-[120%] top-[-65px] left-[-60px] h-[35%] -z-10">
+                                            <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                        </div>
+                                        <div className="h-[105px] mt-[50%] w-[85%] flex items-end">
+                                            <span className="leading-none text-[40px]">R$</span>
+                                            <span className="text-[105px] font-medium leading-[85px]">19</span>
+                                            <span className="leading-none ">,</span>
+                                            <span className="mb-auto text-[35px] font-medium">90</span>
+                                            <span className="leading-none text-[40px] -ml-3 ">/mensal</span>
+                                        </div>
+
+                                        <div className=" w-[90%] flex items-end ">
+                                            <ul className="text-[18px] text-[#000] list-disc pl-3">
+                                                <li>Acesso ilimitado a salas de estudo</li>
+                                                <li>Materiais de estudo sempre disponíveis</li>
+                                                <li>Inteligência Artificial sem limites</li>
+                                                <li>Ambiente 100% livre de anúncios</li>
+                                            </ul>
+                                        </div>
+
+                                    </motion.div> */}
+
                                 </div>
-                            </div>  
-                        </div>
+                            </div>
+                        </div>  
+                        {/* <div className="w-[1500px] flex justify-center items-center bg-red-500">
+                        </div> */}
 
                         <div className="absolute w-[100%] overflow-hidden bottom-0 z-[-10]">
                             <Image id="aprender" width={300} height={800} src="Vector 2.svg" alt="Banner" className=" w-full"/>
                         </div>
 
-                    </div> */}
+                    </div>
 
                     <div ref={el => { sectionRefs.current[3] = el; }} id="perguntas-frequentes" className="w-full h-[635px] flex gap-[150px] relative">
                         <div className="w-full h-full absolute ">
