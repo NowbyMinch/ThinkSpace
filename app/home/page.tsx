@@ -307,7 +307,7 @@ export default function HomePage() {
         <div className="h-[82px] mt-[15px] flex justify-between ">
           <div className="flex gap-[10px] ">
 
-            <div id="pop" className=" relative w-[60px] h-[60px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
+            <div id="pop" className=" relative w-[55px] h-[55px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => opening()}
                 onMouseLeave={() => closing()}
@@ -320,7 +320,6 @@ export default function HomePage() {
                       <div className="w-[70px] h-[100px]"></div>
                     )}
                     { pop && (
-                      
                       <motion.div 
                       key="content"
                       initial={{ opacity: 0.95, scale: 0.90}}
@@ -328,193 +327,202 @@ export default function HomePage() {
                       exit={{ opacity: 0.95, scale: 0.90 }}
                       transition={{ duration: 0.01, ease: "easeInOut" }}
 
-                      className={`absolute w-[530px] h-[250px] origin-top-left transition-all ease-in-out bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center items-center overflow-hidden flex cursor-default
+                      className={`absolute pop1_box h-10 origin-top-left transition-all ease-in-out bg-white border border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center items-center overflow-hidden flex cursor-default
                       `}>
-                        <div className=" w-[85%] h-[75%] flex flex-col gap-6">
-                          <div className="">
-                            <h1 className="w-fit font-medium leading-[40px] cursor-text">
+                        <div className=" w-[85%] h-[75%] overflow-hidden flex flex-col justify-between ">
+                          <div className="h-full">
+                            <h1 className="w-fit text-[20] font-medium leading-none cursor-text">
                               Sua ofensiva
                             </h1>
-                            <h2 className="cursor-text font-medium text-[22px] w-fit text-[#121212] ">
+                            <h2 className="cursor-text font-medium text-[18px] w-fit text-[#121212] ">
                               Sua ofensiva atual é de 1 dia
                             </h2>
                           </div>
 
-                          <div className="flex justify-between">
+                          <div className="flex justify-between ">
+                            {(() => {
+                              if (ofensiva){
+                                return (
+                                  <>
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">DOM</span>
+                                      {(() => {
+                                        if (ofensiva[0]?.status! === 0){
+                                          return (
+                                            <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[0]?.status! === 1 ){
+                                          return (
+                                            <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
+                                    </div>
 
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">DOM</span>
-                              {(() => {
-                                if (ofensiva[0]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">SEG</span>
+                                      {(() => {
+                                        if (ofensiva[1]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[1]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                } else if (ofensiva[0]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
-                                    </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
 
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">SEG</span>
-                              {(() => {
-                                if (ofensiva[1].status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">TER</span>
+                                      {(() => {
+                                        if (ofensiva[2]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[2]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                } else if (ofensiva[1]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
-                                    </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
 
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">TER</span>
-                              {(() => {
-                                if (ofensiva[2]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">QUA</span>
+                                      {(() => {
+                                        if (ofensiva[3]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[3]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                } else if (ofensiva[2]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">QUI</span>
+                                      {(() => {
+                                        if (ofensiva[4]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[4]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
 
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">QUA</span>
-                              {(() => {
-                                if (ofensiva[3]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">SEX</span>
+                                      {(() => {
+                                        if (ofensiva[5]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[5]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                } else if (ofensiva[3]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
+                                    
+                                    <div className="flex flex-col text-center ">
+                                      <span className="text-[15px]">SAB</span>
+                                      {(() => {
+                                        if (ofensiva[6]?.status! === 0){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
+                                            </div>
+                                          )
+                                        } else if (ofensiva[6]?.status! === 1 ){
+                                          return (
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
+                                              <X className="text-[#C10000] stroke-3 size-7"/>
+                                            </div>
+                                          )
+                                        }
+                                        else {
+                                          return(
+                                            <div className=" flex justify-center items-center diaOfensiva rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
+                                              <Check className="text-white stroke-3 size-7 "/>
+                                            </div>
+                                          )
+                                        }
+                                      })()}
                                     </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
+                                  </>
+                                )
+                              }
+                            })()}
                             
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">QUI</span>
-                              {(() => {
-                                if (ofensiva[4]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
-                                    </div>
-                                  )
-                                } else if (ofensiva[4]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
-                                    </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
-
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">SEX</span>
-                              {(() => {
-                                if (ofensiva[5]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
-                                    </div>
-                                  )
-                                } else if (ofensiva[5]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
-                                    </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
-                            <div className="flex flex-col text-center ">
-                              <span className="text-[20px]">SAB</span>
-                              {(() => {
-                                if (ofensiva[6]?.status! === 0){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#D9D9D9]">
-                                    </div>
-                                  )
-                                } else if (ofensiva[6]?.status! === 1 ){
-                                  return (
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#EB9481]">
-                                      <X className="text-[#C10000] stroke-3 size-8"/>
-                                    </div>
-                                  )
-                                }
-                                else {
-                                  return(
-                                    <div className=" flex justify-center items-center w-[50px] h-[50px] rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                                      <Check className="text-white stroke-3 size-8 "/>
-                                    </div>
-                                  )
-                                }
-                              })()}
-                            </div>
                           </div>
                         </div>
 
@@ -530,10 +538,10 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Flame className=" size-[32px] text-[#cc6b5f] fill-[#e19786]" />
+              <Flame className=" size-[30px] text-[#cc6b5f] fill-[#e19786]" />
             </div>
 
-            <div id="pop2" className=" relative w-[60px] h-[60px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
+            <div id="pop2" className=" relative w-[55px] h-[55px] rounded-full bg-[#D9D9D9] cursor-pointer flex justify-center items-center border border-[#00000031] shadow-md ">
               <div
                 onMouseEnter={() => opening2()}
                 onMouseLeave={() => closing2()}
@@ -552,13 +560,13 @@ export default function HomePage() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0.95, scale: 0.90 }}
                       transition={{ duration: 0.01, ease: "easeInOut" }}
-                      className={`absolute w-[490px] h-fit py-4 max-h-[470px] bg-white origin-top-left transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
+                      className={`pop2_box absolute py-4  bg-white origin-top-left md:left-0 left-[-125%] transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
                         <div className=" w-[85%] h-[87.5%] flex flex-col relative">
                           <div className="">
-                            <h1 className=" font-medium leading-[40px] cursor-text">
+                            <h1 className=" font-medium text-[20px] leading-none cursor-text">
                               Notificações
                             </h1>
-                            <h2 className=" font-medium text-[22px] text-[#121212] cursor-text">
+                            <h2 className=" font-medium text-[18px] text-[#121212] cursor-text">
                               Fique em dia
                             </h2>
                           </div>
@@ -571,10 +579,54 @@ export default function HomePage() {
                                     <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
                                       <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
                                       <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[28px] text-white">Não há notificações</h1>
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
                                         <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
                                       </div>
-
+                                    </div>
+                                  </div>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
+                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
+                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
+                                      <div className="w-full max-w-[270px]">
+                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
+                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
+                                      </div>
                                     </div>
                                   </div>
                                 </>
@@ -595,22 +647,23 @@ export default function HomePage() {
                 </div>
 
               </div>
-              <Bell className="size-[32px] text-[rgba(0,0,0,31%)]" />
+              <Bell className="size-[30px] text-[rgba(0,0,0,31%)]" />
             </div>
           </div>
 
           <div className="flex gap-2">
-            <div className="text-end flex flex-col justify-center">
-              <h1 className="font-medium leading-none text-[clamp(1.6rem,3vw,1.875rem)]">
+            <div className="text-end flex flex-col justify-center ">
+              <h1 className="font-medium leading-none text-[clamp(1.35rem,3vw,1.875rem)]">
                 {user.primeiroNome}
               </h1>
-              <h2 className="font-medium text-[20px] text-[#828181]">
+              <h2 className="font-medium text-[clamp(1.26rem,3vw,1.25rem)] text-[#828181]">
                 {user.cargo}
               </h2>
             </div>
+
             <img
             src={`${user.foto}`}
-            className="rounded-full cursor-pointer transition-all w-[60px] h-[60px] shadow-md"
+            className="rounded-full cursor-pointer transition-all w-[55px] h-[55px] shadow-md bg-blue-200"
             alt="Foto de perfil"
             />
           </div>
@@ -700,7 +753,7 @@ export default function HomePage() {
                                                       })()}
                                                       </div>
                       
-                                                      <h1 className="text-[28px] overflow-hidden text-ellipsis leading-8 font-medium ">
+                                                      <h1 className="text-[28px] overflow-hidden text-ellipsis line-clamp-2 break-words leading-8 font-medium ">
                                                       {material.nome}
                                                       </h1>
                                                   </div>
@@ -762,7 +815,7 @@ export default function HomePage() {
                         <CardContent className="flex items-center justify-center h-full flex-col p-0">
                             <div className="w-[92%] h-[95%] ">
                                 <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center object-cover">
-                                    <Image src="/eficiente.svg" width={300} height={500} alt="Link Útil" className=" h-full w-full bg-red-500 -mb-24" />
+                                    <Image src="/eficiente.svg" width={300} height={500} alt="Link Útil" className=" h-full w-full -mb-24" />
                                 </div>  
                                 <p className="text-white text-[18px]">Como os grupos de estudo podem te ajudar na sua trajetória acadêmica?</p>
                             </div>
@@ -914,22 +967,22 @@ export default function HomePage() {
                             <div className="relative w-[160px] h-[50px] flex cursor-pointer">
                               <Image width={300} height={500}
                                 src="/imaginuser4.svg"
-                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"
+                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
                                 alt="Usuário"
                               />
                               <Image width={300} height={500}
                                 src="/imaginuser3.svg"
-                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
+                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
                                 alt="Usuário"
                               />
                               <Image width={300} height={500}
                                 src="/imaginuser2.svg"
-                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
+                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
                                 alt="Usuário"
                               />
                               <Image width={300} height={500}
                                 src="/imaginuser1.svg"
-                                className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
+                                className="diaOfensiva rounded-full absolute border-white border-[2px]"
                                 alt="Usuário"
                               />
                             </div>
@@ -971,22 +1024,22 @@ export default function HomePage() {
                         <div className="relative w-[160px] h-[50px] flex cursor-pointer">
                           <Image width={300} height={500}
                             src="/gramatiuser4.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[72px]"
+                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
                             alt="Usuário"
                           />
                           <Image width={300} height={500}
                             src="/gramatiuser3.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[48px]"
+                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
                             alt="Usuário"
                           />
                           <Image width={300} height={500}
                             src="/gramatiuser2.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px] left-[24px]"
+                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
                             alt="Usuário"
                           />
                           <Image width={300} height={500}
                             src="/gramatiuser1.svg"
-                            className="w-[50px] h-[50px] rounded-full absolute border-white border-[2px]"
+                            className="diaOfensiva rounded-full absolute border-white border-[2px]"
                             alt="Usuário"
                           />
                         </div>

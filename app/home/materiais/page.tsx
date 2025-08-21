@@ -574,7 +574,7 @@ export default function Materiais() {
                     </motion.div>
                         
                         
-                    <div className="w-full absolute flex justify-center items-center bg-red-500">
+                    <div className="w-full absolute flex justify-center items-center ">
                         <Backdrop3 onClick={() => setDeletarPop(false)}/>
                     </div>
                 </>
@@ -589,11 +589,11 @@ export default function Materiais() {
         { editar && (
             <Backdrop3 onClick={() => closing()}/>
         )}
-
-        <div className="w-full mx-[10px] lg:mx-[20px] h-[calc(100vh-24px)] my-[10px] gap-4 rounded-[35px] flex justify-center items-center overflow-hidden ">
-            <div className=" rounded-[35px] w-[75%] h-[100%] overflow-hidden bg-white flex flex-col items-center shadow-md border border-[#00000031]">
-                <div className="w-[1200px] max-w-[95%] mt-4 ">
-                    <div className="w-[92%] mx-auto">
+        
+        <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto h-full my-[12px] gap-3 rounded-[35px] flex justify-center items-center  ">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+                <div className="w-[95%] max-w-[95%] mt-4 ">
+                    <div className="w-full mx-auto">
                         <h1 className="text-[#1E2351] font-medium text-[30px]"> Olá, {user.primeiroNome} </h1>
                         <h1 className="font-medium text-[18px] text-[#A19797] "> Qual matéria será revisada hoje? </h1>
                     </div>
@@ -602,7 +602,7 @@ export default function Materiais() {
   
                         <div className="w-full h-[82px] mt-10 flex justify-center relative ">
                             
-                            <div className="w-[980px] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
+                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
 
                             <div className="relative w-[84%] max-w-[90%]">
                                 <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
@@ -612,112 +612,110 @@ export default function Materiais() {
                     </div>
                 </div>
 
-                <div className=" flex justify-center overflow-y-auto mt-5 h-[590px] max-h-[80%] w-[1100px]  max-w-[95%] ">
-                    <div className={`w-[980px] max-w-[100%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"}  grid gap-[20px] h-fit pt-1 pb-1 `}>
+                <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[20px] h-[600px] pt-1 pb-1 overflow-y-auto px-1`}>
+                    { materias && materias.length === 0 && (
+                        <div className=" h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
+                            <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
+                                <div className=" flex flex-col justify-center gap-[10%] w-full h-full  ">
+                                    <h1 className="text-[22px] font-medium line-clamp-3 break-words">
+                                        Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
+                                    </h1>
 
-                        { materias && materias.length === 0 && (
-                            <div className=" h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
-                                <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
-                                    <div className=" flex flex-col justify-center gap-[10%] w-full h-full  ">
-                                        <h1 className="text-[32px]  font-medium line-clamp-3 break-words">
-                                            Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
-                                        </h1>
-
-                                        <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
-                                        <button onClick={() => setOpen(true)} className="w-full h-full bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[22px] shadow-md leading-5 ">
-                                            <Icons.CirclePlus className="size-8"/> Criar matéria
-                                        </button>
-                                        </Link>
-                                    </div>
-                                    
+                                    <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
+                                    <button onClick={() => setOpen(true)} className="p-[10px_12px] bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[20px] shadow-md leading-5 ">
+                                        <Icons.CirclePlus className="size-6"/> Criar matéria
+                                    </button>
+                                    </Link>
                                 </div>
-                                <Image width={300} height={500}
-                                    src="/semmateria.svg"
-                                    alt="Decoração"
-                                    className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
-                                    />
-                            </div>
-                        )} 
-                        { materias && materias.length > 0 && (
-                            <>
-                                <motion.div 
-                                whileHover={{ scale:1.01 }}
-                                whileTap={{ scale:0.99 }}
-                                transition={{ duration: 0.25, ease: "easeInOut" }}
-
-                                id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)]  h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
-                                    <CirclePlus className="text-[rgb(165,165,165)] size-[70px]"/>
-                                    <h2 className="text-[30px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
-                                </motion.div>
-
-                                {materias.map((material, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <motion.div 
-                                            whileHover={{ scale:1.01 }}
-                                            whileTap={{ scale:0.99 }}
-                                            transition={{ duration: 0.25, ease: "easeInOut" }}
-                                            id="materias" className="h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
-                                                <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
-                                                    <div className="">
-                                                        <AnimatePresence initial={false}>
-                                                            <button ref={(el) => { buttonRefs.current[index] = el; }}
-                                                            onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                                                            key={0} className="" ><Ellipsis className="opacity-[80%] size-8"/>
-                                                            </button>
-
-                                                            { openPop === index &&(
-                                                                <motion.div 
-                                                                initial={{ scale: 0, opacity: 0}}
-                                                                animate={{ scale: 1, opacity: 1 }}
-                                                                exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
-                                                                
-                                                                ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
-                                                                    <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
-                                                                        <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
-                                                                        <div className="flex flex-col w-full gap-1 text-base ">
-                                                                            <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); 
-                                                                            setTemp([{ id: material.id, nome: material.nome, cor: material.cor, icone: material.icone }] );}} >
-                                                                                <SquarePen/> Editar
-                                                                            </button>
-                                                                            <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                                                                            <button onClick={() => {setDeletarPop(true); setDeletar(material.id!); setOpenPop(null)}} className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </motion.div>
-                                                            )}
-                                                        </AnimatePresence>
-                                                    </div>
-                                                </div>
-                                                <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
-                                                    <div className="w-[90%] max-w-[90%]  h-full flex rounded-[28px] gap-[2%] justify-center items-center">
-                                                        <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
-                                                            <h2 className="text-[30px]  w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
-                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
-                                                            <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
-                                                        </div>
-                                                        
-                                                        {(() => {
-                                                            const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
-                                                            if (IconComponent) {
-                                                                return <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />;
-                                                            }
-                                                            return null;
-                                                        })()}
-                                                    </div>
-                                                </Link>
-
-                                            </motion.div>
-                                        </div>
-                                    )
-                                })}
                                 
-                            </>
-                        )} 
+                            </div>
+                            <Image width={300} height={500}
+                                src="/semmateria.svg"
+                                alt="Decoração"
+                                className=" w-[310px] max-w-[40%] absolute h-full right-0 object-cover  "
+                                />
+                        </div>
+                    )} 
+                    { materias && materias.length > 0 && (
+                        <>
+                            <motion.div 
+                            whileHover={{ scale:1.01 }}
+                            whileTap={{ scale:0.99 }}
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
 
-                    </div>
+                            id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
+                                <CirclePlus className="text-[rgb(165,165,165)] size-[60px]"/>
+                                <h2 className="text-[30px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
+                            </motion.div>
+
+                            {materias.map((material, index) => {
+                                return (
+                                    <div key={index}>
+                                        <motion.div 
+                                        whileHover={{ scale:1.01 }}
+                                        whileTap={{ scale:0.99 }}
+                                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                                        id="materias" className="h-[280px] bg-red-500 rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
+                                            <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
+                                                <div className="">
+                                                    <AnimatePresence initial={false}>
+                                                        <button ref={(el) => { buttonRefs.current[index] = el; }}
+                                                        onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
+                                                        key={0} className="" ><Ellipsis className="opacity-[80%] size-8"/>
+                                                        </button>
+
+                                                        { openPop === index &&(
+                                                            <motion.div 
+                                                            initial={{ scale: 0, opacity: 0}}
+                                                            animate={{ scale: 1, opacity: 1 }}
+                                                            exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
+                                                            
+                                                            ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
+                                                                <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+                                                                    <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
+                                                                    <div className="flex flex-col w-full gap-1 text-base ">
+                                                                        <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); 
+                                                                        setTemp([{ id: material.id, nome: material.nome, cor: material.cor, icone: material.icone }] );}} >
+                                                                            <SquarePen/> Editar
+                                                                        </button>
+                                                                        <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                                                                        <button onClick={() => {setDeletarPop(true); setDeletar(material.id!); setOpenPop(null)}} className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
+                                                                    </div>
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+                                            </div>
+                                            <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
+                                                <div className="w-[90%] max-w-[90%] h-full flex rounded-[28px] gap-[2%] justify-center items-center">
+                                                    <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
+                                                        <h2 className="text-[30px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
+                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
+                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
+                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
+                                                    </div>
+                                                    
+                                                    {(() => {
+                                                        const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
+                                                        if (IconComponent) {
+                                                            return <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />;
+                                                        }
+                                                        return null;
+                                                    })()}
+                                                </div>
+                                            </Link>
+
+                                        </motion.div>
+                                    </div>
+                                )
+                            })}
+                            
+                        </>
+                    )} 
                 </div>
+                {/* <div className=" flex justify-center overflow-y-auto mt-5 max-h-[80%] w-[95%] max-w-[90%] ">
+                </div> */}
 
                 {/* <div className="min-w-max max-w-[94%] h-[94px] flex justify-center items-center" id="paginacao">
                     <ChevronsLeft/>
@@ -730,46 +728,45 @@ export default function Materiais() {
                 </div> */}
             </div>
 
-            <div className="bg-white rounded-[35px] h-full w-[25%] flex justify-center shadow-md border border-[#00000031] ">
+            <div className=" right_panel bg-white rounded-[35px]  h-full flex justify-center shadow-md border border-[#00000031] ">
                  
-                <div className="w-full  h-full flex justify-center items-center">   
-                    <div className="w-[95%] h-[95%] flex flex-col">
+                <div className="w-full h-full flex justify-center ">   
+                    <div className="w-[95%] h-[95%] flex flex-col items-center mt-4">
                         
-                        <div className="flex gap-[15px] justify-center items-center w-[380px] max-w-[95%] max-h-[110px]">
+                        <div className="flex gap-[15px] justify-center items-center w-[95%] max-w-[95%] max-h-[110px]">
                             
                             <img src={`${user.foto}`} className="w-[28%] max-w-[380px] rounded-full cursor-pointer" alt="Profile picture" />
 
                             <div className="w-[70%] ">
                                 <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
                                 <h2 className="text-[#828181] font-medium text-[18px]">{user.cargo}</h2>
-                                <div className="w-[220px] h-2 rounded-[18px] bg-[#1e235138]">
-                                    <div className="w-[0%] h-2 rounded-[25px] bg-purple-600 "></div>
+                                <div className="  h-2 rounded-[18px] bg-[#1e235138]">
+                                    <div className="w-[20%] h-2 rounded-[25px] bg-purple-600 "></div>
                                 </div>
-                                <div className="flex justify-between w-[220px]">
+                                <div className="flex justify-between ">
                                     <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
-                                    <h2 className="font-medium text-[18px] text-[#828181]">0px</h2>
+                                    <h2 className="font-medium text-[18px] text-[#828181]">20px</h2>
                                 </div>
                             </div>
 
                         </div>
                         
-                        <div className="ml-[15px] mt-[30px] w-[380px] max-w-[95%]">
+                        <div className="ml-[15px] mt-[30px] w-[95%] max-w-[95%]">
                             <h1 className="text-[30px] w-fit font-medium leading-6">Materiais recentes</h1>
                             <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1>
                         </div>
                         
-                        
-                        <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%] overflow-hidden">
+                        <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%] bg-red-500 overflow-auto">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href="/home/materiais/" className=" flex gap-3 px-2 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
 
                                         <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1 < 10 ? `0${index + 1}`: `${index + 1}` }</h1>
 
-                                        <div className="flex justify-between items-center w-full">
-                                            <div className=" ">
-                                                <h2 className="text-[28px] font-medium leading-[30px]">{materia.nome}</h2>
-                                                <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                        <div className="flex items-center w-full">
+                                            <div className="w-full">
+                                                <h2 className="text-[25px] font-medium leading-[30px]">{materia.nome}</h2>
+                                                <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 3 horas</h2>
                                             </div>
 
                                             <ChevronRight className="size-12 "/>
@@ -778,8 +775,8 @@ export default function Materiais() {
 
                                 )
                             })}
-    
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full absolute bottom-0">Ver mais materiais</motion.button>
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full ">Ver mais materiais</motion.button>
+
                         </div>
 
                     </div>

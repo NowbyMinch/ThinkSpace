@@ -306,15 +306,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     formData.append("file", file, file.name);
                 }
 
-                // 🔥 Debug: mostra tudo do FormData
-                for (const [key, val] of formData.entries()) {
-                    console.log(key, val);
-                }
-
-                // OU converte em objeto (sem arquivos)
-                const formObj = Object.fromEntries(formData.entries());
-                console.log("FormData como objeto:", formObj);
-                
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                     method: "POST",
                     body: formData, // ✅ Só FormData aqui
@@ -331,7 +322,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     quantidadeQuestoes: value,
                     quantidadeFlashcards: value2,
                 };
-                console.log("Logo antes,", value, value2)
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -351,8 +341,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 data.message === "Campos obrigatórios ausentes para criação por documento." ||
                 data.message === "Internal server error" ||
                 data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." ||
-                data.message === "Nome designado e nome da matéria são obrigatórios." || 
-                data.message === "Já existe um material com esse nome." 
+                data.message === "Nome designado e nome da matéria são obrigatórios." 
                 ) {
             setMessage(data.message);
             return;
@@ -403,13 +392,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
             }
             }
 
+            setLoading(false);
+
             // 5️⃣ Redirecionar
             const redirectPath =
             origem === "DOCUMENTO"
                 ? `/home/materiais/${id}/${data.material.id}/Material`
                 : `/home/materiais/${id}/${data.material.id}/Resumo`;
             router.push(redirectPath);
-            setLoading(false);
 
         } catch (err) {
             console.error(err);
@@ -717,58 +707,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
                                             </div>
-                                            <div className="w-full flex justify-between">
-                                                <div className="">
-                                                    <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
-                                                    
-                                                    <div className="flex w-full justify-between ">
-                                                        <button
-                                                        onClick={() => handleDecrease(1)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
-                                                        </button>
-                                                        
-                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
-                                                            <input 
-                                                            value={value}
-                                                            onChange={(e) => handleChange(e,1)}
-                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
-                                                        </div>
-
-                                                        <button 
-                                                        onClick={() => handleIncrease(1)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowRight className="size-6 text-white"/>
-                                                        </button>
-                                                    
-                                                    </div>
-                                                </div> 
-                                                
-                                                <div className="">
-                                                    <h2 className="text-[20px] font-medium"> Quantidade de flashcards</h2>
-                                                    <div className="flex w-full justify-between ">
-                                                        <button
-                                                        onClick={() => handleDecrease(2)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
-                                                        </button>
-                                                        
-                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
-                                                            <input 
-                                                            value={value2}
-                                                            onChange={(e) => handleChange(e,2)}
-                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
-                                                        </div>
-
-                                                        <button 
-                                                        onClick={() => handleIncrease(2)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowRight className="size-6 text-white"/>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
                                             <motion.button
                                                 whileTap={{ scale: 0.95 }}
                                                 whileHover={{ scale: 1.02 }}
@@ -865,58 +803,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
 
-                                            </div>
-                                            <div className="w-full flex justify-between">
-                                                <div className="">
-                                                    <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
-                                                    
-                                                    <div className="flex w-full justify-between ">
-                                                        <button
-                                                        onClick={() => handleDecrease(1)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
-                                                        </button>
-                                                        
-                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
-                                                            <input 
-                                                            value={value}
-                                                            onChange={(e) => handleChange(e,1)}
-                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
-                                                        </div>
-
-                                                        <button 
-                                                        onClick={() => handleIncrease(1)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowRight className="size-6 text-white"/>
-                                                        </button>
-                                                    
-                                                    </div>
-                                                </div> 
-                                                
-                                                <div className="">
-                                                    <h2 className="text-[20px] font-medium"> Quantidade de flashcards</h2>
-                                                    <div className="flex w-full justify-between ">
-                                                        <button
-                                                        onClick={() => handleDecrease(2)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowLeft className="size-6 text-white rounded-full"/>
-                                                        </button>
-                                                        
-                                                        <div className="w-full mx-2 rounded-[12px] border border-solid border-black ">
-                                                            <input 
-                                                            value={value2}
-                                                            onChange={(e) => handleChange(e,2)}
-                                                            type="number" max={25} min={1} className="appearance-none text-[20px] w-full h-full text-center flex justify-center items-center rounded-[12px] bg-transparent"/>
-                                                        </div>
-
-                                                        <button 
-                                                        onClick={() => handleIncrease(2)}
-                                                        className="p-2 bg-[#A387DC] rounded-full">
-                                                            <ArrowRight className="size-6 text-white"/>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                
                                             </div>
                                             
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {

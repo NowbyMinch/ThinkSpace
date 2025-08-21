@@ -90,6 +90,7 @@ export default function MaterialClient() {
                     });
                     
                     const data = await res.json();
+                    console.log(data);
                     setFlashcards(data);
                     setLoading(false);
                 } else{

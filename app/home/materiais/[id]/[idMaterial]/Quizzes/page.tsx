@@ -99,7 +99,7 @@ export default function MaterialClient() {
                     });
 
                     const data = await res.json();
-                    console.log(data)
+                    console.log(data);
                     setQuizzes(data.quizzes);
                     setLoading(false);
 
@@ -213,17 +213,11 @@ export default function MaterialClient() {
         const letra = letraPorIndice[indice];
         setSelected(letra);
         setDisabled(true);
-        questao(indice);
 
         setTimeout(() => {
-        // if (questaoIndex !== quizzes.length - 1) {
-        //     setQuestaoIndex((prev) => prev + 1);
-        // };
-        
-        setSelected(null);
-        if (!finalizado){
-            setDisabled(false);
-        }
+            setSelected(null);
+            if (!finalizado) setDisabled(false);
+            questao(indice);
         }, 1200);
     };
 
