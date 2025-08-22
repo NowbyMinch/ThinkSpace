@@ -998,24 +998,33 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
         <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} ></div>
 
-        <div className=" grid grid-cols-[3fr_1fr] mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] gap-[20px]">
-            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031]">
-                <div className="w-[70%] h-full overflow-hidden max-w-[1000px] max-w- mt-4 ">
-                    <div className="">
-                        <h1 className="text-[30px] w-fit font-medium ">Materiais de Estudo</h1>
-                        <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] ">{materia?.nome}</h1>
+        <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto mt-[12px] mb-[12px] h-[calc(100vh-24px)] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+                <div className="w-[95%] max-w-[95%] mt-4 ">
+                    
+                    
+                    <div className="w-full mx-auto">
+                        <h1 className="text-[#1E2351] font-medium text-[30px]"> Materiais de Estudo </h1>
+                        <h1 className="font-medium text-[18px] text-[#9767F8] "> {materia?.nome} </h1>
+                    </div>
+                        {/* <h1 className="text-[30px] w-fit font-medium ">Materiais de Estudo</h1>
+                        <h1 className="text-[18px] italic w-fit font-medium  ">{materia?.nome}</h1> */}
+
+                    <div className=" mt-[25px] overflow-hidden flex items-center ">
+                        <div className="w-full h-[82px] mt-10 flex justify-center relative ">
+                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[45px] bg-[#D9D9D9] absolute "></div>
+
+                            <div className="relative w-[84%] max-w-[90%]">
+                                <input type="text" id="search_bar" placeholder="Pesquise o material" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                                <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] "/>
+                            </div>
+
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="min-w-[10%] bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
+
+                        </div>
+                        
                     </div>
 
-                    <div className="mt-[50px] overflow-hidden flex flex-row gap-4 justify-center px-1 py-1 ">
-                        <div className=" h-[82px] w-full flex relative ">
-                            <div className="w-[98%] rounded-[20px] mt-4 mr-auto h-[50px] bg-[#D9D9D9] absolute"></div>
-                            <div className="relative w-full ">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
-                                <Search className="absolute right-[20px] text-black opacity-[36%]cursor-pointer top-[12px] size-[30px] "/>
-                            </div>
-                        </div>
-                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="bg-[#9B79E0] border border-[#716BAF] w-[20%] h-[58px] rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
-                    </div>
 
 
                     <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
@@ -1062,7 +1071,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[35px] flex justify-center shadow-md border border-[#00000031]">
+            <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden">
                 
                 <div className="w-[100%] flex ">
                     <div className=" ml-[10px] mr-[10px] w-[390px] flex flex-col gap-10">

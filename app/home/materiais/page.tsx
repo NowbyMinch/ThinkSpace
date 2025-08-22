@@ -663,12 +663,12 @@ export default function Materiais() {
                                         whileTap={{ scale:0.99 }}
                                         transition={{ duration: 0.25, ease: "easeInOut" }}
                                         id="materias" className="material rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
-                                            <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
+                                            <div className="absolute top-1 right-3 z-10 flex flex-col items-end ">
                                                 <div className="">
                                                     <AnimatePresence initial={false}>
                                                         <button ref={(el) => { buttonRefs.current[index] = el; }}
                                                         onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                                                        key={0} className="" ><Ellipsis className="opacity-[80%] size-6"/>
+                                                        key={0} className="p-1 flex justify-start items-end" ><Ellipsis className="opacity-[80%] size-6"/>
                                                         </button>
 
                                                         { openPop === index &&(
