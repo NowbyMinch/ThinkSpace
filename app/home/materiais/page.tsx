@@ -327,24 +327,24 @@ export default function Materiais() {
                 className={`w-full h-full absolute opacity-1 z-[1100] `}>
                     <div className="w-full h-full absolute" onClick={() => closing()}></div>
 
-                    <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
+                    <div id="white-box" className={`w-[1250px] max-w-[95%] min-h-[95%] lg:min-h-[650px] h-[650px] max-h-[95%] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
                         
-                        <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
+                        <X className="absolute top-5 right-8 size-6 cursor-pointer" onClick={() => closing()}/>
                         <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                         <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
-                        <div className="w-[80%] h-[85%] flex flex-col items-center gap-10 z-[900]">
-                            <h1 className="text-center text-[45px] font-medium">Como você deseja criar a matéria?</h1>
-                            <div className="w-full flex justify-between ">
-                                <div className="w-[47%] flex flex-col gap-2">
+                        <div className=" w-[90%] h-[90%] lg:w-[80%] lg:h-[92%] mt-auto lg:mb-4 flex flex-col items-center gap-10 z-[900] overflow-y-auto pr-2 pb-4">
+                            <h1 className="text-center text-[30px] font-medium">Como você deseja criar a matéria?</h1>
+                            <div className="w-full flex lg:flex-row flex-col justify-between lg:gap-0 gap-4">
+                                <div className=" w-full lg:w-[47%] flex flex-col gap-2">
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium ">Nome da matéria:</h2>
-                                        <input type="text" id="nome_materia" onChange={(e) => {setCriarMateria({...criarMateria, nome: e.target.value }); console.log(criarMateria)}} placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                        <h2 className="text-[18px] font-medium ">Nome da matéria:</h2>
+                                        <input type="text" id="nome_materia" onChange={(e) => {setCriarMateria({...criarMateria, nome: e.target.value }); console.log(criarMateria)}} placeholder="Nome da matéria" className="pl-5 text-[18px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
 
                                     </div>
 
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium">Cores:</h2>
+                                        <h2 className="text-[18px] font-medium">Cores:</h2>
                                         <div className="flex gap-1">
                                             {colors.map((color) => (
                                                 <motion.button 
@@ -357,9 +357,9 @@ export default function Materiais() {
                                     </div>
 
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
+                                        <h2 className="text-[18px] font-medium">Ícone desejado:</h2>
                                         <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                            <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
+                                            <div className=" max-w-[92%] overflow-y-auto h-[85%] flex flex-wrap gap-2 overflow-x-hidden items-center pb-1">
                                                 {icons.map(({ id, Icon }) => (
                                                     <motion.button
                                                         whileTap={{ scale: 0.95 }}
@@ -368,7 +368,7 @@ export default function Materiais() {
                                                         key={id}
                                                         onClick={() => {setCriarMateria({...criarMateria, icone: id }); setSelected(id) }}
                                                     >
-                                                        <Icon />
+                                                        <Icon className="size-5" />
                                                     </motion.button>
                                                 ))}
                                             </div>
@@ -376,38 +376,37 @@ export default function Materiais() {
                                     </div>
                                 </div>
 
-                                <div className=" w-[47%] ">
-                                    <div className="w-full h-[100%] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
+                                <div className=" w-[438px] max-w-full lg:w-[47%] lg:mx-0 mx-auto">
+                                    <div className=" w-full h-[320px] lg:h-full max-h-[320px] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
                                         <h2 className="w-[85%] h-[60px] flex font-medium text-[25px]">Pré-visualização:</h2>
-                                        <div style={{backgroundColor: color || "white"}} className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center">
+                                        <div style={{backgroundColor: color || "white"}} className="w-[85%] h-[70%] max-h-[220px] rounded-[25px] flex justify-center items-center">
+                                            <div className="w-[85%] h-[85%] flex items-center">
+                                                <div className={`${selected ? "w-[54%]": "w-full" } flex flex-col gap-4`}  >
+                                                    <h1 className="w-[210px] line-clamp-2 break-words material_title leading-none font-medium ">{ criarMateria.nome?.trim() !== "" ? criarMateria.nome : "Nome da matéria"}</h1>
+                                                    <div className="text-[18px]">
+                                                        <h2 className="material_text leading-none">Materiais de estudo: 0</h2>
+                                                        <h2 className="material_text leading-none">Tempo ativo: Sem dados</h2>
+                                                        <h2 className="material_text leading-none">Última revisão: Sem dados</h2>
+                                                    </div>
+                                                </div>
 
-                                        <div className="w-[85%] h-[85%] flex items-center">
-                                            <div className="w-[65%] flex flex-col gap-4 ">
-                                                <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{ criarMateria.nome?.trim() !== "" ? criarMateria.nome : "Nome da matéria"}</h1>
-                                                <div className="text-[18px]">
-                                                    <h2>Materiais de estudo: 0</h2>
-                                                    <h2>Tempo ativo: Sem dados</h2>
-                                                    <h2>Última revisão: Sem dados</h2>
+                                                <div className="w-full flex justify-center items-center">
+                                                    {selected && (
+                                                        <>
+                                                            {(() => {
+                                                                const SelectedIcon = icons.find((icon) => icon.id === selected)?.Icon;
+                                                                return SelectedIcon? <SelectedIcon className=" size-[100px] lg:size-[130px] opacity-[22%] stroke-1"/> : null;
+                                                            })()}
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
-
-                                            <div className="w-[50%] flex justify-center items-center">
-                                                {selected && (
-                                                    <>
-                                                        {(() => {
-                                                            const SelectedIcon = icons.find((icon) => icon.id === selected)?.Icon;
-                                                            return SelectedIcon? <SelectedIcon className="size-[150px] opacity-[22%] stroke-1"/> : null;
-                                                        })()}
-                                                    </>
-                                                )}
-                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => criar()}>Criar nova matéria</motion.button>
+                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[18px] p-[5px_30px] rounded-full" onClick={() => criar()}>Criar nova matéria</motion.button>
 
                         </div>
                     </div>
@@ -424,29 +423,29 @@ export default function Materiais() {
                 className={`w-full h-full absolute opacity-1 z-[1100] `}>
                     <div className="w-full h-full absolute" onClick={() => closing()}></div>
 
-                    <div id="white-box" className={` w-[1250px] h-[650px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
+                    <div id="white-box" className={`w-[1250px] max-w-[95%] min-h-[95%] lg:min-h-[650px] h-[650px] max-h-[95%] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
                         
-                        <X className="absolute top-10 right-10 size-10 cursor-pointer" onClick={() => closing()}/>
+                        <X className="absolute top-5 right-8 size-6 cursor-pointer" onClick={() => closing()}/>
                         <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                         <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
-                        <div className="w-[80%] h-[85%] flex flex-col items-center gap-10 z-[900]">
-                            <h1 className="text-center text-[45px] font-medium">Editar matéria</h1>
-                            <div className="w-full flex justify-between ">
-                                <div className="w-[47%] flex flex-col gap-2">
+                        <div className=" w-[90%] h-[90%] lg:w-[80%] lg:h-[92%] mt-auto lg:mb-4 flex flex-col items-center gap-10 z-[900] overflow-y-auto pr-2 pb-4">
+                            <h1 className="text-center text-[30px] font-medium">Editar matéria</h1>
+                            <div className="w-full flex lg:flex-row flex-col justify-between lg:gap-0 gap-4">
+                                <div className=" w-full lg:w-[47%] flex flex-col gap-2">
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium ">Nome da matéria:</h2>
-                                        <input type="text" id="nome_materia" onChange={(e) => {setCriarMateria({...criarMateria, nome: e.target.value }); console.log(criarMateria)}} placeholder="Nome da matéria" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                        <h2 className="text-[18px] font-medium ">Nome da matéria:</h2>
+                                        <input type="text" id="nome_materia" onChange={(e) => {setCriarMateria({...criarMateria, nome: e.target.value }); console.log(criarMateria)}} placeholder="Nome da matéria" className="pl-5 text-[18px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+
                                     </div>
 
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium">Cores:</h2>
+                                        <h2 className="text-[18px] font-medium">Cores:</h2>
                                         <div className="flex gap-1">
                                             {colors.map((color) => (
                                                 <motion.button 
                                                 whileTap={{ scale: 0.95 }} 
                                                 whileHover={{ scale: 1.02 }}
-
                                                 key={color} style={{backgroundColor: color}} onClick={() => {setCriarMateria({...criarMateria, cor: cor[color as keyof typeof cor] }); setColor(color); } } className={`w-[30px] h-[30px] rounded-full cursor-pointer`}></motion.button>
                                             ))}
                                         </div>
@@ -454,9 +453,9 @@ export default function Materiais() {
                                     </div>
 
                                     <div className="">
-                                        <h2 className="text-[28px] font-medium">Ícone desejado:</h2>
+                                        <h2 className="text-[18px] font-medium">Ícone desejado:</h2>
                                         <div className="w-full h-[140px] border-2 border-[rgba(0,0,0,0.19)] rounded-[25px] flex justify-center items-center ">
-                                            <div className=" w-[92%] overflow-y-auto h-[85%] grid grid-cols-[repeat(14,1fr)] grid-rows-[repeat(4,40px)] items-center pb-1">
+                                            <div className=" max-w-[92%] overflow-y-auto h-[85%] flex flex-wrap gap-2 overflow-x-hidden items-center pb-1">
                                                 {icons.map(({ id, Icon }) => (
                                                     <motion.button
                                                         whileTap={{ scale: 0.95 }}
@@ -465,7 +464,7 @@ export default function Materiais() {
                                                         key={id}
                                                         onClick={() => {setCriarMateria({...criarMateria, icone: id }); setSelected(id) }}
                                                     >
-                                                        <Icon />
+                                                        <Icon className="size-5" />
                                                     </motion.button>
                                                 ))}
                                             </div>
@@ -473,50 +472,58 @@ export default function Materiais() {
                                     </div>
                                 </div>
 
-                                <div className=" w-[47%] ">
-                                    <div className="w-full h-[100%] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
+                                <div className=" w-[438px] max-w-full lg:w-[47%] lg:mx-0 mx-auto">
+                                    <div className=" w-full h-[320px] lg:h-full max-h-[320px] rounded-[25px] bg-[#EFEFEF] flex flex-col items-center justify-center">
                                         <h2 className="w-[85%] h-[60px] flex font-medium text-[25px]">Pré-visualização:</h2>
-                                        <div style={{ backgroundColor: criarMateria.cor && cores[criarMateria.cor as keyof typeof cores] ? cores[criarMateria.cor as keyof typeof cores] : cores[temp[0].cor as keyof typeof cores] }} className="w-[85%] h-[70%] rounded-[25px] flex justify-center items-center">
+                                        <div style={{ backgroundColor: criarMateria.cor && cores[criarMateria.cor as keyof typeof cores] ? cores[criarMateria.cor as keyof typeof cores] : cores[temp[0].cor as keyof typeof cores] }} className="w-[85%] h-[70%] max-h-[220px] rounded-[25px] flex justify-center items-center">
+                                            <div className="w-[85%] h-[85%] flex items-center">
+                                                <div className={`w-[54%] flex flex-col gap-4`}  >
+                                                    <h1 className="w-[210px] line-clamp-2 break-words material_title leading-none font-medium ">{ criarMateria.nome? criarMateria.nome : temp[0]?.nome }</h1>
+                                                    <div className="text-[18px]">
+                                                        <h2 className="material_text leading-none">Materiais de estudo: 0</h2>
+                                                        <h2 className="material_text leading-none">Tempo ativo: Sem dados</h2>
+                                                        <h2 className="material_text leading-none">Última revisão: Sem dados</h2>
+                                                    </div>
+                                                </div>
 
-                                        <div className="w-[85%] h-[85%] flex items-center">
-                                            <div className="w-[65%] flex flex-col gap-4 ">
-                                                <h1 className="w-[210px] line-clamp-2 break-words text-[35px] leading-[40px] font-medium">{ criarMateria.nome? criarMateria.nome : temp[0]?.nome }</h1>
-                                                <div className="text-[18px]">
-                                                    <h2>Materiais de estudo: 0</h2>
-                                                    <h2>Tempo ativo: Sem dados</h2>
-                                                    <h2>Última revisão: Sem dados</h2>
+                                                <div className="w-full flex justify-center items-center">
+                                                    {(() => {
+                                                        if (criarMateria.icone){
+                                                            const IconComponent = icons.find(icon => icon.id.toLowerCase() === criarMateria.icone?.toLowerCase())?.Icon;
+                                                            if (IconComponent) {
+                                                                return <IconComponent className=" size-[100px] lg:size-[130px] opacity-[22%] stroke-1"/>;
+                                                            }
+                                                            return null;
+                                                        }
+                                                        else{
+                                                            const IconComponent = icons.find(icon => icon.id.toLowerCase() === temp[0]?.icone?.toLowerCase())?.Icon;
+                                                            if (IconComponent) {
+                                                                return <IconComponent className=" size-[100px] lg:size-[130px] opacity-[22%] stroke-1"/> 
+                                                            }
+                                                            return null;
+                                                        }
+                                                    })()}
+                                                    {/* {selected && (
+                                                        <>
+                                                            {(() => {
+                                                                const SelectedIcon = icons.find((icon) => icon.id === selected)?.Icon;
+                                                                return SelectedIcon? <SelectedIcon className=" size-[100px] lg:size-[130px] opacity-[22%] stroke-1"/> : null;
+                                                            })()}
+                                                        </>
+                                                    )} */}
                                                 </div>
                                             </div>
-
-                                            <div className="w-[50%] flex justify-center items-center">
-                                                {(() => {
-                                                    if (criarMateria.icone){
-                                                        const IconComponent = icons.find(icon => icon.id.toLowerCase() === criarMateria.icone?.toLowerCase())?.Icon;
-                                                        if (IconComponent) {
-                                                            return <IconComponent className="size-[160px] opacity-[22%] stroke-1" />;
-                                                        }
-                                                        return null;
-                                                    }
-                                                    else{
-                                                        const IconComponent = icons.find(icon => icon.id.toLowerCase() === temp[0]?.icone?.toLowerCase())?.Icon;
-                                                        if (IconComponent) {
-                                                            return <IconComponent className="size-[160px] opacity-[22%] stroke-1" />;
-                                                        }
-                                                        return null;
-                                                    }
-                                                })()}
-                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[22px] p-[5px_30px] rounded-full" onClick={() => { if (temp[0]?.id) editarMateria(temp[0].id, criarMateria); }}>Salvar edição</motion.button>
+                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className=" border border-[#1E2351] text-[18px] p-[5px_30px] rounded-full" onClick={() => { if (temp[0]?.id) editarMateria(temp[0].id, criarMateria); }}>Salvar edição</motion.button>
 
                         </div>
                     </div>
                 </motion.div>
+                
             )}
             
             {deletarPop && (
@@ -534,7 +541,7 @@ export default function Materiais() {
                         initial={{ opacity: 0, scale: 0.85}}
                         animate={{ opacity: 1, scale: 0.94 }}
                         exit={{ opacity: 0, scale: 0.90 }}
-                        className={`w-[700px] h-[380px] flex rounded-[40px] z-[1100]  opacity-1 `}>
+                        className={`w-[700px] h-[320px] flex rounded-[40px] z-[1100]  opacity-1 `}>
 
                             <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
                                 
@@ -548,20 +555,20 @@ export default function Materiais() {
                                         <span className="text-[20px]"></span>
                                     </div>
 
-                                    <h1 className="text-center text-[35px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
+                                    <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
                                     <div className="w-[60%] flex justify-between mt-auto">
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => setDeletarPop(false)}
-                                        className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_12px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
                                             Voltar
                                         </motion.button>
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => {setDeletarPop(false); deletarMateria(deletar)}}
-                                        className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_12px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
                                             Deletar
                                         </motion.button>
                                     </div>
@@ -590,7 +597,7 @@ export default function Materiais() {
             <Backdrop3 onClick={() => closing()}/>
         )}
         
-        <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto h-full my-[12px] gap-3 rounded-[35px] flex justify-center items-center  ">
+        <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto mt-[12px] mb-[12px] h-[calc(100vh-24px)] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
             <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="w-[95%] max-w-[95%] mt-4 ">
                     <div className="w-full mx-auto">
@@ -602,17 +609,17 @@ export default function Materiais() {
   
                         <div className="w-full h-[82px] mt-10 flex justify-center relative ">
                             
-                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[50px] bg-[#D9D9D9] absolute "></div>
+                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[45px] bg-[#D9D9D9] absolute "></div>
 
                             <div className="relative w-[84%] max-w-[90%]">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 h-[55px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
-                                <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[30px] "/>
+                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                                <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] "/>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[20px] h-[600px] pt-1 pb-1 overflow-y-auto px-1`}>
+                <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2`}>
                     { materias && materias.length === 0 && (
                         <div className=" h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
@@ -643,9 +650,9 @@ export default function Materiais() {
                             whileTap={{ scale:0.99 }}
                             transition={{ duration: 0.25, ease: "easeInOut" }}
 
-                            id="materias" onClick={() => setOpen(true)} className="bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] h-[280px] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
-                                <CirclePlus className="text-[rgb(165,165,165)] size-[60px]"/>
-                                <h2 className="text-[30px] text-[rgb(48,38,42,87%)] font-medium">Criar matéria</h2>
+                            id="materias" onClick={() => setOpen(true)} className="material bg-[#D8D8D8] border-[3px] border-[rgb(0,0,0,22%)] rounded-[28px] cursor-pointer flex justify-center items-center flex-col ">
+                                <CirclePlus className="text-[rgb(165,165,165)] size-[50px]"/>
+                                <h2 className="text-[25px] text-[rgb(48,38,42,87%)] leading-none font-medium text-center material_title">Criar matéria</h2>
                             </motion.div>
 
                             {materias.map((material, index) => {
@@ -655,13 +662,13 @@ export default function Materiais() {
                                         whileHover={{ scale:1.01 }}
                                         whileTap={{ scale:0.99 }}
                                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                                        id="materias" className="h-[280px] bg-red-500 rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
+                                        id="materias" className="material rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
                                             <div className="absolute top-3 right-4 z-10 flex flex-col items-end ">
                                                 <div className="">
                                                     <AnimatePresence initial={false}>
                                                         <button ref={(el) => { buttonRefs.current[index] = el; }}
                                                         onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                                                        key={0} className="" ><Ellipsis className="opacity-[80%] size-8"/>
+                                                        key={0} className="" ><Ellipsis className="opacity-[80%] size-6"/>
                                                         </button>
 
                                                         { openPop === index &&(
@@ -670,16 +677,19 @@ export default function Materiais() {
                                                             animate={{ scale: 1, opacity: 1 }}
                                                             exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
                                                             
-                                                            ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px]">
-                                                                <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+                                                            ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px] z-1000">
+                                                                <div className="absolute right-0 top-full mt-2 w-[160px] rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+
                                                                     <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
+
                                                                     <div className="flex flex-col w-full gap-1 text-base ">
-                                                                        <button className="mx-2 text-[#726BB6] text-[25px] px-2 w-[98%] py-3 items-center flex gap-2" onClick={() => {setEditar(true); 
+                                                                        <button className="mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2" onClick={() => {setEditar(true); 
                                                                         setTemp([{ id: material.id, nome: material.nome, cor: material.cor, icone: material.icone }] );}} >
-                                                                            <SquarePen/> Editar
+                                                                            <SquarePen className="icon-3"/> Editar
                                                                         </button>
                                                                         <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                                                                        <button onClick={() => {setDeletarPop(true); setDeletar(material.id!); setOpenPop(null)}} className="mx-2 text-[#726BB6] text-[25px] px-2 w-[95%] py-3 flex gap-2 items-center" ><SquareX/> Excluir</button>
+                                                                        <button onClick={() => {setDeletarPop(true); setDeletar(material.id!); setOpenPop(null)}} className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center" >
+                                                                            <SquareX className="icon-3"/> Excluir</button>
                                                                     </div>
                                                                 </div>
                                                             </motion.div>
@@ -688,18 +698,37 @@ export default function Materiais() {
                                                 </div>
                                             </div>
                                             <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
-                                                <div className="w-[90%] max-w-[90%] h-full flex rounded-[28px] gap-[2%] justify-center items-center">
-                                                    <div className="max-w-[85%] max-h-[80%] overflow-hidden ">
-                                                        <h2 className="text-[30px] w-min leading-[40px] text-[rgb(48,38,42,87%)] font-medium ">{material.nome}</h2>
-                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
-                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
-                                                        <h2 className="text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
+                                                <div className="w-[90%] max-w-[90%] h-full flex rounded-[28px] gap-[4%] justify-center items-center">
+                                                    <div className="max-w-[100%] xl:max-w-[85%] max-h-[80%] overflow-hidden ">
+                                                        <div className="flex justify-between">
+                                                            <h2 className="  material_title 
+                                                            text-[25px] 
+                                                            w-[95px]
+                                                            max-w-[80%] 
+                                                            line-clamp-2
+                                                            break-words 
+                                                            leading-none 
+                                                            text-[rgb(48,38,42,87%)] 
+                                                            font-medium">{material.nome}</h2>
+                                                            
+                                                            {(() => {
+                                                                const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
+                                                                if (IconComponent) {
+                                                                    return <IconComponent className="md:hidden flex size-[30px] opacity-[50%] stroke-1" />;
+                                                                }
+                                                                return null;
+                                                            })()}
+
+                                                        </div>
+                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
+                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
+                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
                                                     </div>
                                                     
                                                     {(() => {
                                                         const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
                                                         if (IconComponent) {
-                                                            return <IconComponent className="size-[160px] max-w-[45%] opacity-[22%] stroke-1" />;
+                                                            return <IconComponent className="size-[130px] hidden md:flex max-w-[45%] opacity-[22%] stroke-1" />;
                                                         }
                                                         return null;
                                                     })()}
@@ -728,7 +757,7 @@ export default function Materiais() {
                 </div> */}
             </div>
 
-            <div className=" right_panel bg-white rounded-[35px]  h-full flex justify-center shadow-md border border-[#00000031] ">
+            <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden">
                  
                 <div className="w-full h-full flex justify-center ">   
                     <div className="w-[95%] h-[95%] flex flex-col items-center mt-4">
@@ -752,20 +781,24 @@ export default function Materiais() {
                         </div>
                         
                         <div className="ml-[15px] mt-[30px] w-[95%] max-w-[95%]">
-                            <h1 className="text-[30px] w-fit font-medium leading-6">Materiais recentes</h1>
-                            <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1>
+                            <h1 className="text-[30px] w-fit font-medium leading-6">Materias recentes</h1>
+                            {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 items-center h-[685px] relative w-[380px] max-w-[95%] bg-red-500 overflow-auto">
+                        <div className="flex flex-col gap-1 mb-[5px] items-center relative max-w-[95%]">
                             {recente.map((materia, index) => {
                                 return(
-                                    <Link key={index} href="/home/materiais/" className=" flex gap-3 px-2 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
+                                    <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
 
                                         <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1 < 10 ? `0${index + 1}`: `${index + 1}` }</h1>
 
                                         <div className="flex items-center w-full">
-                                            <div className="w-full">
-                                                <h2 className="text-[25px] font-medium leading-[30px]">{materia.nome}</h2>
+                                            <div className="recentes ">
+                                                <h2 className="
+                                                w-full
+                                                break-words 
+                                                text-[25px] 
+                                                max-w-[250px] line-clamp-2 breake-words  font-medium leading-none">{materia.nome}</h2>
                                                 <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 3 horas</h2>
                                             </div>
 
@@ -775,10 +808,9 @@ export default function Materiais() {
 
                                 )
                             })}
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-5 text-[22px] w-[380px] max-w-[95%] h-[50px] rounded-full ">Ver mais materiais</motion.button>
-
                         </div>
 
+                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais materias</motion.button>
                     </div>
                 </div> 
             </div>

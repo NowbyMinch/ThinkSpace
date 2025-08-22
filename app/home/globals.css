@@ -419,3 +419,29 @@ input::-webkit-inner-spin-button {
 .right_panel{
   min-width: 25%;
 }
+
+.material{
+  height: 280px;
+}
+
+.recentes {
+  width: clamp(
+    105px,
+    /* linear interpolation between 105px → 262px as viewport goes 1280px → 1920px */
+    calc(118px + (262 - 118) * ((100vw - 1280px) / (1920 - 1280))),
+    262px
+  );
+}
+
+@media(max-width:1310px){
+  .material{
+      height: clamp(150px, 25vw, 280px);
+      /* height: 180px; */
+  }
+  .material_text{
+    font-size: clamp( 13px, 4vw, 18px);
+  }
+  .material_title{
+    font-size: clamp( 20px, 2vw, 25px);
+  }
+}

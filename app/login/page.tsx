@@ -5,15 +5,16 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import ErrorModal from '@/components/ui/ErrorModal';
+import Loading from '../home/components/loading';
 
 export default function LoginPage() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", senha: "" });
   const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading ] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -30,6 +31,9 @@ export default function LoginPage() {
     }
     console.log(data);
   };
+
+  if (loading) return <Loading />;
+
   return (
     <>
       {message && (

@@ -367,7 +367,7 @@ export const Sidebar = () => {
 
             <motion.div
             ref={bottomBar}
-            className={`${visible? "h-[85px] ": "left-[50%] translate-x-[-50%]"}    w-[65px] left-[50%] translate-x-[-50%] fixed bottom-0 rounded-tl-[10px] rounded-tr-[10px] min-h-fit flex flex-col justify-center items-center z-[100] overflow-hidden `}>
+            className={`${visible? "h-[85px] ": "left-[50%] translate-x-[-50%]"} w-[65px] left-[50%] translate-x-[-50%] fixed bottom-0 rounded-tl-[10px] rounded-tr-[10px] min-h-fit flex flex-col justify-center items-center z-[100] overflow-hidden `}>
                 <div className="bg-[#D9D9D9] w-[65px] h-[25px] rounded-tl-[10px] lg:hidden rounded-tr-[10px] mt-auto flex justify-center items-center cursor-pointer" onClick={() => bar()}>
                     <ChevronUp className={` ${visible? "rotate-[180deg]": ""} transition-all ease-in-out duration-400 `}/>
                 </div>

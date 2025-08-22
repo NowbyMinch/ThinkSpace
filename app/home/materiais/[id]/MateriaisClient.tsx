@@ -80,8 +80,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ deletarId, setDeletarId ] = useState("");
     const [ tipo, setTipo ] = useState("");
     const [ origem, setOrigem ] = useState("");
-    const [ quantidadeQuestoes, setQuantidadeQuestoes] = useState(0);
-    const [ quantidadeFlashcards, setQuantidadeFlashcards] = useState(0);
     const [value, setValue] = useState(10);
     const [value2, setValue2] = useState(10);
 
@@ -951,7 +949,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                         initial={{ opacity: 0, scale: 0.85}}
                         animate={{ opacity: 1, scale: 0.94 }}
                         exit={{ opacity: 0, scale: 0.90 }}
-                        className={`w-[700px] h-[380px] flex rounded-[40px] z-[1100]  opacity-1 `}>
+                        className={`w-[700px] h-[320px] flex rounded-[40px] z-[1100]  opacity-1 `}>
 
                             <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
                                 
@@ -965,20 +963,20 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         <span className="text-[20px]"></span>
                                     </div>
 
-                                    <h1 className="text-center text-[35px] font-medium">Deseja mesmo deletar esse material?</h1>
+                                    <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar esse material?</h1>
                                     <div className="w-[60%] flex justify-between mt-auto">
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => setDeletar(false)}
-                                        className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_12px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
                                             Voltar
                                         </motion.button>
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => {setDeletar(false); Deletar(deletarId)}}
-                                        className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_12px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
                                             Deletar
                                         </motion.button>
                                     </div>
