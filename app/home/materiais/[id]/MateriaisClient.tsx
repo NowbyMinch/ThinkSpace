@@ -1011,15 +1011,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
                         <h1 className="text-[18px] italic w-fit font-medium  ">{materia?.nome}</h1> */}
 
                     <div className=" mt-[25px] overflow-hidden flex items-center ">
-                        <div className="w-full h-[82px] mt-10 flex justify-center relative ">
-                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 mr-5 h-[45px] bg-[#D9D9D9] absolute "></div>
+                        <div className="w-full h-[82px] mt-10 flex justify-center relative gap-[2%]">
 
+                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 left-[2%] h-[45px] bg-[#D9D9D9] absolute  "></div>
                             <div className="relative w-[84%] max-w-[90%]">
-                                <input type="text" id="search_bar" placeholder="Pesquise o material" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                                <input type="text" id="search_bar" placeholder="Pesquise o material" className=" w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] "/>
                             </div>
 
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="min-w-[10%] bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="min-w-[10%] h-fit bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
 
                         </div>
                         
@@ -1118,23 +1118,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                     Menor tempo de estudo
                                 </div>
                             </div>
-
-                            <div className="w-full flex flex-col gap-2 text-[25px]">
-                                <h1 className="text-[40px] font-medium border border-b-[rgba(0,0,0,0.28)] ">POO I</h1>
-
-                                <h2>Criado em 01/02</h2>
-                                <h2>Tempo de estudo: 45 min</h2>
-                                <h2>Flashcards: 12</h2>
-                                <div className="flex flex-col gap-2">
-                                    <h2>Status da atividade:</h2>
-                                    <div className="flex gap-2 items-center text-[20px]">
-                                        <h3 className="bg-[#9767F8] px-5 rounded-[25px] text-white">Completa</h3>
-                                        <h3 className="bg-[#C7C7C7] px-5 rounded-[25px] text-white">Incompleta</h3>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                           
                         </div>
                     </div>
                 </div>

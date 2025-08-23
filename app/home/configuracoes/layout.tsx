@@ -19,7 +19,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         if (pathname == "/home/configuracoes/informacoes") {
                                             return (
                                                 <>
-                                                    <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Informações básicas</h2>
+                                                    <h2 className=" text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Informações básicas</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -30,7 +30,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                                 </>
                                             )
                                         }
-                                        return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>
+                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>
                                         }
                                     )()}
 
@@ -42,7 +42,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         if (pathname == "/home/configuracoes/personalizacao") {
                                             return (
                                                 <>
-                                                    <h2 className=" text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Personalização</h2>
+                                                    <h2 className=" text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Personalização</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -54,7 +54,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                             )
                                             
                                         }
-                                        return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Personalização</h2>
+                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Personalização</h2>
                                         }
                                     )()}
 
@@ -67,7 +67,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                             return (
 
                                                 <>
-                                                    <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Notificação</h2>
+                                                    <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Notificação</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -78,7 +78,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                                 </>
                                             )
                                         }
-                                        return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Notificação</h2>
+                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Notificação</h2>
                                         }
                                     )()}
 
@@ -90,7 +90,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         if (pathname == "/home/configuracoes/conta") {
                                             return (
                                                 <>
-                                                    <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Conta</h2>
+                                                    <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Conta</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -101,7 +101,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                                 </>
                                             )
                                         }
-                                        return <h2 className="text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Conta</h2>
+                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Conta</h2>
                                         }
                                     )()}
 

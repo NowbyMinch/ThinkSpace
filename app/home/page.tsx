@@ -28,6 +28,7 @@ import {
   SquarePen, Flame, ArrowLeft, ArrowRight, Ellipsis
 } from "lucide-react";
 import * as Icons from "lucide-react";
+import { avatar } from "@heroui/react";
 
 const icons = [
   // Educação e aprendizado
@@ -145,14 +146,10 @@ export default function HomePage() {
   assuntoId: string | null;
   criadoEm: string;
   };
-  type SalasResponse = {
-    salasMembro: Sala[];
-  };
   type Ofensiva = {
     data: string;
     status: number;
   };
-
   const [ bannerData, setBannerData ] = useState<BannerData>({})
   const [ user, setUser ] = useState<UserData>({})
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
@@ -161,6 +158,9 @@ export default function HomePage() {
   const [ loading, setLoading ] = useState(true);
   const [ materias, setMaterias ] = useState<materiaItem[]>([]);
   const [ ofensiva, setOfensiva ] = useState<Ofensiva[]>([]);
+  const [ ofensivaMensagem, setOfensivaMensagem ] = useState("");
+  const [ avatares, setAvatares ] = useState("");
+  const [ totalEstudantes, setTotalEstudantes ] = useState(0);
   
   useEffect(() => {
     console.log("Salas updated:", salas);
@@ -189,7 +189,6 @@ export default function HomePage() {
         });
         
         const data = await res.json();
-        setLoading(false);
         setBannerData(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -205,7 +204,6 @@ export default function HomePage() {
         });
         
         const data = await res.json();
-        setLoading(false);
         setUser(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -221,7 +219,6 @@ export default function HomePage() {
         });
         
         const data = await res.json();
-        setLoading(false);
         setCalendario(data)
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
@@ -231,16 +228,20 @@ export default function HomePage() {
     
     const salasDeEstudo = async () => {
       try{
+        setLoading(true);
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
           method: 'GET',
           credentials: 'include',
         });
         
-        const data: SalasResponse = await res.json();
-        const todasSalas = [...data.salasMembro];
+        const data = await res.json();
 
-        setSalas(todasSalas);
-      
+        console.log("/home/salas-estudo aqui", data);
+        
+        setAvatares(data.avataresUltimosUsuarios);
+        setTotalEstudantes(data.totalEstudantes);
+        setSalas(data.salasMembro);
+        setLoading(false);
       } catch (err) {
         setMessage("Erro ao carregar salas de estudo.");
         console.error(err);
@@ -270,17 +271,28 @@ export default function HomePage() {
           credentials: 'include',
         });
         
+        const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
         const data = await res.json();
+        const data2 = await res2.json();
+        console.log("DATA ", data, " DATA2 ", data2 );
+
+        setOfensivaMensagem(data2.mensagemOfensiva);
         setLoading(false);
         setOfensiva(data.diasSemana);
+
       } catch (err) {
         setMessage("Erro ao carregar a ofensiva.");
         console.error(err);
       }
+      
+
     }; Ofensiva();
 
   }, []);
-
 
   useEffect(() =>{
     console.log("UseEffect ofensiva: ", ofensiva);
@@ -335,7 +347,7 @@ export default function HomePage() {
                               Sua ofensiva
                             </h1>
                             <h2 className="cursor-text font-medium text-[18px] w-fit text-[#121212] ">
-                              Sua ofensiva atual é de 1 dia
+                              {ofensivaMensagem}
                             </h2>
                           </div>
 
@@ -910,9 +922,9 @@ export default function HomePage() {
             <div id="scroll" className="max-h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
               
               { salas.length === 0 && salas.length === 0 && (
-                <div className="w-full h-[500px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
+                <div className="w-full h-[400px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
                   <div className="w-[90%] h-[35%]  flex justify-center items-center">
-                      <h1 className="text-[32px] font-medium line-clamp-3 break-words">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
+                      <h1 className="banner_title text-[22px] font-medium line-clamp-4 break-words">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
                   </div>
 
                   <div className="flex relative w-[90%] h-[65%] ">
@@ -925,7 +937,7 @@ export default function HomePage() {
 
                     <div className=" z-20 ml-auto mr-[4%] w-[45%] h-[61px] ">
                       <a className=" cursor-pointer rounded-full">
-                        <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                         <button className="banner_button bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
                           Ir para salas
                         </button>
                       </a>
@@ -965,33 +977,33 @@ export default function HomePage() {
 
                           <div className="flex items-center ">
                             <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                              <Image width={300} height={500}
-                                src="/imaginuser4.svg"
+                              <img 
+                                src={avatares[0]}
                                 className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
                                 alt="Usuário"
                               />
-                              <Image width={300} height={500}
-                                src="/imaginuser3.svg"
+                              <img
+                                src={avatares[1]}
                                 className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
                                 alt="Usuário"
                               />
-                              <Image width={300} height={500}
-                                src="/imaginuser2.svg"
+                              <img
+                                src={avatares[2]}
                                 className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
                                 alt="Usuário"
                               />
-                              <Image width={300} height={500}
-                                src="/imaginuser1.svg"
+                              <img
+                                src={avatares[3]}
                                 className="diaOfensiva rounded-full absolute border-white border-[2px]"
                                 alt="Usuário"
                               />
                             </div>
 
                             <div className="flex justify-between  items-center h-[44px] w-full ">
-                              <h2 className="text-[18px]">+50 estudantes</h2>
-                              <button className="p-[5px_15px] h-full rounded-full bg-blue-950 text-white text-[18px] shadow-md">
+                              <h2 className={`text-[18px] ${totalEstudantes > 4 ? "block": "hidden"} pl-1`}>+{totalEstudantes - 4} estudantes</h2>
+                              {/* <button className="p-[5px_15px] h-full rounded-full bg-blue-950 text-white text-[18px] shadow-md">
                                 Visitar
-                              </button>
+                              </button> */}
                             </div>
                           </div>
                         </div>

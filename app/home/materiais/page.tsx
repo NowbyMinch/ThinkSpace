@@ -21,7 +21,7 @@ import {
 import * as Icons from "lucide-react"; 
 import Loading from "@/app/home/components/loading";
 
-const icons = [
+export const icons = [
   // Educação e aprendizado
   { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
   { id: "clipboard", Icon: Clipboard }, { id: "file", Icon: File }, { id: "folder", Icon: Folder },
@@ -57,8 +57,8 @@ const icons = [
   { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse }, { id: "squareX", Icon: SquareX },
   { id: "squarePen", Icon: SquarePen }
 ];
-const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
-const cor = { 
+export const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
+export const cor = { 
     "#8B81F3": "ROXO", 
     "#CAC5FF": "LILAS", 
     "#FFA6F1": "ROSA", 
@@ -96,7 +96,6 @@ type UserData = {
     foto?: string;
     // add other properties if needed
 };
-
 type RecenteData = {
     indice?: number;
     nome?: string;
@@ -105,6 +104,14 @@ type RecenteData = {
     icone?: string;
     ultimaRevisao?: number;
     tempoAtivo?: number;
+};
+type UserXP = {
+    avatar: string;
+    cargo: string;
+    nivel: string;
+    primeiroNome: string;
+    progresso: number;
+    xp: number;
 };
 
 export default function Materiais() {
@@ -132,6 +139,7 @@ export default function Materiais() {
     const [materias, setMaterias] = useState<materiaItem[]>([]);
     const [criarMateria, setCriarMateria] = useState<criar>({});
     const [temp, setTemp] = useState<editar[]>([]);
+    const [userXP, setUserXP] = useState<UserXP>();
     // const [recentes, setRecentes] = useState<recentesData[]>([]);
 
     // Constantes
@@ -187,6 +195,7 @@ export default function Materiais() {
                 });
                 
                 const data = await res.json();
+                console.log("User: ", data)
                 setUser(data)
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -206,15 +215,35 @@ export default function Materiais() {
                 if (data.materiasRecentes){
                     setRecente(data.materiasRecentes);
                 }
-                setLoading(false);
 
             } catch (err) {
                 console.error(err);
             }
             
         }; recentes();
+        
+        const ranking = async () => {
+          try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+              method: 'GET',
+              credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setUserXP(data);
+            console.log(data);
+            setLoading(false);
+
+          } catch (err) {
+            console.error(err);
+          }
+1        }; ranking();
 
     }, []);
+
+    useEffect(() => {
+        console.log("UserXP: ", userXP);
+    }, [userXP]);
 
     useEffect(() => {
         setTemp([{ nome: criarMateria.nome, cor: criarMateria.cor, icone: criarMateria.cor }]);
@@ -300,7 +329,6 @@ export default function Materiais() {
             console.error("Erro ao deletar matéria:");
         }
     };
-
     function closing(){
         setOpen(false);
         setEditar(false);
@@ -308,9 +336,7 @@ export default function Materiais() {
         setColor("");
         setCriarMateria({ nome: "", cor: "", icone: "" })
     }
-     
     if (loading) return <Loading />;
-    
     return( 
         <>
         {message && (
@@ -773,19 +799,30 @@ export default function Materiais() {
                                     <div className="w-[20%] h-2 rounded-[25px] bg-purple-600 "></div>
                                 </div>
                                 <div className="flex justify-between ">
-                                    <h2 className="font-medium text-[18px] text-[#828181]">Iniciante</h2>
-                                    <h2 className="font-medium text-[18px] text-[#828181]">20px</h2>
+                                    {(() =>{
+
+                                        const nivel = (userXP?.nivel!).toLowerCase().charAt(0).toUpperCase() + (userXP?.nivel!).slice(1).toLocaleLowerCase();
+                                        
+                                        return (
+                                            <>
+                                                <h2 className="font-medium text-[18px] text-[#828181]">{nivel}</h2>
+                                            </>
+                                        )
+
+                                    })()}
+
+                                    <h2 className="font-medium text-[18px] text-[#828181]">{userXP?.xp} XP</h2>
                                 </div>
                             </div>
 
                         </div>
                         
                         <div className="ml-[15px] mt-[30px] w-[95%] max-w-[95%]">
-                            <h1 className="text-[30px] w-fit font-medium leading-6">Materias recentes</h1>
+                            <h1 className="text-[30px] w-fit font-medium leading-6">Matérias recentes</h1>
                             {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 mb-[5px] items-center relative max-w-[95%]">
+                        <div className="flex flex-col gap-1 mb-[5px] mt-2 items-center relative max-w-[95%]">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
@@ -810,7 +847,7 @@ export default function Materiais() {
                             })}
                         </div>
 
-                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais materias</motion.button>
+                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais matérias</motion.button>
                     </div>
                 </div> 
             </div>

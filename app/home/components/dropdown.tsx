@@ -178,6 +178,94 @@ export function ComboboxDemo() {
   )
 }
 
+type Sala = {
+  id: string;
+  nome: string;
+  descricao: string;
+  topicos: string[];
+  banner: string;
+  moderadorId: string;
+  assuntoId: string | null;
+  criadoEm: string;
+  };
+
+export function ComboboxDemomMetricas() {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState("")
+  const [ salas, setSalas ] = useState<Sala[]>([])
+
+  useEffect(() => {
+    const salasDeEstudo = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+
+        console.log(data);
+        setSalas(data.salasMembro);
+
+      } catch (err) {
+        console.error(err);
+      }
+    }; salasDeEstudo();
+
+  }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen} >
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-fit min-w-[180px] flex gap-4 justify-center rounded-[10px]"
+        >
+          <span>
+            {salas[0]?.nome}
+            {/* {value
+              ? salas.find((framework) => framework.nome === value)?.nome
+              : "Selecione a sala de estudo"} */}
+          </span>
+
+          <ChevronsUpDown className="opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0 rounded-[10px]">
+        <Command className="rounded-[10px]">
+          <CommandList>
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup>
+              {salas.map((framework) => (
+                
+                <CommandItem
+                  key={framework.id}
+                  value={framework.nome}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? "" : currentValue)
+                    setOpen(false)
+                  }}
+                >
+                  {framework.nome}
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      value === framework.nome ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  )
+}
+
 interface ComboboxDemoProps {
   value: string;
   onChange: (value: string) => void;
@@ -185,7 +273,7 @@ interface ComboboxDemoProps {
 
 export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
-
+  
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="">
