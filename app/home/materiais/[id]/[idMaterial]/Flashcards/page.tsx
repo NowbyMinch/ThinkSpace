@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/app/home/components/loading";
+import { set } from "date-fns";
 
 // import { PageProps } from "../type";
 // { params }: PageProps 
@@ -90,9 +91,8 @@ export default function MaterialClient() {
                     });
                     
                     const data = await res.json();
-                    console.log(data);
+                    console.log("Flashcards", data);
                     setFlashcards(data);
-                    setLoading(false);
                 } else{
                     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards/${id}`, {
                     method: 'GET',
@@ -100,8 +100,8 @@ export default function MaterialClient() {
                     });
                     
                     const data = await res.json();
+                    console.log("Flashcards", data);
                     setFlashcards(data);
-                    setLoading(false);
                 }
 
             } catch (err) {
@@ -113,7 +113,10 @@ export default function MaterialClient() {
     }, []);
 
     useEffect(() => {
-        console.log(flashcards.flashcards);
+        if (flashcards.flashcards.length > 0){
+            setLoading(false);
+        }
+        console.log(flashcards.flashcards.length);
     }, [flashcards]);
     
     if (loading) return <Loading />;

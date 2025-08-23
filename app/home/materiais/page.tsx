@@ -106,6 +106,7 @@ type RecenteData = {
     tempoAtivo?: number;
 };
 type UserXP = {
+    maxXp: number;
     avatar: string;
     cargo: string;
     nivel: string;
@@ -197,6 +198,7 @@ export default function Materiais() {
                 const data = await res.json();
                 console.log("User: ", data)
                 setUser(data)
+                
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
                 console.error(err);
@@ -795,23 +797,16 @@ export default function Materiais() {
                             <div className="w-[70%] ">
                                 <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
                                 <h2 className="text-[#828181] font-medium text-[18px]">{user.cargo}</h2>
-                                <div className="  h-2 rounded-[18px] bg-[#1e235138]">
-                                    <div className="w-[20%] h-2 rounded-[25px] bg-purple-600 "></div>
+                                <div className=" h-2 rounded-[18px] bg-[#1e235138]">
+                                    <div style={{ width: userXP?.progresso ?? 0 }} className={` h-2 rounded-[25px] bg-purple-600 `}></div>
                                 </div>
                                 <div className="flex justify-between ">
                                     {(() =>{
-
-                                        const nivel = (userXP?.nivel!).toLowerCase().charAt(0).toUpperCase() + (userXP?.nivel!).slice(1).toLocaleLowerCase();
-                                        
-                                        return (
-                                            <>
-                                                <h2 className="font-medium text-[18px] text-[#828181]">{nivel}</h2>
-                                            </>
-                                        )
-
+                                        const nivel = userXP?.nivel ? userXP.nivel.charAt(0).toUpperCase() + userXP.nivel.slice(1).toLowerCase() : "";
+                                        return <h2 className="font-medium text-[18px] text-[#828181]">{nivel}</h2>
                                     })()}
 
-                                    <h2 className="font-medium text-[18px] text-[#828181]">{userXP?.xp} XP</h2>
+                                    <h2 className="font-medium text-[18px] text-[#A39CEC]">{userXP?.xp} XP</h2>
                                 </div>
                             </div>
 

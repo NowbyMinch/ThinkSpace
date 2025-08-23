@@ -11,7 +11,6 @@ export default function LoginPage() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", senha: "" });
   const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading ] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,27 +31,24 @@ export default function LoginPage() {
     console.log(data);
   };
 
-  if (loading) return <Loading />;
-
   return (
     <>
       {message && (
         <ErrorModal message={message} onClose={() => setMessage(null)} />
       )}
       
-      <div className="w-[100%] h-[100vh] flex justify-center bg-white">
-          <div className="logincontainer w-[1600px] py-5 m-auto max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
-            <AnimatePresence >
-              <motion.div 
-              key="loginimage"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.9, ease: "easeInOut", type: "spring", bounce: 0.4}}
-              className="loginimage min-w-[50%] max-w-[50%] flex items-center h-fit">
-                <Image src="/loginimage.svg" alt="Login Image" className='w-full' width={300} height={500}/>
-              </motion.div>
-
+      <AnimatePresence>
+        <div className="w-[100%] h-[100vh] flex justify-center bg-white">
+            <div className="logincontainer w-[1600px] py-5 m-auto max-w-[90%] mx-auto flex lg:flex-row flex-col justify-center items-center">
+                <motion.div 
+                key="loginimage"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.9, ease: "easeInOut", type: "spring", bounce: 0.4}}
+                className="loginimage min-w-[50%] max-w-[50%] flex items-center h-fit">
+                  <img src="/loginimage.svg" alt="Login Image" className='w-full ' width={300} height={500}/>
+                </motion.div>
               <motion.div key="login" className="login  w-[90%] lg:max-w-[50%] flex justify-center items-center">
                 <div className=" flex flex-col w-[500px] gap-[20px] max-w-[100%] h-full ">
                   <div className="">
@@ -100,11 +96,10 @@ export default function LoginPage() {
                 </div>
           
               </motion.div>
-              
-            </AnimatePresence>
-            
-          </div>
-      </div>
+            </div>
+        </div>
+        
+      </AnimatePresence>
     </>
   )
 }

@@ -129,6 +129,10 @@ export default function RegisterPage() {
       final();
       handleScrollToTop();
     }
+    else if (data.message === "Sala de estudo não encontrada."){
+      final();
+      handleScrollToTop();
+    }
     else{
       setMessage(data.message)
     }

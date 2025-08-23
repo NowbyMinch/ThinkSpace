@@ -330,17 +330,20 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     quantidadeFlashcards: value2,
                 };
                 console.log("Logo antes,", value, value2)
+
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload), // ✅ Só string aqui
+                    body: JSON.stringify(payload), 
                     credentials: "include",
                 });
+
                 console.log(payload);
             }
 
             const data = await res.json();
             console.log("DATA 1:", data);
+
 
             // Checar erros
             if (
@@ -355,50 +358,58 @@ export default function MateriaisClient({ id }: { id: string; }) {
             setMessage(data.message);
             return;
             }
+            else{
+                setLoading(true);
+            }
 
+            console.log("FORA DO COMPLETO", data.material.id);
             closing();
             console.log("Loading true")
-            setLoading(true);
 
             // Processar materiais
             if (tipo === "COMPLETO") {
-            let resumoEndpoint = "";
-            let flashcardsEndpoint = "";
-            let quizzesEndpoint = "";
-            if (origem === "DOCUMENTO") {resumoEndpoint = "resumo-documento"; flashcardsEndpoint = "flashcards-pdf"; quizzesEndpoint = "quizzes-pdf"}
-            if (origem === "TOPICOS") {resumoEndpoint = "resumo-topicos"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
-            if (origem === "ASSUNTO") {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
+                console.log("DENTRO DO COMPLETO", data.material.id);
 
-            if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
-                console.log(data.material.id);
-                
-                const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${resumoEndpoint}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: data.material.id }),
-                credentials: "include",
-                });
-                const data2 = await res2.json();
-                console.log("RESUMO:", data2);
+                let resumoEndpoint = "";
+                let flashcardsEndpoint = "";
+                let quizzesEndpoint = "";
+                if (origem === "DOCUMENTO") {resumoEndpoint = "resumo-documento"; flashcardsEndpoint = "flashcards-pdf"; quizzesEndpoint = "quizzes-pdf"}
+                else if (origem === "TOPICOS") {resumoEndpoint = "resumo-topicos"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
+                else {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
+            
+            setTimeout( async () => {
+                if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
+                    console.log(data.material.id);
+                    
+                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${resumoEndpoint}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                    });
+                    const data2 = await res2.json();
+                    console.log("RESUMO:", data2);
 
-                // Flashcards
-                const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${flashcardsEndpoint}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: data.material.id }),
-                credentials: "include",
-                });
-                console.log("FLASHCARDS:", await res3.json());
+                    // Flashcards
+                    const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${flashcardsEndpoint}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                    });
+                    console.log("FLASHCARDS:", await res3.json());
 
-                // Quizzes
-                const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${quizzesEndpoint}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: data.material.id }),
-                credentials: "include",
-                });
-                console.log("QUIZZES:", await res4.json());
-            }
+                    // Quizzes
+                    const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${quizzesEndpoint}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: data.material.id }),
+                    credentials: "include",
+                    });
+                    console.log("QUIZZES:", await res4.json());
+                }
+            }, 5000);
+            
             }
 
             // 5️⃣ Redirecionar
@@ -1002,7 +1013,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
             <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="w-[95%] max-w-[95%] mt-4 ">
                     
-                    
                     <div className="w-full mx-auto">
                         <h1 className="text-[#1E2351] font-medium text-[30px]"> Materiais de Estudo </h1>
                         <h1 className="font-medium text-[18px] text-[#9767F8] "> {materia?.nome} </h1>
@@ -1033,12 +1043,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 {(() => {
                                     if (index < 9){
                                         return (
-                                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">0{index + 1}</h1>
+                                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">0{index + 1}</h1>
                                         )
                                     }
                                     else{
                                         return (
-                                            <h1 className="text-[90px] font-bold text-[#A78CDC] leading-[90px]">{index + 1}</h1>
+                                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1}</h1>
                                         )
                                     }
                                 })()}
@@ -1047,8 +1057,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 whileHover="delete"
                                 className="mt-[18px] flex justify-between items-center ">
                                     <div className="">
-                                        <h2 className="text-[30px] font-medium leading-[30px]">{material.titulo}</h2>
-                                        <h2 className="text-[20px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                        <h2 className="text-[25px] font-medium leading-[30px]">{material.titulo}</h2>
+                                        <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 3 horas</h2>
                                     </div>
                                     <div className="flex items-center">
                                         <motion.div 

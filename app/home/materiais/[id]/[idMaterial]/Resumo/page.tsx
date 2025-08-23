@@ -29,7 +29,6 @@ export default function MaterialClient() {
                 setOrigem(data.material.origem);
             } catch (err) {
                 console.error(err);
-                setLoading(false);
             }
         };
 
@@ -64,21 +63,28 @@ export default function MaterialClient() {
                 
             } catch (err) {
                 console.error(err);
-            } finally {
-                setLoading(false);
-            }
+            } 
         };
 
         Resumo();
     }, [origem, idMaterial]);
 
+    useEffect(() => {
+        if (resumo) {
+            if (resumo.length > 0){
+                setLoading(false);
+            }
+        }
+
+    }, [resumo]);
+    
     if (!idMaterial) return null;
     if (loading) return <Loading />;
 
     return( 
         <>  
             <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] justify-center ">
-                <div className=" w-[1150px] max-w-[95%] h-[95%] flex flex-col overflow-y-auto items-center ">
+                <div className=" w-[1350px] max-w-[95%] h-[95%] flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
                         <h1 className=" text-[25px] font-medium h-fit">Resumo <span className=" text-[#726BB6]">IA</span></h1>
                         <div className=" h-[96%] flex flex-col gap-8 ">

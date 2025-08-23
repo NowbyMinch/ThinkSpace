@@ -1,19 +1,17 @@
 "use client";
 
-import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Earth } from 'lucide-react';
-import { Chart } from '@/app/home/components/chart';
+import { ChevronDown, HeartPulse, CodeXml, Cable, Plus, Minus, Divide, X, Earth, UserX } from 'lucide-react';
 import Image from 'next/image';
-import { ComboboxDemo, ComboboxDemomMetricas } from '@/app/home/components/dropdown';
+import { ComboboxDemomMetricas } from '@/app/home/components/dropdown';
+import Charting from '@/app/home/components/dropdown';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Loading from '@/app/home/components/loading';
 import { motion, AnimatePresence } from "framer-motion";
-import { Backdrop3 } from '@/app/home/components/backdrop';
-import { colors, cor, icons } from '@/app/home/materiais/page';
 
 
 type UserXP = {
-    maxXP: number;
+    maxXp: number;
     avatar: string;
     cargo: string;
     nivel: string;
@@ -42,9 +40,6 @@ type userData = {
     foto?: string;
     // add other properties if needed
 };
-type QuestoesPorDia = {
-  [data: string]: number;
-};
 type MelhorMateria = {
   nome: string;
   xp: number;
@@ -64,6 +59,9 @@ type MetricasUser = {
   totalQuestoes: number;
   xp: number;
 };
+type QuestoesPorDia = {
+  [data: string]: number;
+};
 
 export default function Métricas() {
     
@@ -73,7 +71,8 @@ export default function Métricas() {
     const [ loading, setLoading ] = useState(true);
     const [ userID, setUserID ] = useState("");
     const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
-    const [ verMais, setVerMais ] = useState(false);
+    const [ melhores, setMelhores ] = useState();
+
     
     useEffect(() => {
         const user = async () => {
@@ -86,7 +85,6 @@ export default function Métricas() {
                 
                 const data = await res.json();
                 setUser(data);
-
 
             } catch (err) {
                 console.error(err);
@@ -101,9 +99,9 @@ export default function Métricas() {
                 });
                 
                 const data = await res.json();
+                console.log("IGNORE (Esse é o retorno do materias perfil ): ", data);
                 setUserXP(data);
-                console.log("This is USERXP: ", data);
-
+                // console.log("This is USERXP: ", data);
 
             } catch (err) {
                 console.error(err);
@@ -118,7 +116,7 @@ export default function Métricas() {
                 });
                 
                 const data = await res.json();
-                console.log("Rank", data);
+                // console.log("Rank", data);
                 setRanking(data);
 
             } catch (err) {
@@ -134,13 +132,13 @@ export default function Métricas() {
                 });
                 
                 const data = await res.json();
-                console.log("UserID: ", data);
                 setUserID(data.userId);
 
             } catch (err) {
                 console.error(err);
             }
         }; UserID();
+        
     }, []);
 
     useEffect(() => {
@@ -155,90 +153,61 @@ export default function Métricas() {
                     const data = await res.json();
                     console.log(data);
                     setMetricasUser(data);
-                     setLoading(false);
+                    setLoading(false);
                 }
             }; metricasUser();
+            
+            const metricas = async () => {
+                try{
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}/?weeksAgo=${0}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    });
+                    
+                    const data = await res.json();
+                    // console.log("Metricas: ", data);
+
+                } catch (err) {
+                    console.error(err);
+                }
+            }; metricas();
+            
+            const melhoresMaterias = async () => {
+                try{
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}/melhores-materias`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    });
+                    
+                    const data = await res.json();
+                    setMelhores(data);
+                    console.log("IGNORE Melhores: ", data);
+
+                } catch (err) {
+                    console.error(err);
+                }
+            }; melhoresMaterias();
         }
     }, [userID])
-    
+
+    useEffect(() => {
+        console.log("USERXP", userXP);
+    }, [userXP])
+
     if (loading) return <Loading />;
 
     return(
         <>
-        <AnimatePresence initial={false}>
-
-            {verMais && (
-                <>
-                    <motion.div 
-                    key="content"
-                    initial={{ opacity: 0, scale: 0.85}}
-                    animate={{ opacity: 1, scale: 0.94 }}
-                    exit={{ opacity: 0, scale: 0.90 }}
-                    className={`w-full h-full fixed flex justify-center items-center  opacity-1 z-[1100] `}>
-                        
-                        <div className="w-full h-full absolute" onClick={() => setVerMais(false)}></div>
-                        <motion.div 
-                        key="content"
-                        initial={{ opacity: 0, scale: 0.85}}
-                        animate={{ opacity: 1, scale: 0.94 }}
-                        exit={{ opacity: 0, scale: 0.90 }}
-                        className={`w-[550px] h-[550px] flex rounded-[40px] z-[1100]  opacity-1 `}>
-
-                            <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
-                                
-                                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
-                                <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
-
-                                <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                        <span className="font-medium text-[30px]">{user.primeiroNome} </span>
-                                        <span className="text-[20px]"></span>
-                                    </div>
-
-                                    <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
-                                    <div className="w-[60%] flex justify-between mt-auto">
-                                        <motion.button 
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.97 }}
-                                        onClick={() => setVerMais(false)}
-                                        className="p-[10px_12px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                            Voltar
-                                        </motion.button>
-                                        <motion.button 
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.97 }}
-                                        onClick={() => {setVerMais(false); }}
-                                        className="p-[10px_12px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                            Deletar
-                                        </motion.button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </motion.div>
-                        
-                    </motion.div>
-                        
-                    <div className="w-full absolute flex justify-center items-center ">
-                        <Backdrop3 onClick={() => setVerMais(false)}/>
-                    </div>
-                </>
-            )}
-
-        </AnimatePresence>
-
-
-
-
             <div className="flex w-full justify-center overflow-hidden " >
                 <div className=" mt-[12px] h-[965px] w-[1580px] grid grid-rows-[65%_1fr] gap-4 ml-[20px] mr-[20px]">
                     <div className=" grid grid-cols-[55%_1fr] gap-4 ">
                         
                         <div className=" bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
-                            <div className=" w-[90%] h-[90%] ">
-                                <h1 className="text-[30px] font-medium leading-none">Métricas</h1>
-                                <h2 className="text-[18px] leading-[28px] ">Seu desempenho da semana está aqui! 💡</h2>
+                            <div className=" w-[90%] h-[90%] flex flex-col justify-between">
+                                <div className="">
+                                    <h1 className="text-[30px] font-medium leading-none">Métricas</h1>
+                                    <h2 className="text-[18px] leading-[28px] ">Seu desempenho da semana está aqui! 💡</h2>
+                                </div>
 
                                 <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
                                     <div className="">
@@ -270,13 +239,8 @@ export default function Métricas() {
                                     </div>
                                 </div>
 
-                                <div className="mt-2 flex flex-col justify-between gap-1bg-red-500 ">
-                                    <h1 className="w-full font-medium flex items-end justify-between cursor-pointer text-[30px]">
-                                        Atividades
-                                        <ComboboxDemo />
-                                    </h1>
-
-                                    <Chart />
+                                <div className="mt-2 flex flex-col justify-between gap-1 ">
+                                    <Charting />
                                 </div>
 
                             </div>
@@ -292,30 +256,43 @@ export default function Métricas() {
                                         <img src={user.foto} className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
                                         <div className="absolute w-[165.3px] h-[163px] bg-[#EB9481] rounded-full left-[-5px]"></div>
                                         <div className="">
-                                            <h1 className="text-[40px] font-medium leading-none ">{user.primeiroNome}</h1>
-                                            <h2 className="text-[#828181] font-medium text-[30px] leading-none">{user.cargo}</h2>
+                                            <h1 className="text-[30px] font-medium leading-none ">{user.primeiroNome}</h1>
+                                            <h2 className="text-[#828181] font-medium text-[20px] leading-none">{user.cargo}</h2>
                                         </div>    
                                     </div>
 
-                                    <div className="flex flex-col  justify-c    enter items-center">
-                                        <h2 className="font-medium text-[22px] text-[#828181] w-full flex justify-end" >{} XP</h2>
+                                    <div className="flex flex-col justify-center items-center">
+                                        
+                                        <div className="w-full flex justify-between ">
+
+                                            {(() =>{
+                                                const nivel = userXP?.nivel ? userXP.nivel.charAt(0).toUpperCase() + userXP.nivel.slice(1).toLowerCase() : "";
+                                                return <h2 className="font-medium text-[22px] text-[#828181] w-full flex " >{nivel}</h2>
+                                            })()}
+                                        </div>
+
                                         <div className="w-full h-[12px] rounded-[25px] bg-[#1e235138]">
         
 
 
 
-
-
-
-
-
-                                            <div style={{ width: `${ranking[2]?.progresso ?? 0}%` }} className={` h-[12px] rounded-[25px] bg-purple-600 `}>
+                                            <div style={{ width: `${userXP?.progresso ?? 0}%` }} className={` h-[12px] rounded-[25px] bg-purple-600 `}>
                                             </div>
                                         </div>
                                         
                                         <div className="flex justify-between w-full">
-                                            <h2 className="font-medium text-[20px] text-[#828181]">{userXP?.xp} XP</h2>
-                                            {/* <h2 className="font-medium text-[20px] text-[#A39CEC]">1000xp</h2> */}
+                                            <h2 className="font-medium text-[20px] text-[#A39CEC]">{userXP?.xp} XP</h2>
+                                            {(() =>{
+                                                if (!userXP?.maxXp){
+                                                    return(
+                                                        <h2 className="font-medium text-[20px] text-[#A39CEC]">Máximo atingido!</h2>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <h2 className="font-medium text-[20px] text-[#A39CEC]">{userXP?.maxXp} XP</h2>
+                                                    )
+                                                }
+                                            })()}
 
                                         </div>
                                     </div>
@@ -374,8 +351,7 @@ export default function Métricas() {
                                         }
                                     })()}
                                     
-
-                                    <div className=" w-full flex justify-end">
+                                    {/* <div className=" w-full flex justify-end">
                                         <motion.button 
                                         whileHover={{scale: 1.01}}
                                         whileTap={{scale: 0.99}}
@@ -384,7 +360,7 @@ export default function Métricas() {
                                             Veja mais
                                             <ChevronDown/>
                                         </motion.button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 
@@ -397,13 +373,16 @@ export default function Métricas() {
                         <div className="w-full h-full bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full h-[90%] flex justify-center items-center">
                                 <div className=" flex flex-col justify-center gap-[25%] min-w-[60%] h-full ">
-                                    <h1 className="text-[32px] font-medium line-clamp-3 break-words">
+                                    <h1 className="banner_title font-medium line-clamp-3 break-words">
                                         Ao criar seu primeiro material, você desbloqueia o acompanhamento do seu progresso, com metas semanais, conquistas e relatórios de desempenho.
                                     </h1>
                                     <Link href='/home/materiais' className="w-[40%] min-w-[40%] h-[25%] min-h-[25%] rounded-full">
-                                        <button className="w-full h-full bg-[#1E2351] rounded-full text-white text-[22px] shadow-md leading-5">
+                                        <motion.button 
+                                        whileHover={{ scale: 0.99}}
+                                        whileTap={{ scale: 1.01}}
+                                        className="p-[15px_25px] bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
                                         Criar material
-                                        </button>
+                                        </motion.button>
                                     </Link>
                                 </div>
 

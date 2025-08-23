@@ -81,6 +81,7 @@ export default function MaterialClient() {
                 
                 const data = await res.json();
                 setOrigem(data.material.origem);
+
             } catch (err) {
                 console.error(err);
             }; 
@@ -101,7 +102,6 @@ export default function MaterialClient() {
                     const data = await res.json();
                     console.log(data);
                     setQuizzes(data.quizzes);
-                    setLoading(false);
 
                 } else{
                     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes/${id}`, {
@@ -112,7 +112,6 @@ export default function MaterialClient() {
                     const data = await res.json();
                     console.log(data)
                     setQuizzes(data.quizzes);
-                    setLoading(false);
                 }
                     
 
@@ -124,6 +123,12 @@ export default function MaterialClient() {
         
     }, []);
 
+    useEffect(() => {
+        if (quizzes.length > 0){
+            setLoading(false);
+        }
+    }, [quizzes]);
+ 
     useEffect(() => {
         final();
     }, []);
@@ -303,7 +308,7 @@ export default function MaterialClient() {
                             <h2 className="absolute top-0 right-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Quiz</h2>
 
                             <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center relative">
-                                <h1 className="text-[30px] text-center line-clamp-3 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
+                                <h1 className="text-[25px] text-center line-clamp-4 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
                                 <div className="w-full flex flex-col gap-[5%]">
                                     <div className="flex max-w-[100%] gap-[5%]">
                                         {[0, 1].map((i) => (
@@ -326,7 +331,7 @@ export default function MaterialClient() {
                                             className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
                                         >
                                             
-                                            <span className="p-4 w-full line-clamp-5 h-full break-words">
+                                            <span className="p-4 w-full line-clamp-5 h-full break-words text-[20px]">
                                             {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>
@@ -352,7 +357,7 @@ export default function MaterialClient() {
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
                                             className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
-                                            <span className="p-4 w-full line-clamp-5 h-fit break-words">
+                                            <span className="p-4 w-full line-clamp-5 h-fit break-words text-[20px]">
                                                 {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>

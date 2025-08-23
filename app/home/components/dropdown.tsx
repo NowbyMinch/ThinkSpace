@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Check, ChevronDown, ChevronsUpDown } from "lucide-react"
+import { createContext, useContext, useEffect, useState } from "react"
+import { Check, ChevronDown, ChevronsLeftRightEllipsis, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,22 +16,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
+import { motion, AnimatePresence } from "framer-motion";
+import type { TooltipProps } from "recharts";
+
 
 const frameworks = [
   {
-    value: "Esta semana",
+    value: "0",
     label: "Esta semana",
   },
   {
-    value: "Há 1 semana",
+    value: "1",
     label: "Há 1 semana",
   },
   {
-    value: "Há 2 semanas",
+    value: "2",
     label: "Há 2 semanas",
   },
   {
-    value: "Há 3 semanas",
+    value: "3",
     label: "Há 3 semanas",
   },
 ]
@@ -122,10 +126,61 @@ type materiaItem = {
     materiais?: any[]; // or specify the correct type if known
     // add other properties if needed
 };
+type MelhorMateria = {
+  nome: string;
+  xp: number;
+  cor: string;
+  icone: string;
+};
+type MetricasUser = {
+  acertos: number;
+  erros: number;
+  fimSemana: string;
+  inicioSemana: string;
+  melhoresMaterias: MelhorMateria[];
+  percentualAcertos: number;
+  percentualErros: number;
+  questoesPorDia: QuestoesPorDia;
+  rendimentoSemanal: number;
+  totalQuestoes: number;
+  xp: number;
+};
+type QuestoesPorDia = {
+  [data: string]: number;
+};
+interface QuestoesPorDiaItem {
+  dia: string;         // "Dia 1", "Dia 2", ...
+  atividades: number;  // how many activities
+}
+type QuestoesPorDiaLista = QuestoesPorDiaItem[];
+function buildQuestoesPorDiaLista(questoesPorDia: QuestoesPorDia): QuestoesPorDiaLista {
+  const dates = Object.keys(questoesPorDia);
 
-export function ComboboxDemo() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
+  const lista: QuestoesPorDiaLista = Array.from({ length: 7 }, (_, i) => ({
+    dia: `Dia ${i + 1}`,
+    atividades: 0,
+  }));
+
+  dates.forEach((date, idx) => {
+    if (idx < 7) {
+      lista[idx].atividades = questoesPorDia[date] ?? 0;
+    }
+  });
+
+  return lista;  // <-- 🔴 make sure you actually return
+}
+
+
+export function ComboboxDemo({ onChange }: { onChange: (value: number) => void }) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<number | null>(0);
+
+  const handleSelect = (currentValue: string) => {
+    const newValue = Number(currentValue); 
+    setValue(newValue);
+    onChange(newValue); // 🔑 send value back to parent
+    setOpen(false);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -134,12 +189,12 @@ export function ComboboxDemo() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[180px] flex gap-4 justify-center rounded-[10px]"
+          className="w-fit min-w-[180px] flex gap-4 justify-center rounded-[10px]"
         >
           <span>
-            {value
-              ? frameworks.find((framework) => framework.value === value)?.label
-              : "Selecione a semana"}
+            {value === 0
+              ? "Esta semana"
+              : frameworks.find((f) => Number(f.value) === value)?.label}
           </span>
 
           <ChevronsUpDown className="opacity-50" />
@@ -150,33 +205,165 @@ export function ComboboxDemo() {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
-                
+              {frameworks.map((f) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
+                  key={f.value}
+                  value={f.value}
+                  onSelect={handleSelect}
                 >
-                  {framework.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
+                  {f.label}
                 </CommandItem>
-
               ))}
             </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
-    </Popover>
-  )
+    </Popover> 
+
+
+
+)}
+
+
+const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
+  if (!active || !payload || payload.length === 0) return null;
+
+  const atividades = payload[0].value;
+
+  return (
+    
+    <AnimatePresence>
+        <motion.div
+        initial={{ scale:0.50 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.50 }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="bg-white rounded-xl shadow p-3 text-center origin-top-left">
+            <p className="text-xl font-bold">{atividades}</p>
+            <p className="text-base ">Atividades feitas</p>
+        </motion.div>
+
+    </AnimatePresence>
+  );
+};
+
+export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
+  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
+  const [isClient, setIsClient] = useState(false);
+
+  const [ userID, setUserID ] = useState("");
+
+  useEffect(() => {
+    const UserID = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            // console.log("UserID: ", data);
+            setUserID(data.userId);
+
+        } catch (err) {
+            console.error(err);
+        }
+    }; UserID();
+
+  }, []);
+
+  useEffect(() => {
+        if (userID){
+          const metricasUser = async () => {
+              if (userID){
+                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}`, {
+                      method: 'GET',
+                      credentials: 'include',
+                  });
+                  
+                  const data = await res.json();
+                  // console.log(data);
+                  setMetricasUser(data);
+              }
+          }; metricasUser();
+          
+          const metricas = async () => {
+              try{
+                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}/?weeksAgo=${selectedWeek}`, {
+                  method: 'GET',
+                  credentials: 'include',
+                  });
+                  
+                  const data = await res.json();
+                  // console.log("/metricas/${userID}/weeks VALUEEE: ", value);
+                  console.log("/metricas/${userID}/weeks: ", data);
+                  setMetricasUser(data);
+                  // console.log("Metricas: ", data);
+
+              } catch (err) {
+                  console.error(err);
+              }
+          }; metricas();
+
+        }
+  }, [userID, selectedWeek])
+
+  const [questoesPorDiaLista, setQuestoesPorDiaLista] = useState<QuestoesPorDiaLista>([]);
+
+  useEffect(() => {
+    if (metricasUser) {
+      const data = buildQuestoesPorDiaLista(metricasUser.questoesPorDia);
+      setQuestoesPorDiaLista(data); // ✅ now works
+      console.log("Questões por dia lista:", data);
+    }
+  }, [metricasUser]);
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    useEffect(() => {
+      setIsClient(true);
+    }, []);
+  
+    if (!isClient) return null;
+    
+    return (
+        <>
+            <div className="w-[770px] max-w-[100%] overflow-hidden">
+                <LineChart width={770} height={300} data={questoesPorDiaLista} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
+                    <XAxis stroke="#666" dataKey="dia"/>
+                    <YAxis 
+                      dataKey="atividades" 
+                      domain={[0, 'auto']} // ensures 0 is at bottom
+                      allowDecimals={false}
+                    />
+                    <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
+                    <Tooltip content={CustomTooltip} />
+                </LineChart>
+            </div>
+        </>
+    )
 }
+
+
+export default function Charting() {
+  const [selectedWeek, setSelectedWeek] = useState<number>(0);
+
+  return (
+    <>
+      <h1 className="w-full font-medium flex items-end justify-between cursor-pointer text-[30px]">
+        Atividades
+        <ComboboxDemo onChange={setSelectedWeek} />
+      </h1>
+      {/* Combobox "returns" its value via onChange callback */}
+
+      {/* Chart can now use it */}
+      <Chart selectedWeek={selectedWeek} />
+    </>
+  );
+}
+
+
 
 type Sala = {
   id: string;
@@ -203,8 +390,7 @@ export function ComboboxDemomMetricas() {
         });
         
         const data = await res.json();
-
-        console.log(data);
+        // console.log(data);
         setSalas(data.salasMembro);
 
       } catch (err) {
