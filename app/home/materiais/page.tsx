@@ -19,9 +19,7 @@ import {
   SquarePen,
   Ellipsis
 } from "lucide-react";
-import { colors } from "../components/icons";
-import { icons } from "../components/icons";
-import { cor } from "../components/icons";
+import { colors, icons, cor } from "@/app/home/components/icons";
 
 type materiaItem = {
     id?: string;
