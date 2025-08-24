@@ -128,7 +128,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [value2, setValue2] = useState(10);
     const [userXP, setUserXP] = useState<UserXP>();
 
-
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
 
@@ -374,6 +373,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     body: formData, // ✅ Só FormData aqui
                     credentials: "include",
                 });
+                setLoading(true);
+
             } else {
                 const payload = {
                     nomeDesignado: input,
@@ -393,6 +394,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     body: JSON.stringify(payload), 
                     credentials: "include",
                 });
+                setLoading(true);
 
                 console.log(payload);
             }
@@ -412,6 +414,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 data.message === "Já existe um material com esse nome." 
                 ) {
             setMessage(data.message);
+            setLoading(false);
             return;
             }
             else{

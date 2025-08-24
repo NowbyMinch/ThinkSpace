@@ -14,11 +14,9 @@ export default function MaterialClient() {
   const params = useParams();
   const idMaterial = params?.idMaterial as string;
   const [file, setFile] = useState<File | null>(null);
-  const [ loading, setLoading] = useState(true); 
 
   if (!idMaterial) return null;
 
-  if (loading) return <Loading />;
   return (
     <>
       <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
