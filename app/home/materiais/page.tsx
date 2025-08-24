@@ -146,14 +146,17 @@ export default function Materiais() {
 
         const user = async () => {
             try{
+                setLoading(true);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-                method: 'GET',
-                credentials: 'include',
+                    method: 'GET',
+                    credentials: 'include',
                 });
                 
                 const data = await res.json();
                 console.log("User: ", data)
                 setUser(data)
+                console.log("complete");
+                setLoading(false);
                 
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -773,21 +776,21 @@ export default function Materiais() {
                             {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden">
+                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden pb-2">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
 
                                         <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1 < 10 ? `0${index + 1}`: `${index + 1}` }</h1>
 
-                                        <div className="flex items-center w-full">
-                                            <div className="recentes ">
+                                        <div className="flex items-center w-full ">
+                                            <div className="recentes  ">
                                                 <h2 className="
                                                 w-full
                                                 break-words 
                                                 text-[25px] 
                                                 max-w-[250px] line-clamp-2 breake-words  font-medium leading-none">{materia.nome}</h2>
-                                                <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 3 horas</h2>
+                                                <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 0 horas</h2>
                                             </div>
 
                                             <ChevronRight className="size-12 "/>
@@ -796,7 +799,7 @@ export default function Materiais() {
 
                                 )
                             })}
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais matérias</motion.button>
+                            {/* <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais matérias</motion.button> */}
 
                         </div>
 

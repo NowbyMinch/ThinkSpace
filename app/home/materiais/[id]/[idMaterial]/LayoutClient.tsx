@@ -258,7 +258,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                                 whileTap={{ scale:0.98 }}
                                 whileHover={{ scale:1.02 }}
                                 onClick={() => concluir()}
-                                className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-1 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative  ">
+                                className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative  ">
                                     Concluir 
                                 </motion.button>
                             </Link>
@@ -268,7 +268,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                                 <motion.button 
                                 whileTap={{ scale:0.98 }}
                                 whileHover={{ scale:1.02 }}
-                                className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-1 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative ">
+                                className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative ">
                                     <Reply className="reply"/> Voltar
                                 </motion.button>
                             </Link>

@@ -305,7 +305,7 @@ export default function HomePage() {
         
       </AnimatePresence>
 
-      <div className=" w-[1580px] max-w-[90%] lg:max-w-[88%] mx-auto h-full  pb-8 max-h-full  ">
+      <div className=" w-[1580px] max-w-[90%] lg:max-w-[90%] mx-auto h-full  pb-8 max-h-full  ">
         <div className="h-[82px] mt-[15px] flex justify-between ">
           <div className="flex gap-[10px] ">
 

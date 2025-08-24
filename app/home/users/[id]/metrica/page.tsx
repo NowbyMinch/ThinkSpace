@@ -198,11 +198,11 @@ export default function Métricas() {
 
     return(
         <>
-            <div className="flex w-full justify-center overflow-hidden " >
-                <div className=" mt-[12px] h-[965px] w-[1580px] grid grid-rows-[65%_1fr] gap-4 ml-[20px] mr-[20px]">
-                    <div className=" grid grid-cols-[55%_1fr] gap-4 ">
+            <div className="flex w-full justify-center overflow-hidden ">
+                <div className=" mt-[12px] xl:h-[965px] w-[1580px] max-w-[98%] lg:max-w-[90%] flex flex-col gap-4 my-auto pb-4 overflow-y-auto">
+                    <div className=" flex xl:flex-row flex-col gap-4 min-h-[65%]">
                         
-                        <div className=" bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
+                        <div className="min-w-[55%] min-h-[580px] bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
                             <div className=" w-[90%] h-[90%] flex flex-col justify-between">
                                 <div className="">
                                     <h1 className="text-[30px] font-medium leading-none">Métricas</h1>
@@ -210,31 +210,37 @@ export default function Métricas() {
                                 </div>
 
                                 <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
-                                    <div className="">
-                                        <div className="w-[80%] ">
+                                    <div className="flex justify-center">
+                                        <div className="w-[80%] flex flex-col justify-between">
                                             <h2 className="text-[20px] leading-[25px]">Rendimento semanal</h2>
-                                            <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                                            <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.rendimentoSemanal}%</h1>
+                                            <div className="">
+                                                <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                                                <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.rendimentoSemanal}%</h1>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div className=" flex justify-center ">
-                                        <div className="w-[80%] ">
+                                        <div className="w-[80%] flex flex-col justify-between">
                                             <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Acertos
                                                 <div className="bg-[#FF9F93] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.acertos}</div>
                                             </h2>
-                                            <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                                            <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualAcertos}%</h1>
+                                            <div className="">
+                                                <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                                                <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualAcertos}%</h1>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div className=" flex justify-end">
-                                        <div className="w-[80%] ">
+                                        <div className="w-[80%] flex flex-col justify-between">
                                             <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Erros
                                                 <div className="bg-[#9767F8] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.erros}</div>
                                             </h2>
-                                            <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                                            <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualErros}%</h1>
+                                            <div className="">
+                                                <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                                                <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualErros}%</h1>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -246,15 +252,21 @@ export default function Métricas() {
                             </div>
                         </div>
 
-                        <div className=" grid grid-rows-[1fr_1fr] gap-4 ">
-                            <div className="bg-white rounded-[35px] shadow-md border border-[#00000031] flex justify-center items-center">
+                        <div className="w-full flex flex-col md:flex-row xl:flex-col gap-4 ">
+                            <div className="w-full h-full min-h-[340px] md:min-h-[290px] bg-white rounded-[35px] shadow-md border border-[#00000031] flex justify-center items-center">
                                 <div className="w-[90%] h-[80%] flex flex-col justify-between ">
 
-                                    <div className="flex items-center gap-5 relative">
+                                    <div className="flex md:flex-row flex-col items-center gap-5 relative">
                                         
-                                        
-                                        <img src={user.foto} className="h-[163px] w-fit rounded-full cursor-pointer z-10" alt="Profile picture" />
-                                        <div className="absolute w-[165.3px] h-[163px] bg-[#EB9481] rounded-full left-[-5px]"></div>
+                                        <div className="relative">
+                                            <div className="absolute w-[165.3px] h-[163px] bg-[#EB9481] rounded-full top-0 left-[-5px] z-0"></div>
+                                            <img
+                                                src={user.foto}
+                                                className="h-[163px] w-fit rounded-full cursor-pointer relative z-10"
+                                                alt="Profile picture"
+                                            />
+                                        </div>
+
                                         <div className="">
                                             <h1 className="text-[30px] font-medium leading-none ">{user.primeiroNome}</h1>
                                             <h2 className="text-[#828181] font-medium text-[20px] leading-none">{user.cargo}</h2>
@@ -300,7 +312,7 @@ export default function Métricas() {
 
                             </div>
 
-                            <div className="bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
+                            <div className="w-full h-full min-h-[340px] md:min-h-[290px] bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
                                 <div className="w-[90%] h-[92%] flex flex-col justify-between ">
                                     <h1 className='leading-none font-medium flex justify-between items-end text-[30px]'>Ranking
                                         <div className="flex gap-2">
@@ -316,7 +328,7 @@ export default function Métricas() {
                                         if (ranking) {
                                             return (
                                                 <>
-                                                    <div className="mt-2 w-full  h-14 flex items-center justify-between">
+                                                    <div className="mt-2 w-full h-14 flex items-center justify-between">
                                                         <div className="flex items-center gap-2 min-w-[194px]  ">
                                                             <Image width={300} height={500} src={ranking[0]?.usuario.foto ?? null} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
                                                             <h2 className='text-[20px] font-bold whitespace-nowrap '>{ ranking[0]?.usuario?.nomeCompleto ?? "" }</h2>
@@ -370,7 +382,7 @@ export default function Métricas() {
 
                     { metricasUser?.melhoresMaterias && metricasUser?.melhoresMaterias.length === 0 && (
 
-                        <div className="w-full h-full bg-[#CCB2FF] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
+                        <div className="w-full h-full bg-[#CCB2FF] min-h-[316px] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full h-[90%] flex justify-center items-center">
                                 <div className=" flex flex-col justify-center gap-[25%] min-w-[60%] h-full ">
                                     <h1 className="banner_title font-medium line-clamp-3 break-words">
@@ -400,35 +412,80 @@ export default function Métricas() {
                     
                     { metricasUser?.melhoresMaterias && metricasUser?.melhoresMaterias.length > 0 && (
                         <>
-                            <div className="bg-[#C3A7FA] rounded-[35px] flex justify-center items-center shadow-md border border-[#00000031]">
-                                <div className=" grid grid-cols-[1fr_4fr] gap-4 w-[95%] h-[80%]">
-                                    <div className=" ">
-                                        <h1 className='font-medium '>Matérias:</h1>
-                                        <p className='text-[20px] '>Veja a evolução das suas 5 principais matérias, com atualização semanal para acompanhar seu desempenho. 🚀</p>
+                            <div className="bg-[#C3A7FA] min-h-[316px] h-[470px] xl:h-full overflow-hidden rounded-[35px] flex justify-center items-center shadow-md border border-[#00000031]">
+                                <div className=" flex xl:flex-row flex-col justify-between w-[95%] xl:h-[80%] h-[90%] gap-1">
+                                    <div className=" xl:max-w-[25%] flex flex-col xl:items-start items-center ">
+                                        <h1 className='font-medium text-[30px] xl:text-left text-center'>Matérias:</h1>
+                                        <p className='text-[20px] break-words xl:max-w-full xl:w-full xl:text-left max-w-[90%] text-center '>Veja a evolução das suas 5 principais matérias, com atualização semanal para acompanhar seu desempenho. 🚀</p>
                                     </div>
                                     
-                                    <div className="grid grid-flow-col gap-5 items-end ">
-                                        <div className="w-[234px] h-[220px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col gap-[15px] items-center border border-[#00000031] relative">
-
-                                            <div className="w-[75px] h-[75px] bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className=" grid grid-cols-2 gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-[25px] text-[#757575] stroke-2"/>
-                                                    <Minus className="size-[25px] text-[#757575] "/>
-                                                    <Divide className="size-[25px] text-[#757575] "/>
-                                                    <X className="size-[25px] text-[#757575] "/>
+                                    <div className="flex w-full min-h-[50%] overflowx-auto overflow-y-hidden h-full justify-between items-end gap-2 py-2">
+                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col items-center border border-[#00000031] relative">
+                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                <div className="flex gap-1 w-fit justify-center items-center">
+                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
                                                 </div>
                                             </div>
-
-                                            <div className=" w-[80%] h-[100%] flex flex-col justify-center ">
-
-                                                <div className="flex justify-center items-end text-center w-[100%] h-[50%]  overflow-hidden">
-                                                    <h1 className='text-[33px] max-w-full font-medium leading-9 overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
                                                 </div>
-
-                                                <h1 className='text-[50px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-
+                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
                                             </div>
                                         </div>
+                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
+                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                <div className="flex gap-1 w-fit justify-center items-center">
+                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
+                                                </div>
+                                            </div>
+                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                                </div>
+                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
+                                            </div>
+                                        </div>
+                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
+                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                <div className="flex gap-1 w-fit justify-center items-center">
+                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
+                                                </div>
+                                            </div>
+                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                                </div>
+                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
+                                            </div>
+                                        </div>
+                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
+                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                <div className="flex gap-1 w-fit justify-center items-center">
+                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
+                                                </div>
+                                            </div>
+                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                                </div>
+                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
+                                            </div>
+                                        </div>
+                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
+                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                <div className="flex gap-1 w-fit justify-center items-center">
+                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
+                                                </div>
+                                            </div>
+                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                                </div>
+                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
+                                            </div>
+                                        </div>
+                                        
 
 
 

@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
+import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
 import { motion, AnimatePresence } from "framer-motion";
 import type { TooltipProps } from "recharts";
 
@@ -220,8 +220,6 @@ export function ComboboxDemo({ onChange }: { onChange: (value: number) => void }
       </PopoverContent>
     </Popover> 
 
-
-
 )}
 
 
@@ -240,7 +238,7 @@ const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
         transition={{ duration: 0.2, ease: "easeInOut" }}
         className="bg-white rounded-xl shadow p-3 text-center origin-top-left">
             <p className="text-xl font-bold">{atividades}</p>
-            <p className="text-base ">Atividades feitas</p>
+            <p className="text-base ">Questões feitas</p>
         </motion.div>
 
     </AnimatePresence>
@@ -273,39 +271,28 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
   }, []);
 
   useEffect(() => {
-        if (userID){
-          const metricasUser = async () => {
-              if (userID){
-                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}`, {
-                      method: 'GET',
-                      credentials: 'include',
-                  });
-                  
-                  const data = await res.json();
-                  // console.log(data);
-                  setMetricasUser(data);
-              }
-          }; metricasUser();
-          
-          const metricas = async () => {
-              try{
-                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}/?weeksAgo=${selectedWeek}`, {
-                  method: 'GET',
-                  credentials: 'include',
-                  });
-                  
-                  const data = await res.json();
-                  // console.log("/metricas/${userID}/weeks VALUEEE: ", value);
-                  console.log("/metricas/${userID}/weeks: ", data);
-                  setMetricasUser(data);
-                  // console.log("Metricas: ", data);
+    if (!userID) return;
 
-              } catch (err) {
-                  console.error(err);
-              }
-          }; metricas();
+    const fetchMetricas = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}?weeksAgo=${selectedWeek}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
-        }
+        const data = await res.json();
+        console.log("Metricas:", data);
+        setMetricasUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMetricas();
+
   }, [userID, selectedWeek])
 
   const [questoesPorDiaLista, setQuestoesPorDiaLista] = useState<QuestoesPorDiaLista>([]);
@@ -328,8 +315,9 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
     
     return (
         <>
-            <div className="w-[770px] max-w-[100%] overflow-hidden">
-                <LineChart width={770} height={300} data={questoesPorDiaLista} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
+            <div className="w-[770px] max-w-full overflow-hidden">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart  height={300} data={questoesPorDiaLista} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
                     <XAxis stroke="#666" dataKey="dia"/>
                     <YAxis 
@@ -340,6 +328,7 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
                     <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
                     <Tooltip content={CustomTooltip} />
                 </LineChart>
+              </ResponsiveContainer>
             </div>
         </>
     )
@@ -351,9 +340,9 @@ export default function Charting() {
 
   return (
     <>
-      <h1 className="w-full font-medium flex items-end justify-between cursor-pointer text-[30px]">
+      <h1 className="w-full font-medium flex items-end justify-between text-[30px] ">
         Atividades
-        <ComboboxDemo onChange={setSelectedWeek} />
+        <ComboboxDemo onChange={setSelectedWeek}/>
       </h1>
       {/* Combobox "returns" its value via onChange callback */}
 

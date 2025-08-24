@@ -127,6 +127,16 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [value, setValue] = useState(10);
     const [value2, setValue2] = useState(10);
     const [userXP, setUserXP] = useState<UserXP>();
+    const [selectedFiltro, setSelectedFiltro] = useState<string | null>(null);
+
+    const handleCheck = async (value: string) => {
+    if (selectedFiltro === value) {
+        setSelectedFiltro(null); // desmarca se clicar de novo
+    } else {
+        setSelectedFiltro(value);
+        await materiaisFiltro(value); // chama a função que já existe
+    }
+    };
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -158,14 +168,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
             let num = parseInt(e.target.value, 10);
             if (isNaN(num)) num = 1;
             if (num < 1) num = 1;
-            if (num > 25) num = 25;
+            if (num > 15) num = 15;
             setValue(num);
 
         } else{
             let num = parseInt(e.target.value, 10);
             if (isNaN(num)) num = 1;
             if (num < 1) num = 1;
-            if (num > 25) num = 25;
+            if (num > 15) num = 15;
             setValue2(num);
         }
         console.log("Value1",value);
@@ -217,7 +227,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
         console.log("Origem: ", origem);
         
     }, [origem]);
-    
     
     // Outros ----------------------------------
     const decodedId = decodeURIComponent(id);
@@ -333,6 +342,29 @@ export default function MateriaisClient({ id }: { id: string; }) {
         
     }; 
 
+    const materiaisFiltro = async (filtro: string) => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/?filtro=${filtro}`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            
+            const materiaisFiltrados = data.materiais.filter(
+                (material: any) => material.materiaId === id
+            );
+
+            setMateriaisNome(materiaisFiltrados);
+
+
+        } catch (err) {
+            console.error(err);
+        }
+        
+    }; 
+
     const [file, setFile] = useState<globalThis.File | null>(null);
 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -413,17 +445,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 data.message === "Nome designado e nome da matéria são obrigatórios." || 
                 data.message === "Já existe um material com esse nome." 
                 ) {
-            setMessage(data.message);
-            setLoading(false);
-            return;
-            }
-            else{
-                setLoading(true);
+                setMessage(data.message);
+                setLoading(false);
+                return;
             }
 
+            setLoading(true);
+            console.log("Loading true");
             console.log("FORA DO COMPLETO", data.material.id);
             closing();
-            console.log("Loading true")
 
             // Processar materiais
             if (tipo === "COMPLETO") {
@@ -436,7 +466,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 else if (origem === "TOPICOS") {resumoEndpoint = "resumo-topicos"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
                 else {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
             
-            setTimeout( async () => {
                 if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
                     console.log(data.material.id);
                     
@@ -467,14 +496,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
                     });
                     console.log("QUIZZES:", await res4.json());
                 }
-            }, 5000);
-            
             }
 
             // 5️⃣ Redirecionar
             const redirectPath =
             origem === "DOCUMENTO"
                 ? `/home/materiais/${id}/${data.material.id}/Material`
+                // // // // // // // // // // // // // // // // 
                 : `/home/materiais/${id}/${data.material.id}/Resumo`;
             router.push(redirectPath);
             setLoading(false);
@@ -514,6 +542,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
         // setInput3("");
         // setInput4("");
     }
+
     function voltar(){
         setOpenVar(false);
         setOpenVar2(false);
@@ -1081,7 +1110,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 {material.titulo}
                                 </h2>
                                 <h2 className="text-[18px] text-[#828181]">
-                                Tempo de estudo: 3 horas
+                                Tempo de estudo: 0 horas
                                 </h2>
                             </div>
                             <div className="flex items-center">
@@ -1146,23 +1175,43 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <div className="w-full flex flex-col gap-2 ">
                                 <h1 className="text-[25px] font-medium border border-b-[rgba(0,0,0,0.28)] ">Filtro</h1>
 
-                                <div className="flex gap-2 items-center text-[18px] ">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                <div className="flex gap-2 items-center text-[18px]">
+                                    <input
+                                    type="checkbox"
+                                    className="cursor-pointer size-4 accent-[#804EE5]"
+                                    checked={selectedFiltro === "maisRecentes"}
+                                    onChange={() => handleCheck("maisRecentes")}
+                                    />
                                     Mais recentes
                                 </div>
 
                                 <div className="flex gap-2 items-center text-[18px]">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    <input
+                                    type="checkbox"
+                                    className="cursor-pointer size-4 accent-[#804EE5]"
+                                    checked={selectedFiltro === "maisAntigos"}
+                                    onChange={() => handleCheck("maisAntigos")}
+                                    />
                                     Mais antigos
                                 </div>
 
                                 <div className="flex gap-2 items-center text-[18px]">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    <input
+                                    type="checkbox"
+                                    className="cursor-pointer size-4 accent-[#804EE5]"
+                                    checked={selectedFiltro === "maiorTempoEstudo"}
+                                    onChange={() => handleCheck("maiorTempoEstudo")}
+                                    />
                                     Maior tempo de estudo
                                 </div>
 
                                 <div className="flex gap-2 items-center text-[18px]">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    <input
+                                    type="checkbox"
+                                    className="cursor-pointer size-4 accent-[#804EE5]"
+                                    checked={selectedFiltro === "menorTempoEstudo"}
+                                    onChange={() => handleCheck("menorTempoEstudo")}
+                                    />
                                     Menor tempo de estudo
                                 </div>
                             </div>

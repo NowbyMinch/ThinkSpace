@@ -128,22 +128,22 @@ export default function MaterialClient() {
                 <div className="mt-[25px] mb-[25px] overflow-hidden w-[1200px] max-w-[90%] h-[950px] max-h-[95%] flex flex-col justify-center gap-4 items-center ">
                     <div className="w-[420px] max-w-[90%] h-[80px] bg-[#A39CEC] border-[2px] border-[#726BB6] rounded-[25px] flex justify-center items-center">
                         <div className="w-[85%] h-[80%] text-white font-medium overflow-ellipsis flex justify-between items-center ">
-                            <h1 className="text-[25px] line-clamp-1">Acertos: {acertos}</h1> 
-                            <h1 className="text-[25px] line-clamp-1">Erros: {erros}</h1>  
-                            <h1 className="text-[25px] line-clamp-1">Revisar: {revisar}</h1>  
+                            <h1 className="text-[20px] line-clamp-1">Acertos: {acertos}</h1> 
+                            <h1 className="text-[20px] line-clamp-1">Erros: {erros}</h1>  
+                            <h1 className="text-[20px] line-clamp-1">Revisar: {revisar}</h1>  
                         </div>
                     </div>
                     
                     <div
-                    className="w-full gap-5 h-[80%] bg-[#f0f0fb] rounded-[25px] border-[2px] shadow-md border-[rgba(60,49,91,0.24)] flex justify-center items-center perspective relative"
+                    className="w-full gap-2 h-[80%] bg-[#f0f0fb] rounded-[25px] px-1 border-[2px] shadow-md border-[rgba(60,49,91,0.24)] flex justify-center items-center perspective relative"
                     >
                         <motion.div 
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97}}
                         transition={{ duration: 0.3, ease: "easeInOut"}}
                         onClick={() => {if (questaoIndex !== 0){ setQuestaoIndex(questaoIndex - 1);} else {return} }}
-                        className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer">
-                            <ArrowLeft className=""/>
+                        className="bg-white rounded-full p-2 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer">
+                            <ArrowLeft className="size-8"/>
                         </motion.div>
                         <div className="relative w-[80%] h-[85%] gap-1 cursor-pointer flex flex-col justify-center items-center ">
                             <motion.div className="w-full h-full cursor-pointer "
@@ -193,15 +193,15 @@ export default function MaterialClient() {
 
                             </motion.div>
 
-                            <h1 className="">{questaoIndex + 1}/{flashcards.flashcards.length}</h1>
+                            <h1 className="text-[30px]">{questaoIndex + 1}/{flashcards.flashcards.length}</h1>
                         </div>
                         <motion.div 
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97}}
                         transition={{ duration: 0.3, ease: "easeInOut"}}
                         onClick={() => {setFlipped(false); if (flipped){ setTimeout(() => {if (questaoIndex + 1 !== flashcards.flashcards.length){ setQuestaoIndex(questaoIndex + 1); } else {return};}, 300) } else { if (questaoIndex + 1 !== flashcards.flashcards.length){ setQuestaoIndex(questaoIndex + 1); } else {return}; }}} 
-                        className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer">
-                            <ArrowRight className=""/>
+                        className="bg-white rounded-full p-2 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer">
+                            <ArrowRight className="size-8"/>
                         </motion.div>
 
 
@@ -210,7 +210,7 @@ export default function MaterialClient() {
                     <div className="w-full h-[15%] flex overflow-visible justify-center items-center ">
 
                         <div className="w-[78%] h-full flex justify-center items-center ">
-                            <div className="flex gap-4 max-w-[95%] h-[100px] max-h-[90%] justify-center items-center ">
+                            <div className="flex gap-2 max-w-[95%] h-[100px] max-h-[90%] justify-center items-center ">
                                 <motion.button 
                                 whileTap={{ scale: 0.98 }}
                                 whileHover={{ scale: 1.02, backgroundColor: "#A39CEC", color: "#FFFFFF"}}
@@ -222,7 +222,7 @@ export default function MaterialClient() {
                                     novo[questaoIndex] = 1; // 1 = acertei
                                     return novo;
                                 }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
-                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%]  rounded-[25px] border-[#726BB6] shadow-md flex justify-center items-center text-[20px] font-medium">
                                     <span className="line-clamp-1 break-words">Acertei</span>
                                 </motion.button>
 
@@ -238,7 +238,7 @@ export default function MaterialClient() {
                                     novo[questaoIndex] = 2; // 1 = errei
                                     return novo;
                                 }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
-                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[25px] border-[#726BB6] shadow-md flex justify-center items-center text-[20px] font-medium">
                                     <span className="line-clamp-1 break-words">Errei</span>
                                 </motion.button>
 
@@ -253,7 +253,7 @@ export default function MaterialClient() {
                                     novo[questaoIndex] = 3; // 1 = revisar
                                     return novo;
                                 }); if (questaoIndex !== flashcards.flashcards.length - 1){ setQuestaoIndex(questaoIndex + 1); } else {return}}}
-                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[20px] border-[#726BB6] shadow-md flex justify-center items-center text-[30px] font-medium">
+                                className="w-[250px] border-[2px] max-w-[30%] h-[100px] max-h-[95%] rounded-[25px] border-[#726BB6] shadow-md flex justify-center items-center text-[20px] font-medium">
                                     <span className="line-clamp-1 break-words">Revisar</span>
                                 </motion.button>
                             </div>
