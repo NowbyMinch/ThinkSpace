@@ -202,7 +202,7 @@ export default function Métricas() {
                 <div className=" mt-[12px] xl:h-[965px] w-[1580px] max-w-[98%] lg:max-w-[90%] flex flex-col gap-4 my-auto pb-4 overflow-y-auto">
                     <div className=" flex xl:flex-row flex-col gap-4 min-h-[65%]">
                         
-                        <div className="min-w-[55%] min-h-[5890px] bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
+                        <div className="min-w-[55%] min-h-[580px] bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
                             <div className=" w-[90%] h-[90%] flex flex-col justify-between">
                                 <div className="">
                                     <h1 className="text-[30px] font-medium leading-none">Métricas</h1>
@@ -384,25 +384,25 @@ export default function Métricas() {
 
                         <div className="w-full h-full bg-[#CCB2FF] min-h-[316px] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full h-[90%] flex justify-center items-center">
-                                <div className=" flex flex-col justify-center gap-[25%] min-w-[60%] h-full ">
-                                    <h1 className="banner_title font-medium line-clamp-3 break-words">
+                                <div className=" flex flex-col justify-between min-h-[220px] min-w-[60%] h-full">
+                                    <h1 className="banner_title font-medium line-clamp-5 break-words">
                                         Ao criar seu primeiro material, você desbloqueia o acompanhamento do seu progresso, com metas semanais, conquistas e relatórios de desempenho.
                                     </h1>
-                                    <Link href='/home/materiais' className="w-[40%] min-w-[40%] h-[25%] min-h-[25%] rounded-full">
+                                    <Link href='/home/materiais' className="max-w-[40%] min-w-[40%] h-[25%] min-h-[25%] rounded-full">
                                         <motion.button 
                                         whileHover={{ scale: 0.99}}
                                         whileTap={{ scale: 1.01}}
-                                        className="p-[15px_25px] bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
+                                        className="p-[10px_20px] bg-[#1E2351] rounded-full whitespace-nowrap text-white text-[18px] shadow-md ">
                                         Criar material
                                         </motion.button>
                                     </Link>
                                 </div>
 
-                                <div className=" w-full h-full flex justify-center items-center overflow-hidden relative">
+                                <div className=" min-w-[40%] bg-red-200 min-h-[250px] h-fit flex justify-center items-center overflow-hidden relative">
                                     <Image width={300} height={500}
                                         src="/metricaMaterial.svg"
                                         alt="Decoração"
-                                        className=" w-[94%] absolute top-0"
+                                        className=" w-[110%] absolute top-2  "
                                     />
                                 </div>
                             </div>

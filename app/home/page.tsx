@@ -333,7 +333,7 @@ export default function HomePage() {
                       `}>
                         <div className=" w-[85%] h-[85%] overflow-hidden flex flex-col justify-between ">
                           <div className="h-full ">
-                            <h1 className="w-fit text-[20] font-medium leading-none cursor-text">
+                            <h1 className="w-fit text-[20px] font-medium leading-none cursor-text">
                               Sua ofensiva
                             </h1>
                             <h2 className="cursor-text font-medium text-[18px] w-fit text-[#121212] ">

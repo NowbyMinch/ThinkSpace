@@ -1176,44 +1176,44 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 <h1 className="text-[25px] font-medium border border-b-[rgba(0,0,0,0.28)] ">Filtro</h1>
 
                                 <div className="flex gap-2 items-center text-[18px]">
-                                    <input
-                                    type="checkbox"
-                                    className="cursor-pointer size-4 accent-[#804EE5]"
-                                    checked={selectedFiltro === "maisRecentes"}
-                                    onChange={() => handleCheck("maisRecentes")}
-                                    />
-                                    Mais recentes
-                                </div>
+                                        <input
+                                        type="checkbox"
+                                        className="cursor-pointer size-4 accent-[#804EE5]"
+                                        checked={selectedFiltro === "maisRecentes"}
+                                        onChange={() => handleCheck("maisRecentes")}
+                                        />
+                                        Mais recentes
+                                    </div>
 
-                                <div className="flex gap-2 items-center text-[18px]">
-                                    <input
-                                    type="checkbox"
-                                    className="cursor-pointer size-4 accent-[#804EE5]"
-                                    checked={selectedFiltro === "maisAntigos"}
-                                    onChange={() => handleCheck("maisAntigos")}
-                                    />
-                                    Mais antigos
-                                </div>
+                                    <div className="flex gap-2 items-center text-[18px]">
+                                        <input
+                                        type="checkbox"
+                                        className="cursor-pointer size-4 accent-[#804EE5]"
+                                        checked={selectedFiltro === "maisAntigos"}
+                                        onChange={() => handleCheck("maisAntigos")}
+                                        />
+                                        Mais antigos
+                                    </div>
 
-                                <div className="flex gap-2 items-center text-[18px]">
-                                    <input
-                                    type="checkbox"
-                                    className="cursor-pointer size-4 accent-[#804EE5]"
-                                    checked={selectedFiltro === "maiorTempoEstudo"}
-                                    onChange={() => handleCheck("maiorTempoEstudo")}
-                                    />
-                                    Maior tempo de estudo
-                                </div>
+                                    <div className="flex gap-2 items-center text-[18px]">
+                                        <input
+                                        type="checkbox"
+                                        className="cursor-pointer size-4 accent-[#804EE5]"
+                                        checked={selectedFiltro === "maiorTempoEstudo"}
+                                        onChange={() => handleCheck("maiorTempoEstudo")}
+                                        />
+                                        Maior tempo de estudo
+                                    </div>
 
-                                <div className="flex gap-2 items-center text-[18px]">
-                                    <input
-                                    type="checkbox"
-                                    className="cursor-pointer size-4 accent-[#804EE5]"
-                                    checked={selectedFiltro === "menorTempoEstudo"}
-                                    onChange={() => handleCheck("menorTempoEstudo")}
-                                    />
-                                    Menor tempo de estudo
-                                </div>
+                                    <div className="flex gap-2 items-center text-[18px]">
+                                        <input
+                                        type="checkbox"
+                                        className="cursor-pointer size-4 accent-[#804EE5]"
+                                        checked={selectedFiltro === "menorTempoEstudo"}
+                                        onChange={() => handleCheck("menorTempoEstudo")}
+                                        />
+                                        Menor tempo de estudo
+                                    </div>
                             </div>
                         </div>
 
