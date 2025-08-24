@@ -10,6 +10,7 @@ import Loading from "@/app/home/components/loading";
 import { Backdrop3 } from "../../components/backdrop";
 import { useRouter } from "next/navigation";
 import { File } from "buffer";
+import { UserXP } from "../page";
 
 type materiaItem = {
     id?: string;
@@ -57,6 +58,49 @@ type Material = {
     // add other properties if needed
 };
     
+// USEFULL STRUCTURE ---- Filtros de matérias
+    // const filtered = materias.filter((item) =>
+    // item.nome?.toLowerCase().includes(query.toLowerCase())
+    // );
+    // const isExactMatch = materias.some(
+    // (item) => item.nome?.toLowerCase() === query.toLowerCase()
+    // );
+
+{/* USEFULL STRUCTURE  */}
+
+                                                {/* <div className=" w-full relative">
+                                                    <input
+                                                    type="text"
+                                                    value={query}
+                                                    onChange={(e) => setQuery(e.target.value)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setTimeout(() => setIsFocused(false), 150)}
+                                                    placeholder="Pesquisar por materia"
+                                                    className="w-full border-2 border-[rgba(0,0,0,0.19)] h-[45px] rounded-[20px] pl-5 text-[20px] outline-[rgba(151,103,248,0.6)] "
+                                                    />
+                                                    {query.length > 0 && !isExactMatch && isFocused && (
+                                                    <ul id="label-box" className="absolute z-10 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-[10px] shadow-md">
+                                                        {filtered.length === 0 && (
+                                                            <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
+                                                        )}
+
+                                                        {filtered.map((materias) => (
+                                                            <li
+                                                                key={materias.id}
+                                                                
+                                                                className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
+                                                                onClick={() => {
+                                                                setQuery(materias.nome ?? "");
+                                                                }}
+                                                            >
+                                                                <div className="font-medium">{materias.nome}</div>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                    )}
+                                                </div> */}
+
+
 export default function MateriaisClient({ id }: { id: string; }) {
     const router = useRouter();
     // Estados de controle de interface
@@ -82,6 +126,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ origem, setOrigem ] = useState("");
     const [value, setValue] = useState(10);
     const [value2, setValue2] = useState(10);
+    const [userXP, setUserXP] = useState<UserXP>();
+
 
     // Dados do usuário
     const [user, setUser] = useState<UserData>({});
@@ -173,15 +219,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
         
     }, [origem]);
     
-    // USEFULL STRUCTURE ---- Filtros de matérias
-    // const filtered = materias.filter((item) =>
-    // item.nome?.toLowerCase().includes(query.toLowerCase())
-    // );
-    // const isExactMatch = materias.some(
-    // (item) => item.nome?.toLowerCase() === query.toLowerCase()
-    // );
-
-    // Outros
+    
+    // Outros ----------------------------------
     const decodedId = decodeURIComponent(id);
     
     useEffect(() => {
@@ -252,6 +291,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
             }
             
         }; materiais();
+
+        const ranking = async () => {
+          try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+              method: 'GET',
+              credentials: 'include',
+            });
+            
+            const data = await res.json();
+            setUserXP(data);
+            console.log(data);
+            setLoading(false);
+
+          } catch (err) {
+            console.error(err);
+          }
+1        }; ranking();
         
     }, []);
     
@@ -424,7 +480,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.error(err);
         }
     };
-
     
     const Deletar = async (id: string) => {
         try {
@@ -480,125 +535,83 @@ export default function MateriaisClient({ id }: { id: string; }) {
         <AnimatePresence initial={false} >
             {open && (
                 <motion.div 
-                    key="content"
-                    initial={{ opacity: 0, scale: 0.85}}
-                    animate={{ opacity: 1, scale: 0.94 }}
-                    exit={{ opacity: 0, scale: 0.90 }}
-                    className={`w-full h-full absolute ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
+                key="content"
+                initial={{ opacity: 0, scale: 0.85}}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.90 }}
+                
+                className={`w-full h-full absolute opacity-1 z-[1100] ${ open? ' opacity-1 z-[1100]' : 'z-[-100] opacity-0'}`}>
                         <div className="w-full h-full absolute" onClick={() => closing()}></div>
-                        <div id="white-box" className={` w-[1250px] h-[600px] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} ${openVar || openVar2 || openVar3? 'h-[650px]' : 'h-[600px]'} `}>
+                        <div id="white-box" className={`w-[1250px] max-w-[95%] min-h-[95%] lg:min-h-[650px] h-[650px] max-h-[95%] rounded-[50px] z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] bg-white shadow-md flex justify-center items-center relative overflow-hidden ${open? 'opacity-1 scale-1'  : 'opacity-0 scale-95'} ${openVar || openVar2 || openVar3? 'h-[650px]' : 'h-[600px]'}`}>
 
-                            <div className="absolute w-[95%] top-10 flex justify-between gap-2 z-[1100]">
-                                <motion.button 
-                                whileTap={{ scale:0.95 }}
-                                whileHover={{ scale:1.05 }}
-                                onClick={voltar}
-                                className={`flex cursor-pointer justify-center items-center text-white h-fit text-[20px] rounded-full  ${ openVar || openVar2 || openVar3? "block": "hidden"}`}>
-                                    <ArrowLeft className="size-10 text-black"/> 
-                                </motion.button>
-                                <motion.button 
-                                whileTap={{ scale:0.95 }}
-                                whileHover={{ scale:1.05 }}
-                                onClick={closing}
-                                className={`flex cursor-pointer justify-center ml-auto items-center text-white h-fit text-[20px] rounded-full `}>
-                                    <X className="size-10 text-black"/> 
-                                </motion.button>
-                            </div>
-            
-                            <div className="w-[80%] h-[85%] flex flex-col gap-14 z-[1000]">
-                                <h1 className={`text-center text-[45px] font-medium ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>Como você deseja criar a matéria?</h1>
-                                <div className="flex w-[100%] h-[100%] justify-between ">
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar(true); Origem("DOCUMENTO");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
-                                        <BookOpenText  className=" text-white size-[130px] stroke-1"/>
-                                        <div  className="flex flex-col items-center ">
-                                            <h1  className="text-[45px] font-medium text-white">Documentos</h1>
-                                            <h2  className="text-[18px] font-medium">PDF, slides da aula, livros diversos</h2>
+                            <ArrowLeft onClick={voltar} className={`size-6 text-black flex cursor-pointer h-fit absolute top-5 left-8 z-10 ${ openVar || openVar2 || openVar3? "block": "hidden"}`} /> 
+                            <X className="absolute top-5 right-8 size-6 cursor-pointer" onClick={() => closing()}/>
+                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
+                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
+
+                            <div className="w-[90%] h-[85%] lg:w-[80%] lg:h-[92%] lg:mb-4 flex flex-col items-center gap-10 z-[900] overflow-y-auto pr-2 pb-4">
+                                <h1 className={`text-center text-[30px] font-medium ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>Como você deseja criar a matéria?</h1>
+                                <div className="flex w-full h-full flex-col md:flex-row lg:justify-between items-center gap-2 ">
+
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar(true); Origem("DOCUMENTO");}}  className={` w-[400px] max-w-full h-full min-h-[200px] md:w-full md:h-[320px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[30px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                        <BookOpenText  className=" text-white size-[100px] stroke-1"/>
+                                        <div  className="flex flex-col items-center w-[90%]">
+                                            <h1  className="banner_title font-medium text-white">Documentos</h1>
+                                            <h2  className="text-[18px] font-medium material_text">PDF, slides da aula, livros diversos</h2>
                                         </div>
                                     </motion.button>
                                     
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar2(true); Origem("TOPICOS");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
-                                        <FileText  className=" text-white size-[130px] stroke-1"/>
-                                        <div  className="flex flex-col items-center ">
-                                            <h1  className="text-[45px] font-medium text-white">Tópicos</h1>
-                                            <h2  className="text-[18px] font-medium">Digite um tópico que deseja revisar</h2>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar2(true); Origem("TOPICOS");}}  className={` w-[400px] max-w-full h-full min-h-[200px] md:w-full md:h-[320px] flex flex-col items-center justify-center bg-[#A39CEC] rounded-[30px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                        <FileText  className=" text-white size-[100px] stroke-1"/>
+                                        <div  className="flex flex-col items-center w-[90%]">
+                                            <h1  className="banner_title font-medium text-white">Tópicos</h1>
+                                            <h2  className="text-[18px] font-medium material_text">Digite um tópico que deseja revisar</h2>
                                         </div>
                                     </motion.button>
                                     
-                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO");}}  className={`w-[320px] h-[330px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[25px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
-                                        <ScrollText  className=" text-white size-[130px] stroke-1"/>
-                                        <div  className="flex flex-col items-center ">
-                                            <h1  className="text-[45px] font-medium text-white">Assuntos</h1>
-                                            <h2  className="text-[18px] font-medium">Digite assuntos gerais para revisar</h2>
+                                    <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={() => {setOpenVar3(true); Origem("ASSUNTO");}}  className={` w-[400px] max-w-full h-full min-h-[200px] md:w-full md:h-[320px] flex flex-col items-center justify-center bg-[#6871BB] rounded-[30px] cursor-pointer ${ openVar || openVar2 || openVar3? "hidden": "block"}`}>
+                                        <ScrollText  className=" text-white size-[100px] stroke-1"/>
+                                        <div  className="flex flex-col items-center w-[90%]">
+                                            <h1  className="banner_title font-medium text-white">Assuntos</h1>
+                                            <h2  className="text-[18px] font-medium material_text">Digite assuntos gerais para revisar</h2>
                                         </div>
                                     </motion.button>
 
-                                    <div className={`w-full h-full flex gap-12 items-center  ${ openVar? "block": "hidden"}`}>
-                                        <div className="w-[50%] h-[85%] bg-[#A39CEC] rounded-[25px] flex justify-center items-center">
-                                            <div className="w-[85%] h-[85%] flex flex-col gap-2">
-                                                <div className="">
-                                                    <h1 className="text-white text-[40px]">Documento</h1>
-                                                    <h2 className="text-white text-[20px]">1 {calendario.mesAtual} {calendario.anoAtual}</h2>
-                                                </div>
+                                    <div className={`w-full h-full flex lg:flex-row flex-col gap-10 items-center mt-4 ${ openVar? "block": "hidden"}`}>
+                                        <div className="w-[500px] max-w-full min-h-[220px] lg:w-[105%] lg:h-[85%] bg-[#A39CEC] rounded-[25px] flex justify-center items-center">
+                                            <div className="w-[85%] h-[85%] flex flex-col justify-between">
+                                                <h1 className="text-white banner_title">Documento</h1>
+                                                {/* <div className="">
+                                                    <h2 className="text-white material_text">1 {calendario.mesAtual} {calendario.anoAtual}</h2>
+                                                </div> */}
                                                 <motion.button
                                                 whileTap={{ scale: 0.99 }}
                                                 whileHover={{ scale: 1.01 }}
                                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                                                 onClick={() => documentInputRef.current?.click()}
                                                 className=" w-full h-full bg-white rounded-[25px] flex flex-col justify-center items-center cursor-pointer">
-                                                    <FileInput className="size-[110px] stroke-1 opacity-[75%]"/>
+                                                    <FileInput className="size-[100px] stroke-1 opacity-[75%]"/>
                                                     <input ref={documentInputRef} type="file" onChange={handleFileChange} className="absolute right-[9999px]"/>
-                                                    <h1 className="text-[30px] opacity-[75%]">Faça o upload do material</h1>
+                                                    <h1 className=" w-[90%] banner_title opacity-[75%]">Faça o upload do material</h1>
                                                 </motion.button>
                                             </div>
                                         </div>
 
-                                        <form onSubmit={(e) => {e.preventDefault(); } } encType="multipart/form-data" className="w-[45%] h-[90%] flex flex-col gap-5 ">
-                                            <div className="">
-                                                <h2 className="text-[28px] font-medium"> Nome do material</h2>
-                                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                        <form onSubmit={(e) => {e.preventDefault(); } } encType="multipart/form-data" className="w-full lg:h-[90%] flex flex-col gap-5 ">
+                                            <div className=" flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium"> Nome do material</h2>
+                                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
                                             </div>
                                             
-                                            <div className="relative">
-                                                <h2 className="text-[28px] font-medium">Matéria designada:</h2>
+                                            <div className="relative flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium">Matéria designada:</h2>
                                                 
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
                                                 
-                                                {/* USEFULL STRUCTURE  */}
-
-                                                {/* <div className=" w-full relative">
-                                                    <input
-                                                    type="text"
-                                                    value={query}
-                                                    onChange={(e) => setQuery(e.target.value)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-                                                    placeholder="Pesquisar por materia"
-                                                    className="w-full border-2 border-[rgba(0,0,0,0.19)] h-[45px] rounded-[20px] pl-5 text-[20px] outline-[rgba(151,103,248,0.6)] "
-                                                    />
-                                                    {query.length > 0 && !isExactMatch && isFocused && (
-                                                    <ul id="label-box" className="absolute z-10 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-[10px] shadow-md">
-                                                        {filtered.length === 0 && (
-                                                            <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
-                                                        )}
-
-                                                        {filtered.map((materias) => (
-                                                            <li
-                                                                key={materias.id}
-                                                                
-                                                                className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
-                                                                onClick={() => {
-                                                                setQuery(materias.nome ?? "");
-                                                                }}
-                                                            >
-                                                                <div className="font-medium">{materias.nome}</div>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                    )}
-                                                </div> */}
+                                                
                                             </div>
                                             
-                                            <div className="w-full flex justify-between">
+                                            <div className="flex w-[220px] flex-col max-w-full gap-3">
                                                 <div className="">
                                                     <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
                                                     
@@ -651,7 +664,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 
                                             </div>
 
-                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border mb-4 border-[#1E2351] text-[18px] w-fit p-[10px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
                                                 criar();
                                             }}>
                                                 <FileText />
@@ -661,10 +674,16 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </form>
                                     </div>
 
-                                    <div className={`w-full h-full flex gap-12 items-center  ${ openVar2? "block": "hidden"}`}>
-                                        <div className="w-[50%] h-[97.95%] flex flex-col gap-4 ">
-                                            <div className="h-fit flex flex-col gap-1">
-                                                <h1 className="font-medium text-[50px] leading-[60px] ">Tópicos</h1>
+
+
+
+                                    <div className={`w-full h-full flex lg:flex-row flex-col lg:gap-12 gap-6 lg:items-center  ${ openVar2? "block": "hidden"}`}>
+
+                                        {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+                                        
+                                        <div className="w-full max-w-full min-h-[220px] lg:w-[105%] lg:h-[85%] flex flex-col gap-5 ">
+                                            <div className=" lg:w-full w-[500px] max-w-full h-fit flex flex-col gap-1">
+                                                <h1 className="font-medium text-[20px] leading-[20px] ">Tópicos</h1>
                                                 <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
                                                     <input type="text" value={topicoInput}
                                                     onChange={e => setTopicoInput(e.target.value)} onKeyDown={e => {
@@ -682,15 +701,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                         setTopicos(prev => [...prev, topicoInput]);
                                                         setTopicoInput(""); 
                                                     }}}
-
-                                                    className="w-[12%] h-[45px]  bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
+                                                    className="p-[10px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
                                                         <SendHorizonal className="size-6"/>
                                                     </motion.button>
                                                 </div>
                                             </div>
 
-                                            <div className="w-full h-[69.9%] rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
-                                                <div className="w-[95%] px-2 py-2 h-min max-h-[95%] mt-2  flex flex-wrap gap-2 overflow-auto">
+                                            <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
+                                                <div className="w-[95%] px-2 py-2 h-min max-h-[95%] mt-2 flex flex-wrap gap-2 overflow-auto">
                                                     <AnimatePresence>
                                                         {topicos.map((topico, index) => (
                                                             <motion.div 
@@ -712,21 +730,29 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                             
                                                             </motion.div>
                                                         ))}
+                                                        
+
                                                     </AnimatePresence>
+
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
-                                            <div className="h-[87px] ">
-                                                <h2 className="text-[28px] font-medium">Nome do Material</h2>
-                                                <input type="text" value={input} onChange={(e) => {setInput(e.target.value);}} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
-                                            </div>
-                                            <div className="relative ">
-                                                <h2 className="text-[28px] font-medium">Matéria designada:</h2>
 
+                                        </div>
+                                        
+                                        {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+                                        
+                                        <div className="w-full lg:h-[85%] flex flex-col gap-5  ">
+                                            <div className="flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium leading-[20px]"> Nome do material</h2>
+                                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                            </div>
+                                            
+                                            <div className="relative flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium leading-[20px]">Matéria designada:</h2>
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
                                             </div>
-                                            <div className="w-full flex justify-between">
+                                            
+                                            <div className="flex w-[220px] flex-col max-w-full gap-3">
                                                 <div className="">
                                                     <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
                                                     
@@ -778,34 +804,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 </div>
                                                 
                                             </div>
-                                            <motion.button
-                                                whileTap={{ scale: 0.95 }}
-                                                whileHover={{ scale: 1.02 }}
-                                                id="editar_conta"
-                                                className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2"
-                                                onClick={() => {
-                                                    criar();
-                                                }}>
+
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border  border-[#1E2351] text-[18px] w-fit p-[8px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
+                                                criar();
+                                            }}>
                                                 <FileText />
                                                 Enviar
                                             </motion.button>
                                         
                                         </div>
+
+                                        {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
                                     </div>
 
-                                    <div className={`w-full h-full flex gap-12 items-center ${ openVar3? "block": "hidden"}`}>
-                                        <div className="w-[50%] h-[97.95%] flex flex-col gap-4 ">
-                                            <div className="h-fit flex flex-col gap-1">
-                                                <h1 className="font-medium text-[50px] leading-[60px] ">Assunto:</h1>
-                                                <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
-                                                    <input type="text" value={assuntoInput} onChange={e => setAssuntoInput(e.target.value)}  placeholder="Diga o assunto" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
-                                                    />
-
-                                                </div>
-                                            </div>
-
-                                            <div className="h-fit flex flex-col gap-1">
-                                                <h2 className="text-[28px] font-medium">Tópicos:</h2>
+                                    <div className={`w-full h-full flex lg:flex-row flex-col lg:gap-12 gap-6 lg:items-center ${ openVar3? "block": "hidden"}`}>
+                                        <div className="w-full max-w-full min-h-[220px] lg:w-[105%] lg:h-[85%] flex flex-col gap-5 ">
+                                            <div className=" lg:w-full w-[500px] max-w-full h-fit flex flex-col gap-1">
+                                                <h1 className="font-medium text-[20px] leading-[20px] ">Tópicos</h1>
                                                 <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
                                                     <input type="text" value={topicoInput}
                                                     onChange={e => setTopicoInput(e.target.value)} onKeyDown={e => {
@@ -823,15 +838,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                         setTopicos(prev => [...prev, topicoInput]);
                                                         setTopicoInput(""); 
                                                     }}}
-
-                                                    className="w-[12%] h-[45px]  bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
+                                                    className="p-[10px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
                                                         <SendHorizonal className="size-6"/>
                                                     </motion.button>
                                                 </div>
                                             </div>
 
-                                            <div className="w-full h-[50.12%] rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
-                                                <div className="w-[95%] px-2 py-2 h-min max-h-[95%] mt-2  flex flex-wrap gap-2 overflow-auto">
+                                            <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
+                                                <div className="w-[95%] px-2 py-2 h-min max-h-[95%] mt-2 flex flex-wrap gap-2 overflow-auto">
                                                     <AnimatePresence>
                                                         {topicos.map((topico, index) => (
                                                             <motion.div 
@@ -858,24 +872,22 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                     </AnimatePresence>
 
                                                 </div>
-
                                             </div>
 
                                         </div>
 
-                                        <div className="w-[45%] h-[90%] flex flex-col gap-5 ">
-                                            <div className="h-[87px] ">
-                                                <h2 className="text-[28px] font-medium">Nome do Material</h2>
-                                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+                                        <div className="w-full lg:h-[85%] flex flex-col gap-5  ">
+                                            <div className="flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium leading-[20px]"> Nome do material</h2>
+                                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nome do Material" className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
                                             </div>
                                             
-                                            <div className="relative ">
-                                                <h2 className="text-[28px] font-medium">Matéria designada:</h2>
-
+                                            <div className="relative flex flex-col gap-1">
+                                                <h2 className="text-[20px] font-medium leading-[20px]">Matéria designada:</h2>
                                                 <ComboboxDemoMateria value={materiaDesignada} onChange={ value => {setMateriaDesignada(value);}} />
-
                                             </div>
-                                            <div className="w-full flex justify-between">
+                                            
+                                            <div className="flex w-[220px] flex-col max-w-full gap-3">
                                                 <div className="">
                                                     <h2 className="text-[20px] font-medium"> Quantidade de questões</h2>
                                                     
@@ -927,8 +939,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 </div>
                                                 
                                             </div>
-                                            
-                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" className="mt-auto border mb-4 border-[#1E2351] text-[22px] w-[150px] h-[40px] rounded-full flex justify-center items-center gap-2" onClick={() => {
+
+                                            <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border  border-[#1E2351] text-[18px] w-fit p-[8px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
                                                 criar();
                                             }}>
                                                 <FileText />
@@ -941,7 +953,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 </div>
             
                             </div>
-                            <Image width={300} height={500} src="/Vector.svg" id="vector" alt="Decoração" className={`absolute top-[350px] right-[-130px] -rotate-90 w-[550px] `}/>
                         </div>
                 </motion.div>
             )}
@@ -1008,80 +1019,157 @@ export default function MateriaisClient({ id }: { id: string; }) {
         </AnimatePresence>
 
         <div className={`w-full h-full fixed z-[1000] bg-[rgba(0,0,0,0.40)] ${ open? 'flex' : 'hidden'} justify-center items-center`} ></div>
-
         <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto mt-[12px] mb-[12px] h-[calc(100vh-24px)] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
-            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
-                <div className="w-[95%] max-w-[95%] mt-4 ">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white py-4 h-full flex flex-col justify-center items-center shadow-md border border-[#00000031]">
+                <div className="w-[95%] max-w-[95%] ">
                     
                     <div className="w-full mx-auto">
                         <h1 className="text-[#1E2351] font-medium text-[30px]"> Materiais de Estudo </h1>
                         <h1 className="font-medium text-[18px] text-[#9767F8] "> {materia?.nome} </h1>
                     </div>
-                        {/* <h1 className="text-[30px] w-fit font-medium ">Materiais de Estudo</h1>
-                        <h1 className="text-[18px] italic w-fit font-medium  ">{materia?.nome}</h1> */}
 
-                    <div className=" mt-[25px] overflow-hidden flex items-center ">
-                        <div className="w-full h-[82px] mt-10 flex justify-center relative gap-[2%]">
+                    <div className=" mx-auto w-[1030px] max-w-full mt-[25px] flex items-center justify-between">
+  
+                        <div className="w-full mr-[2%] h-[82px] mt-10 flex justify-center relative ">
+                            
+                            <div className="w-[98%] rounded-[20px] mt-4 mr-3 h-[45px] bg-[#D9D9D9] absolute "></div>
 
-                            <div className="w-[82%] max-w-[82%] rounded-[20px] mt-4 left-[2%] h-[45px] bg-[#D9D9D9] absolute  "></div>
-                            <div className="relative w-[84%] max-w-[90%]">
-                                <input type="text" id="search_bar" placeholder="Pesquise o material" className=" w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                            <div className="relative w-full">
+                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] "/>
                             </div>
-
-                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="min-w-[10%] h-fit bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
-
                         </div>
                         
+                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} onClick={() => setOpen(true)} className="min-w-fit h-fit bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]">Criar novo</motion.button>
                     </div>
 
-
-
-                    <div className="flex h-[700px] overflow-y-auto overflow-x-hidden flex-col items-center">
+                </div>
+                
+                {/*  ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2 */}
+                <div className="w-[95%] max-w-[95%] h-full overflow-y-auto">
+                    <div className="w-full h-full flex overflow-y-auto overflow-x-hidden flex-col items-center">
                         {materiaisNome.map((material, index) => (
-                            <a key={index} href={`${material.origem === "DOCUMENTO" ? `/home/materiais/${id}/${material.id}/Material` : `/home/materiais/${id}/${material.id}/Resumo` }`} id="materiais" className=" grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)] ">
-                                {(() => {
-                                    if (index < 9){
-                                        return (
-                                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">0{index + 1}</h1>
-                                        )
-                                    }
-                                    else{
-                                        return (
-                                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">{index + 1}</h1>
-                                        )
-                                    }
-                                })()}
+                        <a
+                            key={material.id ?? index} // prefer unique id if available
+                            href={`${
+                            material.origem === "DOCUMENTO"
+                                ? `/home/materiais/${id}/${material.id}/Material`
+                                : `/home/materiais/${id}/${material.id}/Resumo`
+                            }`}
+                            id="materiais"
+                            className="grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
+                        >
+                            {index < 9 ? (
+                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">
+                                0{index + 1}
+                            </h1>
+                            ) : (
+                            <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">
+                                {index + 1}
+                            </h1>
+                            )}
 
-                                <motion.div 
-                                whileHover="delete"
-                                className="mt-[18px] flex justify-between items-center ">
-                                    <div className="">
-                                        <h2 className="text-[25px] font-medium leading-[30px]">{material.titulo}</h2>
-                                        <h2 className="text-[18px] text-[#828181]">Tempo de estudo: 3 horas</h2>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <motion.div 
-                                        initial={{ scale: 0}}
-                                        variants={{
-                                            delete: { scale:1}
-                                        }} className="div" onClick={(e) => {e.preventDefault() ;setDeletar(true); setDeletarId(material.id); }}> 
-                                            <Trash className="size-8 text-red-500"/>
-                                        </motion.div>
-
-                                        <ChevronRight className="size-12 "/>
-                                    </div>
+                            <motion.div
+                            whileHover="delete"
+                            className="mt-[18px] flex justify-between items-center "
+                            >
+                            <div>
+                                <h2 className="text-[25px] font-medium leading-[30px]">
+                                {material.titulo}
+                                </h2>
+                                <h2 className="text-[18px] text-[#828181]">
+                                Tempo de estudo: 3 horas
+                                </h2>
+                            </div>
+                            <div className="flex items-center">
+                                <motion.div
+                                initial={{ scale: 0 }}
+                                variants={{
+                                    delete: { scale: 1 },
+                                }}
+                                className="div"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setDeletar(true);
+                                    setDeletarId(material.id);
+                                }}
+                                >
+                                <Trash className="size-8 text-red-500" />
                                 </motion.div>
-                            </a>
 
+                                <ChevronRight className="size-12 " />
+                            </div>
+                            </motion.div>
+                        </a>
                         ))}
                     </div>
-                    
-                    
                 </div>
+
             </div>
 
             <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden">
+                 
+                <div className="w-full h-full flex justify-center ">   
+                    <div className="w-[95%] h-[95%] flex flex-col items-center mt-4">
+                        
+                        <div className="flex gap-[15px] justify-center items-center w-[95%] max-w-[95%] max-h-[110px]">
+                            
+                            <img src={`${user.foto}`} className="w-[28%] max-w-[380px] rounded-full cursor-pointer" alt="Profile picture" />
+
+                            <div className="w-[70%] ">
+                                <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
+                                <h2 className="text-[#828181] font-medium text-[18px]">{user.cargo}</h2>
+                                <div className=" h-2 rounded-[18px] bg-[#1e235138]">
+                                    <div style={{ width: `${userXP?.progresso ?? 0}%`}} className={` h-2 rounded-[25px] bg-purple-600 `}></div>
+                                </div>
+                                <div className="flex justify-between ">
+                                    {(() =>{
+                                        const nivel = userXP?.nivel ? userXP.nivel.charAt(0).toUpperCase() + userXP.nivel.slice(1).toLowerCase() : "";
+                                        return <h2 className="font-medium text-[18px] text-[#828181]">{nivel}</h2>
+                                    })()}
+
+                                    <h2 className="font-medium text-[18px] text-[#A39CEC]">{userXP?.xp} XP</h2>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div className=" mt-[30px] w-full max-w-[95%]">
+                            <h1 className="text-[30px] w-fit font-medium leading-6">Matérias recentes</h1>
+                            {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
+                        </div>
+                        
+                        <div className="flex flex-col gap-1 mb-[5px] mt-2 items-center relative max-w-[95%] w-full">
+                            <div className="w-full flex flex-col gap-2 ">
+                                <h1 className="text-[25px] font-medium border border-b-[rgba(0,0,0,0.28)] ">Filtro</h1>
+
+                                <div className="flex gap-2 items-center text-[18px] ">
+                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    Mais recentes
+                                </div>
+
+                                <div className="flex gap-2 items-center text-[18px]">
+                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    Mais antigos
+                                </div>
+
+                                <div className="flex gap-2 items-center text-[18px]">
+                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    Maior tempo de estudo
+                                </div>
+
+                                <div className="flex gap-2 items-center text-[18px]">
+                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
+                                    Menor tempo de estudo
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+            </div>
+
+            {/* <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden">
                 
                 <div className="w-[100%] flex ">
                     <div className=" ml-[10px] mr-[10px] w-[390px] flex flex-col gap-10">
@@ -1104,35 +1192,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-5 ml-[15px]">
-                            <div className="w-full flex flex-col gap-2 text-[22px]">
-                                <h1 className="text-[40px] font-medium border border-b-[rgba(0,0,0,0.28)] ">Filtro</h1>
-
-                                <div className="flex gap-2 items-center ">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
-                                    Mais recentes
-                                </div>
-
-                                <div className="flex gap-2 items-center ">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
-                                    Mais antigos
-                                </div>
-
-                                <div className="flex gap-2 items-center ">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
-                                    Maior tempo de estudo
-                                </div>
-
-                                <div className="flex gap-2 items-center ">
-                                    <input type="checkbox" className="cursor-pointer size-4 accent-[#804EE5]" />
-                                    Menor tempo de estudo
-                                </div>
-                            </div>
-                           
-                        </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
         </>
     );

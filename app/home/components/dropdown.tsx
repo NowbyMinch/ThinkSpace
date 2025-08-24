@@ -771,7 +771,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+          className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
         >
           <span className="font-normal w-full block text-left rounded-[25px] overflow-hidden text-ellipsis whitespace-nowrap ">
             {value

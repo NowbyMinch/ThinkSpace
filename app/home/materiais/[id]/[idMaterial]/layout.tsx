@@ -7,12 +7,12 @@ export default async function idMaterialLayout({ children, params }: { params: P
 
     return(
         <>
-            <div className="mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full ml-[20px] mr-[20px] flex flex-col items-center overflow-hidden gap-1">
-                <div className=" min-h-[42px] max-h-[42px] w-[95%] ml-2 gap-4 ">
+            <div className="mt-[12px] h-[calc(100vh-25px)] min-h-fit w-full flex flex-col items-center overflow-hidden ">
+                <div className=" w-[2000px]  max-w-[95%] lg:max-w-[90%] overflow-hidden flex justify-center items-center min-h-[42px] max-h-[42px] ml-2 gap-4 ">
                     <LayoutClient id={id} idMaterial={idMaterial}/>
                 </div>
                 
-                <div className="grid grid-cols-[7.2fr_2.8fr] h-[calc(100%-42px)]  w-full gap-[20px] ">
+                <div className="w-[2000px] max-w-[95%] lg:max-w-[90%] mx-auto mb-[12px] overflow-hidden h-[calc(100vh-66px)] gap-3 rounded-[35px] flex justify-center items-center  ">
                     { children }
                 </div>
             </div>

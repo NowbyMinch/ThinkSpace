@@ -98,10 +98,9 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
         }
     };
 
-    if (loading) return <Loading />;
 
     return (
-        <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] ">
+        <div className=" 2xl:flex hidden flex-col right_panel bg-white rounded-[35px] h-full justify-center items-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden ">
             <div id="messages" className="w-[95%] max-w-[600px] flex flex-col gap-[18px] pr-1 h-[89%] overflow-y-auto mt-6 pb-4 rounded-lg ">
 
                 {historicoUsuario.map((mensagem, index) => (
@@ -137,11 +136,10 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.92 }}
                 type="submit"
-                className="w-[15%] h-[75px] max-h-[100%] bg-[#A39CEC] rounded-[20px] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
-                    <SendHorizonal className="size-7 max-w-[60%] max-h-[60%] "/>
+                className="p-[10px] max-h-[100%] bg-[#A39CEC] rounded-[20px] text-white flex justify-center items-center text-[20px] font-semibold shadow-md ">
+                    <SendHorizonal className="size-8 max-w-[60%] max-h-[60%] "/>
                 </motion.button>
             </form>
-
         </div>
     )
 }

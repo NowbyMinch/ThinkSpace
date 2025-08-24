@@ -6,6 +6,7 @@ import Link from "next/link";
 import {  useState, useEffect, useRef } from 'react';
 import { Backdrop3 } from "../components/backdrop";
 import ErrorModal from "@/components/ui/ErrorModal";
+import Loading from "@/app/home/components/loading";
 import {
   CirclePlus, Heart, Globe, Monitor, CodeXml, HeartPulse,
   Minus, Divide, X, Plus, Search, ChevronRight, ChevronsLeft,
@@ -18,52 +19,9 @@ import {
   SquarePen,
   Ellipsis
 } from "lucide-react";
-import * as Icons from "lucide-react"; 
-import Loading from "@/app/home/components/loading";
-
-export const icons = [
-  // Educação e aprendizado
-  { id: "book", Icon: Book }, { id: "bookmark", Icon: Bookmark },
-  { id: "clipboard", Icon: Clipboard }, { id: "file", Icon: File }, { id: "folder", Icon: Folder },
-  { id: "calendar", Icon: Calendar }, { id: "clock", Icon: Clock }, { id: "alarmClock", Icon: AlarmClock },
-  { id: "edit", Icon: Edit }, { id: "download", Icon: Download }, { id: "eye", Icon: Eye },
-  { id: "check", Icon: Check }, { id: "search", Icon: Search }, { id: "filter", Icon: Filter },
-  { id: "helpCircle", Icon: HelpCircle }, { id: "info", Icon: Info }, { id: "lightbulb", Icon: Lightbulb },
-
-  // Programação e lógica
-  { id: "code", Icon: Code }, { id: "codeXml", Icon: CodeXml }, { id: "cpu", Icon: Cpu }, { id: "database", Icon: Database },
-  { id: "gitBranch", Icon: GitBranch }, { id: "hash", Icon: Hash }, { id: "Monitor", Icon: Monitor },
-
-  // Matemática
-  { id: "plus", Icon: Plus }, { id: "minus", Icon: Minus }, { id: "x", Icon: X }, { id: "divide", Icon: Divide },
-
-  // Interface e organização de conhecimento
-  { id: "layers", Icon: Layers }, { id: "layout", Icon: Layout }, { id: "grid", Icon: Grid }, { id: "list", Icon: List },
-  { id: "menu", Icon: Menu }, { id: "loader", Icon: Loader },
-
-  // Comunicação e interações
-  { id: "mail", Icon: Mail }, { id: "inbox", Icon: Inbox }, { id: "bell", Icon: Bell }, { id: "headphones", Icon: Headphones },
-
-  // Identidade e acesso (login/logout para ambientes de estudo)
-  { id: "logIn", Icon: LogIn }, { id: "logOut", Icon: LogOut }, { id: "lock", Icon: Lock }, { id: "key", Icon: Key },
-
-  // Contexto global e navegação de conteúdo
-  { id: "globe", Icon: Globe }, { id: "globe2", Icon: Globe2 }, { id: "map", Icon: Map }, { id: "home", Icon: Home },
-  { id: "chevronRight", Icon: ChevronRight }, { id: "chevronLeft", Icon: ChevronLeft },
-  { id: "chevronsRight", Icon: ChevronsRight }, { id: "chevronsLeft", Icon: ChevronsLeft },
-
-  // Extras úteis
-  { id: "flag", Icon: Flag }, { id: "lifeBuoy", Icon: LifeBuoy }, { id: "circlePlus", Icon: CirclePlus },
-  { id: "heart", Icon: Heart }, { id: "heartPulse", Icon: HeartPulse }, { id: "squareX", Icon: SquareX },
-  { id: "squarePen", Icon: SquarePen }
-];
-export const colors = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
-export const cor = { 
-    "#8B81F3": "ROXO", 
-    "#CAC5FF": "LILAS", 
-    "#FFA6F1": "ROSA", 
-    "#FFACA1": "SALMAO" 
-};
+import { colors } from "../components/icons";
+import { icons } from "../components/icons";
+import { cor } from "../components/icons";
 
 type materiaItem = {
     id?: string;
@@ -105,7 +63,7 @@ type RecenteData = {
     ultimaRevisao?: number;
     tempoAtivo?: number;
 };
-type UserXP = {
+export type UserXP = {
     maxXp: number;
     avatar: string;
     cargo: string;
@@ -658,7 +616,7 @@ export default function Materiais() {
 
                                     <Link href="/home/materiais" className="w-[40%] min-w-[40%] h-[30%] min-h-[30%] rounded-full">
                                     <button onClick={() => setOpen(true)} className="p-[10px_12px] bg-[#1E2351] rounded-full text-white flex justify-center items-center gap-2 text-[20px] shadow-md leading-5 ">
-                                        <Icons.CirclePlus className="size-6"/> Criar matéria
+                                        <CirclePlus className="w-6 h-6" /> Criar matéria
                                     </button>
                                     </Link>
                                 </div>
@@ -785,10 +743,10 @@ export default function Materiais() {
                 </div> */}
             </div>
 
-            <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden">
+            <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] ">
                  
                 <div className="w-full h-full flex justify-center ">   
-                    <div className="w-[95%] h-[95%] flex flex-col items-center mt-4">
+                    <div className="w-[95%] h-[95%] flex flex-col items-center mt-4 pb-2">
                         
                         <div className="flex gap-[15px] justify-center items-center w-[95%] max-w-[95%] max-h-[110px]">
                             
@@ -798,7 +756,7 @@ export default function Materiais() {
                                 <h1 className="text-[30px] font-medium ">{user.primeiroNome}</h1>
                                 <h2 className="text-[#828181] font-medium text-[18px]">{user.cargo}</h2>
                                 <div className=" h-2 rounded-[18px] bg-[#1e235138]">
-                                    <div style={{ width: userXP?.progresso ?? 0 }} className={` h-2 rounded-[25px] bg-purple-600 `}></div>
+                                    <div style={{ width: `${userXP?.progresso ?? 0}%`}} className={` h-2 rounded-[25px] bg-purple-600 `}></div>
                                 </div>
                                 <div className="flex justify-between ">
                                     {(() =>{
@@ -812,12 +770,12 @@ export default function Materiais() {
 
                         </div>
                         
-                        <div className="ml-[15px] mt-[30px] w-[95%] max-w-[95%]">
+                        <div className="ml-[15px] mt-[30px]  w-[95%] max-w-[95%]">
                             <h1 className="text-[30px] w-fit font-medium leading-6">Matérias recentes</h1>
                             {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 mb-[5px] mt-2 items-center relative max-w-[95%]">
+                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
@@ -840,9 +798,10 @@ export default function Materiais() {
 
                                 )
                             })}
+                            <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais matérias</motion.button>
+
                         </div>
 
-                        <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }}  id="editar_conta" className="border border-[#1E2351] mt-auto mb-[5px] text-[22px] w-[380px] max-w-[95%] min-h-[50px] rounded-full ">Ver mais matérias</motion.button>
                     </div>
                 </div> 
             </div>

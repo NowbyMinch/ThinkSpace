@@ -124,7 +124,7 @@ export default function MaterialClient() {
     
     return( 
         <>  
-            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031]  ">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className="mt-[25px] mb-[25px] overflow-hidden w-[1200px] max-w-[90%] h-[950px] max-h-[95%] flex flex-col justify-center gap-4 items-center ">
                     <div className="w-[420px] max-w-[90%] h-[80px] bg-[#A39CEC] border-[2px] border-[#726BB6] rounded-[25px] flex justify-center items-center">
                         <div className="w-[85%] h-[80%] text-white font-medium overflow-ellipsis flex justify-between items-center ">

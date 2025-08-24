@@ -75,7 +75,6 @@ export default function MaterialClient() {
                 setLoading(false);
             }
         }
-
     }, [resumo]);
     
     if (!idMaterial) return null;
@@ -83,13 +82,13 @@ export default function MaterialClient() {
 
     return( 
         <>  
-            <div className=" bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center shadow-md border border-[#00000031] justify-center ">
-                <div className=" w-[1350px] max-w-[95%] h-[95%] flex flex-col overflow-y-auto items-center ">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+                <div className=" w-[1350px] max-w-[95%] h-full py-2 my-1 flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
                         <h1 className=" text-[25px] font-medium h-fit">Resumo <span className=" text-[#726BB6]">IA</span></h1>
-                        <div className=" h-[96%] flex flex-col gap-8 ">
+                        <div className=" h-[96%] flex flex-col gap-8  ">
                             
-                            <p className="text-[18px]" dangerouslySetInnerHTML={{ __html: html }} />
+                            <p className="text-[18px] resumo" dangerouslySetInnerHTML={{ __html: html }} />
 
                             {/* <div className=" flex flex-col gap-4">
                                 <h1 className=" text-[35px] font-semibold">Resumo sobre Programação Orientada a Objetos (POO):</h1>

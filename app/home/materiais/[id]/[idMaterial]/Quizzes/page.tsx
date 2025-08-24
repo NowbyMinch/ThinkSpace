@@ -288,29 +288,30 @@ export default function MaterialClient() {
             {message && (
                 <ErrorModal message={message} onClose={() => setMessage(null)} />
             )}
-            <div className="bg-white rounded-[35px] h-[100%] overflow-hidden flex flex-col items-center  shadow-md border border-[#00000031]">
-                <div className="w-[1200px] max-w-[90%] h-[850px] max-h-[92%] mt-[35px] mb-[35px] relative flex justify-center items-center">
-                    <div className="w-full h-[10px] rounded-full bg-[rgba(16,19,46,0.14)] absolute top-0">
+            <div className=" w-full rounded-[35px] overflow-x-hidden overflow-y-auto bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+                <div className="w-[1200px] max-w-[90%] h-[850px] max-h-[95%] my-auto relative flex flex-col justify-center items-center gap-1">
+                    <div className="w-full h-[10px] rounded-full bg-[rgba(16,19,46,0.14)] absolute top-0 ">
                         <div style={{ width: `${barlength}%` }} className="transition-all ease-in-out duration-300 h-full rounded-full bg-[rgba(30,35,81,0.75)]"></div>
                     </div>
 
-                    <div className="w-full h-[75%] bg-[#F7F7FF] rounded-[25px] border-[2px] shadow-md border-[rgba(60,49,91,0.24)] flex justify-center items-center">
-                        <div className="w-[95%] h-[90%] relative flex justify-center items-center"> 
+                    {(() =>{
+                        if (questaoIndex == 10){
+                            return <h2 className="mr-auto text-[15px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex }/{quizzes.length}</h2>
+                        }
+                        else{
+                            return <h2 className="mr-auto text-[15px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex + 1}/{quizzes.length}</h2>
+                        }
+                    })()}
 
-                            {(() =>{
-                                if (questaoIndex == 10){
-                                    return <h2 className="absolute top-0 left-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex }/{quizzes.length}</h2>
-                                }
-                                else{
-                                    return <h2 className="absolute top-0 left-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Questão {questaoIndex + 1}/{quizzes.length}</h2>
-                                }
-                            })()}
-                            <h2 className="absolute top-0 right-0 text-[22px] bg-[#A39CEC] py-1 px-2 rounded-[10px] text-white">Quiz</h2>
+                    <div className="w-full h-[85%] bg-[#F7F7FF] rounded-[25px] border-[2px] shadow-md border-[rgba(60,49,91,0.24)] flex justify-center items-center relative overflow-y-auto overflow-x-hidden ">
 
-                            <div className="w-[85%] h-[80%] flex flex-col gap-[5%] justify-center items-center relative">
-                                <h1 className="text-[25px] text-center line-clamp-4 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
-                                <div className="w-full flex flex-col gap-[5%]">
-                                    <div className="flex max-w-[100%] gap-[5%]">
+                        <div className="w-[85%] max-w-[90%] h-[90%] flex justify-center items-center relative "> 
+                            
+                            <div className="w-full h-full flex flex-col items-center relative gap-2">
+                                <h1 className="quizz_title text-[20px] min-h-fit text-center line-clamp-7 break-words ">{quizzes[questaoIndex]?.pergunta}</h1>
+
+                                <div className="w-full flex flex-col justify-center items-center gap-1 my-auto ">
+                                    <div className="flex max-w-full justify-between w-[700px] min-h-[100px] max-h-[280px] options">
                                         {[0, 1].map((i) => (
                                         <motion.button
                                             key={i}
@@ -328,17 +329,16 @@ export default function MaterialClient() {
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i)} }
-                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium"
+                                            className=" text-left border-[2px] w-[49%] max-w-[49%] h-full rounded-[20px] border-[#726BB6] shadow-md flex items-center font-medium singleOption"
                                         >
-                                            
-                                            <span className="p-4 w-full line-clamp-5 h-full break-words text-[20px]">
+                                            <span className="p-4 w-full line-clamp-5 h-fit break-words quizzOption_text">
                                             {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>
                                         ))}
                                     </div>
 
-                                    <div className="flex max-w-[100%] gap-[5%]">
+                                    <div className="flex max-w-full justify-between w-[700px] min-h-[100px] max-h-[280px] options">
                                         {[2, 3].map((i) => (
                                         <motion.button
                                             key={i}
@@ -356,8 +356,8 @@ export default function MaterialClient() {
                                             onClick={() => handleClick(i)}
                                             disabled={disabled}
                                             style={{ backgroundColor: getBackgroundColor(i), color: getColor(i) }}
-                                            className="text-left border-[2px] w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] rounded-[20px] border-[#726BB6] shadow-md flex items-center text-[25px] font-medium">
-                                            <span className="p-4 w-full line-clamp-5 h-fit break-words text-[20px]">
+                                            className="text-left border-[2px] w-[49%] max-w-[49%] h-full rounded-[20px] border-[#726BB6] shadow-md flex items-center font-medium singleOption">
+                                            <span className="p-4 w-full line-clamp-5 h-fit break-words quizzOption_text">
                                                 {quizzes[questaoIndex]?.alternativas[i]}
                                             </span>
                                         </motion.button>
@@ -390,32 +390,33 @@ export default function MaterialClient() {
                                 </AnimatePresence>
                             </div>
                             
-                            {finalizado && (
-                                <>
-                                    <motion.div 
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97}}
-                                    transition={{ duration: 0.3, ease: "easeInOut"}}
-                                    onClick={() => {if (questaoIndex !== 0){ setQuestaoIndex(questaoIndex - 1); console.log(questaoIndex)} else {return} }}
-                                    className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 left-0">
-                                        <ArrowLeft className=""/>
-                                    </motion.div>
-
-                                    <motion.div 
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97}}
-                                    transition={{ duration: 0.3, ease: "easeInOut"}}
-                                    onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
-                                    className="bg-white rounded-full p-5 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-0 right-0">
-                                        <ArrowRight className=""/>
-                                    </motion.div>
-                                </>
-
-                            )}
-                            
-
                         </div>
+
+                        
                     </div>
+
+                    {finalizado && (
+                        <>
+                            <motion.div 
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97}}
+                            transition={{ duration: 0.3, ease: "easeInOut"}}
+                            onClick={() => {if (questaoIndex !== 0){ setQuestaoIndex(questaoIndex - 1); console.log(questaoIndex)} else {return} }}
+                            className="bg-white rounded-full p-2 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-14 left-2">
+                                <ArrowLeft className="size-8 "/>
+                            </motion.div>
+
+                            <motion.div 
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97}}
+                            transition={{ duration: 0.3, ease: "easeInOut"}}
+                            onClick={() => {if (questaoIndex !== quizzes.length - 1){ setQuestaoIndex(questaoIndex + 1); console.log(questaoIndex)} else {return} }}
+                            className="bg-white rounded-full p-2 border-[1px] border-[rgba(0,0,0,0.3)] cursor-pointer absolute bottom-14 right-2">
+                                <ArrowRight className="size-8 "/>
+                            </motion.div>
+                        </>
+
+                    )}
 
                 </div>
             </div>
