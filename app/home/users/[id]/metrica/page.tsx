@@ -202,7 +202,7 @@ export default function Métricas() {
                 <div className=" mt-[12px] xl:h-[965px] w-[1580px] max-w-[98%] lg:max-w-[90%] flex flex-col gap-4 my-auto pb-4 overflow-y-auto">
                     <div className=" flex xl:flex-row flex-col gap-4 min-h-[65%]">
                         
-                        <div className="min-w-[55%] min-h-[580px] bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
+                        <div className="min-w-[55%] min-h-[5890px] bg-white flex justify-center items-center rounded-[35px] shadow-md border border-[#00000031] ">
                             <div className=" w-[90%] h-[90%] flex flex-col justify-between">
                                 <div className="">
                                     <h1 className="text-[30px] font-medium leading-none">Métricas</h1>
