@@ -32,40 +32,36 @@ export default function TermosDeUso() {
     return (
         <>
             <div className=" h-screen relative flex flex-col items-center bg-white">
-                <div className="h-[120px] w-full ">
-                    <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[120px] flex justify-center`}>
-                        <div className="flex w-[90%] max-w-[1700px] h-[120px] justify-between">
-                            <div className=" w-full h-full flex items-center ">
-                                <Link href="/" className="cursor-pointer ">
-                                    <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[180px] " alt="Logo"/>
+                <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[100px] flex justify-center align items-center`}>
+                    <div className="flex max-w-[95%] w-[1700px] max-h-[100px] h-max justify-between ">
+                        <div className=" w-full h-full flex items-center ">
+                            <a className="cursor-pointer ">
+                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
+                            </a>
+                        </div>
+
+                        <div className=" w-full flex justify-end ">
+                            <div className="flex items-center gap-2 ">
+                                <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
+                                    <button className="text-[18px] ">Entrar</button>
                                 </Link>
-                            </div>
-                            <div className=" w-full flex justify-center items-center ">  
-                                
-                            </div>
-                            <div className=" w-full flex justify-end ">
-                                <div className="flex items-center gap-8 ">
-                                    <Link href="/login" className=" transition-all ease-in-out hover:text-[#A78CDC]">
-                                        <button className="text-[18px] ">Entrar</button>
-                                    </Link>
+
+                                <Link href="/registrar" className="">
                                     <motion.button 
                                     whileTap={{ scale: 0.99 }} 
                                     whileHover={{ scale: 1.01 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                                    className="text-[18px] p-[8px_20px] rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
-                                        <Link href="/registrar">
-                                            Registre-se
-                                        </Link>
-                                        <div className="bg-[#A39CEC] p-3 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
+                                    className="text-[18px] p-[5px_10px] leading-none text-nowrap rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]">
+                                        Registre-se
+                                        <div className="bg-[#A39CEC] p-2 rounded-full"> <MoveUpRight className="text-white size-5"/> </div>
                                     </motion.button>
-                                </div>
-
+                                </Link>
                             </div>
                         </div>
-                    </header>
-                    <header id="header" className={` bg-white w-[100%] h-[120px] `}>
-                    </header>
-                </div>
+                    </div>
+                </header>
+                
+                <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[100px] `} ></div>
                 
                 <div className="w-full flex flex-col items-center gap-8 mb-8">
                     <div className="w-[100%] h-[85px] bg-[#9767F8] mx-auto flex justify-center items-center shadow-md">
@@ -159,38 +155,46 @@ export default function TermosDeUso() {
                         </div>
 
                 </div>
-                <footer className="w-full h-[300px] flex justify-center items-center py-8 mt-auto">
-                    <div className="w-[34%] h-[140px] flex justify-center  items-center">
-                        <Image width={300} height={500} src="/landingpage/logo1.png" className="h-full w-auto" alt="Logo"/>
-                    </div>
-
-                    <div className="w-[33%] flex flex-col justify-center items-center ">
-
-                        <div className=" flex justify-center items-center gap-4 ">
-                            <a href="/termos-de-uso">Termos de uso</a>
-                            <a href="/politica-de-privacidade">Política de privacidade</a>
-                            <a href="">Suporte</a>
+                
+                <footer className={`w-[1300px] max-w-full h-[200px] flex justify-center items-center mx-auto `}>
+                    <div className="flex w-full h-full relative justify-center">
+                        <div className=" w-fit h-full flex items-center absolute left-2 ">
+                            <a className="cursor-pointer hidden md:flex">
+                                <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
+                            </a>
                         </div>
                         
-                        <div className="w-full flex justify-center items-center gap-4 mt-2">
-                            <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
+                        <div className=" w-fit flex overflow-hidden gap-2">
+                            <div className="flex flex-col justify-center items-center ">
+                                <div className=" flex justify-center items-center gap-4 ">
+                                    <a href="/termos-de-uso">Termos de uso</a>
+                                    <a href="/politica-de-privacidade">Política de privacidade</a>
+                                    <a href="">Suporte</a>
+                                </div>
+                                
+                                <div className="w-full flex justify-center items-center gap-4 mt-2">
+                                    <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
+                                </div>
+                            </div>
+
+                            <div className=" flex justify-center items-center">
+                                <motion.a 
+                                href="https://www.instagram.com/thinkspace__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                target="_blank" rel="noopener noreferrer"
+                                whileTap={{ scale: 0.98 }} 
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.2, ease: "easeInOut" }}
+
+                                className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
+                                    <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
+                                    <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
+                                </motion.a>
+                            </div>
+                            
                         </div>
                     </div>
-
-                    <div className="w-[33%] flex flex-col">
-                        <motion.a 
-                        href="https://www.instagram.com/thinkspace__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                        target="_blank" rel="noopener noreferrer"
-                        whileTap={{ scale: 0.98 }} 
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-
-                        className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
-                            <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
-                            <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
-                        </motion.a>
-                    </div>
                 </footer>
+
             </div>
         </>
     )

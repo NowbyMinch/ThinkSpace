@@ -452,7 +452,7 @@ export default function RegisterPage() {
                                   <motion.div className=" flex justify-center items-center relative w-[550px] max-w-[90%] mx-auto flex-col gap-9">
                                     <div className="h-fit flex justify-center items-center gap-2 overflow-hidden">
                                       <input type="checkbox" required className='size-4 accent-[#804EE5] cursor-pointer'/> 
-                                      <h2 className='text-[18px]'>Li e concordo com os <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Termos de uso</a> e a <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Política de Privacidade</a>.</h2>
+                                      <h2 className='text-[18px]'>Li e concordo com os <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36' href="/termos-de-uso">Termos de uso</a> e a <a href="/politica-de-privacidade" className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Política de Privacidade</a>.</h2>
                                     </div>
 
                                     <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">
@@ -529,7 +529,7 @@ export default function RegisterPage() {
                                   <motion.div className=" flex justify-center items-center relative w-[550px] max-w-[90%] mx-auto flex-col gap-9">
                                     <div className="h-fit flex justify-center items-center gap-2 overflow-hidden">
                                       <input type="checkbox" required className='size-4 accent-[#804EE5] cursor-pointer'/> 
-                                      <h2 className='text-[18px]'>Li e concordo com os <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Termos de uso</a> e a <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Política de Privacidade</a>.</h2>
+                                      <h2 className='text-[18px]'>Li e concordo com os <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36' href="/termos-de-uso" >Termos de uso</a> e a <a href="/politica-de-privacidade" className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Política de Privacidade</a>.</h2>
                                     </div>
 
                                     <motion.div className=" flex justify-center items-center gap-[7%] relative w-[550px] max-w-[90%] mx-auto ">

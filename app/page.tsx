@@ -263,30 +263,30 @@ export default function landingPage() {
                                         <div className="embla__viewport " ref={emblaRef}>
                                             <div className="embla__container ">
 
-                                                <div className="embla__slide flex flex-col gap-3 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center  ">
                                                     <Image src="/landingpage/materiais-img1.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Professora de Ciências</h1>
-                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Ajuda pré-universitários a explorarem o mundo com curiosidade e foco no vestibular.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center   break-words">Professora de Ciências</h1>
+                                                    <h2 className="embla_text text-white max-w-[230px] text-center text-[18px] break-words">Ajuda pré-universitários a explorarem o mundo com curiosidade e foco no vestibular.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-3 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center ">
                                                     <Image src="/landingpage/materiais-img2.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Mentora de Artes</h1>
-                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Inspira estudantes a desenvolverem a criatividade através do desenho e expressão visual.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center ">Mentora de Artes</h1>
+                                                    <h2 className="embla_text text-white max-w-[230px] text-center text-[18px]">Inspira estudantes a desenvolverem a criatividade através do desenho e expressão visual.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-3 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center ">
                                                     <Image src="/landingpage/materiais-img3.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Professor de Matemática</h1>
-                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Ensina com entusiasmo, conectando o raciocínio lógico ao dia a dia universitário.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center ">Professor de Matemática</h1>
+                                                    <h2 className="embla_text text-white max-w-[230px] text-center text-[18px]">Ensina com entusiasmo, conectando o raciocínio lógico ao dia a dia universitário.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-3 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center ">
                                                     <Image src="/landingpage/materiais-img4.svg" className="max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Estudante amante de leitura</h1>
-                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Descobre novos mundos através dos livros e compartilha conhecimento com alegria.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center ">Estudante amante de leitura</h1>
+                                                    <h2 className="embla_text text-white max-w-[230px] text-center text-[18px]">Descobre novos mundos através dos livros e compartilha conhecimento com alegria.</h2>
                                                 </div>
-                                                <div className="embla__slide flex flex-col gap-3 items-center">
+                                                <div className="embla__slide flex flex-col gap-3 items-center ">
                                                     <Image src="/landingpage/materiais-img5.svg" className=" max-h-[200px]" width={300} height={500} alt="Alt"/>
-                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 text-center flex justify-center ">Estudante programadora autodidata</h1>
-                                                    <h2 className="embla_text text-white max-w-[96%] text-center text-[18px]">Aprende por conta própria sobre programação e inovação, com sede de descobertas.</h2>
+                                                    <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center ">Estudante programadora autodidata</h1>
+                                                    <h2 className="embla_text text-white max-w-[230px] text-center text-[18px]">Aprende por conta própria sobre programação e inovação, com sede de descobertas.</h2>
                                                 </div>
                                                 
 
@@ -364,12 +364,35 @@ export default function landingPage() {
                                         </div>
 
                                     </motion.div>
+
                                     <motion.div
                                     whileHover={{ scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
                                     id="title"
-                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#876de7] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                        <div className="absolute preco_img top-[-65px] left-[-55px] h-[35%] -z-10">
+                                            <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
+                                        </div>
+
+                                        <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
+                                            <span className="leading-none valor">R$</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">19</span>
+                                            <span className="leading-none valor">,</span>
+                                            <span className="mb-auto font-medium valor">90</span>
+                                            <span className="leading-none -ml-3 valor">/mensal</span>
+                                        </div>
+
+                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                            <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
+                                                <li className="max-w-[242px]">Acesso ilimitado a salas de estudo</li>
+                                                <li className="max-w-[242px]">Materiais de estudo sempre disponíveis</li>
+                                                <li className="max-w-[242px]">Inteligência Artificial sem limites</li>
+                                                <li className="max-w-[242px]">Ambiente 100% livre de anúncios</li>
+                                            </ul>
+                                        </div>
+
+                                        {/* className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#9678FF] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
                                         <div className="absolute preco_img top-[-72px] left-[-53px] h-[35%] -z-10">
                                             <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
                                         </div>
@@ -389,8 +412,7 @@ export default function landingPage() {
                                                 <li>Inteligência Artificial sem limites</li>
                                                 <li>Ambiente 100% livre de anúncios</li>
                                             </ul>
-                                        </div>
-
+                                        </div> */}
                                     </motion.div>
                                     
 
@@ -426,7 +448,7 @@ export default function landingPage() {
                                 </div>
                             </div>
                         </div>  
-                        {/* <div className="w-[1500px] flex justify-center items-center bg-red-500">
+                        {/* <div className="w-[1500px] flex justify-center items-center ">
                         </div> */}
 
                         <div className="absolute w-[100%] overflow-hidden bottom-0 z-[-10]">
