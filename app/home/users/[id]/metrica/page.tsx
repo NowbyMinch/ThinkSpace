@@ -385,7 +385,7 @@ export default function Métricas() {
                         <div className="w-full h-full bg-[#CCB2FF] min-h-[316px] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full h-[90%] flex justify-center items-center">
                                 <div className=" flex flex-col justify-between min-h-[220px] min-w-[60%] h-full">
-                                    <h1 className="banner_title font-medium line-clamp-5 break-words">
+                                    <h1 className="text-[18px] font-medium  break-words criar_material">
                                         Ao criar seu primeiro material, você desbloqueia o acompanhamento do seu progresso, com metas semanais, conquistas e relatórios de desempenho.
                                     </h1>
                                     <Link href='/home/materiais' className="max-w-[40%] min-w-[40%] h-[25%] min-h-[25%] rounded-full">
@@ -398,11 +398,11 @@ export default function Métricas() {
                                     </Link>
                                 </div>
 
-                                <div className=" min-w-[40%] bg-red-200 min-h-[250px] h-fit flex justify-center items-center overflow-hidden relative">
+                                <div className=" min-w-[40%]  min-h-[250px] h-fit flex overflow-hidden relative">
                                     <Image width={300} height={500}
                                         src="/metricaMaterial.svg"
                                         alt="Decoração"
-                                        className=" w-[110%] absolute top-2  "
+                                        className=" w-[80%] absolute top-1 min-h-[250px] min-w-[300px] "
                                     />
                                 </div>
                             </div>

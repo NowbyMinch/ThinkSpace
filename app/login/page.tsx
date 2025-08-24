@@ -87,7 +87,7 @@ export default function LoginPage() {
 
                 </form>
 
-                <div className="flex flex-col gap-4 mt-10">
+                {/* <div className="flex flex-col gap-4 mt-10">
                   <div className="flex justify-center items-center mt-[-15px] ">
                     <div className="h-[1px] w-[33%] bg-[rgba(0,0,0,0.50)] flex justify-center items-center"></div>
                     <span className='w-[33%] flex justify-center items-center text-[15px] text-center'>Ou continue com</span>
@@ -108,7 +108,7 @@ export default function LoginPage() {
                   </div>
 
                   <h2 className='text-[15px] w-full text-center'>Não tem uma conta? <a href="/registrar" className='text-[#3881AF]'> Registre-se</a></h2>
-                </div>
+                </div> */}
               </div>
         
             </motion.div>
