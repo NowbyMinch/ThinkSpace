@@ -484,7 +484,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
-            router.push(`/home/materiais/${id}/${materialId}/resumo`);
+            // router.push(`/home/materiais/${id}/${materialId}/resumo`);
             
         } catch (err) {
             setLoading(false);
