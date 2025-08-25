@@ -131,7 +131,7 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
                 {insideLoading && <LoadingMessage />}
 
             </div>
-            <form onSubmit={(e) => {e.preventDefault(); Mensagem(); setMensagem("");}} className="w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center">
+            <form onSubmit={(e) => {e.preventDefault(); Mensagem(); setMensagem("");}} className="w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center w-[95%] max-w-[600px] h-[6%] flex gap-2 justify-center items-center mb-2">
                 <input value={mensagem} onChange={(e) => {setMensagem(e.target.value); }} type="text" placeholder="Pergunte a assistente IA" className="w-[80%] pr-3 h-full break-words whitespace-nowrap overflow-hidden overflow-ellipsis rounded-full max-h-[74px] pl-4 text-[20px] border-2 border-[rgba(0,0,0,0.19)] outline-[rgba(151,103,248,0.6)]"/>
                 <motion.button 
                 whileHover={{ scale: 1.02 }}
