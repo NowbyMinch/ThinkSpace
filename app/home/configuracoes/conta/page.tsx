@@ -750,7 +750,7 @@ export default function Conta() {
           <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => setEditarSenhaPop(true)}
+          onClick={() => setEditarEmailPop(true)}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
