@@ -85,7 +85,7 @@ export default function MaterialClient() {
             <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
                 <div className=" w-[1350px] max-w-[95%] h-full py-2 my-1 flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
-                        <p className="text-[16px] text-[#C2C2C2] w-full max-w-full" >Este conteúdo foi sintetizado por IA e busca facilitar sua compreensão. Em caso de dúvida, consulte fontes complementares.</p>    
+                        <p className="text-[16px] text-[#C2C2C2] w-full max-w-full text-center" >Este conteúdo foi sintetizado por IA e busca facilitar sua compreensão. Em caso de dúvida, consulte fontes complementares.</p>    
                         <h1 className=" text-[25px] font-medium h-fit">Resumo <span className=" text-[#726BB6]">IA</span></h1>
                         <div className=" h-[96%] flex flex-col gap-8  ">
                             
