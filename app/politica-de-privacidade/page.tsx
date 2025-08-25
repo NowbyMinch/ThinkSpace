@@ -60,6 +60,7 @@ export default function PoliticaDePrivacidade() {
                         </div>
                     </div>
                 </header>
+                <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[100px] `} ></div>
                 
                 <div className="w-full flex flex-col items-center gap-8 mb-8">
                     <div className="w-[100%] h-[85px] bg-[#9767F8] mx-auto flex justify-center items-center shadow-md">
