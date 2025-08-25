@@ -35,7 +35,7 @@ export default function TermosDeUso() {
                 <header id="header" className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} transition-all ease-in-out duration-300 z-[1100] shadow-md fixed top-0 bg-white w-[100%] h-[100px] flex justify-center align items-center`}>
                     <div className="flex max-w-[95%] w-[1700px] max-h-[100px] h-max justify-between ">
                         <div className=" w-full h-full flex items-center ">
-                            <a className="cursor-pointer ">
+                            <a href="/" className="cursor-pointer ">
                                 <Image width={300} height={500} src="/landingpage/logo1.png" className="w-[125px] " alt="Logo"/>
                             </a>
                         </div>
