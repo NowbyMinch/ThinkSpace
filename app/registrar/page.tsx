@@ -125,11 +125,7 @@ export default function RegisterPage() {
 
     const data = await res.json();
     console.log(newForm3);
-    if (data.message === "E-mail verificado e cadastro concluído.") {
-      final();
-      handleScrollToTop();
-    }
-    else if (data.message === "Sala de estudo não encontrada."){
+    if (data.message === "E-mail verificado e cadastro concluído." || data.message === "Sala padrão não encontrada. Execute o salaEstudo primeiro.") {
       final();
       handleScrollToTop();
     }
@@ -287,7 +283,7 @@ export default function RegisterPage() {
 
                                       <div className="mx-auto lg:w-[50%] max-w-[550px] mt-4 lg:mt-0 flex flex-col gap-2 ">
                                         <div className="flex flex-col gap-1">
-                                          <label htmlFor="" className='text-[20px]'>Data de nascimento</label>
+                                          <label htmlFor="" className='text-[20px]'>Data de nascimento </label>
                                           <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
                                         </div>
 

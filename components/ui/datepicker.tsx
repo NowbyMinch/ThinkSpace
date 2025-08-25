@@ -57,7 +57,7 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
       <div className="relative ">
         <input
           type="text"
-          placeholder="Data de nascimento" // <-- updated format
+          placeholder="Data de nascimento (dia/mês/ano)" // <-- updated format
           value={inputValue}
           required
           onChange={handleInputChange}

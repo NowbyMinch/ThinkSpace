@@ -25,9 +25,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
     const [ documento, setDocumento ] = useState(false);
     const [ loading, setLoading ] = useState(true);
 
-    const concluir = () => {
-        setConcluiu(true);
-    }
+
 
     useEffect(() => {
         const user = async () => {
@@ -64,8 +62,25 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
             }
             
         }; material();
-
+        
     }, []);
+    
+    const Concluir = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/concluir/${id}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            });
+            
+            const data = await res.json();
+            console.log(data);
+
+        } catch (err) {
+            console.error(err);
+        }
+        
+    }; 
     
     if (loading) return ;
     
@@ -145,7 +160,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                 <div className="flex flex-col w-full h-full relative  gap-2">
                     <div className="flex justify-between gap-2 overflow-x-scroll overflow-y-visible scrollbar-hide ">
                         <div className="flex justify-between gap-2">
-                            {documento && (
+                            {/* {documento && (
                                 <>
                                     <Link href={`/home/materiais/${id}/${idMaterial}/Material`}>
                                         {(() => {
@@ -173,7 +188,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
 
                                     </Link>
                                 </>
-                            )}
+                            )} */}
                             <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`}>
                                 {(() => {
                                     if (pathname == `/home/materiais/${id}/${idMaterial}/Resumo`) {
@@ -257,7 +272,7 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
                                 <motion.button 
                                 whileTap={{ scale:0.98 }}
                                 whileHover={{ scale:1.02 }}
-                                onClick={() => concluir()}
+                                onClick={() => Concluir()}
                                 className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative  ">
                                     Concluir 
                                 </motion.button>

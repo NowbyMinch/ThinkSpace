@@ -58,6 +58,7 @@ export default function Conta() {
   
   // SENHA ------------------------------------------------------------------------------------------
   const [ senhaDeletar, setSenhaDeletar] = useState({ senhaDeletar: "" });
+  const [ senhaSuspender, setSenhaSuspender] = useState({ senhaSuspender: "" });
   
   // EMAIL ------------------------------------------------------------------------------------------
   const [ step, setStep] = useState(1);
@@ -104,7 +105,6 @@ export default function Conta() {
   }, []);
 
   const deletarConta = async () => {
-    setExcluirPop(false);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/configuracoes/excluir-conta`, {
         method: "DELETE",
@@ -114,29 +114,32 @@ export default function Conta() {
       });
 
       const result = await res.json();
-      console.log(result.message); // Conta excluída com sucesso.
+      console.log(result); // Conta excluída com sucesso.
+      
       if (result.message === "Conta excluída com sucesso."){
-        router.push('/');
+        setExcluirPop(false);
       }
       
     } catch (error) {
       console.error("Erro ao excluir conta");
+    } finally {
+      router.push('/');
     }
   };
 
-  const Suspender = async () => {
-    setExcluirPop(false);
+  const suspenderConta = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/configuracoes/excluir-conta`, {
-        method: "DELETE",
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/configuracoes/suspender-conta`, {
+        method: "PATCH",
         credentials: "include",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senhaAtual: senhaDeletar.senhaDeletar }),
+        body: JSON.stringify({ senhaAtual: senhaSuspender.senhaSuspender }),
       });
 
-      const result = await res.json();
-      console.log(result.message); // Conta excluída com sucesso.
+        const result = await res.json();
+        console.log(result); // Conta excluída com sucesso.
       if (result.message === "Conta excluída com sucesso."){
+        setSuspenderPop(false);
         router.push('/');
       }
       
@@ -370,7 +373,7 @@ export default function Conta() {
                 <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
                 <form onSubmit={(e) => {e.preventDefault(); Step()}} className={`w-[90%] h-[85%] lg:w-[80%] lg:h-[85%] lg:mb-4 flex flex-col items-center ${step === 1 || step === 3 ? "gap-10" : "gap-0"} z-[900] overflow-y-auto pr-2 pb-4`}>
-                  <div className="h-fit">
+                  <div className="h-fit w-full flex flex-col justify-center items-center">
                     <h1 className={`text-center text-[30px] font-medium text-[#EB7262]`}>Deseja editar seu email?</h1>
                     <h2 className={`text-center text-[25px] w-[700px] max-w-full font-medium break-words ${step === 1 ? "flex" : "hidden"}`}>Insira o seu email e enviaremos um código de verificação para você editar sua conta.</h2>
                     <h2 className={`text-center text-[25px] w-[700px] max-w-full font-medium break-words ${step === 2 ? "flex" : "hidden"}`}>Um e-mail de confirmação foi enviado. Digite o código de verificação para redefinir sua conta com segurança.</h2>
@@ -486,7 +489,7 @@ export default function Conta() {
                 <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
 
                 <form onSubmit={(e) => {e.preventDefault(); StepSenha()}} className={`w-[90%] h-[85%] lg:w-[80%] lg:h-[85%] lg:mb-4 flex flex-col items-center ${stepSenha === 1 || stepSenha === 3 ? "gap-10" : "gap-0"} z-[900] overflow-y-auto pr-2 pb-4`}>
-                  <div className="h-fit">
+                  <div className="h-fit w-full flex flex-col justify-center items-center ">
                     <h1 className={`text-center text-[30px] font-medium text-[#EB7262]`}>Deseja editar a senha?</h1>
                     <h2 className={`text-center text-[25px] w-[700px] max-w-full font-medium break-words ${stepSenha === 1 ? "flex" : "hidden"}`}>Insira o seu email e enviaremos um código de verificação para você editar sua conta.</h2>
                     <h2 className={`text-center text-[25px] w-[700px] max-w-full font-medium break-words ${stepSenha === 2 ? "flex" : "hidden"}`}>Um e-mail de confirmação foi enviado. Digite o código de verificação para redefinir sua conta com segurança.</h2>
@@ -607,46 +610,46 @@ export default function Conta() {
                     exit={{ opacity: 0, scale: 0.90 }}
                     className={`w-[700px] h-[400px] flex rounded-[40px] z-[1100]  opacity-1 `}>
 
-                        <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
-                            
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
+                      <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
+                          
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
 
-                            <form className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
-                              <div className="flex flex-col justify-center items-center">
-                                  <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                  <span className="font-medium text-[30px]">{user.primeiroNome} </span>
-                                  <span className="text-[20px]"></span>
-                              </div>
+                          <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                            <div className="flex flex-col justify-center items-center">
+                                <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                <span className="text-[20px]"></span>
+                            </div>
 
-                              <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
-                              <input type="password" onChange={(e) => {
-                                  setSenhaDeletar({ senhaDeletar: e.target.value });
-                                  console.log(senhaDeletar);
-                                }} 
-                                placeholder="Digite sua senha"
-                                className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
-                              />
+                            <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar sua conta?</h1>
+                            <input type="password" onChange={(e) => {
+                                setSenhaDeletar({ senhaDeletar: e.target.value });
+                                console.log(senhaDeletar);
+                              }} 
+                              placeholder="Digite sua senha"
+                              className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
+                            />
 
-                              <div className="w-full flex justify-center gap-4 mt-auto">
-                                  <motion.button 
-                                  whileHover={{ scale: 1.03 }}
-                                  whileTap={{ scale: 0.97 }}
-                                  onClick={() => setExcluirPop(false)}
-                                  className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                      Voltar
-                                  </motion.button>
-                                  <motion.button 
-                                  whileHover={{ scale: 1.03 }}
-                                  whileTap={{ scale: 0.97 }}
-                                  onClick={() => {deletarConta()}}
-                                  className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                      Deletar
-                                  </motion.button>
-                              </div>
+                            <div className="w-full flex justify-center gap-4 mt-auto">
+                                <motion.button 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() => setExcluirPop(false)}
+                                className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                  Voltar
+                                </motion.button>
+                                <motion.button 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() => {deletarConta()}}
+                                className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                  Deletar
+                                </motion.button>
+                            </div>
 
-                            </form>
-                        </div>
+                          </div>
+                      </div>
                     </motion.div>
                     
                     
@@ -657,7 +660,76 @@ export default function Conta() {
                   <Backdrop3 onClick={() => setExcluirPop(false)}/>
               </div>
           </>
-      )}
+        )}  
+
+        {suspender && (
+          <>
+              <motion.div 
+                key="content"
+                initial={{ opacity: 0, scale: 0.85}}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.90 }}
+                className={`w-full h-full fixed top-0 left-0 flex justify-center items-center  opacity-1 z-[1100]`}>
+                    
+                    <div className="w-full h-full absolute" onClick={() => setSuspenderPop(false)}></div>
+                    <motion.div 
+                    key="content"
+                    initial={{ opacity: 0, scale: 0.85}}
+                    animate={{ opacity: 1, scale: 0.94 }}
+                    exit={{ opacity: 0, scale: 0.90 }}
+                    className={`w-[700px] h-[400px] flex rounded-[40px] z-[1100]  opacity-1 `}>
+
+                        <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
+                            
+                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
+                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
+
+                            <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                              <div className="flex flex-col justify-center items-center">
+                                  <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                  <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                  <span className="text-[20px]"></span>
+                              </div>
+
+                              <h1 className="text-center text-[20px] font-medium">Você deseja mesmo suspender sua conta?</h1>
+                              <input type="password" onChange={(e) => {
+                                  setSenhaSuspender({ senhaSuspender: e.target.value });
+                                  console.log(senhaSuspender);
+                                }} 
+                                placeholder="Digite sua senha"
+                                className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
+                              />
+
+                              <div className="w-full flex justify-center gap-4 mt-auto">
+                                  <motion.button 
+                                  whileHover={{ scale: 1.03 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => setSuspenderPop(false)}
+                                  className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                    Voltar
+                                  </motion.button>
+                                  <motion.button 
+                                  whileHover={{ scale: 1.03 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => {suspenderConta()}}
+                                  className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                    Suspender 
+                                  </motion.button>
+                              </div>
+
+                            </div>
+                        </div>
+                    </motion.div>
+                    
+                    
+                </motion.div>
+                  
+                  
+              <div className="w-full absolute flex justify-center items-center ">
+                  <Backdrop3 onClick={() => setSuspenderPop(false)}/>
+              </div>
+          </>
+        )}  
 
 
       </AnimatePresence>
@@ -736,9 +808,7 @@ export default function Conta() {
           <div className="flex flex-col justify-between lg:min-w-[650px] lg:max-w-[650px] w-full gap-4">
             <h1 className="font-medium text-[20px]">Suspender a conta</h1>
             <p className="text-[18px] ">
-              Ao suspender sua conta, você não poderá acessar seus estudos nem
-              fazer login em nossa plataforma. Caso a suspensão ultrapasse 3
-              meses, sua conta será excluída.
+              Sua conta será suspensa, mas você poderá reativá-la a qualquer momento fazendo login novamente. Se nenhum acesso for feito dentro de 30 dias, a conta será excluída permanentemente.
             </p>
           </div>
 

@@ -352,10 +352,10 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
 
             data = await materialRes.json();
-            console.log("✅ MATERIAL CRIADO:", data);
+            console.log(" MATERIAL CRIADO:", data);
 
             if (!data.material?.id) {
-            console.error("❌ Nenhum ID de material retornado!");
+            console.error(" Nenhum ID de material retornado!");
             return;
             }
 
@@ -397,11 +397,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
+            router.push(`/home/materiais/${id}/${materialId}/resumo`);
 
         } catch (err) {
             setLoading(false);
-            console.error("❌ Erro no criar():", err);
+            console.error(" Erro no criar():", err);
         } finally {
+            closing()
+            
             setLoading(false);
         }
     };
@@ -436,7 +439,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             );
 
             data = await materialRes.json();
-            console.log("✅ MATERIAL CRIADO:", data);
+            console.log(" MATERIAL CRIADO:", data);
 
             if (!data.material?.id) {
                 console.error(" Nenhum ID de material retornado!");
@@ -481,11 +484,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
-
+            router.push(`/home/materiais/${id}/${materialId}/resumo`);
+            
         } catch (err) {
             setLoading(false);
             console.error(" Erro no criar():", err);
         } finally {
+            closing()
             setLoading(false);
         }
     };
@@ -511,7 +516,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
             });
 
             data = await materialRes.json();
-            console.log("✅ MATERIAL CRIADO:", data);
+            console.log(" MATERIAL CRIADO:", data);
 
             if (!data.material?.id) {
             console.error(" Nenhum ID de material retornado!");
@@ -557,12 +562,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
+            router.push(`/home/materiais/${id}/${materialId}/resumo`);
 
         } catch (err) {
             console.error(" Erro no criar():", err);
             setLoading(false);
 
         } finally {
+            closing()
             setLoading(false);
         }
         

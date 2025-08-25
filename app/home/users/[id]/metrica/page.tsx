@@ -10,6 +10,8 @@ import Loading from '@/app/home/components/loading';
 import { motion, AnimatePresence } from "framer-motion";
 import { LucideProps } from "lucide-react";
 import { icons } from '@/app/home/components/icons';
+import React from "react";
+import { Fragment } from "react";
 
 type UserXP = {
     maxXp: number;
@@ -117,7 +119,7 @@ export default function Métricas() {
                 });
                 
                 const data = await res.json();
-                // console.log("Rank", data);
+                console.log("Rank", data);
                 setRanking(data);
 
             } catch (err) {
@@ -285,9 +287,6 @@ export default function Métricas() {
                                         </div>
 
                                         <div className="w-full h-[12px] rounded-[25px] bg-[#1e235138]">
-        
-
-
 
                                             <div style={{ width: `${userXP?.progresso ?? 0}%` }} className={` h-[12px] rounded-[25px] bg-purple-600 `}>
                                             </div>
@@ -314,7 +313,7 @@ export default function Métricas() {
                             </div>
 
                             <div className="w-full h-full min-h-[340px] md:min-h-[290px] bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
-                                <div className="w-[90%] h-[92%] flex flex-col justify-between ">
+                                <div className="w-[90%] h-[92%] flex flex-col gap-2">
                                     <h1 className='leading-none font-medium flex justify-between items-end text-[30px]'>Ranking
                                         <div className="flex gap-2">
                                             {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#D9D9D9] flex justify-center items-center text-[18px] text-black cursor-pointer">Geral</div> */}
@@ -325,44 +324,21 @@ export default function Métricas() {
                                             </div> */}
                                         </div>
                                     </h1>
-                                    {(() =>{
-                                        if (ranking) {
-                                            return (
-                                                <>
-                                                    <div className="mt-2 w-full h-14 flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 min-w-[194px]  ">
-                                                            <Image width={300} height={500} src={ranking[0]?.usuario.foto ?? null} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
-                                                            <h2 className='text-[20px] font-bold whitespace-nowrap '>{ ranking[0]?.usuario?.nomeCompleto ?? "" }</h2>
-                                                        </div>
-                                                        <div className="flex  items-center justify-end ">
-                                                            {/* <h2>@GrandeDudinha</h2> */}
-                                                            <h2 className='text-[20px] font-bold'>{ ranking[0]?.xp ?? "" } XP</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2 w-full  h-14 flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 min-w-[194px]  ">
-                                                            <Image width={300} height={500} src={ranking[1]?.usuario.foto ?? null} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
-                                                            <h2 className='text-[20px] font-bold whitespace-nowrap '>{ ranking[1]?.usuario?.nomeCompleto ?? "" }</h2>
-                                                        </div>
-                                                        <div className="flex  items-center justify-end ">
-                                                            {/* <h2>@GrandeDudinha</h2> */}
-                                                            <h2 className='text-[20px] font-bold'>{ ranking[1]?.xp ?? "" } XP</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2 w-full  h-14 flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 min-w-[194px]  ">
-                                                            <Image width={300} height={500} src={ranking[2]?.usuario.foto ?? null} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
-                                                            <h2 className='text-[20px] font-bold whitespace-nowrap '>{ ranking[2]?.usuario?.nomeCompleto ?? "" }</h2>
-                                                        </div>
-                                                        <div className="flex  items-center justify-end ">
-                                                            {/* <h2>@GrandeDudinha</h2> */}
-                                                            <h2 className='text-[20px] font-bold'>{ ranking[2]?.xp ?? "" } XP</h2>
-                                                        </div>
-                                                    </div>
-                                                </>
-                                            )
-                                        }
-                                    })()}
+                                   
+                                    {ranking.map((rank, index) =>
+                                        <React.Fragment key={index}>
+                                            <div key={index} className="mt-2 w-full h-14 flex items-center justify-between ">
+                                                <div className="flex items-center gap-2 min-w-[194px]  ">
+                                                    <img width={300} height={500} src={rank.usuario.foto ?? ""} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
+                                                    <h2 className='text-[20px] font-bold whitespace-nowrap '>{ rank?.usuario?.nomeCompleto ?? "" }</h2>
+                                                </div>
+                                                <div className="flex  items-center justify-end ">
+                                                    {/* <h2>@GrandeDudinha</h2> */}
+                                                    <h2 className='text-[20px] font-bold'>{ rank?.xp ?? "" } XP</h2>
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                    )}
                                     
                                     {/* <div className=" w-full flex justify-end">
                                         <motion.button 
