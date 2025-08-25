@@ -303,7 +303,7 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
       setQuestoesPorDiaLista(data); // ✅ now works
       console.log("Questões por dia lista:", data);
     }
-  }, [metricasUser]);
+  }, [metricasUser]); 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -337,17 +337,159 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
 
 export default function Charting() {
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
+  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
+  
+  const [ userID, setUserID ] = useState("");
+
+  useEffect(() => {
+    const UserID = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            // console.log("UserID: ", data);
+            setUserID(data.userId);
+
+        } catch (err) {
+            console.error(err);
+        }
+    }; UserID();
+
+  }, []);
+
+  useEffect(() => {
+    if (!userID) return;
+
+    const fetchMetricas = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}?weeksAgo=${selectedWeek}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        const data = await res.json();
+        console.log("Metricas:", data);
+        setMetricasUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMetricas();
+
+  }, [userID, selectedWeek])
 
   return (
     <>
-      <h1 className="w-full font-medium flex items-end justify-between text-[30px] ">
-        Atividades
-        <ComboboxDemo onChange={setSelectedWeek}/>
-      </h1>
-      {/* Combobox "returns" its value via onChange callback */}
+      <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
+        <div className="flex justify-center">
+            <div className="w-[80%] flex flex-col justify-between">
+                <h2 className="text-[20px] leading-[25px]">Rendimento semanal</h2>
+                <div className="">
+                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.rendimentoSemanal}%</h1>
+                </div>
+            </div>
+        </div>
 
-      {/* Chart can now use it */}
-      <Chart selectedWeek={selectedWeek} />
+        <div className=" flex justify-center ">
+            <div className="w-[80%] flex flex-col justify-between">
+                <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Acertos
+                    <div className="bg-[#FF9F93] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.acertos}</div>
+                </h2>
+                <div className="">
+                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualAcertos}%</h1>
+                </div>
+            </div>
+        </div>
+
+        <div className=" flex justify-end">
+            <div className="w-[80%] flex flex-col justify-between">
+                <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Erros
+                    <div className="bg-[#9767F8] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.erros}</div>
+                </h2>
+                <div className="">
+                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualErros}%</h1>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div className="mt-2 flex flex-col justify-between gap-1 ">
+
+        <h1 className="w-full font-medium flex items-end justify-between text-[30px] ">
+          Atividades
+          <ComboboxDemo onChange={setSelectedWeek}/>
+        </h1>
+        {/* Combobox "returns" its value via onChange callback */}
+
+        {/* Chart can now use it */}
+        <Chart selectedWeek={selectedWeek} />
+      </div>
+    </>
+  );
+}
+
+export  function Metrica() {
+  const [selectedWeek, setSelectedWeek] = useState<number>(0);
+  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
+  
+  const [ userID, setUserID ] = useState("");
+
+  useEffect(() => {
+    const UserID = async () => {
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+            method: 'GET',
+            credentials: 'include',
+            });
+            
+            const data = await res.json();
+            // console.log("UserID: ", data);
+            setUserID(data.userId);
+
+        } catch (err) {
+            console.error(err);
+        }
+    }; UserID();
+
+  }, []);
+
+  useEffect(() => {
+    if (!userID) return;
+
+    const fetchMetricas = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}?weeksAgo=${selectedWeek}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        const data = await res.json();
+        console.log("Metricas:", data);
+        setMetricasUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMetricas();
+
+  }, [userID, selectedWeek])
+
+  return (
+    <>
+      
     </>
   );
 }
@@ -640,7 +782,7 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   //   }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={false} onOpenChange={setOpen} >
       <PopoverTrigger asChild className="">
         <Button
           variant="outline"

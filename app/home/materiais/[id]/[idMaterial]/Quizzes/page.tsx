@@ -156,14 +156,12 @@ export default function MaterialClient() {
         if (estado?.finalizado === true){
             setFinalizado(true);
             setDisabled(true);
-                  
             // console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
             // xpQuiz(estado?.totalQuestoes, acertou);
         }
 
         else{
             if (estado?.respondidas! > 0){
-                
                 setQuestaoIndex(estado?.respondidas!);
             }
         }

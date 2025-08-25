@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Loading from '@/app/home/components/loading';
 import { motion, AnimatePresence } from "framer-motion";
-
+import { LucideProps } from "lucide-react";
+import { icons } from '@/app/home/components/icons';
 
 type UserXP = {
     maxXp: number;
@@ -209,7 +210,7 @@ export default function Métricas() {
                                     <h2 className="text-[18px] leading-[28px] ">Seu desempenho da semana está aqui! 💡</h2>
                                 </div>
 
-                                <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
+                                {/* <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
                                     <div className="flex justify-center">
                                         <div className="w-[80%] flex flex-col justify-between">
                                             <h2 className="text-[20px] leading-[25px]">Rendimento semanal</h2>
@@ -243,11 +244,11 @@ export default function Métricas() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div className="mt-2 flex flex-col justify-between gap-1 ">
-                                    <Charting />
-                                </div>
+                                <Charting />
+                                {/* <div className="mt-2 flex flex-col justify-between gap-1 "> */}
+                                {/* </div> */}
 
                             </div>
                         </div>
@@ -381,7 +382,7 @@ export default function Métricas() {
                     </div>
 
                     { metricasUser?.melhoresMaterias && metricasUser?.melhoresMaterias.length === 0 && (
-
+                        
                         <div className="w-full h-full bg-[#CCB2FF] min-h-[316px] shadow-md rounded-[35px] flex  items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full h-[90%] flex justify-center items-center">
                                 <div className=" flex flex-col justify-between min-h-[220px] min-w-[60%] h-full">
@@ -420,71 +421,41 @@ export default function Métricas() {
                                     </div>
                                     
                                     <div className="flex w-full min-h-[50%] overflowx-auto overflow-y-hidden h-full justify-between items-end gap-2 py-2">
-                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col items-center border border-[#00000031] relative">
-                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className="flex gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
+
+                                        {metricasUser.melhoresMaterias.map((materia, index) => {
+                                            // tenta achar o ícone pelo id que vem do backend
+                                            const match = icons.find(i => i.id.toLowerCase() === materia.icone.toLowerCase());
+                                            const IconComponent = match?.Icon;
+
+                                            return (
+                                                <div
+                                                key={index}
+                                                className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col items-center border border-[#00000031] relative"
+                                                >
+                                                <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
+                                                    <div className="flex gap-1 w-fit justify-center items-center">
+                                                    {IconComponent ? (
+                                                        <IconComponent className="size-7 text-[#757575] stroke-2" />
+                                                    ) : (
+                                                        // fallback caso não encontre o ícone
+                                                        <span className="text-xs text-gray-400">?</span>
+                                                    )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
-                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
-                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
+                                                <div className=" w-[85%] h-full flex flex-col justify-center ">
+                                                    <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
+                                                    <h1 className="text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 ">
+                                                        {materia.nome}
+                                                    </h1>
+                                                    </div>
+                                                    <h1 className="text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] ">
+                                                    +{materia.xp} XP
+                                                    </h1>
                                                 </div>
-                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-                                            </div>
-                                        </div>
-                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
-                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className="flex gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
                                                 </div>
-                                            </div>
-                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
-                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
-                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
-                                                </div>
-                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-                                            </div>
-                                        </div>
-                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
-                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className="flex gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
-                                                </div>
-                                            </div>
-                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
-                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
-                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
-                                                </div>
-                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-                                            </div>
-                                        </div>
-                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
-                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className="flex gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
-                                                </div>
-                                            </div>
-                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
-                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
-                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
-                                                </div>
-                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-                                            </div>
-                                        </div>
-                                        <div className="w-[20%] h-[85%] min-w-[145px] bg-[#FCFCFC] rounded-[25px] shadow-xl flex flex-col  items-center border border-[#00000031] relative">
-                                            <div className="p-4 bg-[#F1F1F1] rounded-full absolute top-[-40px] flex justify-center items-center ">
-                                                <div className="flex gap-1 w-fit justify-center items-center">
-                                                    <Plus className="size-7 text-[#757575] stroke-2"/>
-                                                </div>
-                                            </div>
-                                            <div className=" w-[85%] h-full flex flex-col justify-center ">
-                                                <div className="flex justify-center items-end text-center w-full h-[50%] overflow-hidden">
-                                                    <h1 className='text-[25px] max-w-full font-medium leading-2 break-words overflow-hidden text-ellipsis line-clamp-2 '>Matemática</h1>
-                                                </div>
-                                                <h1 className='text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] '>+35XP</h1>
-                                            </div>
-                                        </div>
+                                            );
+                                            })}
+
                                         
 
 

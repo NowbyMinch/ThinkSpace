@@ -435,6 +435,14 @@ input::-webkit-inner-spin-button {
   );
 }
 
+.recentes2 {
+  width: clamp(
+    130px, 
+    calc(110px + (1073 - 110) * ((100vw - 1280px) / (1920 - 1280))), 
+    1073px
+  );
+}
+
 @media(max-width:1310px){
   .material{
       height: clamp(150px, 25vw, 280px);

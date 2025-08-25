@@ -58,49 +58,6 @@ type Material = {
     // add other properties if needed
 };
     
-// USEFULL STRUCTURE ---- Filtros de matérias
-    // const filtered = materias.filter((item) =>
-    // item.nome?.toLowerCase().includes(query.toLowerCase())
-    // );
-    // const isExactMatch = materias.some(
-    // (item) => item.nome?.toLowerCase() === query.toLowerCase()
-    // );
-
-{/* USEFULL STRUCTURE  */}
-
-                                                {/* <div className=" w-full relative">
-                                                    <input
-                                                    type="text"
-                                                    value={query}
-                                                    onChange={(e) => setQuery(e.target.value)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-                                                    placeholder="Pesquisar por materia"
-                                                    className="w-full border-2 border-[rgba(0,0,0,0.19)] h-[45px] rounded-[20px] pl-5 text-[20px] outline-[rgba(151,103,248,0.6)] "
-                                                    />
-                                                    {query.length > 0 && !isExactMatch && isFocused && (
-                                                    <ul id="label-box" className="absolute z-10 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-[10px] shadow-md">
-                                                        {filtered.length === 0 && (
-                                                            <li className="px-4 py-2 text-sm text-gray-500">No results found</li>
-                                                        )}
-
-                                                        {filtered.map((materias) => (
-                                                            <li
-                                                                key={materias.id}
-                                                                
-                                                                className="cursor-pointer px-4 py-2 text-sm hover:bg-[rgba(151,103,248,0.1)]"
-                                                                onClick={() => {
-                                                                setQuery(materias.nome ?? "");
-                                                                }}
-                                                            >
-                                                                <div className="font-medium">{materias.nome}</div>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                    )}
-                                                </div> */}
-
-
 export default function MateriaisClient({ id }: { id: string; }) {
     const router = useRouter();
     // Estados de controle de interface
@@ -168,14 +125,14 @@ export default function MateriaisClient({ id }: { id: string; }) {
             let num = parseInt(e.target.value, 10);
             if (isNaN(num)) num = 1;
             if (num < 1) num = 1;
-            if (num > 15) num = 15;
+            if (num > 25) num = 25;
             setValue(num);
 
         } else{
             let num = parseInt(e.target.value, 10);
             if (isNaN(num)) num = 1;
             if (num < 1) num = 1;
-            if (num > 15) num = 15;
+            if (num > 25) num = 25;
             setValue2(num);
         }
         console.log("Value1",value);
@@ -373,145 +330,243 @@ export default function MateriaisClient({ id }: { id: string; }) {
         setFile(selectedFile);
     };
 
-    const criar = async () => {
-
+    const criarTopicos = async () => {
         try {
-            let res: Response;
-            if (origem === "DOCUMENTO") {
-                const formData = new FormData();
-                formData.append("nomeDesignado", input);
-                formData.append("nomeMateria", materiaDesignada);
-                formData.append("topicos", JSON.stringify(topicos));
-                formData.append("tipoMaterial", tipo);
-                formData.append("descricao", "");
-                formData.append("assunto", assuntoInput);
-                formData.append("quantidadeQuestoes", value.toString());
-                formData.append("quantidadeFlashcards", value2.toString());
-                if (file) {
-                    formData.append("file", file, file.name);
-                }
+            setLoading(true);
+            let materialRes;
+            let data;
 
-                // 🔥 Debug: mostra tudo do FormData
-                for (const [key, val] of formData.entries()) {
-                    console.log(key, val);
-                }
+            // --- ASSUNTO/TÓPICO: usa JSON normal ---
+            materialRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                nomeDesignado: input,
+                nomeMateria: materiaDesignada,
+                topicos,
+                tipoMaterial: tipo,
+                quantidadeQuestoes: value,
+                quantidadeFlashcards: value2,
+                }),
+                credentials: "include",
+            });
 
-                // OU converte em objeto (sem arquivos)
-                const formObj = Object.fromEntries(formData.entries());
-                console.log("FormData como objeto:", formObj);
-                
-                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                    method: "POST",
-                    body: formData, // ✅ Só FormData aqui
-                    credentials: "include",
-                });
-                setLoading(true);
+            data = await materialRes.json();
+            console.log("✅ MATERIAL CRIADO:", data);
 
-            } else {
-                const payload = {
-                    nomeDesignado: input,
-                    nomeMateria: materiaDesignada,
-                    topicos: topicos,
-                    tipoMaterial: tipo,
-                    descricao: "",
-                    assunto: assuntoInput,
-                    quantidadeQuestoes: value,
-                    quantidadeFlashcards: value2,
-                };
-                console.log("Logo antes,", value, value2)
-
-                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload), 
-                    credentials: "include",
-                });
-                setLoading(true);
-
-                console.log(payload);
+            if (!data.material?.id) {
+            console.error("❌ Nenhum ID de material retornado!");
+            return;
             }
 
-            const data = await res.json();
-            console.log("DATA 1:", data);
+            const materialId = data.material.id;
+            
+            // --- CHAMADAS EM SEQUÊNCIA ---
+            const resumoRes = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos`,
+                {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+                }
+            );
+            console.log("RESUMO:", await resumoRes.json());
 
+            const flashcardsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("FLASHCARDS:", await flashcardsRes.json());
 
-            // Checar erros
-            if (
-                data.message === "Campos obrigatórios ausentes para criação por tópicos." ||
-                data.message === "Campos obrigatórios ausentes para criação por assunto." ||
-                data.message === "Campos obrigatórios ausentes para criação por documento." ||
-                data.message === "Internal server error" ||
-                data.message === "Nome designado, nome da matéria e tópicos são obrigatórios." ||
-                data.message === "Nome designado e nome da matéria são obrigatórios." || 
-                data.message === "Já existe um material com esse nome." 
-                ) {
-                setMessage(data.message);
-                setLoading(false);
+            const quizzesRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("QUIZZES:", await quizzesRes.json());
+
+            // --- atualizar lista no estado ---
+            setMateriaisNome((prev: any) => [...prev, data.material]);
+
+        } catch (err) {
+            setLoading(false);
+            console.error("❌ Erro no criar():", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const criarDocumento = async () => {
+        try {
+            setLoading(true);
+            console.log("Tentando documento")
+
+            let materialRes;
+            let data;
+
+            // --- DOCUMENTO: usa FormData + File ---
+            const formData = new FormData();
+            if (file) {
+                formData.append("file", file, file.name);
+            }
+            formData.append("nomeDesignado", input);
+            formData.append("nomeMateria", materiaDesignada);
+            formData.append("topicos", JSON.stringify(topicos));
+            formData.append("tipoMaterial", tipo);
+            formData.append("quantidadeQuestoes", value.toString());
+            formData.append("quantidadeFlashcards", value2.toString());
+
+            console.log("vai agora documento", formData)
+            materialRes = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`,
+                {
+                method: "POST",
+                body: formData,
+                credentials: "include",
+                }
+            );
+
+            data = await materialRes.json();
+            console.log("✅ MATERIAL CRIADO:", data);
+
+            if (!data.material?.id) {
+                console.error(" Nenhum ID de material retornado!");
                 return;
             }
 
-            setLoading(true);
-            console.log("Loading true");
-            console.log("FORA DO COMPLETO", data.material.id);
-            closing();
-
-            // Processar materiais
-            if (tipo === "COMPLETO") {
-                console.log("DENTRO DO COMPLETO", data.material.id);
-
-                let resumoEndpoint = "";
-                let flashcardsEndpoint = "";
-                let quizzesEndpoint = "";
-                if (origem === "DOCUMENTO") {resumoEndpoint = "resumo-documento"; flashcardsEndpoint = "flashcards-pdf"; quizzesEndpoint = "quizzes-pdf"}
-                else if (origem === "TOPICOS") {resumoEndpoint = "resumo-topicos"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
-                else {resumoEndpoint = "resumo-assunto"; flashcardsEndpoint = "flashcards"; quizzesEndpoint = "quizzes"}
+            const materialId = data.material.id;
             
-                if (resumoEndpoint && flashcardsEndpoint && quizzesEndpoint) {
-                    console.log(data.material.id);
-                    
-                    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${resumoEndpoint}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                    });
-                    const data2 = await res2.json();
-                    console.log("RESUMO:", data2);
-
-                    // Flashcards
-                    const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${flashcardsEndpoint}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                    });
-                    console.log("FLASHCARDS:", await res3.json());
-
-                    // Quizzes
-                    const res4 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${quizzesEndpoint}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id: data.material.id }),
-                    credentials: "include",
-                    });
-                    console.log("QUIZZES:", await res4.json());
+            // --- CHAMADAS EM SEQUÊNCIA ---
+            const resumoRes = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento`,
+                {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
                 }
-            }
+            );
+            console.log("RESUMO:", await resumoRes.json());
 
-            // 5️⃣ Redirecionar
-            const redirectPath =
-            origem === "DOCUMENTO"
-                ? `/home/materiais/${id}/${data.material.id}/Material`
-                // // // // // // // // // // // // // // // // 
-                : `/home/materiais/${id}/${data.material.id}/Resumo`;
-            router.push(redirectPath);
-            setLoading(false);
+            const flashcardsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards-pdf`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("FLASHCARDS:", await flashcardsRes.json());
+
+            const quizzesRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes-pdf`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("QUIZZES:", await quizzesRes.json());
+
+            // --- atualizar lista no estado ---
+            setMateriaisNome((prev: any) => [...prev, data.material]);
 
         } catch (err) {
-            console.error(err);
+            setLoading(false);
+            console.error(" Erro no criar():", err);
+        } finally {
+            setLoading(false);
         }
     };
-    
+    const criarAssunto = async () => {
+        try {
+            setLoading(true);
+            let materialRes;
+            let data;
+            // --- ASSUNTO/TÓPICO: usa JSON normal ---
+            materialRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                nomeDesignado: input,
+                nomeMateria: materiaDesignada,
+                topicos,
+                assunto: assuntoInput,
+                tipoMaterial: tipo,
+                quantidadeQuestoes: value,
+                quantidadeFlashcards: value2,
+                }),
+                credentials: "include",
+            });
+
+            data = await materialRes.json();
+            console.log("✅ MATERIAL CRIADO:", data);
+
+            if (!data.material?.id) {
+            console.error(" Nenhum ID de material retornado!");
+            return;
+            }
+
+
+            const materialId = data.material.id;
+            
+            // --- CHAMADAS EM SEQUÊNCIA ---
+            const resumoRes = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto`,
+                {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+                }
+            );
+            console.log("RESUMO:", await resumoRes.json());
+
+            const flashcardsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("FLASHCARDS:", await flashcardsRes.json());
+
+            const quizzesRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: materialId }),
+                credentials: "include",
+            }
+            );
+            console.log("QUIZZES:", await quizzesRes.json());
+
+            // --- atualizar lista no estado ---
+            setMateriaisNome((prev: any) => [...prev, data.material]);
+
+        } catch (err) {
+            console.error(" Erro no criar():", err);
+            setLoading(false);
+
+        } finally {
+            setLoading(false);
+        }
+        
+    };
     const Deletar = async (id: string) => {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${id}`, {
@@ -542,7 +597,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
         // setInput3("");
         // setInput4("");
     }
-
     function voltar(){
         setOpenVar(false);
         setOpenVar2(false);
@@ -697,7 +751,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
 
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border mb-4 border-[#1E2351] text-[18px] w-fit p-[10px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                criar();
+                                                if (origem === "DOCUMENTO") {
+                                                criarDocumento();
+                                                } else {
+                                                console.log(origem);
+                                                console.log("não é documento"); // <- now it will actually show something
+                                                }
                                             }}>
                                                 <FileText />
                                                 Enviar
@@ -838,7 +897,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
 
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border  border-[#1E2351] text-[18px] w-fit p-[8px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                criar();
+                                                if (origem === "TOPICOS") {
+                                                criarTopicos();
+                                                } else {
+                                                console.log("não é topicos"); // <- now it will actually show something
+                                                }
                                             }}>
                                                 <FileText />
                                                 Enviar
@@ -851,6 +914,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                     <div className={`w-full h-full flex lg:flex-row flex-col lg:gap-12 gap-6 lg:items-center ${ openVar3? "block": "hidden"}`}>
                                         <div className="w-full max-w-full min-h-[220px] lg:w-[105%] lg:h-[85%] flex flex-col gap-5 ">
+                                            <div className="h-fit flex flex-col gap-1">
+                                                <h1 className="font-medium text-[20px] leading-[20px] ">Assunto:</h1>
+                                                <div className=" max-w-[600px] h-fit flex gap-1  ">
+                                                    <input type="text" value={assuntoInput} onChange={(e) => setAssuntoInput(e.target.value)} placeholder="Diga o assunto" className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"/>
+
+                                                </div>
+                                            </div>
                                             <div className=" lg:w-full w-[500px] max-w-full h-fit flex flex-col gap-1">
                                                 <h1 className="font-medium text-[20px] leading-[20px] ">Tópicos</h1>
                                                 <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
@@ -876,7 +946,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                                 </div>
                                             </div>
 
-                                            <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
+                                            <div className="lg:w-full w-[500px] max-w-full min-h-[124px] h-full rounded-[25px] flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
                                                 <div className="w-[95%] px-2 py-2 h-min max-h-[95%] mt-2 flex flex-wrap gap-2 overflow-auto">
                                                     <AnimatePresence>
                                                         {topicos.map((topico, index) => (
@@ -973,7 +1043,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                             </div>
 
                                             <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} id="editar_conta" type="submit" className="mt-auto border  border-[#1E2351] text-[18px] w-fit p-[8px_25px] rounded-full flex justify-center items-center gap-2" onClick={() => {
-                                                criar();
+                                                if (origem === "ASSUNTO") {
+                                                criarAssunto();
+                                                } else {
+                                                console.log("não é assunto"); // <- now it will actually show something
+                                                }
                                             }}>
                                                 <FileText />
                                                 Enviar
@@ -1018,7 +1092,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                     </div>
 
                                     <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar esse material?</h1>
-                                    <div className="w-[60%] flex justify-between mt-auto">
+                                    <div className="w-full flex gap-4 mt-auto justify-center ">
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
@@ -1106,7 +1180,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             className="mt-[18px] flex justify-between items-center "
                             >
                             <div>
-                                <h2 className="text-[25px] font-medium leading-[30px]">
+                                <h2 className="text-[25px] font-medium leading-[30px] recentes2 overflow-hidden ">
                                 {material.titulo}
                                 </h2>
                                 <h2 className="text-[18px] text-[#828181]">

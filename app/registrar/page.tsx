@@ -293,7 +293,7 @@ export default function RegisterPage() {
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px]'>Senha</label>
-                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite seu senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite sua senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
                                         </div>
 
                                         <div className="flex flex-col gap-1">

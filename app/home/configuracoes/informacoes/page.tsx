@@ -1,17 +1,16 @@
 "use client";
 
-// import { set } from 'date-fns';
 import { motion } from 'framer-motion';
-// import { UserSquareIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ComboboxDemoSettings, ComboboxDemoSettings2 } from '../../components/dropdown';
+import ErrorModal from "@/components/ui/ErrorModal";
 
 type UserData = {
   primeiroNome?: string;
   cargo?: string;
   foto?: string;
-  // add other properties if needed
 };
+
 type UsuarioData = {
   primeiroNome?: string;
   cargo?: string;
@@ -35,161 +34,202 @@ type UsuarioData = {
   ultimoLogin?: string;
 };
 
-export default function Informações() {
-  const [ user, setUser ] = useState<UserData>({});
-  const [ escola, setEscola ] = useState("");
+export default function Informacoes() {
+  const [user, setUser] = useState<UserData>({});
   const [usuario, setUsuario] = useState<UsuarioData>({});
-  const [ loading, setLoading ] = useState(true);
-  
-  let escolaridade = "";
-  const [ instituicao, setInstituicao ] = useState<string>("");
+  const [instituicao, setInstituicao] = useState("");
+  const [escola, setEscola] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState<string | null>(null);
 
+  const [configuracoes, setConfiguracoes] = useState({
+    primeiroNome: "",
+    sobrenome: "",
+    dataNascimento: "",
+    instituicao: "",
+    cargo: "",
+    escolaridade: "",
+  });
+
+  // Fetch initial data
   useEffect(() => {
-    const user = async () => {
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-            method: 'GET',
-            credentials: 'include',
-            });
-            
-            const data = await res.json();
-            setUser(data)
-            setLoading(false);
-        } catch (err) {
-            // setMessage("Erro ao carregar saudação.");
-            console.error(err);
-        }
-    }; user();
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // User data
+        const resUser = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, { method: 'GET', credentials: 'include' });
+        const userData = await resUser.json();
+        setUser(userData);
 
-    const e = async () => {
-      try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-        
-        const data = await res.json();
-        escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
-        setEscola(escolaridade);
-        setUsuario(data.usuario);
+        // Usuario configuracoes
+        const resUsuario = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, { method: 'GET', credentials: 'include' });
+        const dataUsuario = await resUsuario.json();
+        const escolaridadeFormatted = (dataUsuario.usuario.escolaridade ?? "").toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
+        setEscola(escolaridadeFormatted);
+        setUsuario(dataUsuario.usuario);
+
+        // Instituicao
+        const resInstituicao = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/instituicao/nome`, { method: 'GET', credentials: 'include' });
+        const dataInstituicao = await resInstituicao.json();
+        setInstituicao(dataInstituicao.nome);
+
         setLoading(false);
       } catch (err) {
-        // setMessage("Erro ao carregar saudação.");
         console.error(err);
-      }
-    }; e();
-
-    const instituicao = async () => {
-      try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/instituicao/nome`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-        
-        const data = await res.json();
-        console.log(data.nome);
-        setInstituicao(data.nome);
         setLoading(false);
-        // setInstituicao(data.instituicao.nome);
-
-      } catch (err) {
-        // setMessage("Erro ao carregar saudação.");
-        console.error(err);
+        setMessage("Erro ao carregar dados do usuário.");
       }
-    }; instituicao();      
+    };
+    fetchData();
   }, []);
 
-  
-  // const [ configuracoes, setConfiguracoes ] = useState({ primeiroNome: usuario.primeiroNome, sobrenome: usuario.sobrenome, dataNascimento: usuario.dataNascimento?.split('T')[0], instituicaoId: usuario.instituicaoId, nomeCompleto: usuario.nomeCompleto, escolaridade: usuario.escolaridade, funcao: user.cargo });
+  // Update configuracoes after data is loaded
+  useEffect(() => {
+    setConfiguracoes({
+      primeiroNome: usuario.primeiroNome ?? "",
+      sobrenome: usuario.sobrenome ?? "",
+      dataNascimento: usuario.dataNascimento?.split("T")[0].replaceAll("-", "/") ?? "",
+      instituicao: instituicao ?? "",
+      cargo: user.cargo ?? "",
+      escolaridade: escola ?? "",
+    });
+  }, [usuario, user, instituicao, escola]);
 
-  // const editarConfiguracoes = async (e) => {
-  //   e.preventDefault();
-  //   console.log(configuracoes);
-  //   try {
-  //       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
-  //         method: "PATCH",
-  //         credentials: "include",
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify(configuracoes),
-  //       });
-  
-  //       const result = await res.json();
-  //       console.log(result.message); // Matéria excluída com sucesso.
-        
-  //     } catch (error) {
-  //       console.error("Erro ao editar a senha:");
-  //     }
-  // };
+  // Reload configuracoes from backend
+  const reloadConfiguracoes = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, { method: 'GET', credentials: 'include' });
+      const data = await res.json();
+      const escolaridadeFormatted = (data.usuario.escolaridade ?? "").toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
+      setEscola(escolaridadeFormatted);
+      setUsuario(data.usuario);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
+  // PATCH any changed fields
+  const Check = async () => {
+    try {
+      // Map configuracoes fields to backend PATCH endpoints
+      const fieldEndpoints: Record<string, string> = {
+        primeiroNome: "/configuracoes/primeiro-nome",
+        sobrenome: "/configuracoes/sobrenome",
+        dataNascimento: "/configuracoes/data-nascimento",
+        instituicao: "/configuracoes/instituicao",
+        escolaridade: "/configuracoes/nivel-escolaridade", // keep local key "escolaridade"
+      };
+
+      // Iterate and PATCH only changed fieldss
+      for (const key of Object.keys(fieldEndpoints)) {
+        if ((configuracoes as any)[key] !== (usuario as any)[key]) {
+          const payload =
+            key === "escolaridade"
+              ? { nivelEscolaridade: (configuracoes as any)[key] }
+              : { [key]: (configuracoes as any)[key] };
+
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}${fieldEndpoints[key]}`,
+            {
+              method: "PATCH",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          const result = await res.json();
+          console.log(`Resultado do PATCH ${key}:`, result);
+        }
+      }
+
+      // Refresh usuario state after updates
+      await reloadConfiguracoes();
+
+    } catch (err) {
+      console.error("Erro ao atualizar configurações:", err);
+      setMessage("Erro ao atualizar configurações");
+    }
+  };
+  
   if (loading) return (
     <div className="flex justify-center items-center w-full h-full">
       <div className="animate-spin w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full" />
     </div>
   );
-  
+
   return (
     <>
-      <form className="mt-4 flex flex-col gap-4 overflow-hidden w-[90%]">
+      {message && <ErrorModal message={message} onClose={() => setMessage(null)} />}
+      <form onSubmit={(e) => { e.preventDefault(); Check(); }} className="mt-4 flex flex-col gap-4 overflow-hidden w-[90%]">
+        {/* Primeiro Nome */}
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Primeiro nome</h1>
           <input
             type="text"
-            defaultValue={usuario.primeiroNome}
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, primeiroNome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
-          ></input>
+            value={configuracoes.primeiroNome}
+            onChange={(e) => setConfiguracoes({ ...configuracoes, primeiroNome: e.target.value })}
+            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
+          />
         </div>
+
+        {/* Sobrenome */}
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Sobrenome</h1>
           <input
             type="text"
-            defaultValue={usuario.sobrenome }
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
-          ></input>
+            value={configuracoes.sobrenome}
+            onChange={(e) => setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })}
+            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
+          />
         </div>
 
-        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
+        {/* Data de Nascimento */}
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Data de Nascimento</h1>
           <input
             type="text"
-            defaultValue={(usuario?.dataNascimento?.split('T')[0])?.replaceAll( "-", "/" ) ?? ""}
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
-          ></input>
+            value={configuracoes.dataNascimento}
+            onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
+            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
+          />
         </div>
 
-        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
+        {/* Instituição */}
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Instituição</h1>
           <input
             type="text"
-            defaultValue={instituicao}
-            // onChange={(e) => setConfiguracoes({ ...configuracoes, instituicaoId: e.target.value })}
-            className=" rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
-          ></input>
+            value={configuracoes.instituicao}
+            onChange={(e) => setConfiguracoes({ ...configuracoes, instituicao: e.target.value })}
+            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
+          />
         </div>
 
-        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
-          <h1 className="text-[20px] font-medium">
-            Cargo ou Posição 
-          </h1>
-          <ComboboxDemoSettings value={user?.cargo ?? ""} onChange={() => {}} />
+        {/* Cargo */}
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
+          <h1 className="text-[20px] font-medium">Cargo ou Posição</h1>
+          <ComboboxDemoSettings
+            value={configuracoes.cargo}
+            onChange={(value) => setConfiguracoes({ ...configuracoes, cargo: value })}
+          />
         </div>
 
-        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px] ">
-          <h1 className="text-[20px] font-medium">
-            Nível de escolaridade 
-          </h1>
-          <ComboboxDemoSettings2 value={escola ?? ""} onChange={() => {}} />
+        {/* Escolaridade */}
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
+          <h1 className="text-[20px] font-medium">Nível de escolaridade</h1>
+          <ComboboxDemoSettings2
+            value={configuracoes.escolaridade}
+            onChange={(value) => {setConfiguracoes({ ...configuracoes, escolaridade: value }); console.log(value);}}
+          />
         </div>
 
         <motion.button
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
-        type='submit'
-        id="editar_conta"
-        // onClick={editarConfiguracoes}
-        className="mt-2 mb-1 ml-1 py-2 px-10 w-min h-min rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          type='submit'
+          id="editar_conta"
+          className="mt-2 mb-1 ml-1 py-2 px-10 w-min h-min rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
         >
           Salvar
         </motion.button>

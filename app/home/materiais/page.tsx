@@ -543,19 +543,19 @@ export default function Materiais() {
                                     </div>
 
                                     <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar essa matéria?</h1>
-                                    <div className="w-[60%] flex justify-between mt-auto">
+                                    <div className="w-full flex justify-center gap-4 mt-auto">
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => setDeletarPop(false)}
-                                        className="p-[10px_12px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
                                             Voltar
                                         </motion.button>
                                         <motion.button 
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => {setDeletarPop(false); deletarMateria(deletar)}}
-                                        className="p-[10px_12px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                        className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
                                             Deletar
                                         </motion.button>
                                     </div>
@@ -776,7 +776,7 @@ export default function Materiais() {
                             {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden pb-2">
+                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden pb-2 ">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">

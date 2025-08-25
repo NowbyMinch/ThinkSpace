@@ -142,6 +142,33 @@ export const Sidebar = () => {
                                             <span className="text-[20px]"></span>
                                         </div>
 
+                                        <h1 className="text-center text-[20px] font-medium">Saindo da conta. Até a próxima sessão!</h1>
+                                        <div className="w-full flex justify-center gap-4 mt-auto">
+                                            <motion.button 
+                                            whileHover={{ scale: 1.03 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            onClick={() => setLogoutPop(false)}
+                                            className="p-[10px_15px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                                Voltar
+                                            </motion.button>
+                                            <motion.button 
+                                            whileHover={{ scale: 1.03 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            onClick={() => {setLogoutPop(false); handleLogout()}}
+                                            className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                                Sair
+                                            </motion.button>
+                                        </div>
+
+                                    </div>
+
+                                    {/* <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                                        <div className="flex flex-col justify-center items-center">
+                                            <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                            <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                            <span className="text-[20px]"></span>
+                                        </div>
+
                                         <h1 className="text-center text-[35px] font-medium">Saindo da conta. Até a próxima sessão!</h1>
                                         <div className="w-[60%] flex justify-between mt-auto">
                                             <motion.button 
@@ -160,7 +187,7 @@ export const Sidebar = () => {
                                             </motion.button>
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div>
                             </motion.div>
                             
