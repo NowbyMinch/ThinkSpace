@@ -1164,11 +1164,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                         {materiaisNome.map((material, index) => (
                         <a
                             key={material.id ?? index} // prefer unique id if available
-                            href={`${
-                            material.origem === "DOCUMENTO"
-                                ? `/home/materiais/${id}/${material.id}/Material`
-                                : `/home/materiais/${id}/${material.id}/Resumo`
-                            }`}
+                            href={`/home/materiais/${id}/${material.id}/Resumo`}
                             id="materiais"
                             className="grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
                         >
