@@ -219,6 +219,7 @@ export default function Materiais() {
             });
             
             const data = await res.json();
+            console.log(data);
             setMaterias(data)
         } catch (err) {
         console.error(err);
@@ -251,7 +252,6 @@ export default function Materiais() {
         }
         materia();
     };
-
     // Função para criar nova matéria
     const deletarMateria = async (id: string) => {
         try {
@@ -269,7 +269,6 @@ export default function Materiais() {
             console.error("Erro ao deletar matéria:");
         }
     };
-
     // Função para criar nova matéria
     const editarMateria = async (id: string, body: { nome?: string; cor?: string; icone?: string }) => {
         try {
@@ -566,8 +565,6 @@ export default function Materiais() {
                         
                         
                     </motion.div>
-                        
-                        
                     <div className="w-full absolute flex justify-center items-center ">
                         <Backdrop3 onClick={() => setDeletarPop(false)}/>
                     </div>
@@ -579,7 +576,6 @@ export default function Materiais() {
         {open && (
             <Backdrop3 onClick={() => closing()}/>
         )}
-
         { editar && (
             <Backdrop3 onClick={() => closing()}/>
         )}
@@ -645,87 +641,129 @@ export default function Materiais() {
                             {materias.map((material, index) => {
                                 return (
                                     <div key={index}>
-                                        <motion.div 
-                                        whileHover={{ scale:1.01 }}
-                                        whileTap={{ scale:0.99 }}
+                                    <motion.div
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
                                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                                        id="materias" className="material rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]" style={{ backgroundColor: material.cor && cores[material.cor as keyof typeof cores] ? cores[material.cor as keyof typeof cores] : "#FFFFFF" }}>
-                                            <div className="absolute top-1 right-3 z-10 flex flex-col items-end ">
-                                                <div className="">
-                                                    <AnimatePresence initial={false}>
-                                                        <button ref={(el) => { buttonRefs.current[index] = el; }}
-                                                        onClick={() => { if (openPop === index) {setOpenPop(null);} else { setOpenPop(index)} }} 
-                                                        key={0} className="p-1 flex justify-start items-end" ><Ellipsis className="opacity-[80%] size-6"/>
-                                                        </button>
+                                        id="materias"
+                                        className="material rounded-[28px] cursor-pointer flex justify-center items-center flex-row gap-5 shadow-md border border-[#00000031]"
+                                        style={{
+                                        backgroundColor:
+                                            material.cor && cores[material.cor as keyof typeof cores]
+                                            ? cores[material.cor as keyof typeof cores]
+                                            : "#FFFFFF",
+                                        }}
+                                    >
+                                        {/* Menu popover */}
+                                        <div className="absolute top-1 right-3 z-10 flex flex-col items-end">
+                                        <AnimatePresence initial={false}>
+                                            <button
+                                            ref={(el) => {
+                                                buttonRefs.current[index] = el;
+                                            }}
+                                            onClick={() => {
+                                                if (openPop === index) {
+                                                setOpenPop(null);
+                                                } else {
+                                                setOpenPop(index);
+                                                }
+                                            }}
+                                            key={0}
+                                            className="p-1 flex justify-start items-end"
+                                            >
+                                            <Ellipsis className="opacity-[80%] size-6" />
+                                            </button>
 
-                                                        { openPop === index &&(
-                                                            <motion.div 
-                                                            initial={{ scale: 0, opacity: 0}}
-                                                            animate={{ scale: 1, opacity: 1 }}
-                                                            exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
-                                                            
-                                                            ref={(el) => {popoverRefs.current[index] = el}} className="origin-top-left relative mr-[-11px] z-1000">
-                                                                <div className="absolute right-0 top-full mt-2 w-[160px] rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
-
-                                                                    <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
-
-                                                                    <div className="flex flex-col w-full gap-1 text-base ">
-                                                                        <button className="mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2" onClick={() => {setEditar(true); 
-                                                                        setTemp([{ id: material.id, nome: material.nome, cor: material.cor, icone: material.icone }] );}} >
-                                                                            <SquarePen className="icon-3"/> Editar
-                                                                        </button>
-                                                                        <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                                                                        <button onClick={() => {setDeletarPop(true); setDeletar(material.id!); setOpenPop(null)}} className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center" >
-                                                                            <SquareX className="icon-3"/> Excluir</button>
-                                                                    </div>
-                                                                </div>
-                                                            </motion.div>
-                                                        )}
-                                                    </AnimatePresence>
+                                            {openPop === index && (
+                                            <motion.div
+                                                initial={{ scale: 0, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                exit={{ scale: 0, opacity: 0, transition: { duration: 0.15, ease: "easeInOut" } }}
+                                                ref={(el) => {
+                                                popoverRefs.current[index] = el;
+                                                }}
+                                                className="origin-top-left relative mr-[-11px] z-1000"
+                                            >
+                                                <div className="absolute right-0 top-full mt-2 w-[160px] rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]">
+                                                <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
+                                                <div className="flex flex-col w-full gap-1 text-base">
+                                                    <button
+                                                    className="mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2"
+                                                    onClick={() => {
+                                                        setEditar(true);
+                                                        setTemp([{ id: material.id, nome: material.nome, cor: material.cor, icone: material.icone }]);
+                                                    }}
+                                                    >
+                                                    <SquarePen className="icon-3" /> Editar
+                                                    </button>
+                                                    <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                                                    <button
+                                                    onClick={() => {
+                                                        setDeletarPop(true);
+                                                        setDeletar(material.id!);
+                                                        setOpenPop(null);
+                                                    }}
+                                                    className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                                                    >
+                                                    <SquareX className="icon-3" /> Excluir
+                                                    </button>
                                                 </div>
+                                                </div>
+                                            </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                        </div>
+
+                                        {/* Link para a matéria */}
+                                        <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]">
+                                        <div className="w-[90%] max-w-[90%] h-full flex rounded-[28px] gap-[4%] justify-center items-center">
+                                            <div className="max-w-[100%] xl:max-w-[85%] max-h-[80%] overflow-hidden">
+                                            <div className="flex justify-between">
+                                                <h2
+                                                className="material_title text-[25px] w-[95px] max-w-[80%] line-clamp-2 break-words leading-none text-[rgb(48,38,42,87%)] font-medium"
+                                                >
+                                                {material.nome}
+                                                </h2>
+
+                                                {(() => {
+                                                const IconComponent = icons.find(
+                                                    (icon) => icon.id.toLowerCase() === material.icone?.toLowerCase()
+                                                )?.Icon;
+                                                if (IconComponent) {
+                                                    return <IconComponent className="md:hidden flex size-[30px] opacity-[50%] stroke-1" />;
+                                                }
+                                                return null;
+                                                })()}
                                             </div>
-                                            <Link href={`/home/materiais/${material.id}`} className="w-full h-full flex justify-center rounded-[28px]" >
-                                                <div className="w-[90%] max-w-[90%] h-full flex rounded-[28px] gap-[4%] justify-center items-center">
-                                                    <div className="max-w-[100%] xl:max-w-[85%] max-h-[80%] overflow-hidden ">
-                                                        <div className="flex justify-between">
-                                                            <h2 className="  material_title 
-                                                            text-[25px] 
-                                                            w-[95px]
-                                                            max-w-[80%] 
-                                                            line-clamp-2
-                                                            break-words 
-                                                            leading-none 
-                                                            text-[rgb(48,38,42,87%)] 
-                                                            font-medium">{material.nome}</h2>
-                                                            
-                                                            {(() => {
-                                                                const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
-                                                                if (IconComponent) {
-                                                                    return <IconComponent className="md:hidden flex size-[30px] opacity-[50%] stroke-1" />;
-                                                                }
-                                                                return null;
-                                                            })()}
 
-                                                        </div>
-                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Materiais de estudo: { material.materiais?.length === 0 ? "0" : material.materiais}</h2>
-                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Tempo ativo: 0 horas</h2>
-                                                        <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit ">Última revisão: 0</h2>
-                                                    </div>
-                                                    
-                                                    {(() => {
-                                                        const IconComponent = icons.find(icon => icon.id.toLowerCase() === material.icone?.toLowerCase())?.Icon;
-                                                        if (IconComponent) {
-                                                            return <IconComponent className="size-[130px] hidden md:flex max-w-[45%] opacity-[22%] stroke-1" />;
-                                                        }
-                                                        return null;
-                                                    })()}
-                                                </div>
-                                            </Link>
+                                            {/* Corrigido: renderiza a quantidade de materiais */}
+                                            <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit">
+                                                Materiais de estudo: {material.materiais?.length ?? 0}
+                                            </h2>
+                                            <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit">
+                                                Tempo ativo: 0 horas
+                                            </h2>
+                                            <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit">
+                                                Última revisão: 0
+                                            </h2>
+                                            </div>
 
-                                        </motion.div>
+                                            {(() => {
+                                            const IconComponent = icons.find(
+                                                (icon) => icon.id.toLowerCase() === material.icone?.toLowerCase()
+                                            )?.Icon;
+                                            if (IconComponent) {
+                                                return <IconComponent className="size-[130px] hidden md:flex max-w-[45%] opacity-[22%] stroke-1" />;
+                                            }
+                                            return null;
+                                            })()}
+                                        </div>
+                                        </Link>
+                                    </motion.div>
                                     </div>
-                                )
-                            })}
+                                );
+                                })}
+
                             
                         </>
                     )} 
