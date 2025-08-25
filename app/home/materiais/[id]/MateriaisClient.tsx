@@ -85,6 +85,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [value2, setValue2] = useState(10);
     const [userXP, setUserXP] = useState<UserXP>();
     const [selectedFiltro, setSelectedFiltro] = useState<string | null>(null);
+    const [terminado, setTerminado] = useState(false);
 
     const handleCheck = async (value: string) => {
     if (selectedFiltro === value) {
@@ -331,6 +332,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     };
 
     const criarTopicos = async () => {
+        let createdMaterialId: string | null = null;
         try {
             setLoading(true);
             let materialRes;
@@ -353,6 +355,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
+            createdMaterialId = data.material.id;
 
             if (!data.material?.id) {
             console.error(" Nenhum ID de material retornado!");
@@ -397,18 +400,21 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
-            router.push(`/home/materiais/${id}/${materialId}/resumo`);
-
+            // router.push(`/home/materiais/${id}/${materialId}/resumo`);
         } catch (err) {
             setLoading(false);
             console.error(" Erro no criar():", err);
         } finally {
             closing()
-            
             setLoading(false);
+            if (createdMaterialId) {
+              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+            }
         }
     };
+    
     const criarDocumento = async () => {
+        let createdMaterialId: string | null = null;
         try {
             setLoading(true);
             console.log("Tentando documento")
@@ -440,6 +446,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
+            createdMaterialId = data.material.id;
 
             if (!data.material?.id) {
                 console.error(" Nenhum ID de material retornado!");
@@ -492,9 +499,15 @@ export default function MateriaisClient({ id }: { id: string; }) {
         } finally {
             closing()
             setLoading(false);
+            setTerminado(true);
+            if (createdMaterialId) {
+              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+            }
         }
     };
+    
     const criarAssunto = async () => {
+        let createdMaterialId: string | null = null;    
         try {
             setLoading(true);
             let materialRes;
@@ -517,7 +530,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
-
+            createdMaterialId = data.material.id;
             if (!data.material?.id) {
             console.error(" Nenhum ID de material retornado!");
             return;
@@ -562,7 +575,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             // --- atualizar lista no estado ---
             setMateriaisNome((prev: any) => [...prev, data.material]);
-            router.push(`/home/materiais/${id}/${materialId}/resumo`);
+            // router.push(`/home/materiais/${id}/${materialId}/resumo`);
 
         } catch (err) {
             console.error(" Erro no criar():", err);
@@ -571,6 +584,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
         } finally {
             closing()
             setLoading(false);
+            if (createdMaterialId) {
+              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+            }
         }
         
     };
