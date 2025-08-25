@@ -731,7 +731,7 @@ export default function HomePage() {
                     <Image width={300} height={500}
                         src="/semmateria.svg"
                         alt="Decoração"
-                        className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover  "
+                        className=" w-[310px] max-w-[40%] absolute h-[full] right-0 object-cover lg:flex hidden "
                         />
                 </div>
             )}  
