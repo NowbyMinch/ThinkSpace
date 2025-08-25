@@ -226,11 +226,21 @@ export default function Conta() {
       console.log("Codigo verificado: ", novoEmail.novoEmail, codigo.code.toString());
       console.log("data: ", data);
   
-      if (data.message === "Email alterado com sucesso." ){
+      if (data.message === "Email alterado com sucesso." || data.message = "Email alterado com sucesso e registros atualizados."){
         setStep(1);
         closing();
-        router.push('/login');
-      }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+              method: "POST",
+              credentials: "include",
+          });
+  
+          const data = await res.json();
+          if (data.message === "Logout realizado com sucesso"){
+              router.push('/');
+          }
+          console.log(data); 
+          router.push('/login');
+        }
       else {
         setMessage(data.message);
       }
