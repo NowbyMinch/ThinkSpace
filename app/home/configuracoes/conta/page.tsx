@@ -226,7 +226,7 @@ export default function Conta() {
       console.log("Codigo verificado: ", novoEmail.novoEmail, codigo.code.toString());
       console.log("data: ", data);
   
-      if (data.message === "Email alterado com sucesso." || data.message = "Email alterado com sucesso e registros atualizados."){
+      if (data.message === "Email alterado com sucesso." || data.message === "Email alterado com sucesso e registros atualizados."){
         setStep(1);
         closing();
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
