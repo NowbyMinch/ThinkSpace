@@ -319,18 +319,18 @@ export default function Conta() {
       if (data.message === "Senha alterada com sucesso." ){
         closing();
         setStepSenha(1);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-              method: "POST",
-              credentials: "include",
-          });
+        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+        //       method: "POST",
+        //       credentials: "include",
+        //   });
   
-          const data = await res.json();
-          if (data.message === "Logout realizado com sucesso"){
-              router.push('/');
-          }
-          console.log(data); 
-          router.push('/login');
-        }
+        //   const data = await res.json();
+        //   if (data.message === "Logout realizado com sucesso"){
+        //       router.push('/');
+        //   }
+        //   console.log(data); 
+        //   router.push('/login');
+        // }
       }
       else {
         setMessage(data.message);
