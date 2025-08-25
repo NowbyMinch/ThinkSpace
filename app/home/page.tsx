@@ -1054,13 +1054,8 @@ export default function HomePage() {
                                     alt="Usuário"
                                   />
                                 )}
-                                                              
-                                
-                                
                               </>
-
                             </div>
-
                             <div className="flex justify-between  items-center h-[44px] w-full ">
                               <h2 className={`text-[18px] ${totalEstudantes > 4 ? "block": "hidden"} pl-1`}>+{totalEstudantes - 4} estudantes</h2>
                               {/* <button className="p-[5px_15px] h-full rounded-full bg-blue-950 text-white text-[18px] shadow-md">
