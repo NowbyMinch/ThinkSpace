@@ -101,7 +101,7 @@ export const ChatMateriais = ({ idMaterial }: ChatMateriaisProps) => {
 
     return (
         <div className=" 2xl:flex hidden flex-col right_panel bg-white rounded-[35px] h-full justify-center items-center shadow-md border border-[#00000031] overflow-y-auto overflow-x-hidden ">
-            <p className="text-[16px] text-[#C2C2C2] w-full max-w-full" >Para manter a experiência leve e segura, suas conversas ficam salvas por até 30 dias.</p>
+            <p className="text-[16px] text-[#C2C2C2] max-[95%] w-[95%] max-w-full text-center " >Para manter a experiência leve e segura, suas conversas ficam salvas por até 30 dias.</p>
             <div id="messages" className="w-[95%] max-w-[600px] flex flex-col gap-[18px] pr-1 h-[89%] overflow-y-auto mt-6 pb-4 rounded-lg ">
 
                 {historicoUsuario.map((mensagem, index) => (
