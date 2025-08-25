@@ -84,6 +84,7 @@ export default function LayoutClient({
       console.log(data);
       if (data === "Material concluído! Você ganhou +20 XP por participação.") {
         setConcluiu(true);
+        router.push(`/home/materiais/${id}`)
       }
     } catch (err) {
       console.error("Erro ao concluir material:", err);
