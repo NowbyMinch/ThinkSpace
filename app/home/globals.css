@@ -407,7 +407,7 @@ input::-webkit-inner-spin-button {
 
 .pop2_box{
   width: clamp(290px, 88vw, 490px);
-  height: clamp(400px, 20vw, 470px);
+  height: fit-content;
 }
 
 .size{

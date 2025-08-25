@@ -69,7 +69,7 @@ const icons = [
 
 export default function HomePage() {
   const [pop, setPop] = useState(false);
-  const [pop2, setPop2] = useState(false);
+  const [pop2, setPop2] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
   
   const cores = {
@@ -620,7 +620,7 @@ export default function HomePage() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0.95, scale: 0.90 }}
                       transition={{ duration: 0.01, ease: "easeInOut" }}
-                      className={`pop2_box absolute py-4  bg-white origin-top-left md:left-0 left-[-125%] transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
+                      className={`pop2_box absolute py-4  bg-white origin-top-left md:left-0 left-[-125%] h-fit transition-all ease-in-out border cursor-default border-[#00000031] shadow-md z-50 rounded-[25px] top-[85px] justify-center flex items-center overflow-hidden  `}>
                         <div className=" w-[85%] h-[95%] flex flex-col relative gap-[2%]">
                           <div className="">
                             <h1 className=" font-medium text-[20px] leading-none cursor-text">
