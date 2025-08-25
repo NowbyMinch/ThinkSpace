@@ -644,51 +644,6 @@ export default function HomePage() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
-                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
-                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
-                                      <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
-                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
-                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
-                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
-                                      <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
-                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
-                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
-                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
-                                      <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
-                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
-                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
-                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
-                                      <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
-                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div id="notificacao" className="w-full h-fit py-1 bg-[#A39CEC] rounded-[20px] items-center justify-center flex cursor-pointer">
-                                    <div className=" overflow-hidden w-[90%] max-w-[400px]  flex gap-4 items-center justify-center">
-                                      <div className="min-w-[70px] h-[70px] rounded-[15px] bg-[rgba(255,255,255,0.4)] flex justify-center items-center"><Info className="text-[#7D77BC] size-14"/></div>
-                                      <div className="w-full max-w-[270px]">
-                                        <h1 className="text-[20px] text-white">Não há notificações</h1>
-                                        <h2 className="text-[18px] w-[100%] break-words">{notificacao.message}</h2>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </>
                               )}
                             </div>
