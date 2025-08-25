@@ -61,9 +61,7 @@ export default function TermosDeUso() {
                     </div>
                 </header>
                 
-                <div className={`${showHeader ? 'translate-y-0' : '-translate-y-full'} w-[100%] h-[100px] `} ></div>
-                
-                <div className="w-full flex flex-col items-center gap-8 mb-8">
+                <div className="w-full flex flex-col items-center gap-8 mb-8 mt-[100px]">
                     <div className="w-[100%] h-[85px] bg-[#9767F8] mx-auto flex justify-center items-center shadow-md">
                         <h1 className="text-[40px] w-max text-white">Termos de Uso</h1>
                     </div>
