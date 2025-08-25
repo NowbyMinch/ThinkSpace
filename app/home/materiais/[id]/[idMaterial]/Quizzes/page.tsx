@@ -221,7 +221,7 @@ export default function MaterialClient() {
             setSelected(null);
             if (!finalizado) setDisabled(false);
             questao(indice);
-        }, 1200);
+        }, 1100);
     };
 
     const getBackgroundColor = (indice: number) => {

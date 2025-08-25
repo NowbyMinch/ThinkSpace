@@ -156,7 +156,7 @@ export default function HomePage() {
   const [ materias, setMaterias ] = useState<materiaItem[]>([]);
   const [ ofensiva, setOfensiva ] = useState();
   const [ ofensivaMensagem, setOfensivaMensagem ] = useState("");
-  const [ avatares, setAvatares ] = useState("");
+  const [avatares, setAvatares] = useState<string[]>([]);
   const [ totalEstudantes, setTotalEstudantes ] = useState(0);
   
   useEffect(() => {
@@ -1025,26 +1025,40 @@ export default function HomePage() {
 
                           <div className="flex items-center ">
                             <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                              <img 
-                                src={avatares[0]}
-                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
-                                alt="Usuário"
-                              />
-                              <img
-                                src={avatares[1]}
-                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
-                                alt="Usuário"
-                              />
-                              <img
-                                src={avatares[2]}
-                                className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
-                                alt="Usuário"
-                              />
-                              <img
-                                src={avatares[3]}
-                                className="diaOfensiva rounded-full absolute border-white border-[2px]"
-                                alt="Usuário"
-                              />
+                              <>
+                                {avatares[3] && (
+                                  <img 
+                                    src={avatares[3]}
+                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
+                                    alt="Usuário"
+                                  />
+                                )}
+                                {avatares[2] && (
+                                  <img 
+                                    src={avatares[2]}
+                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
+                                    alt="Usuário"
+                                  />
+                                )}
+                                {avatares[1] && (
+                                  <img 
+                                    src={avatares[1]}
+                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
+                                    alt="Usuário"
+                                  />
+                                )}
+                                {avatares[0] && (
+                                  <img 
+                                    src={avatares[0]}
+                                    className="diaOfensiva rounded-full absolute border-white border-[2px]"
+                                    alt="Usuário"
+                                  />
+                                )}
+                                                              
+                                
+                                
+                              </>
+
                             </div>
 
                             <div className="flex justify-between  items-center h-[44px] w-full ">

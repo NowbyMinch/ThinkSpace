@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import Loading from "@/app/home/components/loading";
-
+import { useRouter } from 'next/navigation'; 
 
 type UserData = {
     primeiroNome?: string;
@@ -66,8 +66,10 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
     }, []);
     
     const Concluir = async () => {
+        const router = useRouter();
+
         try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/concluir/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/concluir/${idMaterial}`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -75,6 +77,11 @@ export default function LayoutClient({ id, idMaterial, }: { id: string; idMateri
             
             const data = await res.json();
             console.log(data);
+            if (data === 'Material concluído! Você ganhou +20 XP por participação.'){
+                setConcluiu(true);
+                router.push(`/home/materiais/${id}`)
+                
+            }
 
         } catch (err) {
             console.error(err);
