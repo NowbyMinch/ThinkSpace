@@ -4,11 +4,14 @@ import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation'; 
 import ErrorModal from '@/components/ui/ErrorModal';
+import { Eye, EyeOff } from 'lucide-react';
 // import { useState } from 'react';
 
 export default function LoginPage() {
     const router = useRouter();
     const [ step, setStep ] = useState(1);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const [ form, setForm ] = useState({ email: "" });
     const [ form2, setForm2 ] = useState({ email: "", code: ""});
@@ -272,8 +275,28 @@ export default function LoginPage() {
                                     onSubmit={handleSubmit3}
                                     className='flex flex-col gap-8 w-full max-w-[500px] justify-center items-center '>
                                         <div className="w-full flex flex-col gap-4 ">
-                                            <input type="password" required placeholder='Digite sua senha' onChange={(e) => {setCompleteForm({...completeForm, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
-                                            <input type="password" required placeholder='Confirme sua senha' onChange={(e) => {setCompleteForm({...completeForm, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+                                            <div className="relative">
+                                                <input type={showPassword ? "text" : "password"} required placeholder='Digite sua senha' onChange={(e) => {setCompleteForm({...completeForm, novaSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+
+                                                <motion.button
+                                                type="button"
+                                                onClick={() => setShowPassword((prev) => !prev)}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                                >
+                                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                </motion.button>
+                                            </div>
+                                            <div className="relative">
+                                                <input type={showPassword2 ? "text" : "password"} required placeholder='Confirme sua senha' onChange={(e) => {setCompleteForm({...completeForm, confirmarSenha: e.target.value})}} className='p-3 text-[20px] h-[58px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]'/>
+
+                                                <motion.button
+                                                type="button"
+                                                onClick={() => setShowPassword2((prev) => !prev)}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                                >
+                                                {showPassword2 ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                </motion.button>
+                                            </div>
 
                                             {/* <div className={`h-[96px] overflow-hidden w-fit transition-all duration-300 ease-in-out min-w-10 min-h-2 `}>
                                                 modelo

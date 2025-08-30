@@ -499,3 +499,14 @@ input::-webkit-inner-spin-button {
 .criar_material{
   font-size: clamp( 18px, 3vw, 25px);
 }
+
+/* Hide the native 'show password' icon on WebKit browsers (Safari, iOS, Chrome) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-outer-spin-button,
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-password-toggle {
+    display: none;
+    -webkit-appearance: none;
+}

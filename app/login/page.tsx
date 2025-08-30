@@ -6,12 +6,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import ErrorModal from '@/components/ui/ErrorModal';
 import Loading from '../home/components/loading';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", senha: "" });
   const [message, setMessage] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +76,16 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className='flex flex-col gap-1 ' >
                   <div className="flex flex-col gap-4 items-end">
                     <input type="email" required placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] text-[18px] border-2 border-[rgba(10,8,9,0.6)]'/>
-                    <input type="password" required placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, senha: e.target.value })} className='p-3 w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] text-[18px] border-2 border-[rgba(10,8,9,0.6)]'/>
+                    <div className="relative w-full">
+                      <input type={showPassword ? "text" : "password"} onChange={(e) => setForm({ ...form, senha: e.target.value })} required placeholder='Digite sua senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                      <motion.button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </motion.button>
+                    </div>
                     <a href='/esqueceu-senha' className=' text-[#3881AF] w-fit text-[15px] '>Esqueceu a senha?</a>
                   </div>
 

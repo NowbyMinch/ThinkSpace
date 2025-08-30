@@ -5,7 +5,7 @@ import React from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Eye, EyeOff } from 'lucide-react';
 import DatePicker from '@/components/ui/datepicker';
 import { useRouter } from 'next/navigation';
 import { ComboboxDemo2, ComboboxDemo3 } from '../home/components/dropdown';
@@ -13,6 +13,8 @@ import ErrorModal from '@/components/ui/ErrorModal';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [ subStep, setSubStep] = useState(1);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
@@ -44,6 +46,12 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(form.dataNascimento);
+    console.log(form.dataNascimento.length);
+    if (form.dataNascimento.length < 10){
+      setMessage("Data de nacimento inválida.")
+      return;
+    }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/registrar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -287,14 +295,33 @@ export default function RegisterPage() {
                                           <DatePicker onChange={(val) => {setForm({ ...form, dataNascimento: val })}} />
                                         </div>
 
-                                        <div className="flex flex-col gap-1">
+                                        <div className="flex flex-col gap-1 ">
                                           <label htmlFor="" className='text-[20px]'>Senha</label>
-                                          <input type="password" onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite sua senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <div className="relative">
+                                            <input type={showPassword ? "text" : "password"} onChange={e => setForm({ ...form, senha: e.target.value })} required placeholder='Digite sua senha' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                            <motion.button
+                                              type="button"
+                                              onClick={() => setShowPassword((prev) => !prev)}
+                                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                            >
+                                              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                            </motion.button>
+                                          </div>
+                                          
                                         </div>
 
                                         <div className="flex flex-col gap-1">
                                           <label htmlFor="" className='text-[20px]'>Repita a senha</label>
-                                          <input type="password" onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                          <div className="relative">
+                                            <input type={showPassword2 ? "text" : "password"} onChange={e => setForm({ ...form, confirmarSenha: e.target.value })} required placeholder='Digite a senha novamente' className='p-3 text-[18px] w-full rounded-[25px] outline-[rgba(151,103,248,0.6)] border-2 border-[rgba(10,8,9,0.6)]' />
+                                            <motion.button
+                                              type="button"
+                                              onClick={() => setShowPassword2((prev) => !prev)}
+                                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                            >
+                                              {showPassword2 ? <EyeOff size={20} /> : <Eye size={20} />}
+                                            </motion.button>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>

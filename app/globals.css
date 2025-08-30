@@ -334,3 +334,33 @@ body {
     height: clamp(212px, 1vw, 216px);
   }
 }
+
+.no-select {
+  user-select: none;
+}
+
+.no-select::selection {
+  background: transparent; /* remove blue highlight */
+}
+
+/* Mask characters (shown before typing) */
+.imask-input::placeholder {
+  color: gray; /* mask color */
+  opacity: 1;
+}
+
+/* Typed characters */
+.imask-input {
+  color: black; /* typed text color */
+}
+
+/* Hide the native 'show password' icon on WebKit browsers (Safari, iOS, Chrome) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-outer-spin-button,
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-password-toggle {
+    display: none;
+    -webkit-appearance: none;
+}

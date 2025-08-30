@@ -69,7 +69,7 @@ const icons = [
 
 export default function HomePage() {
   const [pop, setPop] = useState(false);
-  const [pop2, setPop2] = useState(true);
+  const [pop2, setPop2] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   
   const cores = {
