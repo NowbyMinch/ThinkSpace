@@ -605,7 +605,7 @@ export default function Materiais() {
                 <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2`}>
                     { materias && materias.length === 0 && (
                         <div className=" h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
-                            <div className="ml-10 w-[60%] h-[90%] flex justify-center items-center">
+                            <div className="ml-10 w-full lg:w-[60%] h-[90%] flex justify-center items-center">
                                 <div className=" flex flex-col justify-center gap-[10%] w-full h-full  ">
                                     <h1 className="text-[22px] font-medium line-clamp-3 break-words">
                                         Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!
@@ -622,7 +622,7 @@ export default function Materiais() {
                             <Image width={300} height={500}
                                 src="/semmateria.svg"
                                 alt="Decoração"
-                                className=" w-[310px] max-w-[40%] absolute h-full right-0 object-cover  "
+                                className=" w-[310px] max-w-[40%] absolute h-full right-0 object-cover lg:flex hidden  "
                                 />
                         </div>
                     )} 

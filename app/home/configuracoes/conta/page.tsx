@@ -226,11 +226,21 @@ export default function Conta() {
       console.log("Codigo verificado: ", novoEmail.novoEmail, codigo.code.toString());
       console.log("data: ", data);
   
-      if (data.message === "Email alterado com sucesso." ){
+      if (data.message === "Email alterado com sucesso." || data.message === "Email alterado com sucesso e registros atualizados."){
         setStep(1);
         closing();
-        router.push('/login');
-      }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+              method: "POST",
+              credentials: "include",
+          });
+  
+          const data = await res.json();
+          if (data.message === "Logout realizado com sucesso"){
+              router.push('/');
+          }
+          console.log(data); 
+          router.push('/login');
+        }
       else {
         setMessage(data.message);
       }
@@ -309,6 +319,20 @@ export default function Conta() {
       if (data.message === "Senha alterada com sucesso." ){
         closing();
         setStepSenha(1);
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+          method: "POST",
+          credentials: "include",
+        });
+        
+        const data = await res.json();
+        
+        if (data.message === "Logout realizado com sucesso") {
+          console.log(data);
+          router.push("/login"); // redireciona para login
+        } else {
+          setMessage(data.message);
+        }
       }
       else {
         setMessage(data.message);
@@ -750,7 +774,7 @@ export default function Conta() {
           <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => setEditarSenhaPop(true)}
+          onClick={() => setEditarEmailPop(true)}
             id="editar_conta"
             className="font-medium border border-[#1E2351] rounded-[15px] px-4 py-2 text-[18px]"
           >
