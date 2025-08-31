@@ -12,7 +12,7 @@ export default async function idMaterialLayout({ children, params }: { params: P
                     <LayoutClient id={id} idMaterial={idMaterial}/>
                 </div>
                 
-                <div className="w-[2000px] max-w-[95%] lg:max-w-[90%] mx-auto mb-[12px] overflow-hidden h-[calc(100vh-66px)] gap-3 rounded-[35px] flex justify-center items-center  ">
+                <div className="w-[2000px] max-w-[95%] lg:max-w-[90%] mx-auto mb-[12px] h-[calc(100vh-66px)] gap-3 rounded-[35px] flex justify-center items-center ">
                     { children }
                 </div>
             </div>

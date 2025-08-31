@@ -714,7 +714,7 @@ export default function HomePage() {
             { materias && materias.length === 0 && (
 
                 <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
-                    <div className="ml-10 w-full lg: w-[60%] h-[90%] flex justify-center items-center">
+                    <div className="ml-10  lg: w-[60%] h-[90%] flex justify-center items-center">
                         <div className=" flex flex-col py-2 justify-between w-full h-full  ">
                             <h1 className="text-[20px] max-w-[70%] lg:w-full h-fit font-medium line-clamp-3 break-words">
                                 Nenhuma matéria criada ainda. Comece agora e organize seu caminho rumo ao sucesso!

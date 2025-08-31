@@ -264,7 +264,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <ChatMateriais idMaterial={idMaterial} />
+            <ChatMateriais appear={true} idMaterial={idMaterial} />
         </>
     );
 };

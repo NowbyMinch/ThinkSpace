@@ -29,7 +29,6 @@ export default function LayoutClient({
   const [concluiu, setConcluiu] = useState(false);
   const [user, setUser] = useState<UserData>({});
   const [documento, setDocumento] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   // ------------------- Carregar dados -------------------
   useEffect(() => {
@@ -57,10 +56,8 @@ export default function LayoutClient({
         if (data.material.origem === "DOCUMENTO") {
           setDocumento(true);
         }
-        setLoading(false);
       } catch (err) {
         console.error("Erro ao carregar material:", err);
-        setLoading(false);
       }
     };
 
@@ -90,8 +87,6 @@ export default function LayoutClient({
       console.error("Erro ao concluir material:", err);
     }
   };
-
-  if (loading) return <Loading />;
 
   return (
     <>
@@ -170,83 +165,111 @@ export default function LayoutClient({
       {/* ------------------- Conteúdo principal ------------------- */}
       <div className="flex w-full h-full relative">
         <div className="flex flex-col w-full h-full relative gap-2">
-          <div className="flex justify-between gap-2 overflow-x-scroll overflow-y-visible scrollbar-hide">
-            <div className="flex justify-between gap-2">
-              {/* Tabs */}
-              {documento && (
-                <Link href={`/home/materiais/${id}/${idMaterial}/Material`}>
-                  <h2
-                    className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ${
-                      pathname ===
-                      `/home/materiais/${id}/${idMaterial}/Material`
-                        ? ""
-                        : "text-[rgb(0,0,0,54%)]"
-                    }`}
-                  >
-                    Material
-                  </h2>
+          <div className="flex justify-between gap-2 overflow-x-scroll pb-1 scrollbar-hide">
+              <div className="flex justify-between gap-2">
+                {/* Tabs */}
+                {/* {documento && (
+                  <Link href={`/home/materiais/${id}/${idMaterial}/Material`}>
+                    <h2
+                      className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ${
+                        pathname ===
+                        `/home/materiais/${id}/${idMaterial}/Material`
+                          ? ""
+                          : "text-[rgb(0,0,0,54%)]"
+                      }`}
+                    >
+                      Material
+                    </h2>
+                  </Link>
+                )} */}
+
+                <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`}>
+                  {(() => {
+                      if (pathname === `/home/materiais/${id}/${idMaterial}/Resumo`) {
+                          return (
+                              <>
+                                  <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center `}>Resumo</h2>
+                                  <AnimatePresence>
+                                      <motion.div 
+                                      initial={{scale: 0 }}
+                                      animate={{scale: 1}}
+                                      exit={{scale: 1}}
+                                      className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}></motion.div> 
+                                  </AnimatePresence>
+                              </>
+                          )
+                      }
+                      return <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]`}>Resumo</h2>
+                      }
+                  )()}
+
                 </Link>
-              )}
 
-              <Link href={`/home/materiais/${id}/${idMaterial}/Resumo`}>
-                <h2
-                  className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ${
-                    pathname === `/home/materiais/${id}/${idMaterial}/Resumo`
-                      ? ""
-                      : "text-[rgb(0,0,0,54%)]"
-                  }`}
-                >
-                  Resumo
-                </h2>
-              </Link>
+                <Link href={`/home/materiais/${id}/${idMaterial}/Flashcards`}>
+                  {(() => {
+                      if (pathname === `/home/materiais/${id}/${idMaterial}/Flashcards`) {
+                          return (
+                              <>
+                                  <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center `}>Flashcards</h2>
+                                  <AnimatePresence>
+                                      <motion.div 
+                                      initial={{scale: 0 }}
+                                      animate={{scale: 1}}
+                                      exit={{scale: 1}}
+                                      className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}></motion.div> 
+                                  </AnimatePresence>
+                              </>
+                          )
+                      }
+                      return <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]`}>Flashcards</h2>
+                      }
+                  )()}
+                </Link>
 
-              <Link href={`/home/materiais/${id}/${idMaterial}/Flashcards`}>
-                <h2
-                  className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ${
-                    pathname ===
-                    `/home/materiais/${id}/${idMaterial}/Flashcards`
-                      ? ""
-                      : "text-[rgb(0,0,0,54%)]"
-                  }`}
-                >
-                  Flashcards
-                </h2>
-              </Link>
+                <Link href={`/home/materiais/${id}/${idMaterial}/Quizzes`}>
+                  {(() => {
+                      if (pathname === `/home/materiais/${id}/${idMaterial}/Quizzes`) {
+                          return (
+                              <>
+                                  <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center `}>Quizzes</h2>
+                                  <AnimatePresence>
+                                      <motion.div 
+                                      initial={{scale: 0 }}
+                                      animate={{scale: 1}}
+                                      exit={{scale: 1}}
+                                      className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}></motion.div> 
+                                  </AnimatePresence>
+                              </>
+                          )
+                      }
+                      return <h2 className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]`}>Quizzes</h2>
+                      }
+                  )()}
+                </Link>
+              </div>
 
-              <Link href={`/home/materiais/${id}/${idMaterial}/Quizzes`}>
-                <h2
-                  className={`text-[15px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center ${
-                    pathname === `/home/materiais/${id}/${idMaterial}/Quizzes`
-                      ? ""
-                      : "text-[rgb(0,0,0,54%)]"
-                  }`}
-                >
-                  Quizzes
-                </h2>
-              </Link>
-            </div>
-
-            {/* Botões */}
-            <div className="flex gap-2">
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                whileHover={{ scale: 1.02 }}
-                onClick={() => Concluir()}
-                className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative"
-              >
-                Concluir
-              </motion.button>
-
-              <Link href={`/home/materiais/${id}`}>
+              {/* Botões */}
+              <div className="flex gap-2">
                 <motion.button
                   whileTap={{ scale: 0.98 }}
                   whileHover={{ scale: 1.02 }}
+                  onClick={() => Concluir()}
                   className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative"
                 >
-                  <Reply className="reply" /> Voltar
+                  Concluir
                 </motion.button>
-              </Link>
-            </div>
+
+                <Link href={`/home/materiais/${id}`}>
+                  <motion.button
+                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="flex bg-[#A39CEC] justify-center items-center text-white h-fit px-2 rounded-full text-[15px] lg:text-[20px] font-medium cursor-pointer relative"
+                  >
+                    <Reply className="reply" /> Voltar
+                  </motion.button>
+                </Link>
+              </div>
+
           </div>
         </div>
       </div>

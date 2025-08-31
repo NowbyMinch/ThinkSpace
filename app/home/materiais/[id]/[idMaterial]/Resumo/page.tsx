@@ -82,7 +82,7 @@ export default function MaterialClient() {
 
     return( 
         <>  
-            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+            <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]"> 
                 <div className=" w-[1350px] max-w-[95%] h-full py-2 my-1 flex flex-col overflow-y-auto items-center ">
                     <div className=" w-[98%]">
                         <p className="text-[16px] text-[#C2C2C2] w-full max-w-full text-center" >Este conteúdo foi sintetizado por IA e busca facilitar sua compreensão. Em caso de dúvida, consulte fontes complementares.</p>    
@@ -131,7 +131,7 @@ export default function MaterialClient() {
                 </div>
             </div>
 
-            <ChatMateriais idMaterial={idMaterial} />
+            {/* <ChatMateriais idMaterial={idMaterial} /> */}
         </>
     );
 };

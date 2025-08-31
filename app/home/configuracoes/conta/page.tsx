@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
 import { Backdrop3 } from "../../components/backdrop";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, X } from "lucide-react";
 import React from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 
@@ -50,6 +50,8 @@ export default function Conta() {
   const [ code, setCode ] = useState<number[]>([]);
   
   // SENHA ------------------------------------------------------------------------------------------
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [ stepSenha, setStepSenha] = useState(1);
   const [ emailSenha, setEmailSenha] = useState({ emailSenha: ""});
   const [ editarSenhaPop, setEditarSenhaPop] = useState(false);
@@ -154,7 +156,10 @@ export default function Conta() {
     setEditarEmailPop(false);
     setEditarSenhaPop(false);
     setStep(1);
+    setShowPassword(false);
+    setShowPassword2(false);
   };
+
   const Step = async () => {
     if (step === 1){
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/configuracoes/email/solicitar`, {
@@ -507,7 +512,7 @@ export default function Conta() {
 
               <div id="white-box" className={`w-[1200px] max-w-[95%] min-h-[95%] lg:min-h-[600px] h-[600px] max-h-[95%] rounded-[50px] z-[1100] bg-white shadow-md flex justify-center items-center relative overflow-hidden `}>
 
-                <ArrowLeft onClick={() => {setStep(step - 1)}} className={`size-6 text-black flex cursor-pointer h-fit absolute top-5 left-8 z-10 ${stepSenha > 1 ? "flex": "hidden"}`} /> 
+                <ArrowLeft onClick={() => {setStepSenha(stepSenha - 1)}} className={`size-6 text-black flex cursor-pointer h-fit absolute top-5 left-8 z-10 ${stepSenha > 1 ? "flex": "hidden"}`} /> 
                 <X className="absolute top-5 right-8 size-6 cursor-pointer" onClick={() => closing()}/>
                 <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-140px] rotate-90 w-[550px]"/>
                 <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-130px] -rotate-90 w-[550px]"/>
@@ -581,20 +586,39 @@ export default function Conta() {
                     else {
                       return (
                         <>
-                          <input type="password" onChange={(e) => {
+                          <div className="relative w-full max-w-[450px]">
+                            <input type={showPassword ? "text" : "password"} required placeholder='Digite sua senha' onChange={(e) => {
                               setNovaSenha({ novaSenha: e.target.value });
                               console.log(novaSenha);
                             }} 
-                            placeholder="Digite sua senha"
-                            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
-                          />
-                          <input type="password" onChange={(e) => {
+                            className='rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]'/>
+
+                            <motion.button
+                            type="button"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </motion.button>
+
+                          </div>
+                          
+                          <div className="relative w-full max-w-[450px]">
+                            <input type={showPassword2 ? "text" : "password"} required placeholder='Confirme sua senha' onChange={(e) => {
                               setConfirmarNovaSenha({ confirmarNovaSenha: e.target.value });
                               console.log(novaSenha);
                             }} 
-                            placeholder="Confirme sua senha"
-                            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
-                          />
+                            className='rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]'/>
+
+                            <motion.button
+                            type="button"
+                            onClick={() => setShowPassword2((prev) => !prev)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                            {showPassword2 ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </motion.button>
+
+                          </div>
 
                           <motion.button 
                           whileTap={{scale: 0.99}}
@@ -647,13 +671,23 @@ export default function Conta() {
                             </div>
 
                             <h1 className="text-center text-[20px] font-medium">Você deseja mesmo deletar sua conta?</h1>
-                            <input type="password" onChange={(e) => {
-                                setSenhaDeletar({ senhaDeletar: e.target.value });
-                                console.log(senhaDeletar);
-                              }} 
-                              placeholder="Digite sua senha"
-                              className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
-                            />
+                            <div className="relative w-full max-w-[450px]">
+                              <input type={showPassword ? "text" : "password"} onChange={(e) => {
+                                  setSenhaDeletar({ senhaDeletar: e.target.value });
+                                  console.log(senhaDeletar);
+                                }} 
+                                placeholder="Digite sua senha"
+                                className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
+                              />
+                              <motion.button
+                              type="button"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                              >
+                              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                              </motion.button>
+                            </div>
+
 
                             <div className="w-full flex justify-center gap-4 mt-auto">
                                 <motion.button 
@@ -703,20 +737,21 @@ export default function Conta() {
                     exit={{ opacity: 0, scale: 0.90 }}
                     className={`w-[700px] h-[400px] flex rounded-[40px] z-[1100]  opacity-1 `}>
 
-                        <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
-                            
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
-                            <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
+                      <div id="white-box" className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}>
+                          
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute top-0 left-[-180px] rotate-90 w-[550px]"/>
+                          <Image width={300} height={500} src="/Vector.svg" alt="Decoração" className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"/>
 
-                            <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
-                              <div className="flex flex-col justify-center items-center">
-                                  <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                  <span className="font-medium text-[30px]">{user.primeiroNome} </span>
-                                  <span className="text-[20px]"></span>
-                              </div>
+                          <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                            <div className="flex flex-col justify-center items-center">
+                                <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
+                                <span className="font-medium text-[30px]">{user.primeiroNome} </span>
+                                <span className="text-[20px]"></span>
+                            </div>
 
-                              <h1 className="text-center text-[20px] font-medium">Você deseja mesmo suspender sua conta?</h1>
-                              <input type="password" onChange={(e) => {
+                            <h1 className="text-center text-[20px] font-medium">Você deseja mesmo suspender sua conta?</h1>
+                            <div className="relative w-full max-w-[450px]">
+                              <input type={showPassword ? "text" : "password"} onChange={(e) => {
                                   setSenhaSuspender({ senhaSuspender: e.target.value });
                                   console.log(senhaSuspender);
                                 }} 
@@ -724,25 +759,36 @@ export default function Conta() {
                                 className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[450px] text-[18px] h-[58px] outline-[#9767F8]"
                               />
 
-                              <div className="w-full flex justify-center gap-4 mt-auto">
-                                  <motion.button 
-                                  whileHover={{ scale: 1.03 }}
-                                  whileTap={{ scale: 0.97 }}
-                                  onClick={() => setSuspenderPop(false)}
-                                  className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                    Voltar
-                                  </motion.button>
-                                  <motion.button 
-                                  whileHover={{ scale: 1.03 }}
-                                  whileTap={{ scale: 0.97 }}
-                                  onClick={() => {suspenderConta()}}
-                                  className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                    Suspender 
-                                  </motion.button>
-                              </div>
-
+                              <motion.button
+                              type="button"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                              >
+                              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                              </motion.button>
                             </div>
-                        </div>
+
+                            
+
+                            <div className="w-full flex justify-center gap-4 mt-auto">
+                                <motion.button 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() => setSuspenderPop(false)}
+                                className="p-[10px_15px] min-w-[70px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
+                                  Voltar
+                                </motion.button>
+                                <motion.button 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() => {suspenderConta()}}
+                                className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
+                                  Suspender 
+                                </motion.button>
+                            </div>
+
+                          </div>
+                      </div>
                     </motion.div>
                     
                     
