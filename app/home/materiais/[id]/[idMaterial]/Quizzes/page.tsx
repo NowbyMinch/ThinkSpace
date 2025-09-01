@@ -286,7 +286,7 @@ export default function MaterialClient() {
             {message && (
                 <ErrorModal message={message} onClose={() => setMessage(null)} />
             )}
-            <div ref={parentRef}  className="relative w-full rounded-[35px] bg-white h-full flex flex-col items-center shadow-md border border-[#00000031] ">
+            <div ref={parentRef} className="relative w-full rounded-[35px] bg-white h-full flex flex-col items-center shadow-md border border-[#00000031] ">
                 <div className=" w-full rounded-[35px] overflow-x-hidden overflow-y-auto bg-white h-full flex flex-col items-center shadow-md border border-[#00000031] relative">
                     <div className="w-[1200px] max-w-[90%] h-[850px] max-h-[95%] my-auto relative flex flex-col justify-center items-center gap-1">
                         <div className="w-full h-[10px] rounded-full bg-[rgba(16,19,46,0.14)] absolute top-0 ">
@@ -427,10 +427,10 @@ export default function MaterialClient() {
                         <img alt="Profile Picture" src="/IApicture.svg" className="rounded-full w-full bg-white" width={800} height={800} />
                     </motion.button>
 
-                
                 </div>
-                <ChatMateriais  appear={appear} idMaterial={idMaterial}/>
 
+                <ChatMateriais  appear={appear} idMaterial={idMaterial}/>
+                
             </div>
             
             
