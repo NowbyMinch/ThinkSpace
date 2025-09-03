@@ -184,7 +184,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     
     useEffect(() => {
         console.log("Origem: ", origem);
-        
     }, [origem]);
     
     // Outros ----------------------------------
@@ -409,10 +408,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.error(" Erro no criar():", err);
         } finally {
             closing()
-            setLoading(false);
             if (createdMaterialId) {
               router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
+            setLoading(false);
+
         }
     };
     
@@ -501,11 +501,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
             console.error(" Erro no criar():", err);
         } finally {
             closing()
-            setLoading(false);
             setTerminado(true);
             if (createdMaterialId) {
               router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
+            setLoading(false);
+
         }
     };
     
@@ -586,10 +587,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
         } finally {
             closing()
-            setLoading(false);
             if (createdMaterialId) {
               router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
+            setLoading(false);
+
         }
         
     };
