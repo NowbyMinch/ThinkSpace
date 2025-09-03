@@ -166,6 +166,7 @@ export default function HomePage() {
   useEffect(() => {
     const materia = async () => {
         try{
+          setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
                 method: 'GET',
                 credentials: 'include',
@@ -175,7 +176,9 @@ export default function HomePage() {
             setMaterias(data);
         } catch (err) {
         console.error(err);
-        } 
+        } finally {
+          setLoading(false);
+        }
     }; materia();
     
     const banner = async () => {

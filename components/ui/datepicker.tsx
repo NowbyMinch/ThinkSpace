@@ -36,7 +36,16 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
   const ValueRef2 = useRef<HTMLInputElement | null>(null);
   const ValueRef3 = useRef<HTMLInputElement | null>(null);
   
-
+  const handleKeyUp = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace') {
+      if (index === 3 && ValueRef3.current?.value === "") {
+        ValueRef2.current?.focus();
+      } else if (index === 2 && ValueRef2.current?.value === "") {
+        ValueRef.current?.focus();
+      }
+    }
+  };
+  
   const [ calendario, setCalendario ] = useState<CalendarioData>({})
   
   useEffect(() => {
@@ -105,7 +114,9 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
   
   useEffect(() => {
     if (parseInt(inputValue3) > (calendario.anoAtual ?? 0)) {
-      setInputValue3(calendario.anoAtual!.toString())
+      if (calendario.anoAtual !== undefined) {
+        setInputValue3(calendario.anoAtual.toString());
+      }
     } else {
       if (inputValue3.length === 4){
         ValueRef3.current?.blur();    
@@ -187,7 +198,7 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
           <div className="relative text-gray-400 block w-[31px]">
             {!focused2 && !inputValue2 && <div className='w-full rounded-[5px] absolute text-center'>mm</div>}
 
-            <input ref={ValueRef2} value={inputValue2} type="text" onFocus={() => setFocused2(true)} onBlur={() => {
+            <input ref={ValueRef2} onKeyUp={(e) => handleKeyUp(2,e)} value={inputValue2} type="text" onFocus={() => setFocused2(true)} onBlur={() => {
               setFocused2(false);
               if (inputValue2 && inputValue2.length === 1) {
                 setInputValue2(inputValue2.padStart(2, "0")); // "2" → "02"
@@ -200,7 +211,7 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
           <div className="relative text-gray-400 block w-[42px]">
             {!focused3 && !inputValue3 && <div className='w-full rounded-[5px] absolute text-center'>aaaa</div>}
 
-            <input ref={ValueRef3} value={inputValue3} type="text" onFocus={() => setFocused3(true)} onBlur={() => {setFocused3(false); 
+            <input ref={ValueRef3} value={inputValue3} onKeyUp={(e) => handleKeyUp(3,e)} type="text" onFocus={() => setFocused3(true)} onBlur={() => {setFocused3(false); 
               
             }} onChange={(e) => setInputValue3(e.target.value)} className={`${focused3  ? "bg-[rgba(151,103,248,0.17)]" : "bg-transparent" } text-center text-black absolute w-full rounded-[5px] border-none outline-none transition-all ease-in-out duration-100 `}/>
           </div>

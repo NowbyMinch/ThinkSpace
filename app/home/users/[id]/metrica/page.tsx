@@ -154,7 +154,6 @@ export default function Métricas() {
                     });
                     
                     const data = await res.json();
-                    console.log(data);
                     setMetricasUser(data);
                     setLoading(false);
                 }
@@ -162,6 +161,7 @@ export default function Métricas() {
             
             const metricas = async () => {
                 try{
+                    setLoading(true);
                     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/${userID}/?weeksAgo=${0}`, {
                     method: 'GET',
                     credentials: 'include',
@@ -172,6 +172,8 @@ export default function Métricas() {
 
                 } catch (err) {
                     console.error(err);
+                } finally {
+                    setLoading(false);
                 }
             }; metricas();
             

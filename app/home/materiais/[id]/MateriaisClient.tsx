@@ -68,6 +68,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const [ calendario, setCalendario ] = useState<CalendarioData>({})
     const [ materiaDesignada, setMateriaDesignada] = useState("");
     const [ deletar, setDeletar] = useState(false);
+    const [ pesquise, setPesquise ] = useState("");
     
     // Inputs e referências
     const [input, setInput] = useState("");
@@ -192,6 +193,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
     useEffect(() => {
         const materia = async (id: string) => {
             try{
+                setLoading(true);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/${id}`, {
                     method: 'GET',
                     credentials: 'include',
@@ -199,10 +201,11 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 
                 const data = await res.json();
                 setMateria(data)
-                setLoading(false);
 
             } catch (err) {
             console.error(err);
+            } finally {
+                setLoading(false);
             }
         }; materia(decodedId);
         
@@ -1164,7 +1167,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                             <div className="w-[98%] rounded-[20px] mt-4 mr-3 h-[45px] bg-[#D9D9D9] absolute "></div>
 
                             <div className="relative w-full">
-                                <input type="text" id="search_bar" placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
+                                <input type="text" id="search_bar" onChange={(e) => setPesquise(e.target.value)} placeholder="Pesquise a matéria" className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]" />
                                 <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] "/>
                             </div>
                         </div>
@@ -1177,9 +1180,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 {/*  ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2 */}
                 <div className="w-[95%] max-w-[95%] h-full overflow-y-auto">
                     <div className="w-full h-full flex overflow-y-auto overflow-x-hidden flex-col items-center">
-                        {materiaisNome.map((material, index) => (
-                        <a
-                            key={material.id ?? index} // prefer unique id if available
+                        {materiaisNome.filter(material => !pesquise || material.titulo?.toLowerCase().includes(pesquise.toLowerCase())).map((material, index) => {
+                        return (
+                            <motion.a
+                            initial={{ scale: 0.80 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            key={material.id} 
                             href={`/home/materiais/${id}/${material.id}/Resumo`}
                             id="materiais"
                             className="grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
@@ -1225,8 +1232,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                 <ChevronRight className="size-12 " />
                             </div>
                             </motion.div>
-                        </a>
-                        ))}
+                        </motion.a>
+                        )
+                        })}
                     </div>
                 </div>
 
