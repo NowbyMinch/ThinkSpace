@@ -54,7 +54,7 @@ export default function MaterialClient() {
     // setTopicos(prev => [...prev, topicoInput]);
     const [ finalizado, setFinalizado ] = useState(false);
     const [ finalizadoPop, setFinalizadoPop ] = useState(false);
-
+    const [feedback, setFeedback] = useState<number | null>(null);
     
     const final = async () => {
         try{
@@ -158,10 +158,8 @@ export default function MaterialClient() {
             setDisabled(true);
             // console.log("Total, acertou: ", estado?.totalQuestoes, acertou);
             // xpQuiz(estado?.totalQuestoes, acertou);
-        }
-
-        else{
-            if (estado?.respondidas! > 0){
+        } else{
+            if (estado?.respondidas! > questaoIndex){
                 setQuestaoIndex(estado?.respondidas!);
             }
         }
@@ -197,85 +195,92 @@ export default function MaterialClient() {
 
     const handleClick = (indice: number) => {
         if (disabled) return;
+        console.log(estado);
 
-        if ((estado?.respondidas! + 1) === (estado?.totalQuestoes!)) {
-            for (let i = 0; i < estado?.totalQuestoes!; i ++){
-                if (estado?.respostasQuiz[i] === quizzes[i]?.correta){
-                    acertou ++;
-                };
-            };
-            xpQuiz(estado?.totalQuestoes!,acertou);
-            setFinalizadoPop(true);
-            setTimeout(() =>{
-                setFinalizadoPop(false);
-            }, 3000);
-
-        };
-
-        final();
-        const letra = letraPorIndice[indice];
-        setSelected(letra);
         setDisabled(true);
+        setFeedback(indice); // show color feedback immediately
+        
+        const letra = letraPorIndice[indice];
+        setSelected(letra); // keep for other logic
+
+
+        // Keep your final() logic and XP calculation
+        if ((estado?.respondidas! + 1) === (estado?.totalQuestoes!)) {
+            let acertouLocal = 0;
+            for (let i = 0; i < estado?.totalQuestoes!; i++) {
+                if (estado?.respostasQuiz[i] === quizzes[i]?.correta) {
+                    acertouLocal++;
+                }
+            }
+            xpQuiz(estado?.totalQuestoes!, acertouLocal);
+
+            setFinalizadoPop(true);
+            setFinalizado(true); // ← marca quiz como finalizado
+            setDisabled(true);   // ← desativa botões
+            setTimeout(() => setFinalizadoPop(false), 3000);
+        }
+
+        final(); // call final as before
+        questao(indice); // send the answer
 
         setTimeout(() => {
+            setFeedback(null);
             setSelected(null);
-            if (!finalizado) setDisabled(false);
-            questao(indice);
-        }, 1100);
+
+            setQuestaoIndex(prev => {
+                if (prev + 1 < quizzes.length) {
+                    setDisabled(false);
+                    return prev + 1;
+                }
+                return prev; // do not increment beyond last question
+            });
+        }, 300);
     };
 
+    // Background color with feedback
     const getBackgroundColor = (indice: number) => {
         const letra = letraPorIndice[indice];
-        if (!finalizado){
-            if (!selected) return "white";
-            if (letra === quizzes[questaoIndex]?.correta) {
-            return selected === letra ? "#7BC396" : "#FFF"; // verde para o certo se selecionado
-            } else {
-            return selected === letra ? "#CF848E" : "white"; // vermelho para errado se selecionado
-            }
-        }
-        else{
-            const marcada = estado?.respostasQuiz[questaoIndex];
-            const correta = quizzes[questaoIndex]?.correta;
+        const correta = quizzes[questaoIndex]?.correta;
 
-            if (marcada === correta){
-                return letra === correta ? "#7BC396" : "white";
-            }
-            else{
-                if (letra === marcada) return "#CF848E";
-                if (letra === correta) return "#7BC396";
-                return "white";
-            }
+        // Durante feedback imediato
+        if (feedback !== null) {
+            return indice === feedback
+                ? letra === correta
+                    ? "#7BC396"
+                    : "#CF848E"
+                : "white";
         }
+
+        // Depois de finalizado, marcar todas as respostas
+        if (finalizado && estado?.respostasQuiz) {
+            const respostasArray = estado?.respostasQuiz ? Object.values(estado.respostasQuiz) : [];
+            const minhaResposta = respostasArray[questaoIndex];
+            if (letra === correta) return "#7BC396"; // verde para correta
+            if (letra === minhaResposta && letra !== correta) return "#CF848E"; // vermelho se errou
+        }
+
+        return "white";
     };
 
+    // Text color with feedback
     const getColor = (indice: number) => {
         const letra = letraPorIndice[indice];
-        if (!finalizado){
-            if (!selected) return "black";
-            const letra = letraPorIndice[indice];
-            if (letra === quizzes[questaoIndex]?.correta) {
-                return selected === letra ? "white" : "black";
-            } 
-            else {
-                return selected === letra ? "white" : "black";
-            } 
-        }
-        else{
-            const marcada = estado?.respostasQuiz[questaoIndex];
-            const correta = quizzes[questaoIndex]?.correta;
+        const correta = quizzes[questaoIndex]?.correta;
 
-            if (marcada === correta) {
-                // Acertou → correta branca
-                return letra === correta ? "white" : "black";
-            } else {
-                // Errou → marcada e correta brancas
-                if (letra === marcada || letra === correta) return "white";
-                return "black";
-            }
+        // Durante feedback imediato
+        if (feedback !== null) {
+            return indice === feedback ? "#FFFFFF" : "black";
         }
 
-        
+        // Depois de finalizado, marcar todas as respostas
+        if (finalizado && estado?.respostasQuiz) {
+            const respostasArray = Object.values(estado.respostasQuiz);
+            const minhaResposta = respostasArray[questaoIndex];
+            if (letra === correta) return "#FFFFFF"; // branco na letra correta
+            if (letra === minhaResposta && letra !== correta) return "#FFFFFF"; // branco se errou
+        }
+
+        return "black"; // default
     };
 
     if (!idMaterial) return null;
