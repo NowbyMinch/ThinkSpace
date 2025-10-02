@@ -190,6 +190,8 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const decodedId = decodeURIComponent(id);
     
     useEffect(() => {
+        setLoading(true);
+
         const materia = async (id: string) => {
             try{
                 setLoading(true);
@@ -203,9 +205,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             } catch (err) {
             console.error(err);
-            } finally {
-                setLoading(false);
-            }
+            } 
         }; materia(decodedId);
         
         const user = async () => {
@@ -222,7 +222,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 console.error(err);
             }
         }; user();
-
+        
         const calendario = async () => {
             try{
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/calendario`, {
@@ -270,15 +270,21 @@ export default function MateriaisClient({ id }: { id: string; }) {
             const data = await res.json();
             setUserXP(data);
             console.log(data);
-            setLoading(false);
 
           } catch (err) {
             console.error(err);
           }
-1        }; ranking();
+        }; ranking();
         
     }, []);
     
+    useEffect(() => {
+        if (user.foto) {
+            setLoading(false);
+        }
+        
+    }, [user]);
+
     const materiais = async () => {
         try{
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/`, {
@@ -336,7 +342,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
     const criarTopicos = async () => {
         let createdMaterialId: string | null = null;
         try {
-            setLoading(true);
             let materialRes;
             let data;
 
@@ -357,11 +362,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
-            createdMaterialId = data.material.id;
+            
+            if (data.message !== "Dados básicos recebidos. Material criado."){
+                setMessage(data.message);
+                return;
+            }
+            setLoading(true);
+            if (data?.material?.id) {
+                createdMaterialId = data.material.id;
+            } else if (data?.dados?.materialId) {
+                createdMaterialId = data.dados.materialId;
+            } else {
+                console.error("Nenhum ID de material retornado!", data);
+            }
 
             if (!data.material?.id) {
-            console.error(" Nenhum ID de material retornado!");
-            return;
+                console.error(" Nenhum ID de material retornado!");
+                return;
             }
 
             const materialId = data.material.id;
@@ -407,9 +424,9 @@ export default function MateriaisClient({ id }: { id: string; }) {
             setLoading(false);
             console.error(" Erro no criar():", err);
         } finally {
-            closing()
             if (createdMaterialId) {
-              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+                closing();
+                router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
             setLoading(false);
 
@@ -449,7 +466,18 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
-            createdMaterialId = data.material.id;
+            if (data.message !== "Dados básicos recebidos. Material criado."){
+                setMessage(data.message);
+                return;
+            }
+            setLoading(false);
+            if (data?.material?.id) {
+                createdMaterialId = data.material.id;
+            } else if (data?.dados?.materialId) {
+                createdMaterialId = data.dados.materialId;
+            } else {
+            console.error("Nenhum ID de material retornado!", data);
+            }
 
             if (!data.material?.id) {
                 console.error(" Nenhum ID de material retornado!");
@@ -497,13 +525,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
             // router.push(`/home/materiais/${id}/${materialId}/resumo`);
             
         } catch (err) {
-            setLoading(false);
             console.error(" Erro no criar():", err);
         } finally {
-            closing()
-            setTerminado(true);
             if (createdMaterialId) {
-              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+                setTerminado(true);
+                closing()
+                router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
             setLoading(false);
 
@@ -511,20 +538,20 @@ export default function MateriaisClient({ id }: { id: string; }) {
     };
     
     const criarAssunto = async () => {
-        let createdMaterialId: string | null = null;    
+        let createdMaterialId: string | null = null;
         try {
-            setLoading(true);
             let materialRes;
             let data;
+
             // --- ASSUNTO/TÓPICO: usa JSON normal ---
             materialRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                assunto: assuntoInput,
                 nomeDesignado: input,
                 nomeMateria: materiaDesignada,
                 topicos,
-                assunto: assuntoInput,
                 tipoMaterial: tipo,
                 quantidadeQuestoes: value,
                 quantidadeFlashcards: value2,
@@ -534,12 +561,23 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
             data = await materialRes.json();
             console.log(" MATERIAL CRIADO:", data);
-            createdMaterialId = data.material.id;
+            if (data.message !== "Dados básicos recebidos. Material criado."){
+                setMessage(data.message);
+                return;
+            }
+            setLoading(true);
+            if (data?.material?.id) {
+                createdMaterialId = data.material.id;
+            } else if (data?.dados?.materialId) {
+                createdMaterialId = data.dados.materialId;
+            } else {
+            console.error("Nenhum ID de material retornado!", data);
+            }
+
             if (!data.material?.id) {
             console.error(" Nenhum ID de material retornado!");
             return;
             }
-
 
             const materialId = data.material.id;
             
@@ -566,15 +604,13 @@ export default function MateriaisClient({ id }: { id: string; }) {
             );
             console.log("FLASHCARDS:", await flashcardsRes.json());
 
-            const quizzesRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`,
-            {
+
+            const quizzesRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: materialId }),
                 credentials: "include",
-            }
-            );
+            });
             console.log("QUIZZES:", await quizzesRes.json());
 
             // --- atualizar lista no estado ---
@@ -586,15 +622,16 @@ export default function MateriaisClient({ id }: { id: string; }) {
             setLoading(false);
 
         } finally {
-            closing()
             if (createdMaterialId) {
-              router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
+                closing()
+                router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
             setLoading(false);
 
         }
         
     };
+    
     const Deletar = async (id: string) => {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${id}`, {
@@ -793,9 +830,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                                         </form>
                                     </div>
 
-
-
-
                                     <div className={`w-full h-full flex lg:flex-row flex-col lg:gap-12 gap-6 lg:items-center  ${ openVar2? "block": "hidden"}`}>
 
                                         {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -939,6 +973,25 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
                                         {/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
                                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     <div className={`w-full h-full flex lg:flex-row flex-col lg:gap-12 gap-6 lg:items-center ${ openVar3? "block": "hidden"}`}>
                                         <div className="w-full max-w-full min-h-[220px] lg:w-[105%] lg:h-[85%] flex flex-col gap-5 ">

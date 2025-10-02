@@ -129,10 +129,10 @@ export default function Materiais() {
     };}, [openPop]);
 
     useEffect(() => {
-        
+        setLoading(true);
+         
         const materia = async () => {
             try{
-                setLoading(true);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
                     method: 'GET',
                     credentials: 'include',
@@ -142,15 +142,13 @@ export default function Materiais() {
                 setMaterias(data)
             } catch (err) {
                 console.error(err);
-            } finally {
-                setLoading(false);
-            }
+            } 
             
         }; materia();
 
         const user = async () => {
             try{
-                setLoading(true);
+                
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
                     method: 'GET',
                     credentials: 'include',
@@ -160,7 +158,7 @@ export default function Materiais() {
                 console.log("User: ", data)
                 setUser(data)
                 console.log("complete");
-                setLoading(false);
+                
                 
             } catch (err) {
                 setMessage("Erro ao carregar saudação.");
@@ -197,7 +195,7 @@ export default function Materiais() {
             const data = await res.json();
             setUserXP(data);
             console.log(data);
-            setLoading(false);
+            
 
           } catch (err) {
             console.error(err);
@@ -206,6 +204,13 @@ export default function Materiais() {
 
     }, []);
 
+    useEffect(() => {
+        if (materias && materias.length > 0 && user.primeiroNome != undefined) {
+            setLoading(false);
+        }
+        
+    }, [materias, user]);
+    
     useEffect(() => {
         console.log("UserXP: ", userXP);
     }, [userXP]);
@@ -606,7 +611,7 @@ export default function Materiais() {
                     </div>
                 </div>
 
-                <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2`}>
+                <div className={`w-[95%] max-w-[95%] ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[880px] pt-1 pb-3 overflow-y-auto px-2`}>
                     { materias && materias.length === 0 && (
                         <div className=" h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
                             <div className="ml-10 w-full lg:w-[60%] h-[90%] flex justify-center items-center">

@@ -64,6 +64,7 @@ export default function MaterialClient() {
             });
             
             const data = await res.json();
+            console.log(data);
             setEstado(data);
 
         } catch (err) {
@@ -174,6 +175,7 @@ export default function MaterialClient() {
 
     const questao = async (indice: number) => {
         const letra = letraPorIndice[indice];
+
         try{
             const resposta = {questaoIndex: questaoIndex, resposta: letra};
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/responder-questao/${idMaterial}`, {
@@ -188,8 +190,7 @@ export default function MaterialClient() {
             final()
 
         } catch (err) {
-        console.error(err);
-
+            console.error(err);
         }
     };
 

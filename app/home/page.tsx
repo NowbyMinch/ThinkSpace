@@ -164,9 +164,9 @@ export default function HomePage() {
   }, [salas]);
   
   useEffect(() => {
+    setLoading(true);
     const materia = async () => {
         try{
-          setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
                 method: 'GET',
                 credentials: 'include',
@@ -176,9 +176,7 @@ export default function HomePage() {
             setMaterias(data);
         } catch (err) {
         console.error(err);
-        } finally {
-          setLoading(false);
-        }
+        } 
     }; materia();
     
     const banner = async () => {
@@ -228,7 +226,6 @@ export default function HomePage() {
     
     const salasDeEstudo = async () => {
       try{
-        setLoading(true);
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
           method: 'GET',
           credentials: 'include',
@@ -241,7 +238,6 @@ export default function HomePage() {
         setAvatares(data.avataresUltimosUsuarios);
         setTotalEstudantes(data.totalEstudantes);
         setSalas(data.salasMembro);
-        setLoading(false);
       } catch (err) {
         setMessage("Erro ao carregar salas de estudo.");
         console.error(err);
@@ -275,7 +271,6 @@ export default function HomePage() {
         const data = await res.json();
 
         setOfensivaMensagem(data.mensagemOfensiva);
-        setLoading(false);
         setOfensiva(data.status);
 
       } catch (err) {
@@ -288,6 +283,12 @@ export default function HomePage() {
 
   }, []);
 
+  useEffect(() => {
+    if (materias && materias.length > 0 && salas && salas.length > 0) {
+      setLoading(false);
+    }
+  }, [materias, salas]);
+  
   useEffect(() =>{
     console.log("UseEffect ofensiva: ", ofensiva);
   }, [ofensiva]);
@@ -702,7 +703,6 @@ export default function HomePage() {
                       </button>
                     </a>
                 </div>
-                
               </div>
 
               <Image width={300} height={500}
@@ -927,7 +927,7 @@ export default function HomePage() {
             </h1>
             <div id="scroll" className="max-h-[665px] overflow-y-auto pr-1 rounded-[25px] ">
               
-              { salas.length === 0 && salas.length === 0 && (
+              { salas.length === 0 && (
                 <div className="w-full h-[400px] bg-[#CCB2FF] py-4 rounded-[25px] flex  items-center flex-col shadow-md">
                   <div className="w-[90%] h-[35%]  flex justify-center items-center">
                       <h1 className="banner_title text-[22px] font-medium line-clamp-4 break-words">Entre em uma sala de estudos para acessar materiais diversos, tirar dúvidas e trocar ideias com outros estudantes.</h1>
@@ -952,7 +952,7 @@ export default function HomePage() {
                   </div>
                 </div>
               )}
-              { ( salas.length > 0 || salas.length > 0 ) &&  (
+              { salas.length > 0  &&  (
                 <>
                   {salas.map((sala, index) =>{
                     return (

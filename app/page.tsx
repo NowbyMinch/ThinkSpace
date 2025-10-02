@@ -162,7 +162,7 @@ export default function landingPage() {
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                                 className=" text-white text-[18px] p-[10px_10px] rounded-full flex gap-2 items-center justify-center cursor-pointer 
                                 bg-[#BF9FFF] ">
-                                    <span className="comece line-clamp-2 break-words ">Comece a estudar</span>
+                                    <a href="/registrar" className="comece line-clamp-2 break-words ">Comece a estudar</a>
                                     <div className="bg-white p-2 rounded-full "> <MoveUpRight className="text-[#A39CEC] size-3"/> </div>
                                 </motion.button>
                             </div>
@@ -235,7 +235,7 @@ export default function landingPage() {
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.2, ease: "easeInOut" }}
                             className=" text-[#704FE6] text-[18px] w-fit p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center border-[#704FE6] cursor-pointer  ">
-                                <span className="line-clamp-2 break-words">Comece a estudar</span>
+                                <a href="/registrar" className="line-clamp-2 break-words">Comece a estudar</a>
                                 <div className="bg-[#704FE6] p-3 rounded-full "> <MoveUpRight className="text-white size-5"/> </div>
                             </motion.button>
                         </div>
@@ -529,7 +529,7 @@ export default function landingPage() {
                                 </div>
                                 
                                 <div className="w-full flex justify-center items-center gap-4 mt-2">
-                                    <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
+                                    <p>© 2023 ThinkSpace.</p>
                                 </div>
                             </div>
 

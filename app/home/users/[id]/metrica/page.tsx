@@ -328,18 +328,22 @@ export default function Métricas() {
                                     </h1>
                                    
                                     {ranking.map((rank, index) =>
-                                        <React.Fragment key={index}>
-                                            <div key={index} className="mt-2 w-full h-14 flex items-center justify-between ">
-                                                <div className="flex items-center gap-2 min-w-[194px]  ">
-                                                    <img width={300} height={500} src={rank.usuario.foto ?? ""} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
-                                                    <h2 className='text-[20px] font-bold whitespace-nowrap '>{ rank?.usuario?.nomeCompleto ?? "" }</h2>
+ 
+                                        ( index < 3 && (
+                                            <React.Fragment key={index}>
+                                                <div key={index} className="mt-2 w-full h-14 flex items-center justify-between ">
+                                                    <div className="flex items-center gap-2 min-w-[194px]  ">
+                                                        <img width={300} height={500} src={rank.usuario.foto ?? ""} alt="Perfil do usuário" className='w-12 h-12 rounded-full'/> 
+                                                        <h2 className='text-[20px] font-bold whitespace-nowrap '>{ rank?.usuario?.nomeCompleto ?? "" }</h2>
+                                                    </div>
+                                                    <div className="flex  items-center justify-end ">
+                                                        {/* <h2>@GrandeDudinha</h2> */}
+                                                        <h2 className='text-[20px] font-bold'>{ rank?.xp ?? "" } XP</h2>
+                                                    </div>
                                                 </div>
-                                                <div className="flex  items-center justify-end ">
-                                                    {/* <h2>@GrandeDudinha</h2> */}
-                                                    <h2 className='text-[20px] font-bold'>{ rank?.xp ?? "" } XP</h2>
-                                                </div>
-                                            </div>
-                                        </React.Fragment>
+                                            </React.Fragment>
+
+                                        ))
                                     )}
                                     
                                     {/* <div className=" w-full flex justify-end">
@@ -398,7 +402,7 @@ export default function Métricas() {
                                         <p className='text-[20px] break-words xl:max-w-full xl:w-full xl:text-left max-w-[90%] text-center '>Veja a evolução das suas 5 principais matérias, com atualização semanal para acompanhar seu desempenho. 🚀</p>
                                     </div>
                                     
-                                    <div className="flex w-full min-h-[50%] overflowx-auto overflow-y-hidden h-full justify-between items-end gap-2 py-2">
+                                    <div className="flex w-full min-h-[50%] overflowx-auto overflow-y-hidden h-full justify-center xl:justify-normal items-end gap-2 py-2">
 
                                         {metricasUser.melhoresMaterias.map((materia, index) => {
                                             // tenta achar o ícone pelo id que vem do backend
@@ -427,7 +431,11 @@ export default function Métricas() {
                                                     </h1>
                                                     </div>
                                                     <h1 className="text-[35px] font-medium text-center text-[#866ABF] leading-none h-[50%] ">
-                                                    +{materia.xp} XP
+                                                    {materia.xp > 0 ? (
+                                                        <span>+{materia.xp} XP</span>
+                                                    ) :(
+                                                        <span>{materia.xp} XP</span>
+                                                    )}
                                                     </h1>
                                                 </div>
                                                 </div>
