@@ -36,10 +36,10 @@ export default function LoginPage() {
 
   return (
     <>
-      {/* {message && (
-      )} */}
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
       
-      <ErrorModal message={"asdsadsa"} onClose={() => setMessage(null)} />
       <AnimatePresence>
         <div className="w-full h-[100vh] flex justify-center bg-white">
           <motion.div 
