@@ -378,7 +378,7 @@ export default function landingPage() {
                                     whileTap={{ scale: 0.99 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
                                     id="title"
-                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[280px] md:h-full bg-[#876de7] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#876de7] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
                                         <div className="absolute preco_img top-[-65px] left-[-55px] h-[35%] -z-10">
                                             <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
                                         </div>
