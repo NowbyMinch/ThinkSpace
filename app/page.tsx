@@ -326,11 +326,12 @@ export default function landingPage() {
                                             <span className="leading-none -ml-3 valor">/mensal</span>
                                         </div>
 
-                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                        <div className="box_preco w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
                                             <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
-                                                <li>5 Salas de estudos</li>
-                                                <li>Até 10 materiais de estudo por mês</li>
-                                                <li>Sem acesso à chat IA</li>
+                                                <li>Não pode criar comunidades</li>
+                                                <li>Não é possível criar salas de estudo</li>
+                                                <li>Sem chat de IA</li>
+                                                <li>10 materiais de estudo por mês</li>
                                                 <li>Ambiente com anúncios</li>
                                             </ul>
                                         </div>
@@ -354,14 +355,21 @@ export default function landingPage() {
                                             <span className="leading-none -ml-3 valor">/mensal</span>
                                         </div>
 
-                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                        <div className="box_preco w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
                                             <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
-                                                <li>Acesso ilimitado a salas de estudo</li>
-                                                <li>30 Materiais de estudo por mês</li>
-                                                <li>Inteligência Artificial limitada</li>
-                                                <li>Ambiente 100% livre de anúncios</li>
+                                                <li className="max-w-[242px]">2 comunidades por mês</li>
+                                                <li className="max-w-[242px]">3 salas de estudo por mês</li>
+                                                <li className="max-w-[242px]">50 mensagens para o chat de IA</li>
+                                                <li className="max-w-[242px]">20 materiais de estudo por mês</li>
+                                                <li className="max-w-[242px]">Sem anúncios</li>
                                             </ul>
                                         </div>
+
+                                        {/* <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                            <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
+                                                
+                                            </ul>
+                                        </div> */}
 
                                     </motion.div>
 
@@ -370,7 +378,7 @@ export default function landingPage() {
                                     whileTap={{ scale: 0.99 }}
                                     transition={{ duration: 0.2, ease: "easeInOut" }}
                                     id="title"
-                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[200px] md:h-full bg-[#876de7] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
+                                    className="box w-full md:w-[32%] rounded-[45px] min-h-[280px] md:h-full bg-[#876de7] cursor-pointer relative overflow-hidden shadow-lg border-[6px] pb-4 border-[#876de7] flex flex-row md:flex-col justify-center gap-[5%] md:justify-end items-center ">
                                         <div className="absolute preco_img top-[-65px] left-[-55px] h-[35%] -z-10">
                                             <Image src="/landingpage/premium.svg" alt="Perguntas Frequentes Vector" className="w-full" width={300} height={500}/>
                                         </div>
@@ -383,12 +391,13 @@ export default function landingPage() {
                                             <span className="leading-none -ml-3 valor">/mensal</span>
                                         </div>
 
-                                        <div className=" w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
+                                        <div className="box_preco w-fit md:w-[85%] flex min-h-fit md:h-[40%]">
                                             <ul className="ul_preco text-[18px] flex flex-col text-[#000] list-disc pl-3">
-                                                <li className="max-w-[242px]">Acesso ilimitado a salas de estudo</li>
-                                                <li className="max-w-[242px]">Materiais de estudo sempre disponíveis</li>
-                                                <li className="max-w-[242px]">Inteligência Artificial sem limites</li>
-                                                <li className="max-w-[242px]">Ambiente 100% livre de anúncios</li>
+                                                <li className="max-w-[242px]">6 comunidades por mês</li>
+                                                <li className="max-w-[242px]">5 salas de estudo por mês</li>
+                                                <li className="max-w-[242px]">150 mensagens para o chat de IA</li>
+                                                <li className="max-w-[242px]">40 materiais de estudo por mês</li>
+                                                <li className="max-w-[242px]">Sem anúncios</li>
                                             </ul>
                                         </div>
 

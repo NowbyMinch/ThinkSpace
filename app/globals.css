@@ -298,6 +298,20 @@ body {
   height: clamp( 26rem, 45vw, 35rem);
 }
 
+@media(max-width:790px){
+  .box_preco{
+    min-height: 60%;
+  }
+}
+
+@media(max-width:765px){
+  .box_preco{
+    min-height: 40%;
+  }
+}
+
+
+
 .valor{
   font-size: clamp( 20px, 2vw, 30px);
 }
