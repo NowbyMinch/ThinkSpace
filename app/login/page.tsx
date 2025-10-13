@@ -29,16 +29,17 @@ export default function LoginPage() {
       router.push("/home");
     } else {
       setMessage(data.message);
+      console.log(message)
     }
     console.log(data);
   };
 
   return (
     <>
-      {message && (
-        <ErrorModal message={message} onClose={() => setMessage(null)} />
-      )}
+      {/* {message && (
+      )} */}
       
+      <ErrorModal message={"asdsadsa"} onClose={() => setMessage(null)} />
       <AnimatePresence>
         <div className="w-full h-[100vh] flex justify-center bg-white">
           <motion.div 

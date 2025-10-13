@@ -348,7 +348,7 @@ export default function landingPage() {
 
                                         <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
                                             <span className="leading-none valor">R$</span>
-                                            <span className="text-[105px] font-medium leading-[80px] valoR">12</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">15</span>
                                             <span className="leading-none valor">,</span>
                                             <span className="mb-auto font-medium valor">90</span>
                                             <span className="leading-none -ml-3 valor">/mensal</span>
@@ -377,7 +377,7 @@ export default function landingPage() {
 
                                         <div className=" w-fit max-w-[90%] flex justify-end items-end min-h-fit md:h-[20%] ">
                                             <span className="leading-none valor">R$</span>
-                                            <span className="text-[105px] font-medium leading-[80px] valoR">19</span>
+                                            <span className="text-[105px] font-medium leading-[80px] valoR">29</span>
                                             <span className="leading-none valor">,</span>
                                             <span className="mb-auto font-medium valor">90</span>
                                             <span className="leading-none -ml-3 valor">/mensal</span>
