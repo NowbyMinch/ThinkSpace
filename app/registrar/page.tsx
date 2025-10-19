@@ -1,21 +1,34 @@
 "use client";
 
-import { useRef } from 'react';
+export const dynamic = "force-dynamic";
+
+import { useEffect, useRef } from 'react';
 import React from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronRight, Eye, EyeOff } from 'lucide-react';
 import DatePicker from '@/components/ui/datepicker';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ComboboxDemo2, ComboboxDemo3 } from '../home/components/dropdown';
 import ErrorModal from '@/components/ui/ErrorModal';
 
-export default function RegisterPage() {
+export default function RegistrarInner() {
+  const params = useSearchParams();
   const router = useRouter();
+  const [ subStep, setSubStep] = useState(Number(params.get("subStep")) || 1);
+  useEffect(() => {
+    router.push(`?subStep=${subStep}`);
+  }, [subStep, router]);
+
+  // useEffect(() => {
+  //   const currentParam = Number(params.get("subStep")) || 1;
+  //   if (currentParam !== subStep) {
+  //     router.push(`?subStep=${subStep}`); // ✅ push adds to history, not replace
+  //   }
+  // }, [subStep]);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [ subStep, setSubStep] = useState(1);
   const [ purple, setPurple] = useState(false);
   const [ purple2, setPurple2] = useState(false);
   const [ categoria, setCategoria] = useState("");
@@ -30,6 +43,18 @@ export default function RegisterPage() {
   const [formFunc, setFormFunc] = useState({ email: form.email, funcao: ""})
   const [form2, setForm2] = useState({ email: form.email, escolaridade: selectedEscolaridade, objetivoNaPlataforma: selectedObjetivo, areaDeInteresse: "", instituicaoNome: ""});
   const [form3, setForm3] = useState({ email: form.email, code: ""});
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const subStepParam = Number(urlParams.get("subStep")) || 1;
+      setSubStep(subStepParam);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
   
   function final(){
     setFinalizar(true);

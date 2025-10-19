@@ -113,10 +113,13 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
   }, [inputValue2]);
   
   useEffect(() => {
-    if (parseInt(inputValue3) > (calendario.anoAtual ?? 0)) {
-      if (calendario.anoAtual !== undefined) {
-        setInputValue3(calendario.anoAtual.toString());
+    if (parseInt(inputValue3) > (new Date().getFullYear() ?? 0)) {
+
+      if ( new Date().getFullYear() !== undefined) {
+        // let raw = e.target.value.replace(/\D/g, ""); // remove non-numeric
+        setInputValue3(new Date().getFullYear().toString());
       }
+      
     } else {
       if (inputValue3.length === 4){
         ValueRef3.current?.blur();    
