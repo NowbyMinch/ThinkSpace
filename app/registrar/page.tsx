@@ -21,12 +21,6 @@ export default function RegistrarInner() {
     router.push(`?subStep=${subStep}`);
   }, [subStep, router]);
 
-  // useEffect(() => {
-  //   const currentParam = Number(params.get("subStep")) || 1;
-  //   if (currentParam !== subStep) {
-  //     router.push(`?subStep=${subStep}`); // ✅ push adds to history, not replace
-  //   }
-  // }, [subStep]);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [ purple, setPurple] = useState(false);
@@ -559,6 +553,30 @@ export default function RegistrarInner() {
                                             inputMode="numeric"
                                             required
                                             maxLength={1}
+                                            onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                              e.preventDefault(); // prevent default paste
+
+                                              const pastedText = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+                                              if (!pastedText) return;
+
+                                              const newCode = [...code]; // copy existing code
+                                              for (let j = 0; j < pastedText.length && j < 6; j++) {
+                                                if (i + j < 5){
+                                                  newCode[i + j] = pastedText[j] ? Number(pastedText[j]) : 0; // fill with pasted digits as numbers, 0 if pasting less
+                                                  if (inputRefs.current[i + j]) {
+                                                    inputRefs.current[i + j]!.value = String(newCode[i + j]); // update input element
+                                                  }
+                                                }
+                                              }
+
+                                              setCode(newCode);
+
+                                              // focus next empty input if exists
+                                              const nextIndex = newCode.findIndex((c) => c === 0);
+                                              if (nextIndex !== -1 && inputRefs.current[nextIndex]) {
+                                                inputRefs.current[nextIndex]!.focus();
+                                              }
+                                            }}
                                             onChange={(e) => {handleChange(i, e);}}
                                             onKeyDown={e => {
                                                 handleKeyDown(i, e);
@@ -619,6 +637,30 @@ export default function RegistrarInner() {
                                             inputMode="numeric"
                                             required
                                             maxLength={1}
+                                            onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                              e.preventDefault(); // prevent default paste
+
+                                              const pastedText = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+                                              if (!pastedText) return;
+
+                                              const newCode = [...code]; // copy existing code
+                                              for (let j = 0; j < pastedText.length && j < 6; j++) {
+                                                if (i + j < 5){
+                                                  newCode[i + j] = pastedText[j] ? Number(pastedText[j]) : 0; // fill with pasted digits as numbers, 0 if pasting less
+                                                  if (inputRefs.current[i + j]) {
+                                                    inputRefs.current[i + j]!.value = String(newCode[i + j]); // update input element
+                                                  }
+                                                }
+                                              }
+
+                                              setCode(newCode);
+
+                                              // focus next empty input if exists
+                                              const nextIndex = newCode.findIndex((c) => c === 0);
+                                              if (nextIndex !== -1 && inputRefs.current[nextIndex]) {
+                                                inputRefs.current[nextIndex]!.focus();
+                                              }
+                                            }}
                                             onChange={(e) => {handleChange(i, e);}}
                                             onKeyDown={e => {
                                                 handleKeyDown(i, e);

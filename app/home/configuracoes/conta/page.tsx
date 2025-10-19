@@ -7,7 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import { Backdrop3 } from "../../components/backdrop";
 import { ArrowLeft, Eye, EyeOff, X } from "lucide-react";
 import React from "react";
-import ErrorModal from "@/components/ui/ErrorModal";
+import ErrorModal from "@/components/ui/ErrorModal"
 
 type UserData = {
   primeiroNome?: string;
@@ -364,6 +364,7 @@ export default function Conta() {
     const values = inputRefs.current.map(input => input?.value ? Number(input.value) : 0);
     setCode(values);
   };
+
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !e.currentTarget.value && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -444,6 +445,30 @@ export default function Conta() {
                                       inputMode="numeric"
                                       required
                                       maxLength={1}
+                                      onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                        e.preventDefault(); // prevent default paste
+
+                                        const pastedText = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+                                        if (!pastedText) return;
+
+                                        const newCode = [...code]; // copy existing code
+                                        for (let j = 0; j < pastedText.length && j < 6; j++) {
+                                          if (i + j < 5){
+                                            newCode[i + j] = pastedText[j] ? Number(pastedText[j]) : 0; // fill with pasted digits as numbers, 0 if pasting less
+                                            if (inputRefs.current[i + j]) {
+                                              inputRefs.current[i + j]!.value = String(newCode[i + j]); // update input element
+                                            }
+                                          }
+                                        }
+
+                                        setCode(newCode);
+
+                                        // focus next empty input if exists
+                                        const nextIndex = newCode.findIndex((c) => c === 0);
+                                        if (nextIndex !== -1 && inputRefs.current[nextIndex]) {
+                                          inputRefs.current[nextIndex]!.focus();
+                                        }
+                                      }}
                                       onChange={(e) => {handleChange(i, e);}}
                                       onKeyDown={e => {
                                           handleKeyDown(i, e);
@@ -560,6 +585,30 @@ export default function Conta() {
                                       inputMode="numeric"
                                       required
                                       maxLength={1}
+                                      onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                      e.preventDefault(); // prevent default paste
+
+                                      const pastedText = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+                                      if (!pastedText) return;
+
+                                      const newCode = [...code]; // copy existing code
+                                      for (let j = 0; j < pastedText.length && j < 6; j++) {
+                                        if (i + j < 5){
+                                          newCode[i + j] = pastedText[j] ? Number(pastedText[j]) : 0; // fill with pasted digits as numbers, 0 if pasting less
+                                          if (inputRefs.current[i + j]) {
+                                            inputRefs.current[i + j]!.value = String(newCode[i + j]); // update input element
+                                          }
+                                        }
+                                      }
+
+                                      setCode(newCode);
+
+                                      // focus next empty input if exists
+                                      const nextIndex = newCode.findIndex((c) => c === 0);
+                                      if (nextIndex !== -1 && inputRefs.current[nextIndex]) {
+                                        inputRefs.current[nextIndex]!.focus();
+                                      }
+                                    }}
                                       onChange={(e) => {handleChange(i, e);}}
                                       onKeyDown={e => {
                                           handleKeyDown(i, e);

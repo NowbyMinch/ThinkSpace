@@ -1,15 +1,20 @@
 "use client";
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation'; 
+import { useRouter, useSearchParams } from 'next/navigation'; 
 import ErrorModal from '@/components/ui/ErrorModal';
 import { Eye, EyeOff } from 'lucide-react';
 // import { useState } from 'react';
 
-export default function LoginPage() {
+export default function EsqueceuSenha() {
+    const params = useSearchParams();
     const router = useRouter();
-    const [ step, setStep ] = useState(1);
+    const [ step, setStep] = useState(Number(params.get("step")) || 1);
+    useEffect(() => {
+    router.push(`?step=${step}`);
+    }, [step, router]);
+
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const inputRefs = useRef<HTMLInputElement[]>([]);
@@ -18,6 +23,19 @@ export default function LoginPage() {
     const [ completeForm, setCompleteForm ] = useState({ email: "", code: "", novaSenha: "", confirmarSenha: ""});
     const [ code, setCode ] = useState<number[]>([]);
     const [message, setMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+    const handlePopState = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const step = Number(urlParams.get("step")) || 1;
+        setStep(step);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+    }, []);
+
+
 
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
@@ -230,6 +248,30 @@ export default function LoginPage() {
                                                         inputMode="numeric"
                                                         required
                                                         maxLength={1}
+                                                        onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                                            e.preventDefault(); // prevent default paste
+                    
+                                                            const pastedText = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+                                                            if (!pastedText) return;
+                    
+                                                            const newCode = [...code]; // copy existing code
+                                                            for (let j = 0; j < pastedText.length && j < 6; j++) {
+                                                            if (i + j < 5){
+                                                                newCode[i + j] = pastedText[j] ? Number(pastedText[j]) : 0; // fill with pasted digits as numbers, 0 if pasting less
+                                                                if (inputRefs.current[i + j]) {
+                                                                inputRefs.current[i + j]!.value = String(newCode[i + j]); // update input element
+                                                                }
+                                                            }
+                                                            }
+                    
+                                                            setCode(newCode);
+                    
+                                                            // focus next empty input if exists
+                                                            const nextIndex = newCode.findIndex((c) => c === 0);
+                                                            if (nextIndex !== -1 && inputRefs.current[nextIndex]) {
+                                                            inputRefs.current[nextIndex]!.focus();
+                                                            }
+                                                        }}
                                                         onChange={(e) => {handleChange(i, e);}}
                                                         onKeyDown={e => {
                                                             handleKeyDown(i, e);
