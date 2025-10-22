@@ -329,7 +329,9 @@ export default function Materiais() {
                             {/* Header */}
                             <button
                                 onClick={() => toggle(index)}
-                                style={{item?.cor && backgroundColor: item?.cor }}
+                                {/* style={{item?.cor && backgroundColor: item?.cor }} */}
+
+                                  
                                 {/* bg-[#${item?.cor}]  */}
                                 className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium  `}
                             >
@@ -355,7 +357,7 @@ export default function Materiais() {
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                 >
                                     <div 
-                                    style={{item?.cor && backgroundColor: item?.cor }}  
+                                    {/* style={{item?.cor && backgroundColor: item?.cor }}   */}
                                     {/* bg-[#${item? && item?.cor ? item?.cor : ""}] */}
                                     className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-opacity-20`}>
                                         {item?.lembrete}
