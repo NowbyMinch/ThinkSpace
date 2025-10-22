@@ -328,8 +328,7 @@ className={`border w-[420px] max-w-full min-h-[62px] border-[rgba(18,18,18,0.14)
 >
 {/* Header */}
 <button
-onClick={() => toggle(index)}
-className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium  bg-[#${item?.cor}] `}
+onClick={() => toggle(index)} style={{backgroundColor: item?.cor || "white"}} className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium `}
 >
 {item?.sala}
 
@@ -352,7 +351,7 @@ animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
 exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
 transition={{ duration: 0.3, ease: "easeInOut" }}
 >
-<div className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-[#${item?.cor}] bg-opacity-20`}>
+<div style={{backgroundColor: item?.cor || "white"}} className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-opacity-20`}>
 {item?.lembrete}
 </div>
 </motion.div>
