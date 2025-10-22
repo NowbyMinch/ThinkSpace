@@ -23,7 +23,7 @@ type CalendarioData = {
 
 export function DatePicker({ onChange }: DatePickerProps ) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [showPicker, setShowPicker] = useState(true);
+  const [showPicker, setShowPicker] = useState(false);
   const [focused, setFocused] = useState(false);
   const [focused2, setFocused2] = useState(false);
   const [focused3, setFocused3] = useState(false);
