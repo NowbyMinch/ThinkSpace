@@ -352,7 +352,7 @@ export default function Materiais() {
                                     exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                 >
-                                    <div className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-[#${item?.cor}] bg-opacity-20`}>
+                                    <div className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-[#${item? && item?.cor ? item?.cor : ""}] bg-opacity-20`}>
                                         {item?.lembrete}
                                     </div>
                                 </motion.div>
