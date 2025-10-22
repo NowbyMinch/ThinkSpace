@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronRight, Eye, EyeOff } from 'lucide-react';
-import DatePicker from '@/components/ui/datepicker';
+import {DatePicker} from '@/components/ui/datepicker';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ComboboxDemo2, ComboboxDemo3 } from '../home/components/dropdown';
 import ErrorModal from '@/components/ui/ErrorModal';

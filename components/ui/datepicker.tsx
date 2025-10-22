@@ -21,9 +21,9 @@ type CalendarioData = {
   diaAtual?: number;
 };
 
-export default function DatePicker({ onChange }: DatePickerProps ) {
+export function DatePicker({ onChange }: DatePickerProps ) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [showPicker, setShowPicker] = useState(false);
+  const [showPicker, setShowPicker] = useState(true);
   const [focused, setFocused] = useState(false);
   const [focused2, setFocused2] = useState(false);
   const [focused3, setFocused3] = useState(false);
@@ -286,6 +286,222 @@ export default function DatePicker({ onChange }: DatePickerProps ) {
             </div>
           </motion.div>
         )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export function DatePicker2({ onChange }: DatePickerProps ) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showPicker, setShowPicker] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [focused2, setFocused2] = useState(false);
+  const [focused3, setFocused3] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [inputValue2, setInputValue2] = useState('');
+  const [inputValue3, setInputValue3] = useState('');
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [sendDate, setSendDate] = useState(new Date());
+  const ValueRef = useRef<HTMLInputElement | null>(null);
+  const ValueRef2 = useRef<HTMLInputElement | null>(null);
+  const ValueRef3 = useRef<HTMLInputElement | null>(null);
+  
+  const handleKeyUp = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace') {
+      if (index === 3 && ValueRef3.current?.value === "") {
+        ValueRef2.current?.focus();
+      } else if (index === 2 && ValueRef2.current?.value === "") {
+        ValueRef.current?.focus();
+      }
+    }
+  };
+  
+  const [ calendario, setCalendario ] = useState<CalendarioData>({})
+  
+  useEffect(() => {
+    const calendario = async () => {
+      try{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/calendario`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        const data = await res.json();
+        setCalendario(data)
+      } catch (err) {
+        console.error(err);
+      }
+    }; calendario();
+
+  }, [])
+  
+  useEffect(() => {
+    if (inputValue === "00"){
+      setInputValue("01");
+    }
+    else if (parseInt(inputValue) > 31){
+      setInputValue("31");
+    } else if (inputValue2 === "1" || inputValue2 === "3" || inputValue2 === "5" || inputValue2 === "7" || inputValue2 === "8" || inputValue2 === "10" || inputValue2 === "12"){
+      console.log(inputValue2)
+      if (parseInt(inputValue) > 31) {
+        setInputValue("31");
+      }
+    } else if (inputValue2 === "4" || inputValue2 === "6" || inputValue2 === "9" || inputValue2 === "11" ) {
+      console.log(inputValue2)
+
+      if (parseInt(inputValue) > 30) {
+        setInputValue("30");
+      }
+    } else if (inputValue2 === "2"){
+      console.log(inputValue2)
+
+      if (parseInt(inputValue) > 28) {
+        setInputValue("28");
+      }
+    } else {
+      if (inputValue.length === 2){
+        ValueRef2.current?.focus();    
+        setInputValue(inputValue.slice(0,2))
+      };
+
+    };
+
+  }, [inputValue,inputValue2]);
+
+  useEffect(() => {
+    if (inputValue2 === "00"){
+      setInputValue2("01");
+    } else if (parseInt(inputValue2) > 12) {
+      setInputValue2("12");
+    } else {
+      if (inputValue2.length === 2){
+        ValueRef3.current?.focus();    
+        setInputValue2(inputValue2.slice(0,2))
+      }
+    };
+
+  }, [inputValue2]);
+  
+  useEffect(() => {
+    if (parseInt(inputValue3) > (new Date().getFullYear() ?? 0)) {
+
+      if ( new Date().getFullYear() !== undefined) {
+        // let raw = e.target.value.replace(/\D/g, ""); // remove non-numeric
+        setInputValue3(new Date().getFullYear().toString());
+      }
+      
+    } else {
+      if (inputValue3.length === 4){
+        ValueRef3.current?.blur();    
+        setInputValue3(inputValue3.slice(0,4))
+        if(parseInt(inputValue3) < 1901){
+          setInputValue3("1900");
+        }
+      } 
+    }
+
+  }, [inputValue3]);
+  
+  useEffect(() => {
+    let date = inputValue3 + "-" + inputValue2 + "-" + inputValue;
+    onChange(date);
+
+  }, [inputValue, inputValue2, inputValue3]);
+  
+  const currentYear = new Date().getFullYear();
+
+  const handleDateSelect = (date: Date) => {
+    if (date.getFullYear() < 1900 || date.getFullYear() > currentYear) return;
+    // console.log(date);
+    const formatted = format(date, "dd/MM/yyyy");
+    setSelectedDate(date);
+    setInputValue(formatted.slice(0,2));
+    setInputValue2(formatted.slice(3,5));
+    setInputValue3(formatted.slice(6,10));
+    setCalendarMonth(date);
+    setShowPicker(false);
+    onChange(date.toISOString().split("T")[0]); // mantém "YYYY-MM-DD"
+  };
+
+  const generateCalendar = () => {
+    const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
+    const end = endOfMonth(calendarMonth);
+    const days: Date[] = [];
+
+    let current = start;
+    while (current <= end || days.length % 7 !== 0) {
+      days.push(current);
+      current = addDays(current, 1);
+    }
+
+    return days;
+  };
+  
+  useEffect(() => {
+    if (inputValue.length === 2 && inputValue2.length === 2 && inputValue3.length === 4) {
+      const typedDate = parse(`${inputValue3}-${inputValue2}-${inputValue}`, "yyyy-MM-dd", new Date());
+      if (isValid(typedDate)) {
+        setCalendarMonth(typedDate);
+        setSelectedDate(typedDate);
+      }
+    }
+  }, [inputValue, inputValue2, inputValue3]);
+
+  
+  return (
+    <div className="relative h-full w-full">
+      <AnimatePresence>
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0, transition:{ duration: 0.15, ease: "easeInOut"} }}
+            id='date-box'
+            className="absolute right-0 z-10 h-full w-full rounded-[25px] border bg-[#ffffff63] p-4 shadow-xl origin-top-right"
+          >
+            {/* Calendar Header */}
+            <div className="mb-3 flex items-center justify-between px-2">
+              <button type='button' onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}>
+                <ChevronLeft size={20} />
+              </button>
+              <span className="text-[20px] font-medium">
+                {format(calendarMonth, 'MMMM yyyy')}
+              </span>
+              <button type='button' onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}>
+                <ChevronRight size={20} />
+              </button>
+            </div>
+
+            {/* Week Days */}
+            <div className="grid grid-cols-7 gap-1 text-[20px] px-1 pb-1">
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                <div key={i} className="text-center">{day}</div>
+              ))}
+            </div>
+
+            {/* Calendar Days */}
+            <div className="grid grid-cols-7 gap-1 text-sm">
+              {generateCalendar().map((day, i) => {
+                const isSelected = selectedDate && isSameDay(day, selectedDate);
+                const inCurrentMonth = isSameMonth(day, calendarMonth);
+                return (
+                  <button
+                    type="button"
+                    key={i}
+                    onClick={() => handleDateSelect(day)}
+                    className={`rounded-md py-1 text-center transition text-[18px] ${
+                      isSelected
+                        ? 'bg-[#9767f87e]'
+                        : inCurrentMonth
+                        ? 'hover:bg-[#9767f834]'
+                        : 'text-zinc-500'
+                    }`}
+                  >
+                    {day.getDate()}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
       </AnimatePresence>
     </div>
   );

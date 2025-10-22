@@ -75,7 +75,8 @@ export default function MaterialClient() {
             }
         }
     }, [resumo]);
-    
+
+
     if (!idMaterial) return null;
     if (loading) return <Loading />;
 

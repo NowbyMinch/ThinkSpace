@@ -414,6 +414,7 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 body: JSON.stringify({ id: materialId }),
                 credentials: "include",
             }
+
             );
             console.log("QUIZZES:", await quizzesRes.json());
 
@@ -428,7 +429,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 closing();
                 router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
-            setLoading(false);
 
         }
     };
@@ -470,7 +470,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 setMessage(data.message);
                 return;
             }
-            setLoading(false);
             if (data?.material?.id) {
                 createdMaterialId = data.material.id;
             } else if (data?.dados?.materialId) {
@@ -532,7 +531,6 @@ export default function MateriaisClient({ id }: { id: string; }) {
                 closing()
                 router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
-            setLoading(false);
 
         }
     };
@@ -619,14 +617,12 @@ export default function MateriaisClient({ id }: { id: string; }) {
 
         } catch (err) {
             console.error(" Erro no criar():", err);
-            setLoading(false);
 
         } finally {
             if (createdMaterialId) {
                 closing()
                 router.push(`/home/materiais/${id}/${createdMaterialId}/Resumo`);
             }
-            setLoading(false);
 
         }
         
