@@ -161,12 +161,12 @@ cor: "#F92A46"
 {
 sala: "Biologia",
 lembrete: "Estudar a estrutura e funções.",
-cor: "A554C5"
+cor: "#A554C5"
 },
 {
 sala: "Química",
 lembrete: "Estudar estrutura atômica, funções inorgânicas, estequiometria e soluções e termoquímica.",
-cor: "3F9DD8"
+cor: "#3F9DD8"
 },
 ];
 
@@ -351,7 +351,7 @@ animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
 exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
 transition={{ duration: 0.3, ease: "easeInOut" }}
 >
-<div style={{backgroundColor: item?.cor || "white"}} className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-opacity-20`}>
+<div style={{backgroundColor: `${item?.cor} + "33"` || "white"}} className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] `}>
 {item?.lembrete}
 </div>
 </motion.div>
