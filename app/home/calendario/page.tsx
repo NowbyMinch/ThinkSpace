@@ -156,17 +156,17 @@ export default function Materiais() {
         {
             sala: "Física",
             lembrete: "Estudar cinemática.",
-            cor: "#F92A46"
+            cor: "F92A46"
         },
         {
             sala: "Biologia",
             lembrete: "Estudar a estrutura e funções.",
-            cor: "#A554C5"
+            cor: "A554C5"
         },
         {
             sala: "Química",
             lembrete: "Estudar estrutura atômica, funções inorgânicas, estequiometria e soluções e termoquímica.",
-            cor: "#3F9DD8"
+            cor: "3F9DD8"
         },
     ];
 
@@ -329,11 +329,9 @@ export default function Materiais() {
                             {/* Header */}
                             <button
                                 onClick={() => toggle(index)}
-                                {/* style={{item?.cor && backgroundColor: item?.cor }} */}
-
-                                  
-                                {/* bg-[#${item?.cor}]  */}
-                                className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium  `}
+                                style={{item?.cor && backgroundColor: item?.cor }} 
+                                {/* bg-[#${item?.cor}] */}
+                                className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium   `}
                             >
                                 {item?.sala}
                                 
@@ -357,9 +355,9 @@ export default function Materiais() {
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                 >
                                     <div 
-                                    {/* style={{item?.cor && backgroundColor: item?.cor }}   */}
-                                    {/* bg-[#${item? && item?.cor ? item?.cor : ""}] */}
-                                    className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] bg-opacity-20`}>
+                                    style={{item?.cor && backgroundColor: item?.cor }}
+                                    {/* bg-[#${item?.cor}] */}
+                                    className={`px-6 py-2 text-[18px] font-medium text-[#1E2351]  bg-opacity-20`}>
                                         {item?.lembrete}
                                     </div>
                                 </motion.div>
