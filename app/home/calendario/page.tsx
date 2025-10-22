@@ -156,7 +156,7 @@ const items: AccordionItem[] = [
 {
 sala: "Física",
 lembrete: "Estudar cinemática.",
-cor: "F92A46"
+cor: "#F92A46"
 },
 {
 sala: "Biologia",
@@ -328,7 +328,7 @@ className={`border w-[420px] max-w-full min-h-[62px] border-[rgba(18,18,18,0.14)
 >
 {/* Header */}
 <button
-onClick={() => toggle(index)} style={{backgroundColor: "#8B81F3" || "white"}} className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium `}
+onClick={() => toggle(index)} style={{backgroundColor: item?.cor || "white"}} className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium `}
 >
 {item?.sala}
 
