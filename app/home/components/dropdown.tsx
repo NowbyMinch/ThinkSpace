@@ -897,27 +897,34 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   //   }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen} >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="">
         <Button
           variant="outline"
           role="combobox"
           className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
         >
-          <span className="font-normal w-full block text-left rounded-[25px] overflow-hidden text-ellipsis whitespace-nowrap ">
-            {value
-              ? <div className="">{frameworksMateria.find((framework) => framework.value === value)?.label as string}</div> 
-              : <div className="text-[#9CA3AF]">Matéria designada</div> 
-              }
+          <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
+            {value ? (
+              <div className="">
+                {
+                  frameworksMateria.find(
+                    (framework) => framework.value === value
+                  )?.label as string
+                }
+              </div>
+            ) : (
+              <div className="text-[#9CA3AF]">Matéria designada</div>
+            )}
           </span>
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="min-w-[200px] p-0 rounded-[25px] z-[1100]">
-        <Command>
-          <CommandList className="rounded-[25px]">
+      <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+        <Command className="rounded-[20px]">
+          <CommandList className="rounded-[20px] ">
             <CommandEmpty>No framework found.</CommandEmpty>
-            <CommandGroup className="">
+            <CommandGroup className="rounded-[20px]">
               {frameworksMateria.map((framework) => (
                 <CommandItem
                   key={framework.value}
