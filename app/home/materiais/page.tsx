@@ -733,7 +733,7 @@ export default function Materiais() {
                                                 <div className="max-w-[100%] xl:max-w-[85%] max-h-[80%] overflow-hidden">
                                                 <div className="flex justify-between">
                                                     <h2
-                                                    className="material_title text-[25px] w-[95px] max-w-[80%] line-clamp-2 break-words leading-none text-[rgb(48,38,42,87%)] font-medium"
+                                                    className="material_title text-[25px] w-fit max-w-[80%] line-clamp-2 break-words leading-none text-[rgb(48,38,42,87%)] font-medium"
                                                     >
                                                     {material.nome}
                                                     </h2>
