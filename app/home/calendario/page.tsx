@@ -261,38 +261,33 @@ export default function Materiais() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className={`w-full h-full fixed flex justify-center items-center opacity-1 z-[1100] `}
+              className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
             >
               <div
                 className="w-full h-full absolute"
                 onClick={() => closing()}
               ></div>
+
               <motion.div
                 key="content"
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 0.94 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className={`  w-[600px] h-fit flex rounded-[40px] z-[1100] opacity-1 `}
+                className="w-[600px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
               >
                 <div
                   id="white-box"
-                  className={`p-4 gap-4 w-full sm:min-h-[320px] min-h-[505px] rounded-[40px] bg-white shadow-md flex  flex-col justify-center items-center relative overflow-hidden z-[1100] `}
+                  className="p-4 gap-4 w-full  rounded-[40px] overflow-y-auto shadow-md flex flex-col items-center relative z-[1100]"
                 >
                   <Image
                     width={300}
                     height={500}
                     src="/Vector.svg"
                     alt="Decoração"
-                    className="absolute top-0 left-[-180px] rotate-90 w-[550px]"
+                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
                   />
-                  <Image
-                    width={300}
-                    height={500}
-                    src="/Vector.svg"
-                    alt="Decoração"
-                    className=" -z-10 absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"
-                  />
-                  <div className="w-full flex">
+
+                  <div className="w-full flex h-[25px] ">
                     {DataFormatada && (
                       <motion.div
                         initial={{ scaleX: 0 }}
@@ -308,13 +303,13 @@ export default function Materiais() {
                       whileHover={{ scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
                       onClick={closing}
-                      className="ml-auto cursor-pointer z-1000 w-6 h-6 "
+                      className="ml-auto cursor-pointer z-1000 w-6 h-6"
                     >
                       <X className="w-full h-full" />
                     </motion.div>
                   </div>
 
-                  <div className="min-h-[282px] border-2 border-[rgba(163,156,236)] rounded-[20px] w-full h-full">
+                  <div className="min-h-[300px]  border-2 border-[rgba(163,156,236)] rounded-[20px] w-full h-fit">
                     <DatePicker2
                       onChange={(val) => {
                         setandoData(val);
@@ -322,36 +317,24 @@ export default function Materiais() {
                     />
                   </div>
 
-                  <div className=" w-full h-full flex flex-col gap-4">
-                    <div className="flex w-full justify-between ">
-                      {/* <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        onClick={closing}
-                        className="sm:flex hidden ml-auto cursor-pointer z-1000 w-6 h-6 "
-                      >
-                        <X className="w-full h-full" />
-                      </motion.div> */}
-                    </div>
-
+                  <div className="w-full flex flex-col gap-4">
                     <div className="flex gap-5 text-[18px]">
                       <div className="flex items-center gap-1">
-                        {/* <Clock /> */}
                         <input
                           type="time"
-                          className="w-full pl-2 text-[18px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)] "
+                          className="w-full pl-2 text-[18px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
                         />
                       </div>
 
                       <div className="flex gap-2 items-center">
                         <motion.input
+                          type="checkbox"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          type="checkbox"
-                          className="border-[rgba(0,0,0,0.19)] w-5 h-5 rounded-[35px] outline-[rgba(151,103,248,0.6)] cursor-pointer "
+                          className="w-5 h-5 accent-[#804EE5] cursor-pointer"
                         />
 
-                        <span className="">Notificação</span>
+                        <span>Notificação</span>
                       </div>
                     </div>
 
@@ -362,8 +345,8 @@ export default function Materiais() {
                       }}
                     />
 
-                    <div className="flex gap-2 ">
-                      <div className="w-full ">
+                    <div className="flex gap-2">
+                      <div className="w-full">
                         <ComboboxDemoMateria
                           value={materiaDesignada}
                           onChange={(value) => {
@@ -381,17 +364,13 @@ export default function Materiais() {
                       </div>
                     </div>
 
-                    <div className="flex gap-2 ">
-                      <div className="w-full ">
-                        <textarea
-                          name=""
-                          id=""
-                          className="w-[98%] pl-2 pt-2 h-[200px] text-[18px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-l-[25px] rounded-br-[25px] outline-[rgba(151,103,248,0.6)] "
-                        ></textarea>
+                    <div className="flex gap-2">
+                      <div className="w-full">
+                        <textarea className="w-[98%] pl-2 pt-2 h-[200px] text-[18px] border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-l-[25px] rounded-br-[25px] outline-[rgba(151,103,248,0.6)]"></textarea>
                       </div>
-                      <div className="w-full max-w-[35%] h-full flex flex-col ">
+                      <div className="w-full max-w-[35%] h-full flex flex-col">
                         <h2 className="text-[25px]">Cores:</h2>
-                        <div className="grid grid-cols-3 gap-3 mt-1">
+                        <div className="grid grid-cols-3 gap-2 mt-1 h-full w-full">
                           {cores.map((cor, index) => {
                             const [nome, valor] = Object.entries(cor)[0];
                             return (
@@ -399,7 +378,7 @@ export default function Materiais() {
                                 whileTap={{ scale: 0.95 }}
                                 whileHover={{ scale: 1.02 }}
                                 key={index}
-                                className="w-11 h-11 rounded-full border border-gray-300 shadow-sm cursor-pointer"
+                                className="sm:w-11 sm:h-11 w-9 h-9 rounded-full border border-gray-300 shadow-sm cursor-pointer"
                                 style={{ backgroundColor: valor }}
                                 title={nome}
                               />
@@ -408,23 +387,24 @@ export default function Materiais() {
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="w-[250px] flex justify-center items-center h-[115px] max-w-[100%] ">
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      whileHover={{ scale: 1.02 }}
-                      id="editar_conta"
-                      onClick={closing}
-                      className=" border border-[#1E2351] w-fit h-fit text-[18px] p-[4px_30px] rounded-full"
-                    >
-                      Salvar
-                    </motion.button>
+                    <div className="w-full flex justify-center py-2">
+                      <motion.button
+                        whileTap={{ scale: 0.95 }}
+                        whileHover={{ scale: 1.02 }}
+                        id="editar_conta"
+                        onClick={closing}
+                        className="border border-[#1E2351] w-fit h-fit text-[18px] p-[4px_30px]   rounded-full"
+                      >
+                        Salvar
+                      </motion.button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </motion.div>
-            <div className="w-full absolute flex justify-center items-center ">
+
+            <div className="w-full absolute flex justify-center items-center">
               <Backdrop3 onClick={() => closing()} />
             </div>
           </>
@@ -434,7 +414,7 @@ export default function Materiais() {
       {/* h-[calc(100vh-24px)] */}
       <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto py-2 h-[1057px] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
         <div className=" w-full overflow-hidden h-full flex flex-col items-center gap-3">
-          <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full flex flex-col items-center shadow-md border border-[#00000031]">
+          <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full max-h-fit flex flex-col items-center shadow-md border border-[#00000031] ">
             <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
               {" "}
               Visão Geral{" "}
@@ -456,30 +436,67 @@ export default function Materiais() {
             </div>
           </div>
 
-          <div className="p-4 w-full rounded-[35px] overflow-hidden bg-white min-h-[70%] flex flex-col items-center shadow-md border border-[#00000031]">
+          <div className="p-4 w-full rounded-[35px] overflow-hidden bg-white min-h-fit h-full flex flex-col items-center shadow-md border border-[#00000031]">
             <div className="w-full">
               <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
-                Fevereiro 2025
+                {new Date()
+                  .toLocaleDateString("pt-BR", { month: "long" })
+                  .replace(/^./, (c) => c.toUpperCase())}{" "}
+                {new Date().toLocaleDateString("pt-BR", { year: "numeric" })}
               </h1>
             </div>
+            <div className="flex w-full text-[20px] text-[#1E2351] font-medium gap-3">
+              <span className="w-full sm:flex hidden">Domingo</span>
+              <span className="w-full sm:flex hidden">Segunda</span>
+              <span className="w-full sm:flex hidden">Terça</span>
+              <span className="w-full sm:flex hidden">Quarta</span>
+              <span className="w-full sm:flex hidden">Quinta</span>
+              <span className="w-full sm:flex hidden">Sexta</span>
+              <span className="w-full sm:flex hidden">Sábado</span>
 
-            <div className="grid grid-cols-7 gap-1 text-sm w-full h-full">
+              <span className="w-full sm:hidden flex">Dom.</span>
+              <span className="w-full sm:hidden flex">Seg.</span>
+              <span className="w-full sm:hidden flex">Ter.</span>
+              <span className="w-full sm:hidden flex">Qua.</span>
+              <span className="w-full sm:hidden flex">Qui.</span>
+              <span className="w-full sm:hidden flex">Sex.</span>
+              <span className="w-full sm:hidden flex">Sáb.</span>
+            </div>
+            <div className="grid grid-cols-7 text-sm w-full h-full ">
               {generateCalendar().map((day, i) => {
+                const today = new Date().toLocaleDateString();
+
                 const isSelected = selectedDate && isSameDay(day, selectedDate);
                 const inCurrentMonth = isSameMonth(day, calendarMonth);
                 return (
                   <button
                     type="button"
                     key={i}
-                    className={`rounded-lg p-2 m-1 flex justify-normal transition text-[18px] text-[#1E2351] shadow-md ${
+                    className={`rounded-lg p-2 m-1 flex justify-normal transition text-[18px] text-[#1E2351] ${today === day.toLocaleDateString() && "shadow-[0_5px_10px_rgba(86,50,157)]"} ${
                       inCurrentMonth
                         ? "hover:bg-[#9767f8] bg-[#F1F1F1] hover:bg-opacity-20"
                         : " bg-[#d9d8ee] F1F1F1"
                     }`}
                   >
-                    <div className="h-fit w-full flex justify-between ">
-                      <span>Segunda</span>
-                      <span> {day.getDate()} </span>
+                    <div className="h-full w-full flex flex-col gap-1 overflow-hidden">
+                      {/* <span
+                        className={`${today === day.toLocaleDateString() && "text-purple-500"}`}
+                      >
+                        {day
+                          .toLocaleDateString("pt-BR", { weekday: "long" })
+                          .replace("-feira", "")
+                          .trim()
+                          .replace(/^./, (c) => c.toUpperCase())}
+                      </span> */}
+                      <span
+                        className={` text-start ${today === day.toLocaleDateString() && "text-purple-500"}`}
+                      >
+                        {" "}
+                        {day.getDate()}{" "}
+                      </span>
+                      <div className="text-start px-2 max-w-full w-fit rounded-[4px] text-white py-1 bg-[#A554C5] overflow-hidden text-ellipsis whitespace-nowrap">
+                        <span>Biologia</span>
+                      </div>
                     </div>
                   </button>
                 );

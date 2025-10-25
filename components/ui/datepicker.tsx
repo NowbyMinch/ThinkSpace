@@ -550,7 +550,7 @@ export function DatePicker2({ onChange }: DatePickerProps) {
   }, [inputValue, inputValue2, inputValue3]);
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full min-h-[282px]">
       <AnimatePresence>
         <motion.div
           // initial={{ scale: 0, opacity: 0 }}
