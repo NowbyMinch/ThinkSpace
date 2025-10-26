@@ -429,7 +429,11 @@ export default function Materiais() {
                   <div className="flex w-full justify-between items-center">
                     <span>{item?.sala}</span>
 
-                    <span className="text-[18px]">03 de Fevereiro de 2025</span>
+                    <span className="text-[18px]">
+                      {index === 0 && "28 de Outubro de 2025"}
+                      {index === 1 && "29 de Outubro de 2025"}
+                      {index === 2 && "30 de Outubro de 2025"}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -494,9 +498,21 @@ export default function Materiais() {
                         {" "}
                         {day.getDate()}{" "}
                       </span>
-                      {/* <div className="text-start px-2 max-w-full w-fit rounded-[4px] text-white py-1 bg-[#A554C5] overflow-hidden text-ellipsis whitespace-nowrap">
-                        <span>Biologia</span>
-                      </div> */}
+                      {i === 30 && (
+                        <div className="text-start px-2 max-w-full w-fit rounded-[6px] text-white py-1 bg-[#F92A46] overflow-hidden text-ellipsis whitespace-nowrap">
+                          <span>Física</span>
+                        </div>
+                      )}
+                      {i === 31 && (
+                        <div className="text-start px-2 max-w-full w-fit rounded-[6px] text-white py-1 bg-[#A554C5] overflow-hidden text-ellipsis whitespace-nowrap">
+                          <span>Biologia</span>
+                        </div>
+                      )}
+                      {i === 32 && (
+                        <div className="text-start px-2 max-w-full w-fit rounded-[6px] text-white py-1 bg-[#3F9DD8] overflow-hidden text-ellipsis whitespace-nowrap">
+                          <span>Química</span>
+                        </div>
+                      )}
                     </div>
                   </button>
                 );
