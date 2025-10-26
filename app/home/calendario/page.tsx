@@ -494,9 +494,9 @@ export default function Materiais() {
                         {" "}
                         {day.getDate()}{" "}
                       </span>
-                      <div className="text-start px-2 max-w-full w-fit rounded-[4px] text-white py-1 bg-[#A554C5] overflow-hidden text-ellipsis whitespace-nowrap">
+                      {/* <div className="text-start px-2 max-w-full w-fit rounded-[4px] text-white py-1 bg-[#A554C5] overflow-hidden text-ellipsis whitespace-nowrap">
                         <span>Biologia</span>
-                      </div>
+                      </div> */}
                     </div>
                   </button>
                 );
