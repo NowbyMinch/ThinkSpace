@@ -78,7 +78,7 @@ import {
 } from "date-fns";
 import React from "react";
 import { DatePicker2 } from "@/components/ui/datepicker";
-import { ComboboxDemoMateria } from "../components/dropdown";
+import { CalendarioMateria, CalendarioMaterial, ComboboxDemoMateria } from "../components/dropdown";
 
 type UserData = {
   primeiroNome?: string;
@@ -110,6 +110,8 @@ export default function Materiais() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [DataFormatada, setDataFormatada] = useState<string>("");
   const [materiaDesignada, setMateriaDesignada] = useState<string>("");
+  const [materialDesignada, setMaterialDesignada] = useState<string>("");
+  const [pesquise, setPesquise] = useState("");
 
   const setandoData = (val: string) => {
     const data = val;
@@ -212,6 +214,7 @@ export default function Materiais() {
     sala?: string;
     lembrete?: string;
     cor: string;
+    data: string;
   };
 
   const items: AccordionItem[] = [
@@ -219,17 +222,20 @@ export default function Materiais() {
       sala: "Física",
       lembrete: "Estudar cinemática.",
       cor: "#F92A46",
+      data: "28 de outubro de 2025",
     },
     {
       sala: "Biologia",
       lembrete: "Estudar a estrutura e funções.",
       cor: "#A554C5",
+      data: "29 de outubro de 2025",
     },
     {
       sala: "Química",
       lembrete:
         "Estudar estrutura atômica, funções inorgânicas, estequiometria e soluções e termoquímica.",
       cor: "#3F9DD8",
+      data: "31 de outubro de 2025",
     },
   ];
 
@@ -338,14 +344,22 @@ export default function Materiais() {
                       </div>
                     </div>
 
-                    <ComboboxDemoMateria
-                      value={materiaDesignada}
-                      onChange={(value) => {
-                        setMateriaDesignada(value);
-                      }}
-                    />
+                      {/* <CalendarioMateria
+                        value={materiaDesignada}
+                        onChange={(value) => {
+                          setMateriaDesignada(value);
+                        }}
+                      /> */}
+                    <div className="w-full flex gap-2">
+                      <CalendarioMaterial
+                        value={materialDesignada}
+                        onChange={(value) => {
+                          setMaterialDesignada(value);
+                        }}
+                      />
+                    </div>
 
-                    <div className="flex gap-2">
+                    <div className="w-full flex gap-2">
                       <div className="w-full">
                         <ComboboxDemoMateria
                           value={materiaDesignada}
@@ -388,13 +402,13 @@ export default function Materiais() {
                       </div>
                     </div>
 
-                    <div className="w-full flex justify-center py-2">
+                    <div className="w-full flex justify-center py-2 min-h-[53px] ">
                       <motion.button
                         whileTap={{ scale: 0.95 }}
                         whileHover={{ scale: 1.02 }}
                         id="editar_conta"
                         onClick={closing}
-                        className="border border-[#1E2351] w-fit h-fit text-[18px] p-[4px_30px]   rounded-full"
+                        className="border border-[#1E2351] w-fit h-fit text-[18px] p-[4px_30px] rounded-full"
                       >
                         Salvar
                       </motion.button>
@@ -412,9 +426,9 @@ export default function Materiais() {
       </AnimatePresence>
 
       {/* h-[calc(100vh-24px)] */}
-      <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto py-2 h-[1057px] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
+      <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto py-2 h-[1057px] lg:my-auto gap-3 rounded-[35px] flex sm:flex-row flex-col justify-center items-center ">
         <div className=" w-full overflow-hidden h-full flex flex-col items-center gap-3">
-          <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full max-h-fit flex flex-col items-center shadow-md border border-[#00000031] ">
+          {/* <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full max-h-fit flex flex-col items-center shadow-md border border-[#00000031] ">
             <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
               {" "}
               Visão Geral{" "}
@@ -438,7 +452,7 @@ export default function Materiais() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="p-4 w-full rounded-[35px] overflow-hidden bg-white min-h-fit h-full flex flex-col items-center shadow-md border border-[#00000031]">
             <div className="w-full">
@@ -519,12 +533,38 @@ export default function Materiais() {
               })}
             </div>
           </div>
+
+          {/* <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full max-h-fit flex flex-col items-center shadow-md border border-[#00000031] ">
+            <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
+              {" "}
+              Visão Geral{" "}
+            </h1>
+            <div className="w-full max-h-full pr-1 overflow-y-auto">
+              {items.map((item: AccordionItem, index) => (
+                <div
+                  key={index}
+                  className={`w-full border-1 ${index !== 1 ? "border-b-[#1E2351] border-t-[#1E2351]" : ""} text-[#1E2351] py-1 flex text-[20px] items-center gap-2`}
+                >
+                  <motion.div className="w-4 h-4 rounded-full border-2 border-[#9868F9]"></motion.div>
+                  <div className="flex w-full justify-between items-center">
+                    <span>{item?.sala}</span>
+
+                    <span className="text-[18px]">
+                      {index === 0 && "28 de Outubro de 2025"}
+                      {index === 1 && "29 de Outubro de 2025"}
+                      {index === 2 && "30 de Outubro de 2025"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div> */}
         </div>
 
-        <div className="xl:flex hidden right_panel flex-col p-4  bg-white rounded-[35px] h-full shadow-md border border-[#00000031] ">
+        <div className="xl:flex hidden right_panel sm:flex-col px-4 pt-4 gap-2 bg-white rounded-[35px] h-full shadow-md border border-[#00000031] ">
           <div className="flex justify-between w-full">
             <h1 className="text-[#1E2351] font-medium text-[30px] h-fit ">
-              Anotações
+              Lembretes
             </h1>
 
             <motion.button
@@ -536,58 +576,86 @@ export default function Materiais() {
               <Plus className=" w-full h-full p-1  rounded-full bg-[#A39CEC] text-white " />
             </motion.button>
           </div>
+          <div className="relative w-full max-w-[480px] ">
+            <input
+              type="text"
+              id="search_bar"
+              onChange={(e) => setPesquise(e.target.value)}
+              placeholder="Pesquise a matéria"
+              className="w-full text-[18px] pl-5 py-2 border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
+            />
+            <Search className="absolute right-[20px] text-black opacity-[36%] cursor-pointer top-[12px] size-[25px] " />
+          </div>
 
-          <div className="flex flex-col gap-2 w-full justify-center">
-            {items.map((item: AccordionItem, index) => (
-              <motion.div
-                id="perguntas"
-                key={index}
-                whileTap={{ scale: 0.99 }}
-                whileHover={{ scale: 1.01 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-                className={`border w-[420px] max-w-full min-h-[62px] border-[rgba(18,18,18,0.14)] rounded-[20px]  overflow-hidden shadow-md `}
-              >
-                {/* Header */}
-                <button
-                  onClick={() => toggle(index)}
-                  style={{ backgroundColor: item?.cor || "white" }}
-                  className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium `}
+          <div className="flex flex-col gap-2 w-[425px] max-w-full min-h-[62px]  h-full max-h-full overflow-y-auto overflow-x-hidden px-[2px] pt-3 pb-3 ">
+            {items
+              .filter(
+                (item) =>
+                  !pesquise ||
+                  item.sala?.toLowerCase().includes(pesquise.toLowerCase())
+              )
+              .map((item: AccordionItem, index) => (
+                <motion.div
+                  id="perguntas"
+                  key={index}
+                  whileTap={{ scale: 0.99 }}
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className={`border w-[420px] max-w-full min-h-[62px] border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
                 >
-                  {item?.sala}
-
-                  <span
-                    className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-                                ${openIndex === index ? "-rotate-90" : ""}`}
+                  {/* Header */}
+                  <button
+                    onClick={() => toggle(index)}
+                    style={{ backgroundColor: item?.cor || "white" }}
+                    className={`w-full min-h-[62px] flex justify-between transition-all ease-in-out dark items-center px-6 py-4 text-left text-[18px] text-white font-medium `}
                   >
-                    <ChevronLeft className="text-white" />
-                  </span>
-                </button>
+                    {item?.sala}
 
-                {/* Animated Content */}
-                <AnimatePresence initial={false}>
-                  {openIndex === index && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0, filter: "blur(1px)" }}
-                      animate={{
-                        height: "auto",
-                        opacity: 1,
-                        filter: "blur(0px)",
-                      }}
-                      exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    <span
+                      className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
+                                ${openIndex === index ? "-rotate-90" : ""}`}
                     >
-                      <div
-                        style={{ backgroundColor: `${item?.cor}33` || "white" }}
-                        className={`px-6 py-2 text-[18px] font-medium text-[#1E2351] `}
+                      <ChevronLeft className="text-white" />
+                    </span>
+                  </button>
+
+                  {/* Animated Content */}
+                  <AnimatePresence initial={false}>
+                    {openIndex === index && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                        animate={{
+                          height: "auto",
+                          opacity: 1,
+                          filter: "blur(0px)",
+                        }}
+                        exit={{ height: 0, opacity: 0, filter: "blur(1px)" }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                       >
-                        {item?.lembrete}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+                        <div
+                          style={{
+                            backgroundColor: `${item?.cor}33` || "white",
+                          }}
+                          className="w-full pr-1 pt-1 flex justify-end "
+                        >
+                          <span className="ml-auto text-[15px] font-medium text-[#1E2351] text-[text-[16px] ">
+                            {item.data}
+                          </span>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: `${item?.cor}33` || "white",
+                          }}
+                          className={`px-6 pb-2 text-[18px] font-medium text-[#1E2351] `}
+                        >
+                          {item?.lembrete}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
           </div>
         </div>
       </div>

@@ -1,25 +1,37 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useEffect, useState } from "react"
-import { Check, ChevronDown, ChevronsLeftRightEllipsis, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  Check,
+  ChevronDown,
+  ChevronsLeftRightEllipsis,
+  ChevronsUpDown,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
+} from "@/components/ui/popover";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TooltipProps } from "recharts";
-
 
 const frameworks = [
   {
@@ -38,7 +50,7 @@ const frameworks = [
     value: "3",
     label: "Há 3 semanas",
   },
-]
+];
 
 const frameworks2 = [
   {
@@ -81,7 +93,7 @@ const frameworks2 = [
     value: "PREFIRO_NAO_INFORMAR",
     label: "Prefiro não informar",
   },
-]
+];
 
 const frameworks3 = [
   {
@@ -103,8 +115,8 @@ const frameworks3 = [
   {
     value: "OUTRO",
     label: "Outro",
-  }
-]
+  },
+];
 
 const frameworks4 = [
   {
@@ -114,17 +126,22 @@ const frameworks4 = [
   {
     value: "Admin",
     label: "Admin",
-  }
-]
+  },
+];
+
+interface Material {
+  nomeDesignado: string;
+  // add other fields if needed
+}
 
 type materiaItem = {
-    id?: string;
-    nome?: string;
-    cor?: string;
-    icone?: string;
-    usuarioId?: string;
-    materiais?: any[]; // or specify the correct type if known
-    // add other properties if needed
+  id?: string;
+  nome?: string;
+  cor?: string;
+  icone?: string;
+  usuarioId?: string;
+  materiais?: Material[]; // or specify the correct type if known
+  // add other properties if needed
 };
 type MelhorMateria = {
   nome: string;
@@ -149,11 +166,13 @@ type QuestoesPorDia = {
   [data: string]: number;
 };
 interface QuestoesPorDiaItem {
-  dia: string;         // "Dia 1", "Dia 2", ...
-  atividades: number;  // how many activities
+  dia: string; // "Dia 1", "Dia 2", ...
+  atividades: number; // how many activities
 }
 type QuestoesPorDiaLista = QuestoesPorDiaItem[];
-function buildQuestoesPorDiaLista(questoesPorDia: QuestoesPorDia): QuestoesPorDiaLista {
+function buildQuestoesPorDiaLista(
+  questoesPorDia: QuestoesPorDia
+): QuestoesPorDiaLista {
   const dates = Object.keys(questoesPorDia);
 
   const lista: QuestoesPorDiaLista = Array.from({ length: 7 }, (_, i) => ({
@@ -167,23 +186,26 @@ function buildQuestoesPorDiaLista(questoesPorDia: QuestoesPorDia): QuestoesPorDi
     }
   });
 
-  return lista;  // <-- 🔴 make sure you actually return
+  return lista; // <-- 🔴 make sure you actually return
 }
 
-
-export function ComboboxDemo({ onChange }: { onChange: (value: number) => void }) {
+export function ComboboxDemo({
+  onChange,
+}: {
+  onChange: (value: number) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<number | null>(0);
 
   const handleSelect = (currentValue: string) => {
-    const newValue = Number(currentValue); 
+    const newValue = Number(currentValue);
     setValue(newValue);
     onChange(newValue); // 🔑 send value back to parent
     setOpen(false);
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen} >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -218,56 +240,53 @@ export function ComboboxDemo({ onChange }: { onChange: (value: number) => void }
           </CommandList>
         </Command>
       </PopoverContent>
-    </Popover> 
+    </Popover>
+  );
+}
 
-)}
-
-
-const CustomTooltip = ({ active, payload }:  TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (!active || !payload || payload.length === 0) return null;
 
   const atividades = payload[0].value;
 
   return (
-    
     <AnimatePresence>
-        <motion.div
-        initial={{ scale:0.50 }}
+      <motion.div
+        initial={{ scale: 0.5 }}
         animate={{ scale: 1 }}
-        exit={{ scale: 0.50 }}
+        exit={{ scale: 0.5 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
-        className="bg-white rounded-xl shadow p-3 text-center origin-top-left">
-            <p className="text-xl font-bold">{atividades}</p>
-            <p className="text-base ">Questões feitas</p>
-        </motion.div>
-
+        className="bg-white rounded-xl shadow p-3 text-center origin-top-left"
+      >
+        <p className="text-xl font-bold">{atividades}</p>
+        <p className="text-base ">Questões feitas</p>
+      </motion.div>
     </AnimatePresence>
   );
 };
 
-export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
-  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
+export const Chart = ({ selectedWeek }: { selectedWeek: number }) => {
+  const [metricasUser, setMetricasUser] = useState<MetricasUser>();
   const [isClient, setIsClient] = useState(false);
 
-  const [ userID, setUserID ] = useState("");
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
     const UserID = async () => {
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
-            method: 'GET',
-            credentials: 'include',
-            });
-            
-            const data = await res.json();
-            // console.log("UserID: ", data);
-            setUserID(data.userId);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+          method: "GET",
+          credentials: "include",
+        });
 
-        } catch (err) {
-            console.error(err);
-        }
-    }; UserID();
-
+        const data = await res.json();
+        // console.log("UserID: ", data);
+        setUserID(data.userId);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    UserID();
   }, []);
 
   useEffect(() => {
@@ -292,10 +311,10 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
     };
 
     fetchMetricas();
+  }, [userID, selectedWeek]);
 
-  }, [userID, selectedWeek])
-
-  const [questoesPorDiaLista, setQuestoesPorDiaLista] = useState<QuestoesPorDiaLista>([]);
+  const [questoesPorDiaLista, setQuestoesPorDiaLista] =
+    useState<QuestoesPorDiaLista>([]);
 
   useEffect(() => {
     if (metricasUser) {
@@ -303,61 +322,68 @@ export const Chart  = ({ selectedWeek }: { selectedWeek: number }) => {
       setQuestoesPorDiaLista(data); // ✅ now works
       console.log("Questões por dia lista:", data);
     }
-  }, [metricasUser]); 
+  }, [metricasUser]);
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    useEffect(() => {
-      setIsClient(true);
-    }, []);
-  
-    if (!isClient) return null;
-    
-    return (
-        <>
-            <div className="w-[770px] max-w-full overflow-hidden">
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart  height={300} data={questoesPorDiaLista} margin={{top: 12, left: -35, bottom: 0, right: 0}}> 
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
-                    <XAxis stroke="#666" dataKey="dia"/>
-                    <YAxis 
-                      dataKey="atividades" 
-                      domain={[0, 'auto']} // ensures 0 is at bottom
-                      allowDecimals={false}
-                    />
-                    <Line type="monotone" dataKey="atividades" strokeWidth={4} stroke="#9767F8" />
-                    <Tooltip content={CustomTooltip} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-        </>
-    )
-}
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
+  if (!isClient) return null;
+
+  return (
+    <>
+      <div className="w-[770px] max-w-full overflow-hidden">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            height={300}
+            data={questoesPorDiaLista}
+            margin={{ top: 12, left: -35, bottom: 0, right: 0 }}
+          >
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis stroke="#666" dataKey="dia" />
+            <YAxis
+              dataKey="atividades"
+              domain={[0, "auto"]} // ensures 0 is at bottom
+              allowDecimals={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="atividades"
+              strokeWidth={4}
+              stroke="#9767F8"
+            />
+            <Tooltip content={CustomTooltip} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  );
+};
 
 export default function Charting() {
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
-  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
-  
-  const [ userID, setUserID ] = useState("");
+  const [metricasUser, setMetricasUser] = useState<MetricasUser>();
+
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
     const UserID = async () => {
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
-            method: 'GET',
-            credentials: 'include',
-            });
-            
-            const data = await res.json();
-            // console.log("UserID: ", data);
-            setUserID(data.userId);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+          method: "GET",
+          credentials: "include",
+        });
 
-        } catch (err) {
-            console.error(err);
-        }
-    }; UserID();
-
+        const data = await res.json();
+        // console.log("UserID: ", data);
+        setUserID(data.userId);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    UserID();
   }, []);
 
   useEffect(() => {
@@ -382,51 +408,61 @@ export default function Charting() {
     };
 
     fetchMetricas();
-
-  }, [userID, selectedWeek])
+  }, [userID, selectedWeek]);
 
   return (
     <>
       <div className="w-full grid grid-cols-[1fr_1fr_1fr] mt-5 ">
         <div className="flex justify-center">
-            <div className="w-[80%] flex flex-col justify-between">
-                <h2 className="text-[20px] leading-[25px]">Rendimento semanal</h2>
-                <div className="">
-                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.rendimentoSemanal}%</h1>
-                </div>
+          <div className="w-[80%] flex flex-col justify-between">
+            <h2 className="text-[20px] leading-[25px]">Rendimento semanal</h2>
+            <div className="">
+              <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+              <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">
+                {metricasUser?.rendimentoSemanal}%
+              </h1>
             </div>
+          </div>
         </div>
 
         <div className=" flex justify-center ">
-            <div className="w-[80%] flex flex-col justify-between">
-                <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Acertos
-                    <div className="bg-[#FF9F93] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.acertos}</div>
-                </h2>
-                <div className="">
-                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualAcertos}%</h1>
-                </div>
+          <div className="w-[80%] flex flex-col justify-between">
+            <h2 className="text-[20px] leading-[25px] flex justify-between items-center">
+              Acertos
+              <div className="bg-[#FF9F93] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">
+                {metricasUser?.acertos}
+              </div>
+            </h2>
+            <div className="">
+              <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+              <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">
+                {metricasUser?.percentualAcertos}%
+              </h1>
             </div>
+          </div>
         </div>
 
         <div className=" flex justify-end">
-            <div className="w-[80%] flex flex-col justify-between">
-                <h2 className="text-[20px] leading-[25px] flex justify-between items-center">Erros
-                    <div className="bg-[#9767F8] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">{metricasUser?.erros}</div>
-                </h2>
-                <div className="">
-                    <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
-                    <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">{metricasUser?.percentualErros}%</h1>
-                </div>
+          <div className="w-[80%] flex flex-col justify-between">
+            <h2 className="text-[20px] leading-[25px] flex justify-between items-center">
+              Erros
+              <div className="bg-[#9767F8] w-[25px] h-[25px] rounded-full flex justify-center items-center text-[18px] text-white ">
+                {metricasUser?.erros}
+              </div>
+            </h2>
+            <div className="">
+              <div className="w-full h-[2px] mt-2 bg-[rgba(0,0,0,0.23)]"></div>
+              <h1 className="text-[50px] leading-[60px] font-medium text-[#866ABF]">
+                {metricasUser?.percentualErros}%
+              </h1>
             </div>
+          </div>
         </div>
       </div>
       <div className="mt-2 flex flex-col justify-between gap-1 ">
-
         <h1 className="w-full font-medium flex items-end justify-between text-[30px] ">
           Atividades
-          <ComboboxDemo onChange={setSelectedWeek}/>
+          <ComboboxDemo onChange={setSelectedWeek} />
         </h1>
         {/* Combobox "returns" its value via onChange callback */}
 
@@ -437,29 +473,28 @@ export default function Charting() {
   );
 }
 
-export  function Metrica() {
+export function Metrica() {
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
-  const [ metricasUser, setMetricasUser ] = useState<MetricasUser>();
-  
-  const [ userID, setUserID ] = useState("");
+  const [metricasUser, setMetricasUser] = useState<MetricasUser>();
+
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
     const UserID = async () => {
-        try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
-            method: 'GET',
-            credentials: 'include',
-            });
-            
-            const data = await res.json();
-            // console.log("UserID: ", data);
-            setUserID(data.userId);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+          method: "GET",
+          credentials: "include",
+        });
 
-        } catch (err) {
-            console.error(err);
-        }
-    }; UserID();
-
+        const data = await res.json();
+        // console.log("UserID: ", data);
+        setUserID(data.userId);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    UserID();
   }, []);
 
   useEffect(() => {
@@ -484,17 +519,10 @@ export  function Metrica() {
     };
 
     fetchMetricas();
+  }, [userID, selectedWeek]);
 
-  }, [userID, selectedWeek])
-
-  return (
-    <>
-      
-    </>
-  );
+  return <></>;
 }
-
-
 
 type Sala = {
   id: string;
@@ -505,34 +533,36 @@ type Sala = {
   moderadorId: string;
   assuntoId: string | null;
   criadoEm: string;
-  };
+};
 
 export function ComboboxDemomMetricas() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
-  const [ salas, setSalas ] = useState<Sala[]>([])
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [salas, setSalas] = useState<Sala[]>([]);
 
   useEffect(() => {
     const salasDeEstudo = async () => {
-      try{
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-        
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
         const data = await res.json();
         // console.log(data);
         setSalas(data.salasMembro);
-
       } catch (err) {
         console.error(err);
       }
-    }; salasDeEstudo();
-
+    };
+    salasDeEstudo();
   }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen} >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -556,13 +586,12 @@ export function ComboboxDemomMetricas() {
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
               {salas.map((framework) => (
-                
                 <CommandItem
                   key={framework.id}
                   value={framework.nome}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                    setValue(currentValue === value ? "" : currentValue);
+                    setOpen(false);
                   }}
                 >
                   {framework.nome}
@@ -573,14 +602,13 @@ export function ComboboxDemomMetricas() {
                     )}
                   />
                 </CommandItem>
-
               ))}
             </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 interface ComboboxDemoProps {
@@ -590,7 +618,7 @@ interface ComboboxDemoProps {
 
 export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
-  
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="">
@@ -601,7 +629,8 @@ export function ComboboxDemo2({ value, onChange }: ComboboxDemoProps) {
         >
           <span className="block w-full truncate text-left">
             {value
-              ? frameworks2.find((framework) => framework.value === value)?.label
+              ? frameworks2.find((framework) => framework.value === value)
+                  ?.label
               : "Selecione o nível de escolaridade"}
           </span>
         </Button>
@@ -652,7 +681,8 @@ export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
         >
           <span className="block w-full truncate text-left">
             {value
-              ? frameworks3.find((framework) => framework.value === value)?.label
+              ? frameworks3.find((framework) => framework.value === value)
+                  ?.label
               : "Selecione o seu objetivo na plataforma"}
           </span>
         </Button>
@@ -692,7 +722,7 @@ export function ComboboxDemo3({ value, onChange }: ComboboxDemoProps) {
 
 export function ComboboxDemoSettings2({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
-  
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="">
@@ -703,7 +733,9 @@ export function ComboboxDemoSettings2({ value, onChange }: ComboboxDemoProps) {
         >
           <span className="w-full flex rounded-[25px]">
             {value
-              ? frameworks2.find((framework) => framework.value === value.toUpperCase())?.label
+              ? frameworks2.find(
+                  (framework) => framework.value === value.toUpperCase()
+                )?.label
               : "Selecione o nível de escolaridade"}
           </span>
         </Button>
@@ -754,7 +786,7 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   //             method: 'GET',
   //             credentials: 'include',
   //             });
-              
+
   //             const data = await res.json();
   //             setUser(data)
   //         } catch (err) {
@@ -762,14 +794,14 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   //             console.error(err);
   //         }
   //     }; user();
-  
+
   //     const e = async () => {
   //       try{
   //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
   //           method: 'GET',
   //           credentials: 'include',
   //         });
-          
+
   //         const data = await res.json();
   //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
   //         setEscola(escolaridade);
@@ -778,11 +810,11 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   //         console.error(err);
   //       }
   //     }; e();
-    
+
   //   }, []);
 
   return (
-    <Popover open={false} onOpenChange={setOpen} >
+    <Popover open={false} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="">
         <Button
           variant="outline"
@@ -791,7 +823,8 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
         >
           <span className="w-full flex rounded-[25px]">
             {value
-              ? frameworks4.find((framework) => framework.value === value)?.label
+              ? frameworks4.find((framework) => framework.value === value)
+                  ?.label
               : "Selecione o nível de escolaridade"}
           </span>
         </Button>
@@ -834,24 +867,22 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   const [materias, setMaterias] = useState<materiaItem[]>([]);
 
   useEffect(() => {
-    
     // Função para buscar matérias
     const materia = async () => {
-      try{
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-              method: 'GET',
-              credentials: 'include',
-          });
-          
-          const data = await res.json();
-          setMaterias(data)
-      } catch (err) {
-      console.error(err);
-      }
-    }; materia();
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        });
 
-  }, [])
-  
+        const data = await res.json();
+        setMaterias(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
 
   const frameworksMateria = materias.map((materia) => ({
     value: materia.nome,
@@ -869,7 +900,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   //             method: 'GET',
   //             credentials: 'include',
   //             });
-              
+
   //             const data = await res.json();
   //             setUser(data)
   //         } catch (err) {
@@ -877,14 +908,14 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   //             console.error(err);
   //         }
   //     }; user();
-  
+
   //     const e = async () => {
   //       try{
   //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
   //           method: 'GET',
   //           credentials: 'include',
   //         });
-          
+
   //         const data = await res.json();
   //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
   //         setEscola(escolaridade);
@@ -893,7 +924,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   //         console.error(err);
   //       }
   //     }; e();
-    
+
   //   }, []);
 
   return (
@@ -949,5 +980,273 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
         </Command>
       </PopoverContent>
     </Popover>
+  );
+}
+
+export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materiaItem[]>([]);
+
+  useEffect(() => {
+    // Função para buscar matérias
+    const materia = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        setMaterias(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
+
+  const frameworksMateria = materias.map((materia) => ({
+    value: materia.nome,
+    label: materia.nome,
+  }));
+
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+
+  //   }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+        >
+          <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
+            {value ? (
+              <div className="">
+                {
+                  frameworksMateria.find(
+                    (framework) => framework.value === value
+                  )?.label as string
+                }
+              </div>
+            ) : (
+              <div className="text-[#9CA3AF]">Matéria designada</div>
+            )}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+        <Command className="rounded-[20px]">
+          <CommandList className="rounded-[20px] ">
+            <CommandEmpty>Nenhuma matériaw.</CommandEmpty>
+            <CommandGroup className="rounded-[20px]">
+              {frameworksMateria.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px] "
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto ",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export function CalendarioMaterial({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materiaItem[]>([]);
+  const [materiaDesignada, setMateriaDesignada] = useState<string>("");
+
+  useEffect(() => {
+    // Função para buscar matérias
+    const materia = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        setMaterias(data);
+        console.log(data, "MATERIA BRUH BRAH BRUU");
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
+
+  const frameworksMateria = materias
+    .filter((item) => item.nome === materiaDesignada)
+    .flatMap((item) => item?.materiais?.map((m) => ({ 
+      value: m.nomeDesignado,
+      label: m.nomeDesignado
+    })) ?? []);
+    
+    // .map((materia, index) => ({
+    //   value: materia.materiais ? materia.materiais[index].nomeDesignado : "",
+    //   label: materia.materiais ? materia.materiais[index].nomeDesignado : "",
+    // }))
+
+  console.log(
+    materias
+      .filter((item) => item.nome === materiaDesignada)
+      .flatMap(
+        (item) => item?.materiais?.map((m: any) => m.nomeDesignado) ?? []
+      )
+  );
+
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+
+  //   }, []);
+
+  return (
+    <div className="w-full flex gap-2">
+      <CalendarioMateria
+        value={materiaDesignada}
+        onChange={(value) => {
+          setMateriaDesignada(value);
+          
+        }}
+      />
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild className="">
+          <Button
+            variant="outline"
+            role="combobox"
+            className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+          >
+            <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
+              {value ? (
+                <div className="">
+                  {
+                    frameworksMateria.find(
+                      (framework) => framework.value === value
+                    )?.label as string
+                  }
+                </div>
+              ) : (
+                <div className="text-[#9CA3AF]">Material designada</div>
+              )}
+            </span>
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+          <Command className="rounded-[20px]">
+            <CommandList className="rounded-[20px] ">
+              <CommandEmpty>Nenhum material.</CommandEmpty>
+              <CommandGroup className="rounded-[20px]">
+                {frameworksMateria.map((framework) => (
+                  <CommandItem
+                    key={framework.value}
+                    value={framework.value}
+                    className="text-[18px] "
+                    onSelect={(currentValue) => {
+                      onChange(currentValue === value ? "" : currentValue);
+                      setOpen(false);
+                    }}
+                  >
+                    {framework.label}
+                    <Check
+                      className={cn(
+                        "ml-auto ",
+                        value === framework.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }
