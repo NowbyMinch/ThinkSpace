@@ -1144,7 +1144,7 @@ export function CalendarioMaterial({ value, onChange }: ComboboxDemoProps) {
     materias
       .filter((item) => item.nome === materiaDesignada)
       .flatMap(
-        (item) => item?.materiais?.map((m: any) => m.nomeDesignado) ?? []
+        (item) => item?.materiais?.map((m) => m.nomeDesignado) ?? []
       )
   );
 
