@@ -66,6 +66,7 @@ import {
   SquareX,
   SquarePen,
   Ellipsis,
+  Trash,
 } from "lucide-react";
 import { colors, icons, cor } from "@/app/home/components/icons";
 import MonthYearSelector from "@/components/ui/MonthYearSelector";
@@ -93,7 +94,7 @@ type UserData = {
   // add other properties if needed
 };
 
-type CalendaioType = {
+type CalendarioType = {
   data: string;
   horario: string;
   materiaId: string;
@@ -118,6 +119,7 @@ export type UserXP = {
 type AnotacaoType = {
   id: string;
   titulo: string;
+  subtitulo?: string;
   descricao?: string | null;
   cor?: string | null;
   criadoEm: string; // ISO string
@@ -159,6 +161,7 @@ export default function Materiais() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [openIndex2, setOpenIndex2] = useState<number | null>(null);
   const [pesquise, setPesquise] = useState("");
+  const [subTitulo, setSubTitulo] = useState("");
   const [duracao, setDuracao] = useState({
     repeticao: "",
     duracao: "",
@@ -289,6 +292,10 @@ export default function Materiais() {
   }, [todasAnotacoes]);
 
   useEffect(() => {
+    console.log(lembreteInfo2, "lembrete aqui");
+  }, [lembreteInfo2]);
+
+  useEffect(() => {
     console.log(user);
   }, [user]);
 
@@ -369,10 +376,21 @@ export default function Materiais() {
         const mes = selectedMonthYear.getMonth() + 1;
         const ano = selectedMonthYear.getFullYear();
 
+        if (!user) {
+          console.warn(
+            "Usuário não definido — não foi possível buscar anotações."
+          );
+          return;
+        }
+
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
           { method: "GET", credentials: "include" }
         );
+
+        if (!res.ok) {
+          throw new Error(`Erro ao buscar anotações: ${res.statusText}`);
+        }
 
         const data = await res.json();
         setLembreteInfo(data);
@@ -384,7 +402,8 @@ export default function Materiais() {
     };
 
     fetchAnotacoes();
-  }, [selectedMonthYear]);
+  }, [selectedMonthYear, user]);
+
 
   function closing() {
     setOpen(false);
@@ -497,6 +516,8 @@ export default function Materiais() {
     // setCalendarMonth(date);
     setOpen2(true);
   };
+
+
 
   if (loading) return <Loading />;
   return (
@@ -915,66 +936,63 @@ export default function Materiais() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-7 text-sm w-full h-full  pb-[2px] ">
+              <div className="grid grid-cols-7 text-sm w-full h-full pb-[2px]">
                 {generateCalendar().map((day, i) => {
-                  const today = new Date().toLocaleDateString();
-
+                  const today = new Date();
+                  const isToday = isSameDay(day, today);
                   const isSelected =
                     selectedDate && isSameDay(day, selectedDate);
-                  const inCurrentMonth = isSameMonth(day, calendarMonth);
+                  const inCurrentMonth = isSameMonth(day, selectedMonthYear); // use selectedMonthYear
+
                   return (
                     <button
                       type="button"
                       key={i}
                       onClick={() => handleDateSelect(day)}
-                      className={`rounded-lg p-2 m-[2px] flex justify-normal transition text-[18px] text-[#1E2351] ${today === day.toLocaleDateString() && "shadow-[0_5px_10px_rgba(86,50,157)]"} ${
-                        inCurrentMonth
-                          ? "hover:bg-[#9767f8] bg-[#F1F1F1] hover:bg-opacity-20"
-                          : " bg-[#d9d8ee] F1F1F1"
-                      }`}
+                      className={`rounded-lg p-2 m-[2px] flex flex-col justify-normal transition text-[18px] text-[#1E2351]
+          ${isToday ? "shadow-[0_5px_10px_rgba(86,50,157)]" : ""}
+          ${
+            inCurrentMonth
+              ? "hover:bg-[#9767f8] bg-[#F1F1F1] hover:bg-opacity-20"
+              : "bg-[#d9d8ee] text-[#9a9a9a]"
+          }`}
                     >
-                      <div className="h-full w-full flex flex-col gap-1 overflow-hidden">
-                        {/* <span
-                          className={`${today === day.toLocaleDateString() && "text-purple-500"}`}
-                        >
-                          {day
-                            .toLocaleDateString("pt-BR", { weekday: "long" })
-                            .replace("-feira", "")
-                            .trim()
-                            .replace(/^./, (c) => c.toUpperCase())}
-                        </span> */}
+                      <span
+                        className={`text-start text-[15px] ${isToday ? "text-purple-500" : ""}`}
+                      >
+                        {day.getDate()}
+                      </span>
 
-                        <span
-                          className={` text-start text-[15px] ${today === day.toLocaleDateString() && "text-purple-500"}`}
-                        >
-                          {" "}
-                          {day.getDate()}{" "}
-                        </span>
-
-                        {todasAnotacoes
-                          .filter(
-                            (nota) =>
-                              nota.dataInicio.split("T")[0] ===
-                              day.toISOString().split("T")[0]
-                          )
-                          .map((nota, index) => {
-                            if (index < 6) {
-                              return (
-                                <div
-                                  key={nota.id}
-                                  className={`text-start text-[13px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px]`}
-                                  style={{
-                                    backgroundColor: nota.cor || "#9767f8",
-                                  }}
-                                >
-                                  {nota.titulo}
-                                </div>
-                              );
-                            } else {
-                              return <div className="">ver mais...</div>;
-                            }
-                          })}
-                      </div>
+                      {todasAnotacoes
+                        .filter(
+                          (nota) =>
+                            nota.dataInicio.split("T")[0] ===
+                            day.toISOString().split("T")[0]
+                        )
+                        .map((nota, index) => {
+                          if (index < 6) {
+                            return (
+                              <div
+                                key={nota.id}
+                                className={`text-start text-[13px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px]`}
+                                style={{
+                                  backgroundColor: nota.cor || "#9767f8",
+                                }}
+                              >
+                                {nota.titulo}
+                              </div>
+                            );
+                          } else {
+                            return (
+                              <div
+                                key={index}
+                                className="text-[12px] text-gray-600"
+                              >
+                                ver mais...
+                              </div>
+                            );
+                          }
+                        })}
                     </button>
                   );
                 })}
@@ -1079,7 +1097,8 @@ export default function Materiais() {
                               }}
                               className="w-full pr-1 pt-1 flex justify-end"
                             >
-                              <span className="ml-auto text-[15px] font-medium text-[#1E2351]">
+                              <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
+
                                 {new Date(nota.dataInicio).toLocaleDateString(
                                   "pt-BR",
                                   {
@@ -1088,6 +1107,7 @@ export default function Materiais() {
                                     year: "numeric",
                                   }
                                 )}
+                                
                               </span>
                             </div>
                             <div
@@ -1096,7 +1116,14 @@ export default function Materiais() {
                               }}
                               className="px-6 pb-2 text-[15px] font-medium text-[#1E2351]"
                             >
-                              {nota.descricao || "Sem descrição"}
+                              {/* <div className="flex gap-2 items-center ">
+                                <div
+                                  style={{ borderColor: nota.cor || "#9767f8" }}
+                                  className={`w-4 h-4 border-2 rounded-full`}
+                                ></div>
+                                <span>{nota.subtitulo}</span>
+                              </div> */}
+                              <span>{nota.descricao}</span>
                             </div>
                           </motion.div>
                         )}
