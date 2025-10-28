@@ -201,7 +201,8 @@ export default function Materiais() {
             console.error(err);
           }
         }; ranking();
-
+        
+        setLoading(false)
     }, []);
 
     useEffect(() => {
@@ -796,7 +797,7 @@ export default function Materiais() {
                 </div> */}
             </div>
 
-            <div className="xl:flex hidden right_panel bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] ">
+            <div className="xl:flex hidden right_panel w-[30%] bg-white rounded-[35px] h-full  justify-center shadow-md border border-[#00000031] ">
                  
                 <div className="w-full h-full flex justify-center ">   
                     <div className="w-[95%] h-[95%] flex flex-col items-center mt-4 pb-2">

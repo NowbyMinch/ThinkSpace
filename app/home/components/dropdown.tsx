@@ -983,7 +983,7 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   );
 }
 
-export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
+export function CalendarioRepeticao({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
 
@@ -1005,10 +1005,24 @@ export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
     materia();
   }, []);
 
-  const frameworksMateria = materias.map((materia) => ({
-    value: materia.nome,
-    label: materia.nome,
-  }));
+  const frameworksRepeticao = [
+    {
+      value: "nao_repetir",
+      label: "Não repetir",
+    },
+    {
+      value: "diario",
+      label: "A cada dia",
+    },
+    {
+      value: "semanal",
+      label: "A cada semana",
+    },
+    {
+      value: "mensal",
+      label: "A cada mês",
+    },
+  ];
 
   // const [ user, setUser ] = useState<UserData>({});
   // const [ escola, setEscola ] = useState("");
@@ -1060,13 +1074,13 @@ export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
             {value ? (
               <div className="">
                 {
-                  frameworksMateria.find(
+                  frameworksRepeticao.find(
                     (framework) => framework.value === value
                   )?.label as string
                 }
               </div>
             ) : (
-              <div className="text-[#9CA3AF]">Matéria designada</div>
+              <div className="text-[#9CA3AF]">Repetição</div>
             )}
           </span>
         </Button>
@@ -1075,9 +1089,9 @@ export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
       <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
         <Command className="rounded-[20px]">
           <CommandList className="rounded-[20px] ">
-            <CommandEmpty>Nenhuma matériaw.</CommandEmpty>
+            <CommandEmpty>Repetir.</CommandEmpty>
             <CommandGroup className="rounded-[20px]">
-              {frameworksMateria.map((framework) => (
+              {frameworksRepeticao.map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
@@ -1104,140 +1118,95 @@ export function CalendarioMateria({ value, onChange }: ComboboxDemoProps) {
   );
 }
 
-export function CalendarioMaterial({ value, onChange }: ComboboxDemoProps) {
+
+interface CalendarioDuracaoProps {
+  value: {
+    repeticao: string;
+    duracao: string;
+  };
+  onChange: (value: { repeticao: string; duracao: string }) => void;
+}
+
+export function CalendarioDuracao({ value, onChange }: CalendarioDuracaoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
-  const [materiaDesignada, setMateriaDesignada] = useState<string>("");
+  const [repeticao, setRepeticao] = useState(value.repeticao || "");
 
   useEffect(() => {
-    // Função para buscar matérias
-    const materia = async () => {
+    const fetchMaterias = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-          method: "GET",
           credentials: "include",
         });
-
         const data = await res.json();
         setMaterias(data);
-        console.log(data, "MATERIA BRUH BRAH BRUU");
       } catch (err) {
         console.error(err);
       }
     };
-    materia();
+    fetchMaterias();
   }, []);
 
-  const frameworksMateria = materias
-    .filter((item) => item.nome === materiaDesignada)
-    .flatMap((item) => item?.materiais?.map((m) => ({ 
-      value: m.nomeDesignado,
-      label: m.nomeDesignado
-    })) ?? []);
-    
-    // .map((materia, index) => ({
-    //   value: materia.materiais ? materia.materiais[index].nomeDesignado : "",
-    //   label: materia.materiais ? materia.materiais[index].nomeDesignado : "",
-    // }))
-
-  console.log(
-    materias
-      .filter((item) => item.nome === materiaDesignada)
-      .flatMap(
-        (item) => item?.materiais?.map((m) => m.nomeDesignado) ?? []
-      )
-  );
-
-  // const [ user, setUser ] = useState<UserData>({});
-  // const [ escola, setEscola ] = useState("");
-  // let escolaridade = "";
-
-  //   useEffect(() => {
-  //     const user = async () => {
-  //         try{
-  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-  //             method: 'GET',
-  //             credentials: 'include',
-  //             });
-
-  //             const data = await res.json();
-  //             setUser(data)
-  //         } catch (err) {
-  //             // setMessage("Erro ao carregar saudação.");
-  //             console.error(err);
-  //         }
-  //     }; user();
-
-  //     const e = async () => {
-  //       try{
-  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
-  //           method: 'GET',
-  //           credentials: 'include',
-  //         });
-
-  //         const data = await res.json();
-  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
-  //         setEscola(escolaridade);
-  //       } catch (err) {
-  //         // setMessage("Erro ao carregar saudação.");
-  //         console.error(err);
-  //       }
-  //     }; e();
-
-  //   }, []);
+  const frameworksDuracao = [
+    { value: "sempre", label: "Sempre" },
+    { value: "ate_data_marcada", label: "Até a data marcada" },
+  ];
 
   return (
     <div className="w-full flex gap-2">
-      <CalendarioMateria
-        value={materiaDesignada}
-        onChange={(value) => {
-          setMateriaDesignada(value);
-          
+      {/* First select — matéria */}
+      <CalendarioRepeticao
+        value={repeticao}
+        onChange={(newMateria) => {
+          setRepeticao(newMateria);
+          onChange({ ...value, repeticao: newMateria }); // 🔹 send both values up
         }}
       />
+
+      {/* Second select — duração */}
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild className="">
+        <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
-            className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+            className="pl-5 text-[18px] min-w-[40%] max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
           >
             <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
-              {value ? (
-                <div className="">
-                  {
-                    frameworksMateria.find(
-                      (framework) => framework.value === value
-                    )?.label as string
-                  }
-                </div>
+              {value.duracao ? (
+                frameworksDuracao.find((f) => f.value === value.duracao)?.label
               ) : (
-                <div className="text-[#9CA3AF]">Material designada</div>
+                <div className="text-[#9CA3AF]">Duração</div>
               )}
             </span>
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+        <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100]">
           <Command className="rounded-[20px]">
-            <CommandList className="rounded-[20px] ">
-              <CommandEmpty>Nenhum material.</CommandEmpty>
-              <CommandGroup className="rounded-[20px]">
-                {frameworksMateria.map((framework) => (
+            <CommandList>
+              <CommandEmpty>Escolher duração.</CommandEmpty>
+              <CommandGroup>
+                {frameworksDuracao.map((framework) => (
                   <CommandItem
                     key={framework.value}
                     value={framework.value}
-                    className="text-[18px] "
-                    onSelect={(currentValue) => {
-                      onChange(currentValue === value ? "" : currentValue);
+                    className="text-[18px]"
+                    onSelect={(duracaoSelecionada) => {
+                      const newDuracao =
+                        duracaoSelecionada === value.duracao
+                          ? ""
+                          : duracaoSelecionada;
+                      onChange({ ...value, duracao: newDuracao }); // 🔹 send both values up
                       setOpen(false);
                     }}
                   >
                     {framework.label}
                     <Check
                       className={cn(
-                        "ml-auto ",
-                        value === framework.value ? "opacity-100" : "opacity-0"
+                        "ml-auto",
+                        value.duracao === framework.value
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
                   </CommandItem>

@@ -2,15 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
 body {
-  color: #2F2F2F;
-  background-color: #EFEFEF; 
+  color: #2f2f2f;
+  background-color: #efefef;
 }
-h1{
+h1 {
   font-size: 40px;
   line-height: normal;
 }
@@ -18,27 +18,26 @@ h1{
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   border-radius: 30px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 30px;
-  background: #1E2351;
+  background: #1e2351;
 }
 
-@media(max-width:1024px){
+@media (max-width: 1024px) {
   ::-webkit-scrollbar {
     width: 6px;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     border-radius: 30px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    border-radius: 30px;
-    background: #1E2351;
   }
 
+  ::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: #1e2351;
+  }
 }
 
 input::-webkit-outer-spin-button,
@@ -47,8 +46,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-
-@keyframes growVar1{
+@keyframes growVar1 {
   0% {
     scale: 85%;
   }
@@ -72,45 +70,45 @@ input::-webkit-inner-spin-button {
   animation: growVar1 0.1s ;
 } */
 
-#editar_conta:hover{
+#editar_conta:hover {
   transition: all ease-in-out 0.1s;
   color: white;
   border: none;
-  background-color: #A78CDC;
+  background-color: #a78cdc;
 }
 
-#side_pop{
+#side_pop {
   animation: grow 0.1s;
 }
 
-#slider{
+#slider {
   transition: all ease-in-out 0.1s;
 }
 
-#opcao:checked + #slider{
+#opcao:checked + #slider {
   margin-left: 40px;
 }
 
-#opcao:checked ~ #switch_color{
-  background-color: #9767F8;
+#opcao:checked ~ #switch_color {
+  background-color: #9767f8;
 }
 
-#on{
+#on {
   scale: 0.52;
   transition: scale ease-in-out 150ms;
   opacity: 0;
 }
 
-#light-box:hover #on{
+#light-box:hover #on {
   scale: 1;
   opacity: 1;
 }
 
-#pop:hover + #backdrop{
+#pop:hover + #backdrop {
   display: block;
 }
 
-#pop2:hover + #backdrop2{
+#pop2:hover + #backdrop2 {
   display: block;
 }
 
@@ -179,62 +177,73 @@ input::-webkit-inner-spin-button {
   }
 }
 
-#tema:hover{
-  border: solid 1px #9767F8;
+#tema:hover {
+  border: solid 1px #9767f8;
 }
 
-#paginacao a{
+#paginacao a {
   width: 24px;
   display: flex;
   justify-content: center;
   font-weight: 500;
 }
 
-
-@keyframes fade-in{
-  from {scale:.8}
-  to {scale:1}
+@keyframes fade-in {
+  from {
+    scale: 0.8;
+  }
+  to {
+    scale: 1;
+  }
 }
 
-@keyframes fade-in-materiais{
-  from {scale:.95}
-  to {scale:1}
+@keyframes fade-in-materiais {
+  from {
+    scale: 0.95;
+  }
+  to {
+    scale: 1;
+  }
 }
 
-@keyframes fade-resumo{
-  from {scale:.98}
-  to {scale:1}
+@keyframes fade-resumo {
+  from {
+    scale: 0.98;
+  }
+  to {
+    scale: 1;
+  }
 }
 
-#notificacao{
+#notificacao {
   animation: fade-in linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 100px;
 }
 
-#topicos{
+#topicos {
   animation: fade-in linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 50px;
 }
 
-#bah{
+#bah {
   animation: fade-resumo linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 50px;
 }
 
-#materias{
+#materias {
   animation: fade-in-materiais linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 200px;
 }
 
-@keyframes grow{
+@keyframes grow {
   0% {
     scale: 95%;
   }
@@ -244,15 +253,14 @@ input::-webkit-inner-spin-button {
   }
 }
 
-
-#messages div{
+#messages div {
   animation: grow linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 80px;
 }
 
-@keyframes grow-icons{
+@keyframes grow-icons {
   0% {
     scale: 10%;
   }
@@ -262,14 +270,14 @@ input::-webkit-inner-spin-button {
   }
 }
 
-#materiais{
+#materiais {
   animation: grow linear;
   animation-timeline: view();
   animation-range-start: cover;
   animation-range-end: 80px;
 }
 
-#icone{
+#icone {
   animation: grow-icons linear;
   animation-timeline: view();
   animation-range-start: cover;
@@ -277,7 +285,7 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
-#botoes-dta{
+#botoes-dta {
   transition: all ease-in-out 0.15s;
 }
 
@@ -285,29 +293,28 @@ input::-webkit-inner-spin-button {
   scale: 101%;
 }
 
-#white-box{
+#white-box {
   transition: all ease-in-out 0.15s;
 }
 
-@keyframes vectorAppear{
-  0%{
-    scale: 0;  
+@keyframes vectorAppear {
+  0% {
+    scale: 0;
   }
-  100%{
+  100% {
     scale: 1;
   }
-
 }
 
-#aba{
+#aba {
   font-weight: 500;
 }
 
-#vector{
+#vector {
   animation: vectorAppear linear;
 }
 
-#AER{
+#AER {
   transition: all ease-in-out 0.2s;
 }
 
@@ -326,7 +333,7 @@ input::-webkit-inner-spin-button {
   }
 }
 
-#label-box{
+#label-box {
   transition: all ease-in-out 0.3s;
   animation: label-pop ease-in-out 0.1s;
   transform-origin: 50% 50%;
@@ -339,9 +346,6 @@ input::-webkit-inner-spin-button {
 .backface-hidden {
   backface-visibility: hidden;
 }
-
-
-
 
 .typing {
   display: flex;
@@ -382,85 +386,83 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.banner_title{
-  font-size: clamp( 1.3rem, 2vw, 1.875rem);
+.banner_title {
+  font-size: clamp(1.3rem, 2vw, 1.875rem);
 }
 
-.banner_button{
-  padding-right: clamp(0.625rem, 1vw, 1rem );
-  padding-left: clamp(0.625rem, 1vw, 1rem );
-  padding-top: clamp(0.625rem, 1vw, 0.8rem );
-  padding-bottom: clamp(0.625rem, 1vw, 0.8rem );
+.banner_button {
+  padding-right: clamp(0.625rem, 1vw, 1rem);
+  padding-left: clamp(0.625rem, 1vw, 1rem);
+  padding-top: clamp(0.625rem, 1vw, 0.8rem);
+  padding-bottom: clamp(0.625rem, 1vw, 0.8rem);
 }
 
-@media(max-width:500px){
-  .banner{
+@media (max-width: 500px) {
+  .banner {
     margin-right: -85px;
   }
 }
 
-.pop1_box{
+.pop1_box {
   width: clamp(290px, 88vw, 530px);
   /* height: clamp(150px, 20vw, 250px); */
   height: 200px;
 }
 
-.pop2_box{
+.pop2_box {
   width: clamp(290px, 88vw, 490px);
   height: fit-content;
 }
 
-.size{
+.size {
   size: clamp();
 }
 
-.diaOfensiva{
+.diaOfensiva {
   width: clamp(20px, 10vw, 50px);
   height: clamp(20px, 10vw, 50px);
 }
 
-.right_panel{
-  min-width: 25%;
-}
 
-.material{
+
+.material {
   height: 280px;
 }
 
 .recentes {
   width: clamp(
-    130px, 
-    calc(110px + (270 - 110) * ((100vw - 1280px) / (1920 - 1280))), 
+    130px,
+    calc(110px + (270 - 110) * ((100vw - 1280px) / (1920 - 1280))),
     280px
   );
 }
 
 .recentes2 {
   width: clamp(
-    130px, 
-    calc(110px + (1073 - 110) * ((100vw - 1280px) / (1920 - 1280))), 
+    130px,
+    calc(110px + (1073 - 110) * ((100vw - 1280px) / (1920 - 1280))),
     1073px
   );
 }
 
-@media(max-width:1310px){
-  .material{
-      height: clamp(150px, 25vw, 280px);
-      /* height: 180px; */
+@media (max-width: 1310px) {
+  .material {
+    height: clamp(150px, 25vw, 280px);
+    /* height: 180px; */
   }
-  .material_text{
-    font-size: clamp( 13px, 4vw, 18px);
+  .material_text {
+    font-size: clamp(13px, 4vw, 18px);
   }
-  .material_title{
-    font-size: clamp( 20px, 2vw, 25px);
+  .material_title {
+    font-size: clamp(20px, 2vw, 25px);
   }
 }
 
-.quizz_title{
-  font-size: clamp( 18px, 3vw, 25px);
+.quizz_title {
+  font-size: clamp(18px, 3vw, 25px);
 }
-.quizzOption_text{
-  font-size: clamp( 18px, 3vw, 20px);
+.quizzOption_text {
+  font-size: clamp(18px, 3vw, 20px);
 }
 
 /* w-[50%] max-w-[50%] min-h-[100px] max-h-[280px] */
@@ -472,32 +474,32 @@ input::-webkit-inner-spin-button {
 
 } */
 
-.resumo h1{
+.resumo h1 {
   font-size: 30px;
 }
 
-@media(max-width:450px){
-  .reply{
+@media (max-width: 450px) {
+  .reply {
     display: none;
   }
 }
 
-@media(max-width:620px){
-  .options{
+@media (max-width: 620px) {
+  .options {
     flex-direction: column;
     align-items: center;
     height: 150px;
   }
-  
-  .singleOption{
+
+  .singleOption {
     max-height: 49%;
     width: 350px;
     max-width: 100%;
   }
 }
 
-.criar_material{
-  font-size: clamp( 18px, 3vw, 25px);
+.criar_material {
+  font-size: clamp(18px, 3vw, 25px);
 }
 
 /* Hide the native 'show password' icon on WebKit browsers (Safari, iOS, Chrome) */
@@ -507,6 +509,6 @@ input[type="password"]::-webkit-inner-spin-button,
 input[type="password"]::-webkit-outer-spin-button,
 input[type="password"]::-webkit-clear-button,
 input[type="password"]::-webkit-password-toggle {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }

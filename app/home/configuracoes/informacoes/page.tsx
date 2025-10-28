@@ -186,7 +186,7 @@ export default function Informacoes() {
 
         {/* Data de Nascimento */}
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
-          <h1 className="text-[20px] font-medium">Data de Nascimento</h1>
+          <h1 className="text-[20px] font-medium">Data de Nascimento </h1>
           <input
             type="text"
             value={configuracoes.dataNascimento}

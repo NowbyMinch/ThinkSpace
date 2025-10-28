@@ -38,6 +38,26 @@ export default function RegistrarInner() {
   const [form2, setForm2] = useState({ email: form.email, escolaridade: selectedEscolaridade, objetivoNaPlataforma: selectedObjetivo, areaDeInteresse: "", instituicaoNome: ""});
   const [form3, setForm3] = useState({ email: form.email, code: ""});
 
+  // const handleEntrar = async () => {
+    
+  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(form),
+  //       credentials: "include",
+  //     });
+  
+  //     const data = await res.json();
+  //     console.log(form);
+  //     if (data.message === "Login realizado com sucesso") {
+  //       router.push("/home");
+  //     } else {
+  //       setMessage(data.message);
+  //       console.log(message)
+  //     }
+  //     console.log(data);
+  //   };
+
   useEffect(() => {
     const handlePopState = () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -92,6 +112,7 @@ export default function RegistrarInner() {
   
   const handleSubmit2 = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(form2)
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/completar-cadastro`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
