@@ -829,7 +829,7 @@ export default function Materiais() {
                             {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
                         </div>
                         
-                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden pb-2 ">
+                        <div className="flex flex-col gap-1 mt-2 items-center relative w-full overflow-y-auto overflow-x-hidden pb-3 ">
                             {recente.map((materia, index) => {
                                 return(
                                     <Link key={index} href={`/home/materiais/${materia.id}`} className="px-1 flex gap-3 py-1 w-full rounded-[15px] ml-[15px] mr-[15px] cursor-pointer hover:bg-[rgba(0,0,0,0.06)] ">
