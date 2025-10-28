@@ -68,6 +68,7 @@ import {
   Ellipsis,
 } from "lucide-react";
 import { colors, icons, cor } from "@/app/home/components/icons";
+import MonthYearSelector from "@/components/ui/MonthYearSelector";
 import {
   startOfWeek,
   startOfMonth,
@@ -129,7 +130,7 @@ type AnotacaoType = {
   tipo?: string | null;
   recorrente: boolean;
   notificar?: boolean;
-  usuarioId?: string | null;
+  usuarioId: string;
 };
 
 type DiaType = {
@@ -162,11 +163,11 @@ export default function Materiais() {
     repeticao: "",
     duracao: "",
   });
-
+  
   /////////////////////////////////////
-
+  
   const [DataFormatada, setDataFormatada] = useState<string>("");
-
+  
   const [data, setData] = useState<string>("");
   const [horario, setHorario] = useState<string>("");
   const [cor, setCor] = useState<string>("");
@@ -175,7 +176,8 @@ export default function Materiais() {
   const [Duracaorecorrente, setDuracaorecorrente] = useState<string>("");
   const [recorrente, setRecorrente] = useState<string>("");
   const [anotacao, setAnotacao] = useState<string>();
-
+  const [notificar, setNotificar] = useState(false);
+  
   const [lembreteInfo, setLembreteInfo] = useState<LembreteInfoType | null>(
     null
   );
@@ -210,12 +212,14 @@ export default function Materiais() {
   const [calendarMonth, setCalendarMonth] = useState(new Date());
 
   // Dados do usuário
-  const [user, setUser] = useState<UserData>({});
+  const [user, setUser] = useState("");
   // const [ perfil, setPerfil ] = useState<perfil | null []>({})
 
   // Referências de elementos
   const popoverRefs = useRef<(HTMLDivElement | null)[]>([]);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const [selectedMonthYear, setSelectedMonthYear] = useState(new Date());
 
   // Constantes
   const cores = [
@@ -273,6 +277,7 @@ export default function Materiais() {
         ...anotacao,
         dia: dia.dia,
         diaSemana: dia.diaSemana,
+        usuarioId: user
       }))
     );
 
@@ -284,82 +289,102 @@ export default function Materiais() {
   }, [todasAnotacoes]);
 
   useEffect(() => {
-    try {
-      const user = async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-  
-          const data = await res.json();
-          setUser(data);
-          console.log("complete");
-        } catch (err) {
-          setMessage("Erro ao carregar saudação.");
-          console.error(err);
-        }
-      };
-      user();
-  
-      const AnotacoesFunc = async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-  
-          const data = await res.json();
-          setLembreteInfo(data);
-          console.log(data, "Data aqui");
-  
-          if (data.error) {
-            console.log("deu erro");
+    console.log(user);
+  }, [user]);
+
+  useEffect(() => {
+    const user = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+          {
+            method: "GET",
+            credentials: "include",
           }
-        } catch (err) {
-          setMessage("Erro ao carregar anotações.");
-          console.error(err);
-        }
-      };
-      AnotacoesFunc();
-  
-      const Recentes = async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/calendario/recentes`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-  
-          const data = await res.json();
-          setLembreteInfo2(data);
-          console.log(data, "Recentes");
-  
-          if (data.error) {
-            console.log("deu erro");
+        );
+
+        const data = await res.json();
+        setUser(data.userId);
+      } catch (err) {
+        setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    };
+    user();
+
+    const AnotacoesFunc = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}&usuarioId=${user}`,
+          {
+            method: "GET",
+            credentials: "include",
           }
-        } catch (err) {
-          setMessage("Erro ao carregar anotações.");
-          console.error(err);
+        );
+
+        const data = await res.json();
+        setLembreteInfo(data);
+        console.log(data, "Data aqui");
+
+        if (data.error) {
+          setMessage(data.message);
         }
-      };
-      Recentes();
+      } catch (err) {
+        setMessage("Erro ao carregar anotações.");
+        console.error(err);
+      }
+    };
+    AnotacoesFunc();
 
-    } catch {
+    const Recentes = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/calendario/recentes?usuarioId=${user}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
-    } finally {
-      setLoading(false);
-    }
+        const data = await res.json();
+        setLembreteInfo2(data);
+        console.log(data, "Recentes");
 
+        if (data.error) {
+          setMessage(data.message);
+        }
+      } catch (err) {
+        setMessage("Erro ao carregar anotações.");
+        console.error(err);
+      }
+    };
+    Recentes();
+
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    const fetchAnotacoes = async () => {
+      try {
+        const mes = selectedMonthYear.getMonth() + 1;
+        const ano = selectedMonthYear.getFullYear();
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}`,
+          { method: "GET", credentials: "include" }
+        );
+
+        const data = await res.json();
+        setLembreteInfo(data);
+        console.log(data, "Updated calendar for selected month/year");
+      } catch (err) {
+        setMessage("Erro ao carregar anotações.");
+        console.error(err);
+      }
+    };
+
+    fetchAnotacoes();
+  }, [selectedMonthYear]);
 
   function closing() {
     setOpen(false);
@@ -376,6 +401,10 @@ export default function Materiais() {
     setDuracaorecorrente("");
     setRecorrente("");
     setAnotacao("");
+    setDuracao({
+      repeticao: "",
+      duracao: "",
+    });
   }
 
   type AccordionItem = {
@@ -386,8 +415,10 @@ export default function Materiais() {
   };
 
   const generateCalendar = () => {
-    const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
-    const end = endOfMonth(calendarMonth);
+    const start = startOfWeek(startOfMonth(selectedMonthYear), {
+      weekStartsOn: 0,
+    });
+    const end = endOfMonth(selectedMonthYear);
     const days: Date[] = [];
 
     let current = start;
@@ -409,6 +440,8 @@ export default function Materiais() {
       Duracaorecorrente: Duracaorecorrente,
       recorrente: recorrente,
       anotacao: anotacao,
+      notificar: notificar,
+      usuarioId: user,
     };
     console.log(calendario);
 
@@ -438,7 +471,7 @@ export default function Materiais() {
   const Lembrete = async () => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}&usuarioId=${user}`,
         {
           method: "GET",
           credentials: "include",
@@ -450,14 +483,13 @@ export default function Materiais() {
       console.log(data, "Data aqui");
 
       if (data.error) {
-        console.log("deu erro");
+        setMessage(data.message);
       }
     } catch (err) {
       setMessage("Erro ao carregar anotações.");
       console.error(err);
     }
   };
-  
 
   const handleDateSelect = (date: Date) => {
     // console.log(date);
@@ -590,6 +622,7 @@ export default function Materiais() {
                       <div className="flex gap-2 items-center">
                         <motion.input
                           type="checkbox"
+                          onChange={() => setNotificar(!notificar)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="w-5 h-5 accent-[#804EE5] cursor-pointer"
@@ -843,13 +876,20 @@ export default function Materiais() {
         <div className=" w-[1800px] max-w-[98%] py-2 sm:h-[1057px] gap-3 rounded-[35px] flex flex-row   ">
           <div className=" w-full overflow-hidden h-full flex sm:flex-row flex-col items-center gap-3">
             <div className=" flex w-full rounded-[35px] overflow-hidden bg-white h-full  flex-col items-center shadow-md border border-[#00000031]">
-              <div className="w-full pt-4 px-4">
+              <div className="w-full pt-4 px-4 flex justify-between">
                 <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
-                  {new Date()
+                  {selectedMonthYear
                     .toLocaleDateString("pt-BR", { month: "long" })
                     .replace(/^./, (c) => c.toUpperCase())}{" "}
-                  {new Date().toLocaleDateString("pt-BR", { year: "numeric" })}
+                  {selectedMonthYear.getFullYear()}
                 </h1>
+
+                <div className="flex flex-col items-center gap-6 w-fit">
+                  <MonthYearSelector
+                    selectedDate={selectedMonthYear}
+                    onChange={setSelectedMonthYear}
+                  />
+                </div>
               </div>
               <div className="flex w-full text-[18px] text-[#1E2351] font-medium gap-3 px-[2px]">
                 <div className="w-full justify-center sm:flex hidden  text-center">
@@ -917,21 +957,23 @@ export default function Materiais() {
                               nota.dataInicio.split("T")[0] ===
                               day.toISOString().split("T")[0]
                           )
-                          .map((nota) => (
-                            <div
-                              key={nota.id}
-                              className={`text-start text-[13px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px]`}
-                              style={{ backgroundColor: nota.cor || "#9767f8" }}
-                            >
-                              {nota.titulo}
-                            </div>
-                          ))}
-
-                        {i === 30 && (
-                          <div className="text-start text-[15px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px] bg-[#F92A46] overflow-hidden text-ellipsis whitespace-nowrap">
-                            <span>Física</span>
-                          </div>
-                        )}
+                          .map((nota, index) => {
+                            if (index < 6) {
+                              return (
+                                <div
+                                  key={nota.id}
+                                  className={`text-start text-[13px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px]`}
+                                  style={{
+                                    backgroundColor: nota.cor || "#9767f8",
+                                  }}
+                                >
+                                  {nota.titulo}
+                                </div>
+                              );
+                            } else {
+                              return <div className="">ver mais...</div>;
+                            }
+                          })}
                       </div>
                     </button>
                   );

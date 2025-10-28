@@ -335,7 +335,7 @@ export const Sidebar = () => {
                                         return (
                                             <>
                                                 <AnimatePresence>
-                                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
+                                                    <Tooltip closeDelay={0} content="Calendário" placement="right" className="w-fit text-[18px]" showArrow={true}>
                                                         <motion.button 
                                                         initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
                                                         animate={{ scale: 1 }}
@@ -352,15 +352,23 @@ export const Sidebar = () => {
                                         )
                                     }
                                     return (
-                                        <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                            <motion.button 
-                                            whileHover={{ scale: 1.05}}
-                                            whileTap={{ scale: 0.95}}
-                                            id="side_pop" className="relative p-[10px]  rounded-full "> 
-                                                <CalendarDays className= "size-[24px] cursor-pointer text-black "/>
-                                            </motion.button>
-                                        </Tooltip>
-                                    )
+                                      <Tooltip
+                                        closeDelay={0}
+                                        content="Calendário"
+                                        placement="right"
+                                        className="w-fit text-[18px]"
+                                        showArrow={true}
+                                      >
+                                        <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          whileTap={{ scale: 0.95 }}
+                                          id="side_pop"
+                                          className="relative p-[10px]  rounded-full "
+                                        >
+                                          <CalendarDays className="size-[24px] cursor-pointer text-black " />
+                                        </motion.button>
+                                      </Tooltip>
+                                    );
                                 })()}
                             </Link>
                             
@@ -564,34 +572,54 @@ export const Sidebar = () => {
                                 {(() => {
                                     if ( pathname.startsWith("/home/calendario") ) {
                                         return (
-                                            <>
-                                                <AnimatePresence>
-                                                    <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                                        <motion.button 
-                                                        initial={{ backgroundColor: "#A39CEC", scale: 0.8 }}
-                                                        animate={{ scale: 1 }}
-                                                        whileHover={{ scale: 1.05}}
-                                                        whileTap={{ scale: 0.95}}
-                                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                        className="relative p-[10px] rounded-full bg-[#A39CEC]"> 
-                                                            <CalendarDays className= "size-[24px] cursor-pointer text-white "/>
-                                                        </motion.button>
-
-                                                    </Tooltip>
-                                                </AnimatePresence>
-                                            </>
-                                        )
+                                          <>
+                                            <AnimatePresence>
+                                              <Tooltip
+                                                closeDelay={0}
+                                                content="Calendário"
+                                                placement="right"
+                                                className="w-fit text-[18px]"
+                                                showArrow={true}
+                                              >
+                                                <motion.button
+                                                  initial={{
+                                                    backgroundColor: "#A39CEC",
+                                                    scale: 0.8,
+                                                  }}
+                                                  animate={{ scale: 1 }}
+                                                  whileHover={{ scale: 1.05 }}
+                                                  whileTap={{ scale: 0.95 }}
+                                                  transition={{
+                                                    duration: 0.2,
+                                                    ease: "easeInOut",
+                                                  }}
+                                                  className="relative p-[10px] rounded-full bg-[#A39CEC]"
+                                                >
+                                                  <CalendarDays className="size-[24px] cursor-pointer text-white " />
+                                                </motion.button>
+                                              </Tooltip>
+                                            </AnimatePresence>
+                                          </>
+                                        );
                                     }
                                     return (
-                                        <Tooltip closeDelay={0} content="Materiais" placement="right" className="w-fit text-[18px]" showArrow={true}>
-                                            <motion.button 
-                                            whileHover={{ scale: 1.05}}
-                                            whileTap={{ scale: 0.95}}
-                                            id="side_pop" className="relative p-[10px]  rounded-full "> 
-                                                <CalendarDays className= "size-[24px] cursor-pointer text-black "/>
-                                            </motion.button>
-                                        </Tooltip>
-                                    )
+                                      <Tooltip
+                                        closeDelay={0}
+                                        content="Calendário"
+                                        placement="right"
+                                        className="w-fit text-[18px]"
+                                        showArrow={true}
+                                      >
+                                        <motion.button
+                                          whileHover={{ scale: 1.05 }}
+                                          whileTap={{ scale: 0.95 }}
+                                          id="side_pop"
+                                          className="relative p-[10px]  rounded-full "
+                                        >
+                                          <CalendarDays className="size-[24px] cursor-pointer text-black " />
+                                        </motion.button>
+                                      </Tooltip>
+                                    );
                                 })()}
                             </Link>
 
