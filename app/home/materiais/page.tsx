@@ -129,81 +129,66 @@ export default function Materiais() {
     };}, [openPop]);
 
     useEffect(() => {
-        setLoading(true);
-         
-        const materia = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                
-                const data = await res.json();
-                setMaterias(data)
-            } catch (err) {
-                console.error(err);
-            } 
-            
-        }; materia();
+      const fetchAll = async () => {
+        setLoading(true); // start loading before requests
 
-        const user = async () => {
-            try{
-                
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                
-                const data = await res.json();
-                console.log("User: ", data)
-                setUser(data)
-                console.log("complete");
-                
-                
-            } catch (err) {
-                setMessage("Erro ao carregar saudação.");
-                console.error(err);
-            }
-        }; user();
+        try {
+          // Run all requests in parallel
+          const [materiaRes, userRes, recentesRes, rankingRes] =
+            await Promise.all([
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/recentes`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+                method: "GET",
+                credentials: "include",
+              }),
+            ]);
 
-        const recentes = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/recentes`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
+          // Parse all JSON responses together
+          const [materiaData, userData, recentesData, rankingData] =
+            await Promise.all([
+              materiaRes.json(),
+              userRes.json(),
+              recentesRes.json(),
+              rankingRes.json(),
+            ]);
 
-                if (data.materiasRecentes){
-                    setRecente(data.materiasRecentes);
-                }
+          // Apply state updates after everything is loaded
+          setMaterias(materiaData);
+          setUser(userData);
+          setUserXP(rankingData);
 
-            } catch (err) {
-                console.error(err);
-            }
-            
-        }; recentes();
-        
-        const ranking = async () => {
-          try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
-              method: 'GET',
-              credentials: 'include',
-            });
-            
-            const data = await res.json();
-            setUserXP(data);
-            console.log(data);
-            
-
-          } catch (err) {
-            console.error(err);
+          if (recentesData.materiasRecentes) {
+            setRecente(recentesData.materiasRecentes);
           }
-        }; ranking();
-        
-        setLoading(false)
+
+          console.log("All data loaded successfully:", {
+            materiaData,
+            userData,
+            recentesData,
+            rankingData,
+          });
+        } catch (err) {
+          console.error("Erro ao carregar dados:", err);
+          setMessage("Erro ao carregar dados.");
+        } finally {
+          setLoading(false); // ✅ stop loading only after all 4 requests finish
+        }
+      };
+
+      fetchAll();
     }, []);
+
 
     useEffect(() => {
         if (materias && materias.length > 0 && user.primeiroNome != undefined) {

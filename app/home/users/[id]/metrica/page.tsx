@@ -78,71 +78,62 @@ export default function Métricas() {
 
     
     useEffect(() => {
-        const user = async () => {
-            try{
-                setLoading(true);
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                setUser(data);
+      const fetchAll = async () => {
 
-            } catch (err) {
-                console.error(err);
-            }
-        }; user();
-        
-        const UserXP = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                console.log("IGNORE (Esse é o retorno do materias perfil ): ", data);
-                setUserXP(data);
-                // console.log("This is USERXP: ", data);
+        try {
+          // Run all requests in parallel
+          const [userRes, userXPRes, rankingRes, userIDRes] = await Promise.all(
+            [
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias/perfil`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/ranking`, {
+                method: "GET",
+                credentials: "include",
+              }),
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+                method: "GET",
+                credentials: "include",
+              }),
+            ]
+          );
 
-            } catch (err) {
-                console.error(err);
-            }
-        }; UserXP();
-        
-        const ranking = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/metricas/ranking`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                console.log("Rank", data);
-                setRanking(data);
+          // Parse JSONs concurrently
+          const [userData, userXPData, rankingData, userIDData] =
+            await Promise.all([
+              userRes.json(),
+              userXPRes.json(),
+              rankingRes.json(),
+              userIDRes.json(),
+            ]);
 
-            } catch (err) {
-                console.error(err);
-            }
-        }; ranking();
-        
-        const UserID = async () => {
-            try{
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
-                method: 'GET',
-                credentials: 'include',
-                });
-                
-                const data = await res.json();
-                setUserID(data.userId);
+          // Apply state updates after all are done
+          setUser(userData);
+          setUserXP(userXPData);
+          setRanking(rankingData);
+          setUserID(userIDData.userId);
 
-            } catch (err) {
-                console.error(err);
-            }
-        }; UserID();
-        
+          console.log("All data loaded successfully:", {
+            userData,
+            userXPData,
+            rankingData,
+            userIDData,
+          });
+        } catch (err) {
+          console.error("Erro ao carregar dados:", err);
+        } finally {
+          setLoading(false); // ✅ stop loading only when all 4 are done
+        }
+      };
+
+      fetchAll();
     }, []);
+
 
     useEffect(() => {
         if (userID){

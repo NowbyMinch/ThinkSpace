@@ -161,16 +161,15 @@ export default function Materiais() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [openIndex2, setOpenIndex2] = useState<number | null>(null);
   const [pesquise, setPesquise] = useState("");
-  const [subTitulo, setSubTitulo] = useState("");
   const [duracao, setDuracao] = useState({
     repeticao: "",
     duracao: "",
   });
-  
+
   /////////////////////////////////////
-  
+
   const [DataFormatada, setDataFormatada] = useState<string>("");
-  
+
   const [data, setData] = useState<string>("");
   const [horario, setHorario] = useState<string>("");
   const [cor, setCor] = useState<string>("");
@@ -180,7 +179,7 @@ export default function Materiais() {
   const [recorrente, setRecorrente] = useState<string>("");
   const [anotacao, setAnotacao] = useState<string>();
   const [notificar, setNotificar] = useState(false);
-  
+
   const [lembreteInfo, setLembreteInfo] = useState<LembreteInfoType | null>(
     null
   );
@@ -280,7 +279,7 @@ export default function Materiais() {
         ...anotacao,
         dia: dia.dia,
         diaSemana: dia.diaSemana,
-        usuarioId: user
+        usuarioId: user,
       }))
     );
 
@@ -300,74 +299,56 @@ export default function Materiais() {
   }, [user]);
 
   useEffect(() => {
-    const user = async () => {
+    const fetchAll = async () => {
       try {
-        const res = await fetch(
+        setLoading(true);
+
+        // 1️⃣ Fetch user first — we need the ID for the others
+        const resUser = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
           {
             method: "GET",
             credentials: "include",
           }
         );
+        const userData = await resUser.json();
+        setUser(userData.userId);
 
-        const data = await res.json();
-        setUser(data.userId);
-      } catch (err) {
-        setMessage("Erro ao carregar saudação.");
-        console.error(err);
-      }
-    };
-    user();
+        // 2️⃣ Then run both requests that depend on userId in parallel
+        const [anotacoesRes, recentesRes] = await Promise.all([
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${
+              new Date().getMonth() + 1
+            }&ano=${new Date().getFullYear()}&usuarioId=${userData.userId}`,
+            { method: "GET", credentials: "include" }
+          ),
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/calendario/recentes?usuarioId=${userData.userId}`,
+            { method: "GET", credentials: "include" }
+          ),
+        ]);
 
-    const AnotacoesFunc = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}&usuarioId=${user}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const [anotacoesData, recentesData] = await Promise.all([
+          anotacoesRes.json(),
+          recentesRes.json(),
+        ]);
 
-        const data = await res.json();
-        setLembreteInfo(data);
-        console.log(data, "Data aqui");
+        setLembreteInfo(anotacoesData);
+        setLembreteInfo2(recentesData);
 
-        if (data.error) {
-          setMessage(data.message);
+        if (anotacoesData.error || recentesData.error) {
+          setMessage(anotacoesData.message || recentesData.message);
         }
       } catch (err) {
-        setMessage("Erro ao carregar anotações.");
+        setMessage("Erro ao carregar dados.");
         console.error(err);
+      } finally {
+        // 3️⃣ Only stop loading when all 3 fetches have finished
+        setLoading(false);
       }
     };
-    AnotacoesFunc();
 
-    const Recentes = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/calendario/recentes?usuarioId=${user}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        const data = await res.json();
-        setLembreteInfo2(data);
-        console.log(data, "Recentes");
-
-        if (data.error) {
-          setMessage(data.message);
-        }
-      } catch (err) {
-        setMessage("Erro ao carregar anotações.");
-        console.error(err);
-      }
-    };
-    Recentes();
-
-    setLoading(false);
+    fetchAll();
   }, []);
 
   useEffect(() => {
@@ -403,7 +384,6 @@ export default function Materiais() {
 
     fetchAnotacoes();
   }, [selectedMonthYear, user]);
-
 
   function closing() {
     setOpen(false);
@@ -483,14 +463,18 @@ export default function Materiais() {
     } catch (err) {
       console.error(err);
     } finally {
-      Lembrete();
+      await Lembrete(selectedMonthYear);;
     }
   };
 
-  const Lembrete = async () => {
+  const Lembrete = async (date: Date = selectedMonthYear) => {
+
     try {
+      const mes = selectedMonthYear.getMonth() + 1;
+      const ano = selectedMonthYear.getFullYear();
+
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${new Date().getMonth() + 1}&ano=${new Date().getFullYear()}&usuarioId=${user}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
         {
           method: "GET",
           credentials: "include",
@@ -499,7 +483,7 @@ export default function Materiais() {
 
       const data = await res.json();
       setLembreteInfo(data);
-      console.log(data, "Data aqui");
+      console.log(data, "Lembretes atualizados para o mês/ano selecionado");
 
       if (data.error) {
         setMessage(data.message);
@@ -510,6 +494,34 @@ export default function Materiais() {
     }
   };
 
+
+  const Deletar = async (id: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/calendario/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      console.log(data, "Data deletar");
+
+      if (data.error) {
+        setMessage(data.message);
+      } else {
+        await Lembrete(selectedMonthYear);
+      }
+    } catch (err) {
+      setMessage("Erro ao carregar anotações.");
+      console.error(err);
+    } finally {
+      setOpenIndex(null)
+      setOpenIndex2(null);
+    }
+  };
+
   const handleDateSelect = (date: Date) => {
     // console.log(date);
     setSelectedDate(date);
@@ -517,7 +529,23 @@ export default function Materiais() {
     setOpen2(true);
   };
 
+  const [cellHeights, setCellHeights] = useState<number[]>([]);
 
+  // store multiple refs (one for each cell)
+  const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const measureHeights = () => {
+    const newHeights = cellRefs.current.map((el) => el?.offsetHeight ?? 0);
+    setCellHeights(newHeights);
+  };
+
+  // ✅ Measure after render and on resize
+  useEffect(() => {
+    measureHeights(); // after first paint
+
+    window.addEventListener("resize", measureHeights);
+    return () => window.removeEventListener("resize", measureHeights);
+  }, [todasAnotacoes, selectedMonthYear]);
 
   if (loading) return <Loading />;
   return (
@@ -549,7 +577,7 @@ export default function Materiais() {
               >
                 <div
                   id="white-box"
-                  className="p-4 gap-4 w-full  rounded-[40px] overflow-y-auto shadow-md flex flex-col items-center relative z-[1100]"
+                  className="p-4 gap-4 w-full  rounded-[40px] overflow-y-auto overflow-x-hidden shadow-md flex flex-col items-center relative z-[1100]"
                 >
                   <Image
                     width={300}
@@ -589,7 +617,7 @@ export default function Materiais() {
                     />
                   </div>
 
-                  <div className="w-full flex flex-col gap-4">
+                  <div className="w-full flex flex-col gap-4 ">
                     <div className="flex gap-3 text-[18px]">
                       <div className="flex items-center gap-2">
                         <Clock className="size-8 stroke-1" />
@@ -761,124 +789,155 @@ export default function Materiais() {
                     className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
                   />
 
-                  <div className="w-full flex h-fit text-[18px]">
-                    <div className="w-full flex flex-col justify-center">
-                      <div className="flex ">
-                        <div className=" flex flex-col justify-center items-center w-full text-[35px]">
-                          <span className="w-fit ">
-                            {selectedDate?.toLocaleDateString("pt-BR", {
-                              weekday: "short",
-                            })}
-                          </span>
-                          <span className="w-fit ">
-                            {selectedDate?.toLocaleDateString("pt-BR", {
-                              day: "numeric",
-                            })}
-                          </span>
-                        </div>
-                        <div className=" w-fit">
-                          <motion.div
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.92 }}
-                            onClick={closing}
-                            className="ml-auto cursor-pointer z-1000 w-6 h-6"
-                          >
-                            <X className="w-full h-full" />
-                          </motion.div>
-                        </div>
+                  <div className="w-full flex flex-col justify-center h-full">
+                    <div className="flex ">
+                      <div className=" flex flex-col justify-center items-center w-full text-[35px]">
+                        <span className="w-fit ">
+                          {selectedDate?.toLocaleDateString("pt-BR", {
+                            weekday: "short",
+                          })}
+                        </span>
+                        <span className="w-fit ">
+                          {selectedDate?.toLocaleDateString("pt-BR", {
+                            day: "numeric",
+                          })}
+                        </span>
                       </div>
+                      <div className=" w-fit">
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          onClick={closing}
+                          className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                        >
+                          <X className="w-full h-full" />
+                        </motion.div>
+                      </div>
+                    </div>
 
-                      <div className="w-full pb-[26px] max-h-[600px] overflow-y-auto overflow-x-hidden flex flex-col gap-2">
-                        {todasAnotacoes
-                          .filter((nota) => {
-                            if (!selectedDate) return true; // show all if no date selected
-                            return (
-                              nota.dataInicio.split("T")[0] ===
-                              selectedDate.toISOString().split("T")[0]
-                            );
-                          })
-                          .map((nota, index) => (
-                            <motion.div
-                              id="perguntas"
-                              key={nota.id}
-                              whileTap={{ scale: 0.99 }}
-                              whileHover={{ scale: 1.01 }}
-                              transition={{ duration: 0.2, ease: "easeInOut" }}
-                              className={`border w-full max-w-full min-h-[55px] border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md`}
+                    <div className="w-full pb-[20px] max-h-[600px]  overflow-y-auto overflow-x-hidden px-1 flex flex-col gap-2">
+                      {todasAnotacoes
+                        .filter((nota) => {
+                          if (!selectedDate) return true; // show all if no date selected
+                          return (
+                            nota.dataInicio.split("T")[0] ===
+                            selectedDate.toISOString().split("T")[0]
+                          );
+                        })
+                        .map((nota, index) => (
+                          <motion.div
+                            id="perguntas"
+                            key={nota.id}
+                            whileTap={{ scale: 0.99 }}
+                            whileHover={{ scale: 1.01 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            className={`border w-full max-w-full min-h-[55px] border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
+                          >
+                            {/* Header */}
+                            <button
+                              onClick={() => toggle2(index)}
+                              style={{
+                                backgroundColor: nota.cor || "#9767f8",
+                              }}
+                              className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out bg-red-500 items-center"
                             >
-                              {/* Header */}
-                              <button
-                                onClick={() => toggle2(index)}
-                                style={{ backgroundColor: nota.cor || "white" }}
-                                className={`w-full min-h-[55px] flex justify-between transition-all ease-in-out dark items-center px-6 text-left text-[18px] text-white font-medium`}
-                              >
+                              <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
                                 {nota.titulo}
+                              </span>
 
-                                <span
-                                  className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-                                  ${openIndex2 === index ? "-rotate-90" : ""}`}
+                              <span
+                                className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
+                                ${openIndex2 === index ? "-rotate-90" : ""}`}
+                              >
+                                <ChevronLeft className="text-white" />
+                              </span>
+                            </button>
+
+                            {/* Animated Content */}
+                            <AnimatePresence initial={false}>
+                              {openIndex2 === index && (
+                                <motion.div
+                                  key="content"
+                                  initial={{
+                                    height: 0,
+                                    opacity: 0,
+                                    filter: "blur(1px)",
+                                  }}
+                                  animate={{
+                                    height: "auto",
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                  }}
+                                  exit={{
+                                    height: 0,
+                                    opacity: 0,
+                                    filter: "blur(1px)",
+                                  }}
+                                  transition={{
+                                    duration: 0.3,
+                                    ease: "easeInOut",
+                                  }}
                                 >
-                                  <ChevronLeft className="text-white" />
-                                </span>
-                              </button>
-
-                              {/* Animated Content */}
-                              <AnimatePresence initial={false}>
-                                {openIndex2 === index && (
-                                  <motion.div
-                                    key="content"
-                                    initial={{
-                                      height: 0,
-                                      opacity: 0,
-                                      filter: "blur(1px)",
+                                  <div
+                                    style={{
+                                      backgroundColor:
+                                        `${nota.cor}33` || "white",
                                     }}
-                                    animate={{
-                                      height: "auto",
-                                      opacity: 1,
-                                      filter: "blur(0px)",
-                                    }}
-                                    exit={{
-                                      height: 0,
-                                      opacity: 0,
-                                      filter: "blur(1px)",
-                                    }}
-                                    transition={{
-                                      duration: 0.3,
-                                      ease: "easeInOut",
-                                    }}
+                                    className="w-full pr-1 pt-1 flex justify-end"
                                   >
-                                    <div
-                                      style={{
-                                        backgroundColor:
-                                          `${nota.cor}33` || "white",
-                                      }}
-                                      className="w-full pr-1 pt-1 flex justify-end"
-                                    >
-                                      <span className="ml-auto text-[15px] font-medium text-[#1E2351]">
-                                        {new Date(
-                                          nota.dataInicio
-                                        ).toLocaleDateString("pt-BR", {
-                                          day: "numeric",
-                                          month: "long",
-                                          year: "numeric",
-                                        })}
+                                    <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
+                                      {new Date(
+                                        nota.dataInicio
+                                      ).toLocaleDateString("pt-BR", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                      })}
+                                    </span>
+                                  </div>
+                                  <div
+                                    style={{
+                                      backgroundColor:
+                                        `${nota.cor}33` || "white",
+                                    }}
+                                    className="px-6  text-[15px] font-medium text-[#1E2351]"
+                                  >
+                                    <div className="flex gap-1 items-center text-wrap ">
+                                      <div
+                                        style={{
+                                          borderColor: nota.cor || "#9767f8",
+                                        }}
+                                        className={`min-w-4 min-h-4 border-2 rounded-full`}
+                                      ></div>
+                                      <span className=" break-words whitespace-normal max-w-[90%]">
+                                        {nota.subtitulo}
                                       </span>
                                     </div>
-                                    <div
-                                      style={{
-                                        backgroundColor:
-                                          `${nota.cor}33` || "white",
-                                      }}
-                                      className="px-6 pb-2 text-[15px] font-medium text-[#1E2351]"
-                                    >
+                                    <span className="break-words whitespace-normal max-w-[90%]">
                                       {nota.descricao}
-                                    </div>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                            </motion.div>
-                          ))}
-                      </div>
+                                    </span>
+                                  </div>
+                                  <div
+                                    style={{
+                                      backgroundColor:
+                                        `${nota.cor}33` || "white",
+                                    }}
+                                    className="pb-2 pr-1 font-medium text-[#1E2351]"
+                                  >
+                                    <motion.div
+                                      whileHover={{ scale: 1.05 }}
+                                      whileTap={{ scale: 0.95 }}
+                                      onClick={() => Deletar(nota.id)}
+                                      className="ml-auto w-5 h-5 cursor-pointer"
+                                    >
+                                      <Trash className=" w-full h-full " />
+                                    </motion.div>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -893,12 +952,12 @@ export default function Materiais() {
       </AnimatePresence>
 
       {/* h-[calc(100vh-24px)] */}
-      <div className="w-full sm:h-[calc(100vh)] overflow-y-auto flex justify-center">
-        <div className=" w-[1800px] max-w-[98%] py-2 sm:h-[1057px] gap-3 rounded-[35px] flex flex-row   ">
-          <div className=" w-full overflow-hidden h-full flex sm:flex-row flex-col items-center gap-3">
-            <div className=" flex w-full rounded-[35px] overflow-hidden bg-white h-full  flex-col items-center shadow-md border border-[#00000031]">
+      <div className="w-full sm:h-screen max-h-[1057px] flex justify-center items-start overflow-hidden">
+        <div className="w-[1800px] max-w-[98%] py-2 h-full gap-3 rounded-[35px] flex flex-row">
+          <div className="w-full overflow-hidden h-full flex sm:flex-row flex-col items-center gap-3">
+            <div className="flex w-full px-1 rounded-[35px] overflow-hidden bg-white h-full flex-col items-center shadow-md border border-[#00000031]">
               <div className="w-full pt-4 px-4 flex justify-between">
-                <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
+                <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1 leading-none">
                   {selectedMonthYear
                     .toLocaleDateString("pt-BR", { month: "long" })
                     .replace(/^./, (c) => c.toUpperCase())}{" "}
@@ -936,64 +995,74 @@ export default function Materiais() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-7 text-sm w-full h-full pb-[2px]">
+              <div className="grid grid-cols-7 text-sm w-full h-full pb-[2px] my-1 mx-1 gap-1 auto-rows-fr">
                 {generateCalendar().map((day, i) => {
                   const today = new Date();
                   const isToday = isSameDay(day, today);
-                  const isSelected =
-                    selectedDate && isSameDay(day, selectedDate);
-                  const inCurrentMonth = isSameMonth(day, selectedMonthYear); // use selectedMonthYear
+                  const inCurrentMonth = isSameMonth(day, selectedMonthYear);
+                  const height = cellRefs.current[i]?.offsetHeight ?? 0;
 
                   return (
-                    <button
-                      type="button"
+                    // 4
+                    <div
+                      ref={(el) => {
+                        cellRefs.current[i] = el;
+                      }}
                       key={i}
                       onClick={() => handleDateSelect(day)}
-                      className={`rounded-lg p-2 m-[2px] flex flex-col justify-normal transition text-[18px] text-[#1E2351]
-          ${isToday ? "shadow-[0_5px_10px_rgba(86,50,157)]" : ""}
-          ${
-            inCurrentMonth
-              ? "hover:bg-[#9767f8] bg-[#F1F1F1] hover:bg-opacity-20"
-              : "bg-[#d9d8ee] text-[#9a9a9a]"
-          }`}
+                      className={`cursor-pointer rounded-lg sm:p-2 p-1 flex flex-col justify-start transition text-[18px] text-[#1E2351] overflow-hidden h-full
+                      ${isToday ? "shadow-[0_5px_10px_rgba(86,50,157)]" : ""}
+                      ${inCurrentMonth ? "hover:bg-[#9767f8] bg-[#F1F1F1] hover:bg-opacity-20" : "bg-[#d9d8ee] text-[#9a9a9a]"}`}
                     >
+                      {/* 20 */}
                       <span
-                        className={`text-start text-[15px] ${isToday ? "text-purple-500" : ""}`}
+                        className={`cursor-pointer text-start sm:text-[15px] h-fit text-[12px] ${isToday ? "text-purple-500" : ""}`}
                       >
                         {day.getDate()}
                       </span>
 
-                      {todasAnotacoes
-                        .filter(
-                          (nota) =>
-                            nota.dataInicio.split("T")[0] ===
-                            day.toISOString().split("T")[0]
-                        )
-                        .map((nota, index) => {
-                          if (index < 6) {
-                            return (
-                              <div
-                                key={nota.id}
-                                className={`text-start text-[13px] px-2 max-w-full w-fit rounded-[6px] text-white py-[2px]`}
-                                style={{
-                                  backgroundColor: nota.cor || "#9767f8",
-                                }}
-                              >
-                                {nota.titulo}
-                              </div>
-                            );
-                          } else {
-                            return (
-                              <div
-                                key={index}
-                                className="text-[12px] text-gray-600"
-                              >
-                                ver mais...
-                              </div>
-                            );
-                          }
-                        })}
-                    </button>
+                      <div className="w-full flex flex-col gap-[2px]">
+                        {(() => {
+                          const notasDoDia = todasAnotacoes.filter(
+                            (nota) =>
+                              nota.dataInicio.split("T")[0] ===
+                              day.toISOString().split("T")[0]
+                          );
+
+                          // Calculate how many can fit based on cell height
+                          const semiHeight = (notasDoDia.length - 1) * 2;
+                          const calc = Math.round(
+                            (height - 16 - semiHeight) / 20 - 2
+                          );
+
+                          // Slice only the notes that fit
+                          const visibleNotas = notasDoDia.slice(0, calc);
+
+                          return (
+                            <>
+                              {visibleNotas.map((nota) => (
+                                <div
+                                  key={nota.id}
+                                  className="cursor-pointer text-start sm:text-[12px] h-[20px] text-[12px] sm:px-2 px-1 max-w-full w-fit rounded-[6px] text-white truncate line-clamp-2"
+                                  style={{
+                                    backgroundColor: nota.cor || "#9767f8",
+                                  }}
+                                >
+                                  {nota.titulo}
+                                </div>
+                              ))}
+
+                              {/* Only one "ver mais..." if there are hidden notes */}
+                              {notasDoDia.length > visibleNotas.length && (
+                                <div className="cursor-pointer sm:text-[13px] h-[16px] text-[12px] text-start overflow-hidden text-ellipsis line-clamp-1 leading-none text-gray-600">
+                                  ver mais...
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </div>
+                    </div>
                   );
                 })}
               </div>
@@ -1057,13 +1126,15 @@ export default function Materiais() {
                       <button
                         onClick={() => toggle(index)}
                         style={{ backgroundColor: nota.cor || "#9767f8" }}
-                        className={`w-full min-h-[55px] flex justify-between items-center px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out`}
+                        className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out bg-red-500 items-center"
                       >
-                        {nota.titulo}
+                        <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
+                          {nota.titulo}
+                        </span>
 
                         <span
                           className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-            ${openIndex === index ? "-rotate-90" : ""}`}
+                          ${openIndex === index ? "-rotate-90" : ""}`}
                         >
                           <ChevronLeft className="text-white" />
                         </span>
@@ -1098,7 +1169,6 @@ export default function Materiais() {
                               className="w-full pr-1 pt-1 flex justify-end"
                             >
                               <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
-
                                 {new Date(nota.dataInicio).toLocaleDateString(
                                   "pt-BR",
                                   {
@@ -1107,23 +1177,41 @@ export default function Materiais() {
                                     year: "numeric",
                                   }
                                 )}
-                                
                               </span>
                             </div>
                             <div
                               style={{
                                 backgroundColor: `${nota.cor}33` || "white",
                               }}
-                              className="px-6 pb-2 text-[15px] font-medium text-[#1E2351]"
+                              className="px-6  text-[15px] font-medium text-[#1E2351]"
                             >
-                              {/* <div className="flex gap-2 items-center ">
+                              <div className="flex gap-1 items-center text-wrap ">
                                 <div
                                   style={{ borderColor: nota.cor || "#9767f8" }}
-                                  className={`w-4 h-4 border-2 rounded-full`}
+                                  className={`min-w-4 min-h-4 border-2 rounded-full`}
                                 ></div>
-                                <span>{nota.subtitulo}</span>
-                              </div> */}
-                              <span>{nota.descricao}</span>
+                                <span className=" break-words whitespace-normal max-w-[90%]">
+                                  {nota.subtitulo}
+                                </span>
+                              </div>
+                              <span className="break-words whitespace-normal max-w-[90%]">
+                                {nota.descricao}
+                              </span>
+                            </div>
+                            <div
+                              style={{
+                                backgroundColor: `${nota.cor}33` || "white",
+                              }}
+                              className="pb-2 pr-1 font-medium text-[#1E2351]"
+                            >
+                              <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => Deletar(nota.id)}
+                                className="ml-auto w-5 h-5 cursor-pointer"
+                              >
+                                <Trash className=" w-full h-full " />
+                              </motion.div>
                             </div>
                           </motion.div>
                         )}
@@ -1132,32 +1220,6 @@ export default function Materiais() {
                   ))}
               </div>
             </div>
-
-            {/* <div className=" w-full rounded-[35px] overflow-hidden bg-white p-4 h-full max-h-fit flex flex-col items-center shadow-md border border-[#00000031] ">
-              <h1 className="text-[#1E2351] font-medium text-[30px] w-full pb-1">
-                {" "}
-                Visão Geral{" "}
-              </h1>
-              <div className="w-full max-h-full pr-1 overflow-y-auto">
-                {items.map((item: AccordionItem, index) => (
-                  <div
-                    key={index}
-                    className={`w-full border-1 ${index !== 1 ? "border-b-[#1E2351] border-t-[#1E2351]" : ""} text-[#1E2351] py-1 flex text-[20px] items-center gap-2`}
-                  >
-                    <motion.div className="w-4 h-4 rounded-full border-2 border-[#9868F9]"></motion.div>
-                    <div className="flex w-full justify-between items-center">
-                      <span>{item?.sala}</span>
-
-                      <span className="text-[18px]">
-                        {index === 0 && "28 de Outubro de 2025"}
-                        {index === 1 && "29 de Outubro de 2025"}
-                        {index === 2 && "30 de Outubro de 2025"}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
