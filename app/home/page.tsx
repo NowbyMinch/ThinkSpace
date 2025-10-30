@@ -159,7 +159,7 @@ const icons = [
 
 export default function HomePage() {
   const [pop, setPop] = useState(false);
-  const [pop2, setPop2] = useState(true);
+  const [pop2, setPop2] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
   const cores = {
@@ -248,16 +248,16 @@ export default function HomePage() {
     criadoEm: string;
   };
 
+  const [calendario, setCalendario] = useState<CalendarioData>({});
   const [bannerData, setBannerData] = useState<BannerData>({});
   const [user, setUser] = useState<UserData>({});
-  const [calendario, setCalendario] = useState<CalendarioData>({});
   const [salas, setSalas] = useState<Sala[]>([]);
+  const [avatares, setAvatares] = useState<string[]>([]);
   const [notificacao, setNotificacao] = useState<notificacaoData>({});
   const [loading, setLoading] = useState(true);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
   const [ofensiva, setOfensiva] = useState();
   const [ofensivaMensagem, setOfensivaMensagem] = useState("");
-  const [avatares, setAvatares] = useState<string[]>([]);
   const [totalEstudantes, setTotalEstudantes] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -749,10 +749,10 @@ export default function HomePage() {
                                                 backgroundColor:
                                                   nota.cor || "#9767f8",
                                               }}
-                                              className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out bg-red-500 items-center"
+                                              className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out items-center"
                                             >
                                               <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
-                                                {nota.mensagem}
+                                                {nota.titulo}
                                               </span>
 
                                               <span
@@ -790,18 +790,13 @@ export default function HomePage() {
                                                 >
                                                   <div
                                                     style={{
-                                                      backgroundColor: `#F92A4633`,
+                                                      backgroundColor: `${nota.cor}33`,
                                                     }}
-                                                    // style={{
-                                                    //   backgroundColor:
-                                                    //     `${nota.cor}33` ||
-                                                    //     "white",
-                                                    // }}
                                                     className="w-full pr-1 pt-1 flex justify-end"
                                                   >
                                                     <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
                                                       {new Date(
-                                                        nota.mensagem
+                                                        nota.data
                                                       ).toLocaleDateString(
                                                         "pt-BR",
                                                         {
@@ -814,25 +809,22 @@ export default function HomePage() {
                                                   </div>
                                                   <div
                                                     style={{
-                                                      backgroundColor: `#F92A4633`,
+                                                      backgroundColor: `${nota.cor}33`,
                                                     }}
-                                                    // style={{
-                                                    //   backgroundColor:
-                                                    //     `${nota.cor}33` ||
-                                                    //     "white",
-                                                    // }}
-                                                    className="px-6 text-[15px] font-medium text-[#1E2351] pb-[30px]"
+                                                    className="px-6 text-[15px] font-medium text-[#1E2351] pb-[15px]"
                                                   >
+                                                    <span className="break-words whitespace-normal text-[20px] max-w-[90%]">
+                                                      {nota.titulo}
+                                                    </span>
                                                     <div className="flex gap-1 items-center text-wrap ">
                                                       <div
                                                         style={{
-                                                          borderColor:
-                                                            "#F92A46",
+                                                          borderColor: `${nota.cor}`,
                                                         }}
                                                         className={`min-w-4 min-h-4 border-2 rounded-full`}
                                                       ></div>
                                                       <span className=" break-words whitespace-normal max-w-[90%]">
-                                                        {nota.mensagem}
+                                                        {nota.subtitulo}
                                                       </span>
                                                     </div>
                                                     <span className="break-words whitespace-normal max-w-[90%]">

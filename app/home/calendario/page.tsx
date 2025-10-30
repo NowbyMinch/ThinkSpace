@@ -183,9 +183,7 @@ export default function Materiais() {
   const [lembreteInfo, setLembreteInfo] = useState<LembreteInfoType | null>(
     null
   );
-  const [lembreteInfo2, setLembreteInfo2] = useState<LembreteInfoType | null>(
-    null
-  );
+  const [lembreteInfo2, setLembreteInfo2] = useState<AnotacaoType | null>(null);
 
   const setandoData = (val: string) => {
     const data = val;
@@ -287,10 +285,6 @@ export default function Materiais() {
   }, [lembreteInfo]);
 
   useEffect(() => {
-    console.log(todasAnotacoes, "Todas");
-  }, [todasAnotacoes]);
-
-  useEffect(() => {
     console.log(lembreteInfo2, "lembrete aqui");
   }, [lembreteInfo2]);
 
@@ -334,7 +328,9 @@ export default function Materiais() {
         ]);
 
         setLembreteInfo(anotacoesData);
+        console.log(anotacoesData, "Info1");
         setLembreteInfo2(recentesData);
+        console.log(recentesData, "Info2");
 
         if (anotacoesData.error || recentesData.error) {
           setMessage(anotacoesData.message || recentesData.message);
@@ -354,36 +350,72 @@ export default function Materiais() {
   useEffect(() => {
     const fetchAnotacoes = async () => {
       try {
+        if (!user) return;
+
         const mes = selectedMonthYear.getMonth() + 1;
         const ano = selectedMonthYear.getFullYear();
 
-        if (!user) {
-          console.warn(
-            "Usuário não definido — não foi possível buscar anotações."
-          );
-          return;
-        }
+        // calculate previous and next months
+        const prevMonthDate = new Date(ano, mes - 2); // JS Date months are 0-indexed
+        const nextMonthDate = new Date(ano, mes); // next month
+        const monthsToFetch = [
+          {
+            mes: prevMonthDate.getMonth() + 1,
+            ano: prevMonthDate.getFullYear(),
+          },
+          { mes, ano },
+          {
+            mes: nextMonthDate.getMonth() + 1,
+            ano: nextMonthDate.getFullYear(),
+          },
+        ];
 
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
-          { method: "GET", credentials: "include" }
+        // fetch all three months in parallel
+        const fetches = monthsToFetch.map(({ mes, ano }) =>
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
+            { method: "GET", credentials: "include" }
+          ).then((res) => res.json())
         );
 
-        if (!res.ok) {
-          throw new Error(`Erro ao buscar anotações: ${res.statusText}`);
-        }
+        const results = await Promise.all(fetches);
+        console.log(results, "RESULTS!!")
 
-        const data = await res.json();
-        setLembreteInfo(data);
-        console.log(data, "Updated calendar for selected month/year");
+        // combine all days into one array
+        const allDias: DiaType[] = results.flatMap(
+          (data: LembreteInfoType) => data.dias || []
+        );
+
+        // flatten into AnotacaoType[]
+        const allAnotacoes: AnotacaoType[] = allDias.flatMap((dia) =>
+          dia.anotacoes.map((anotacao) => ({
+            ...anotacao,
+            dia: dia.dia,
+            diaSemana: dia.diaSemana,
+            usuarioId: user,
+          }))
+        );
+
+        setTodasAnotacoes(allAnotacoes);
+        console.log(
+          allAnotacoes,
+          "Todas as anotações (incluindo 6 dias extras)"
+        );
       } catch (err) {
+        console.error("Erro ao buscar anotações:", err);
         setMessage("Erro ao carregar anotações.");
-        console.error(err);
       }
     };
 
     fetchAnotacoes();
   }, [selectedMonthYear, user]);
+
+  
+  useEffect(() => {
+    console.log(todasAnotacoes, "Todas");
+  }, [todasAnotacoes]);
+
+
 
   function closing() {
     setOpen(false);
@@ -468,26 +500,58 @@ export default function Materiais() {
   };
 
   const Lembrete = async (date: Date = selectedMonthYear) => {
-
     try {
-      const mes = selectedMonthYear.getMonth() + 1;
-      const ano = selectedMonthYear.getFullYear();
+      if (!user) return;
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
+      const mesAtual = date.getMonth() + 1;
+      const anoAtual = date.getFullYear();
+
+      // Previous and next months
+      const prevMonthDate = new Date(anoAtual, mesAtual - 2); // JS months are 0-indexed
+      const nextMonthDate = new Date(anoAtual, mesAtual);
+
+      const mesesParaBuscar = [
+        { mes: prevMonthDate.getMonth() + 1, ano: prevMonthDate.getFullYear() },
+        { mes: mesAtual, ano: anoAtual },
+        { mes: nextMonthDate.getMonth() + 1, ano: nextMonthDate.getFullYear() },
+      ];
+
+      // Fetch all three months in parallel
+      const fetches = mesesParaBuscar.map(({ mes, ano }) =>
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/calendario?mes=${mes}&ano=${ano}&usuarioId=${user}`,
+          { method: "GET", credentials: "include" }
+        ).then((res) => res.json())
       );
 
-      const data = await res.json();
-      setLembreteInfo(data);
-      console.log(data, "Lembretes atualizados para o mês/ano selecionado");
+      const results = await Promise.all(fetches);
 
-      if (data.error) {
-        setMessage(data.message);
-      }
+      // Merge dias from all months
+      const allDias: DiaType[] = results.flatMap(
+        (data: LembreteInfoType) => data.dias || []
+      );
+
+      // Flatten into AnotacaoType[]
+      const allAnotacoes: AnotacaoType[] = allDias.flatMap((dia) =>
+        dia.anotacoes.map((anotacao) => ({
+          ...anotacao,
+          dia: dia.dia,
+          diaSemana: dia.diaSemana,
+          usuarioId: user,
+        }))
+      );
+
+      setLembreteInfo({
+        dias: allDias,
+        mes: mesAtual.toString(),
+        ano: anoAtual.toString(),
+      });
+      setTodasAnotacoes(allAnotacoes);
+
+      console.log(
+        allAnotacoes,
+        "Lembretes atualizados incluindo meses adjacentes"
+      );
     } catch (err) {
       setMessage("Erro ao carregar anotações.");
       console.error(err);
