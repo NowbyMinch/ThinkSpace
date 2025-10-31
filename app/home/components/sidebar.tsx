@@ -328,7 +328,7 @@ export const Sidebar = () => {
                 </Tooltip>
               </Link>
 
-              <Link href="/home/comunidades" className="">
+              <Link href="/home/comunidades/postagens" className="">
                 <Tooltip
                   closeDelay={0}
                   content="Comunidades"
@@ -344,13 +344,13 @@ export const Sidebar = () => {
                       duration: 0.2,
                     }}
                     className={` ${
-                      pathname === "/home/comunidades"
+                      pathname.startsWith("/home/comunidades")
                         ? "bg-[#A39CEC]"
                         : "bg-transparent"
                     } relative p-[10px] rounded-full `}
                   >
                     <User
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/comunidades" ? "text-black" : "text-white"}`}
+                      className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
                     />
                   </motion.button>
                 </Tooltip>
@@ -580,7 +580,7 @@ export const Sidebar = () => {
                 </Tooltip>
               </Link>
 
-              <Link href="/home/comunidades" className="">
+              <Link href="/home/comunidades/postagens" className="">
                 <Tooltip
                   closeDelay={0}
                   content="Comunidades"
@@ -596,13 +596,13 @@ export const Sidebar = () => {
                       duration: 0.2,
                     }}
                     className={` ${
-                      pathname === "/home/comunidades"
+                      pathname.startsWith("/home/comunidades")
                         ? "bg-[#A39CEC]"
                         : "bg-transparent"
                     } relative p-[10px] rounded-full `}
                   >
                     <User
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/comunidades" ? "text-black" : "text-white"}`}
+                      className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
                     />
                   </motion.button>
                 </Tooltip>
