@@ -1,5 +1,5 @@
 // components/ErrorModal.tsx
-import { X } from "lucide-react";
+import { Bookmark, ShieldX, X } from "lucide-react";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -28,19 +28,19 @@ const PostagemDetail: React.FC<Props> = ({ message, appear, index, last, onClose
           <div
             className={`absolute right-0  ${index === last ? "bottom-9 " : "-top-full mt-2"} w-[160px] rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)] `}
           >
-            <div className="flex flex-col w-full gap-1 text-base z-100">
+            <div className="flex flex-col w-full text-base z-100">
               <button
-                className="mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2"
                 onClick={() => {}}
+                className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2  flex gap-2 items-center"
               >
-                Editar
+                <ShieldX /> Denunciar
               </button>
               <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
               <button
                 onClick={() => {}}
                 className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
               >
-                Excluir
+                <Bookmark /> Salvar
               </button>
             </div>
             {/* <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border border-[rgba(0,0,0,0.26)] shadow -z-10 "></div> */}
