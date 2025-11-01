@@ -538,7 +538,7 @@ export default function landingPage() {
                                 </div>
                                 
                                 <div className="w-full flex justify-center items-center gap-4 mt-2">
-                                    <p>© 2023 ThinkSpace.</p>
+                                    <p>ThinkSpace.</p>
                                 </div>
                             </div>
 

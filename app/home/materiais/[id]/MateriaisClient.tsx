@@ -768,7 +768,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                       setOpenVar(true);
                       Origem("DOCUMENTO");
                     }}
-                    className={` w-[400px] max-w-full h-full min-h-[200px] md:w-full md:h-[320px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[30px] cursor-pointer ${openVar || openVar2 || openVar3 ? "hidden" : "block"}`}
+                    className={` w-[400px] max-w-full h-full  min-h-[200px] md:w-full md:h-[320px] flex flex-col items-center justify-center bg-[#A387DC] rounded-[30px] cursor-pointer ${openVar || openVar2 || openVar3 ? "hidden" : "block"}`}
                   >
                     <BookOpenText className=" text-white size-[100px] stroke-1" />
                     <div className="flex flex-col items-center w-[90%]">
