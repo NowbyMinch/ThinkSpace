@@ -170,6 +170,7 @@ export default function HomePage() {
   };
   const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
+  
   function opening() {
     setPop(true);
   }
@@ -182,8 +183,31 @@ export default function HomePage() {
     setPop2(true);
   }
 
-  function closing2() {
+  async function closing2() {
     setTimeout(() => setPop2(false), 10);
+    if (notificacao.notificacoes) {
+      for (let n = 0; n < notificacao.notificacoes.length; n++) {
+        console.log(
+          notificacao.notificacoes[n].id,
+          "Notificacao ---------------------------------------------------------------------------------"
+        );
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/users/notificacoes/${notificacao.notificacoes[n].id}`,
+            {
+              method: "POST",
+              credentials: "include",
+            }
+          );
+          const noti = await res.json();
+          console.log("Notificacao detalhe:", noti);
+
+          fetchAll();
+        } catch (err) {
+          console.error("Erro ao buscar notificação:", err);
+        }
+      }
+    }
   }
 
   type BannerData = {
@@ -218,14 +242,14 @@ export default function HomePage() {
     lida: false;
     mensagem: string;
     usuarioId: string;
-    subtitulo: "Testando notificações Subtitulo";
-    titulo: "Evento do calendário";
+    subtitulo: string;
+    titulo: string;
     // add other properties if needed
   };
   type notificacaoData = {
     userId?: string;
     notificacoes?: notificacoesType[];
-    
+
     // add other properties if needed
   };
   type materiaItem = {
@@ -272,6 +296,94 @@ export default function HomePage() {
   useEffect(() => {
     console.log("Notificação:", notificacao);
   }, [notificacao]);
+
+  const fetchAll = async () => {
+    try {
+      // Run all fetches in parallel
+      const [
+        materiaRes,
+        bannerRes,
+        userRes,
+        calendarioRes,
+        salasRes,
+        notificacaoRes,
+        ofensivaRes,
+      ] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/calendario`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/notificacoes`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
+          method: "GET",
+          credentials: "include",
+        }),
+      ]);
+
+      // Parse all JSONs in parallel
+      const [
+        materiaData,
+        bannerData,
+        userData,
+        calendarioData,
+        salasData,
+        notificacaoData,
+        ofensivaData,
+      ] = await Promise.all([
+        materiaRes.json(),
+        bannerRes.json(),
+        userRes.json(),
+        calendarioRes.json(),
+        salasRes.json(),
+        notificacaoRes.json(),
+        ofensivaRes.json(),
+      ]);
+
+      // ✅ Set states after everything is done
+      setMaterias(materiaData);
+      setBannerData(bannerData);
+      setUser(userData);
+      setCalendario(calendarioData);
+      setNotificacao(notificacaoData);
+      setOfensivaMensagem(ofensivaData.mensagemOfensiva);
+      setOfensiva(ofensivaData.status);
+
+      // Extract data from /home/salas-estudo safely
+      if (salasData) {
+        console.log("/home/salas-estudo aqui", salasData);
+        setAvatares(salasData.avataresUltimosUsuarios);
+        setTotalEstudantes(salasData.totalEstudantes);
+        setSalas(salasData.salasMembro);
+      }
+
+      console.log("✅ All data successfully loaded");
+    } catch (err) {
+      console.error("Erro ao carregar dados:", err);
+      setMessage("Erro ao carregar dados.");
+    } finally {
+      // ✅ Stop loading only after all requests (success or error)
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -374,10 +486,11 @@ export default function HomePage() {
   useEffect(() => {
     console.log("UseEffect ofensiva: ", ofensiva);
   }, [ofensiva]);
+
   if (loading) return <Loading />;
-  
+
   let NaoLidas = 0;
-  
+
   return (
     <>
       {message && (
@@ -868,21 +981,34 @@ export default function HomePage() {
                 </div>
               </div>
               <Bell className="size-[30px] text-[rgba(0,0,0,31%)]" />
-              {notificacao?.notificacoes && notificacao?.notificacoes.map((item, index) => {
-                if (!item.lida){NaoLidas = NaoLidas + 1}
-                
-                if (
-                  notificacao.notificacoes &&
-                  index === notificacao.notificacoes.length - 1
-                ) {
-                  return (
-                    <div key={index} className=" rounded-full  w-5 h-5 -top-[2px] flex justify-center items-center -right-1 text-white font-bold absolute bg-[#F92A46]">
-                      {notificacao?.notificacoes &&
-                        NaoLidas}
-                    </div>
-                  );
-                }
-              })}
+              {notificacao?.notificacoes &&
+                notificacao?.notificacoes.map((item, index) => {
+                  if (!item.lida) {
+                    NaoLidas = NaoLidas + 1;
+                  }
+
+                  if (
+                    notificacao.notificacoes &&
+                    index === notificacao.notificacoes.length - 1
+                  ) {
+                    if (notificacao?.notificacoes && NaoLidas) {
+                      return (
+                        <AnimatePresence key={index}>
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            key={index}
+                            className=" rounded-full  w-5 h-5 -top-[2px] flex justify-center items-center -right-1 text-white font-bold absolute bg-[#F92A46]"
+                          >
+                            {notificacao?.notificacoes && NaoLidas}
+                          </motion.div>
+                        </AnimatePresence>
+                      );
+                    }
+                  }
+                })}
             </div>
           </div>
 

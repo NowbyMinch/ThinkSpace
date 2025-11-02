@@ -905,7 +905,7 @@ export default function Materiais() {
                               }}
                               className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out bg-red-500 items-center"
                             >
-                              <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
+                              <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 line-clamp-4 py-1">
                                 {nota.titulo}
                               </span>
 
@@ -929,7 +929,9 @@ export default function Materiais() {
                                   }}
                                   animate={{
                                     height: "auto",
+                                    maxHeight: "500px",
                                     opacity: 1,
+                                    overflowY: "auto",
                                     filter: "blur(0px)",
                                   }}
                                   exit={{
@@ -964,7 +966,7 @@ export default function Materiais() {
                                       backgroundColor:
                                         `${nota.cor}33` || "white",
                                     }}
-                                    className="px-6  text-[15px] font-medium text-[#1E2351]"
+                                    className="px-6 min-h-fit text-[15px] font-medium text-[#1E2351] pb-4  h-fit"
                                   >
                                     <div className="flex gap-1 items-center text-wrap ">
                                       <div
@@ -977,7 +979,7 @@ export default function Materiais() {
                                         {nota.subtitulo}
                                       </span>
                                     </div>
-                                    <span className="break-words whitespace-normal max-w-[90%]">
+                                    <span className="break-words whitespace-normal max-w-[90%] h-fit">
                                       {nota.descricao}
                                     </span>
                                   </div>
@@ -1162,7 +1164,7 @@ export default function Materiais() {
               <div
                 className={
                   lembreteInfo2
-                    ? "flex flex-col gap-2 w-full sm:w-[415px] max-w-full min-h-[62px] h-full max-h-full overflow-y-auto overflow-x-hidden px-[2px] pt-3 pb-6"
+                    ? "flex flex-col gap-2 w-full sm:w-[415px] max-w-full min-h-[62px]  overflow-y-auto overflow-x-hidden px-[2px] pt-3 pb-6"
                     : ""
                 }
               >
@@ -1192,7 +1194,7 @@ export default function Materiais() {
                         style={{ backgroundColor: nota.cor || "#9767f8" }}
                         className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out bg-red-500 items-center"
                       >
-                        <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
+                        <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 line-clamp-4 py-1">
                           {nota.titulo}
                         </span>
 
@@ -1216,7 +1218,9 @@ export default function Materiais() {
                             }}
                             animate={{
                               height: "auto",
+                              maxHeight: "500px",
                               opacity: 1,
+                              overflowY: "auto",
                               filter: "blur(0px)",
                             }}
                             exit={{
@@ -1247,7 +1251,7 @@ export default function Materiais() {
                               style={{
                                 backgroundColor: `${nota.cor}33` || "white",
                               }}
-                              className="px-6  text-[15px] font-medium text-[#1E2351]"
+                              className="px-6 min-h-fit text-[15px] font-medium text-[#1E2351] pb-4  h-fit"
                             >
                               <div className="flex gap-1 items-center text-wrap ">
                                 <div
@@ -1258,7 +1262,7 @@ export default function Materiais() {
                                   {nota.subtitulo}
                                 </span>
                               </div>
-                              <span className="break-words whitespace-normal max-w-[90%]">
+                              <span className="break-words whitespace-normal max-w-[90%] h-fit">
                                 {nota.descricao}
                               </span>
                             </div>

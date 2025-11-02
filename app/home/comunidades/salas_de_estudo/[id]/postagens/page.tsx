@@ -9,9 +9,9 @@ import {
 import { useState, useEffect, useRef } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
-import { Ellipsis, Heart, MessageCircle, Router } from "lucide-react";
+import { Ellipsis, Heart, MessageCircle, Router, X } from "lucide-react";
 import PostagemDetail from "@/components/postagemDetail";
-import { Backdrop3 } from "../../components/backdrop";
+import { Backdrop3 } from "@/app/home/components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
 
 type UserData = { primeiroNome?: string; cargo?: string; foto?: string };
@@ -52,12 +52,12 @@ type Postagem = {
   sala: Sala;
 };
 
-
-export default function Postagens(){
+export default function Materiais() {
   const pathname = usePathname();
   const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
   const [user, setUser] = useState<UserData>({});
+  const [bannerData, setBannerData] = useState<BannerData>({});
   const [loading, setLoading] = useState(false);
   const [appear, setAppear] = useState(0);
   const [image, setImage] = useState(0);
@@ -67,12 +67,13 @@ export default function Postagens(){
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const salaID = pathname.split("/")[4];
   const [posts, setPosts] = useState<Postagem[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Postagem[]>([]);
   const [userID, setUserID] = useState<string>("");
   const [curtidaCheck, setCurtidaCheck] = useState<boolean | undefined>(
     undefined
   );
   const [curtidaNumero, setCurtidaNumero] = useState<number>(-1);
+  const [open2, setOpen2] = useState(false);
+  const [postText, setPostText] = useState<string>("");
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -116,7 +117,7 @@ export default function Postagens(){
             credentials: "include",
           }),
           fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/posts-gerais?usuarioId=${userIDdata.userId}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${salaID}/posts?usuarioId=${userIDdata.userId}`,
             {
               method: "GET",
               credentials: "include",
@@ -156,51 +157,10 @@ export default function Postagens(){
     }
   }, []);
 
-  const fetchAll = async () => {
-    try {
-      const userIDRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      const userIDdata = await userIDRes.json(); // parse the response
-      setUserID(userIDdata.userId); // set the state
-
-      const [userRes, postsRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/posts-gerais?usuarioId=${userIDdata.userId}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        ),
-      ]);
-
-      const [userData, postsData] = await Promise.all([
-        userRes.json(),
-        postsRes.json(),
-      ]);
-      setUser(userData);
-      setPosts(postsData);
-      console.log(postsData);
-
-      console.log("✅ All data successfully loaded");
-    } catch (err) {
-      console.error("Erro ao carregar dados:", err);
-      setMessage("Erro ao carregar dados.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
+  useEffect(() => {
+    console.log(curtidaCheck);
+  }, [curtidaCheck]);
 
   function formatNumber(num: number) {
     if (num >= 1_000_000)
@@ -211,6 +171,7 @@ export default function Postagens(){
 
   function closing() {
     setOpen(false);
+    setOpen2(false);
     setImage(0);
   }
 
@@ -310,6 +271,44 @@ export default function Postagens(){
     }
   };
 
+  const CriarPost = async () => {
+    try {
+      // 🔹 Get user ID
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const userIDdata = await userIDRes.json();
+      const userID = userIDdata.userId;
+
+      const payload = {
+        salaId: salaID,
+        autorId: userID,
+        conteudo: postText,
+      };
+
+      const postarRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload), // ✅ send the object, not the string
+          credentials: "include",
+        }
+      );
+
+      const postarData = await postarRes.json();
+      console.log(postarData);
+    } catch (error) {
+      console.error("Erro ao curtir:", error);
+    } finally {
+      closing();
+    }
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -353,9 +352,106 @@ export default function Postagens(){
           </div>
         </>
       )}
+      {open2 && (
+        <>
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
+          >
+            <div
+              className="w-full h-full absolute"
+              onClick={() => closing()}
+            ></div>
 
-      <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
-        <h1 className="text-[24px] font-medium">Principais postagens</h1>
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+            >
+              <div
+                id="white-box"
+                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+              >
+                <img
+                  src="/Vector.svg"
+                  alt="Decoração"
+                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                />
+
+                <div className="w-full flex flex-col justify-center h-full gap-4">
+                  <div className="flex ">
+                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                      Fazer postagem:
+                    </div>
+                    <div className=" w-fit">
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={closing}
+                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                      >
+                        <X className="w-full h-full" />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  <div className="w-full text-[18px]  rounded-[25px] overflow-hidden">
+                    <textarea
+                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]  "
+                      placeholder="Escreva um comentário..."
+                      // value={newComentario}
+                      // value={comentar}
+                      onChange={(e) => {
+                        // setComentar(e.target.value);
+                        //   setNewComentario(e.target.value)
+                        const textarea = e.target;
+                        textarea.style.height = "auto"; // reset height
+                        textarea.style.maxHeight = "200px";
+                        textarea.style.height = textarea.scrollHeight + "px";
+                      }}
+                      rows={1}
+                    />
+                  </div>
+                  <div className="w-full flex justify-center items-center">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ ease: "easeInOut" }}
+                      onClick={CriarPost}
+                      className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                    >
+                      Postar
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="w-full absolute flex justify-center items-center">
+            <Backdrop3 onClick={() => closing()} />
+          </div>
+        </>
+      )}
+
+      <div className="w-full h-full flex flex-col px-4 py-2 gap-4 ">
+        <div className="flex justify-between">
+          <h1 className="text-[24px] font-medium">Principais postagens</h1>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ ease: "easeInOut" }}
+            onClick={() => setOpen2(true)}
+            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+          >
+            Criar post
+          </motion.button>
+        </div>
 
         {posts.map((post, index) => {
           return (
@@ -367,23 +463,9 @@ export default function Postagens(){
                     className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
                     alt="Foto de perfil"
                   />
-                  <div className="flex flex-col text-[18px]">
+                  <div className="flex flex-col text-[18px] justify-center">
                     <span className="font-semibold truncate">
                       {post.autor.nome}
-                    </span>
-                    <span className="font-medium">
-                      {" "}
-                      <span
-                        onClick={() => {
-                          router.push(
-                            `/home/comunidades/salas_de_estudo/${post.sala.id}/postagens`
-                          );
-                        }}
-                        className="cursor-pointer font-medium"
-                      >
-                        {" "}
-                        {post.sala.nome}
-                      </span>
                     </span>
                   </div>
                 </div>
@@ -464,9 +546,8 @@ export default function Postagens(){
                       />
                     </motion.div>
                     <PostagemDetail
-                      message={post.id}
-                      Mine={post.autor.id === userID}
-                      onClose={() => { setAppear(0); fetchAll(); }}
+                      message="a"
+                      onClose={() => {}}
                       last={10}
                       index={index + 1}
                       appear={appear === index + 1 && true}
