@@ -39,14 +39,15 @@ type Sala = {
   id: string;
   nome: string;
   descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
   banner: string;
-  moderadorId: string;
-  tipo: "PUBLICA" | "PRIVADA"; // assuming only these two options
   assunto: string | null;
+  avataresUltimosUsuarios: string[];
   criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
-
 type Postagem = {
   id: string;
   conteudo: string;
@@ -315,6 +316,65 @@ export default function Materiais() {
     }
   };
 
+
+
+  const CurtirComentario = async (comentarioId: string) => {
+    try {
+      // Get user ID
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const userIDdata = await userIDRes.json();
+      const userID = userIDdata.userId;
+
+      // Optimistically update the local comment list
+      setComentarios((prev) =>
+        prev.map((comentario) => {
+          if (comentario.id === comentarioId) {
+            const newLiked = !comentario.curtidoPeloUsuario;
+            const newLikes = newLiked
+              ? comentario.curtidas + 1
+              : Math.max(comentario.curtidas - 1, 0);
+            return {
+              ...comentario,
+              curtidoPeloUsuario: newLiked,
+              curtidas: newLikes,
+            };
+          }
+          return comentario;
+        })
+      );
+
+      // Perform backend request
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/comentario/${comentarioId}/curtir/${userID}`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      if (!res.ok) throw new Error("Erro ao curtir comentário");
+
+      // Optional: re-fetch to ensure sync
+      const comentariosRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post/${postID}/comentarios?usuarioId=${userID}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const comentariosData = await comentariosRes.json();
+      setComentarios(comentariosData);
+    } catch (error) {
+      console.error("Erro ao curtir comentário:", error);
+    }
+  };
+
   function formatNumber(num: number) {
     if (num >= 1_000_000)
       return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -420,7 +480,7 @@ export default function Materiais() {
       ) : (
         <>
           <div className="w-full h-fit flex flex-col mb-3 ">
-            {post ? (
+            {post && (
               <>
                 <div className="w-full flex flex-col gap-6">
                   <div className="flex gap-1">
@@ -531,8 +591,6 @@ export default function Materiais() {
                   {post.comentarios.length} Comentários{" "}
                 </h1>
               </>
-            ) : (
-              ""
             )}
           </div>
 
@@ -609,11 +667,22 @@ export default function Materiais() {
                           <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
+                            animate={{
+                              scale: comentario.curtidoPeloUsuario
+                                ? [1, 1.3, 1]
+                                : 1,
+                            }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
                             className="w-6 h-6 cursor-pointer"
+                            onClick={() => CurtirComentario(comentario.id)}
                           >
                             <Heart
                               className="text-[#C85959] w-full h-full"
-                              // fill="currentColor"
+                              fill={
+                                comentario.curtidoPeloUsuario
+                                  ? "#C85959"
+                                  : "transparent"
+                              }
                               stroke="currentColor"
                             />
                           </motion.div>
@@ -660,7 +729,7 @@ export default function Materiais() {
                             fetchAll();
                           }}
                           comentario={true}
-                          last={10}
+                          last={postComentarios.length}
                           index={index + 1}
                           appear={appear2 === index + 1 && true}
                         />

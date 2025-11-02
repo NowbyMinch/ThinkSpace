@@ -492,7 +492,7 @@ export const Sidebar = () => {
         </div>
 
         <nav
-          className={`${visible ? "mb-[5px]" : "-mb-[75px]"} lg:hidden transition-all ease-in-out duration-400 bg-white w-full min-h-fit h-[75px] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px]`}
+          className={`${visible ? "mb-[5px]" : "-mb-[75px]"} lg:hidden transition-all ease-in-out duration-400 bg-white w-full min-h-fit h-[70px] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px]`}
         >
           <div className=" h-full w-full flex justify-between px-5 items-center overflow-hidden ">
             <Link className="relative" href="/home">
@@ -551,7 +551,7 @@ export const Sidebar = () => {
               </Tooltip>
             </Link>
 
-            <div className="flex items-center gap-[18px] ">
+            <div className="flex items-center  ">
               <Link href="/home/materiais" className="">
                 <Tooltip
                   closeDelay={0}

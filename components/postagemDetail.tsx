@@ -67,7 +67,6 @@ const PostagemDetail: React.FC<Props> = ({
       console.log(deleteData);
 
       onClose?.();
-      
     } catch (error) {
       console.error("Erro ao curtir:", error);
     }
@@ -109,14 +108,16 @@ const PostagemDetail: React.FC<Props> = ({
                 >
                   <Bookmark /> Salvar
                 </button>
-                <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
                 {Mine && (
-                  <button
-                    onClick={comentario ? DeleteComentario : Delete}
-                    className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
-                  >
-                    <Trash /> Excluir
-                  </button>
+                  <>
+                    <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                    <button
+                      onClick={comentario ? DeleteComentario : Delete}
+                      className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                    >
+                      <Trash /> Excluir
+                    </button>
+                  </>
                 )}
               </div>
             </div>

@@ -31,11 +31,13 @@ type Sala = {
   id: string;
   nome: string;
   descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
   banner: string;
-  moderadorId: string;
-  tipo: "PUBLICA" | "PRIVADA"; // assuming only these two options
   assunto: string | null;
+  avataresUltimosUsuarios: string[];
   criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
@@ -466,8 +468,11 @@ export default function Postagens(){
                     <PostagemDetail
                       message={post.id}
                       Mine={post.autor.id === userID}
-                      onClose={() => { setAppear(0); fetchAll(); }}
-                      last={10}
+                      onClose={() => {
+                        setAppear(0);
+                        fetchAll();
+                      }}
+                      last={posts.length}
                       index={index + 1}
                       appear={appear === index + 1 && true}
                     />

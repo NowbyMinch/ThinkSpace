@@ -20,26 +20,29 @@ type BannerData = {
   // add other properties if needed
 };
 type Salas = {
-  assunto: string | null;
-  banner: string;
-  criadoEm: string;
-  descricao: string;
   id: string;
-  moderadorId: string;
   nome: string;
-  tipo: "PUBLICA" | "PRIVADA" | string; // you can restrict to known values
+  descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
+  banner: string;
+  assunto: string | null;
+  avataresUltimosUsuarios: string[];
+  criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
-export default function Materiais() {
+export default function SalasdeEstudo() {
   const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
   const [user, setUser] = useState<UserData>({});
   const [bannerData, setBannerData] = useState<BannerData>({});
   const [loading, setLoading] = useState(false);
   const [salas, setSalas] = useState<Salas[]>([]);
+  const [avatares, setAvatares] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -66,9 +69,14 @@ export default function Materiais() {
         setUser(userData);
         setSalas(salasData.salas);
 
-        // Extract data from /home/salas-estudo safely
+        for (let a = 0; a < salasData.salas.length; a++) {
+          setAvatares((prev) => [
+            ...prev,
+            ...salasData.salas[a].avataresUltimosUsuarios,
+          ]);
+        }
 
-        console.log("✅ All data successfully loaded");
+        // Extract data from /home/salas-estudo safely
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -105,8 +113,8 @@ export default function Materiais() {
                     alt=""
                   />
                   {/* <div className="max-w-[50%] w-[50%] max-h-full h-full flex justify-center items-center">
-    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
-  </div> */}
+                    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
+                  </div> */}
                 </div>
               </div>
 
@@ -140,132 +148,54 @@ export default function Materiais() {
                 >
                   Visualizar
                 </motion.button>
-                {/* <div className="flex items-center ">
-                  <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                    <>
-                      {avatares[3] && (
-                        <img
-                          src={avatares[3]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[2] && (
-                        <img
-                          src={avatares[2]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[1] && (
-                        <img
-                          src={avatares[1]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[0] && (
-                        <img
-                          src={avatares[0]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px]"
-                          alt="Usuário"
-                        />
-                      )}
-                    </>
+
+                <p className="w-full break-all line-clamp-5">
+                  {sala.descricao}
+                  {sala.descricao}
+                </p>
+                <div className="flex items-center ">
+                  <div className="relative w-[160px] h-[50px] flex ">
+                    {sala.avataresUltimosUsuarios.map((avatar, index) => (
+                      <div key={index} className="">
+                        {index === 0 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[72px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 1 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[48px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 2 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[24px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 3 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px]"
+                            alt="Usuário"
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
                   <div className="flex justify-between  items-center h-[44px] w-full ">
                     <h2
-                      className={`text-[18px] ${totalEstudantes > 4 ? "block" : "hidden"} pl-1`}
+                      className={`text-[18px] ${sala.quantidadeEstudantes > 4 ? "block" : "hidden"} pl-3`}
                     >
-                      +{totalEstudantes - 4} estudantes
+                      +{sala.quantidadeEstudantes - 4} estudantes
                     </h2>
                   </div>
-                </div> */}
-              </div>
-            </div>
-          );
-        })}
-
-        {Array.from({ length: 5 }).map((_, index) => {
-          const randomColor = cor[Math.floor(Math.random() * cor.length)];
-
-          {
-            /* {
-                sala.topicos.map((topico, index) => {
-                  const randomColor = cor[Math.floor(Math.random() * cor.length)];
-                  return (
-                    <h2
-                      key={index}
-                      style={{ backgroundColor: randomColor }}
-                      className="text-[18px] px-3 text-white rounded-full "
-                    >
-                      {topico}
-                    </h2>
-                  );
-                });
-              } */
-          }
-
-          return (
-            <div
-              key={index}
-              className="w-full min-h-fit h-[300px] border-2 border-[rgba(0,0,0,0.3)] rounded-[35px] shadow-md p-4 flex gap-3 lg:flex-row flex-col "
-            >
-              <div className="flex h-full flex-col min-w-[60%] w-full ">
-                <div className="flex items-center w-full justify-between">
-                  <h1>Esportes</h1>
-                  {/* <div className="flex gap-1">
-                    {Array.from({ length: 2 }).map((_, index) => {
-                      const randomColor =
-                        cor[Math.floor(Math.random() * cor.length)];
-
-                      return (
-                        <span
-                          style={{ backgroundColor: randomColor }}
-                          className={` text-[20px] px-3 rounded-full`}
-                        >
-                          Matérias
-                        </span>
-                      );
-                    })}
-                  </div> */}
                 </div>
-                <div
-                  style={{ backgroundColor: randomColor }}
-                  className="shadow-md flex justify-center items-center w-full h-full max-h-full rounded-[35px] min-h-[160px]"
-                >
-                  <div className=" max-w-[50%] w-[50%] max-h-full h-full flex justify-center items-center">
-                    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-5 w-full justify-center">
-                <div className="flex gap-1 w-full ">
-                  {Array.from({ length: 2 }).map((_, index) => {
-                    const randomColor =
-                      cor[Math.floor(Math.random() * cor.length)];
-
-                    return (
-                      <span
-                        key={index}
-                        style={{ backgroundColor: randomColor }}
-                        className={` text-[16px] px-3 rounded-full h-fit w-fit shadow-md`}
-                      >
-                        Matérias
-                      </span>
-                    );
-                  })}
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                  transition={{ ease: "easeInOut" }}
-                  className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full  py-3 shadow-md"
-                >
-                  Visualizar
-                </motion.button>
-                asddsa
               </div>
             </div>
           );

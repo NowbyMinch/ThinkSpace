@@ -20,26 +20,29 @@ type BannerData = {
   // add other properties if needed
 };
 type Salas = {
-  assunto: string | null;
-  banner: string;
-  criadoEm: string;
-  descricao: string;
   id: string;
-  moderadorId: string;
   nome: string;
-  tipo: "PUBLICA" | "PRIVADA" | string; // you can restrict to known values
+  descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
+  banner: string;
+  assunto: string | null;
+  avataresUltimosUsuarios: string[];
+  criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
 export default function SalasdeEstudo() {
-    const router = useRouter();
-    const [message, setMessage] = useState<string | null>(null);
+  const router = useRouter();
+  const [message, setMessage] = useState<string | null>(null);
   const [user, setUser] = useState<UserData>({});
   const [bannerData, setBannerData] = useState<BannerData>({});
   const [loading, setLoading] = useState(false);
   const [salas, setSalas] = useState<Salas[]>([]);
+  const [avatares, setAvatares] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -65,11 +68,15 @@ export default function SalasdeEstudo() {
         // ✅ Set states after everything is done
         setUser(userData);
         setSalas(salasData.salas);
-        console.log(salasData.salas);
+
+        for (let a = 0; a < salasData.salas.length; a++) {
+          setAvatares((prev) => [
+            ...prev,
+            ...salasData.salas[a].avataresUltimosUsuarios,
+          ]);
+        }
 
         // Extract data from /home/salas-estudo safely
-
-        console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -106,8 +113,8 @@ export default function SalasdeEstudo() {
                     alt=""
                   />
                   {/* <div className="max-w-[50%] w-[50%] max-h-full h-full flex justify-center items-center">
-    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
-  </div> */}
+                    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
+                  </div> */}
                 </div>
               </div>
 
@@ -144,56 +151,54 @@ export default function SalasdeEstudo() {
 
                 <p className="w-full break-all line-clamp-5">
                   {sala.descricao}
-                  {sala.descricao}
-                  {sala.descricao}
-                  {sala.descricao}
                 </p>
-                {/* <div className="flex items-center ">
-                  <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                    <>
-                      {avatares[3] && (
-                        <img
-                          src={avatares[3]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[2] && (
-                        <img
-                          src={avatares[2]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[1] && (
-                        <img
-                          src={avatares[1]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
-                          alt="Usuário"
-                        />
-                      )}
-                      {avatares[0] && (
-                        <img
-                          src={avatares[0]}
-                          className="diaOfensiva rounded-full absolute border-white border-[2px]"
-                          alt="Usuário"
-                        />
-                      )}
-                    </>
+                <div className="flex items-center ">
+                  <div className="relative w-[160px] h-[50px] flex ">
+                    {sala.avataresUltimosUsuarios.map((avatar, index) => (
+                      <div key={index} className="">
+                        {index === 0 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[72px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 1 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[48px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 2 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[24px]"
+                            alt="Usuário"
+                          />
+                        )}
+                        {index === 3 && (
+                          <img
+                            src={avatar}
+                            className="diaOfensiva rounded-full absolute border-white border-[3px]"
+                            alt="Usuário"
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
                   <div className="flex justify-between  items-center h-[44px] w-full ">
                     <h2
-                      className={`text-[18px] ${totalEstudantes > 4 ? "block" : "hidden"} pl-1`}
+                      className={`text-[18px] ${sala.quantidadeEstudantes > 4 ? "block" : "hidden"} pl-3`}
                     >
-                      +{totalEstudantes - 4} estudantes
+                      +{sala.quantidadeEstudantes - 4} estudantes
                     </h2>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           );
         })}
-
       </div>
     </>
   );

@@ -27,15 +27,17 @@ type BannerData = {
   // add other properties if needed
 };
 
-type Salas = {
-  assunto: string | null;
-  banner: string;
-  criadoEm: string;
-  descricao: string;
+type Sala = {
   id: string;
-  moderadorId: string;
   nome: string;
-  tipo: "PUBLICA" | "PRIVADA" | string; // you can restrict to known values
+  descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
+  banner: string;
+  assunto: string | null;
+  avataresUltimosUsuarios: string[];
+  criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
@@ -51,7 +53,7 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [user, setUser] = useState<UserData>({});
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
-  const [sala, setSala] = useState<Salas[]>([]);
+  const [sala, setSala] = useState<Sala[]>([]);
   const [salaID, setSalaID] = useState<string>("");
   const emComentario = pathname.split("/")[5];
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,7 +76,6 @@ export default function LayoutSalas({ children }: SalasProps) {
   useEffect(() => {
     setLoading(true);
     const fetchAll = async () => {
-      console.log("salaID", salaID);
       try {
         // Run all fetches in parallel
         const [userRes, salaRes] = await Promise.all([
@@ -97,10 +98,8 @@ export default function LayoutSalas({ children }: SalasProps) {
         // ✅ Set states after everything is done
         setUser(userData);
         setSala(salaData.salas);
-        console.log(salaData);
 
         // Extract data from /home/salas-estudo safely
-        console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -164,13 +163,21 @@ export default function LayoutSalas({ children }: SalasProps) {
                       <>
                         <div className="flex w-full h-full rounded-[35px] bg-white flex-col items-center shadow-md overflow-y-auto overflow-x-hidden ">
                           <div className="w-full">
-                            <div className="w-full min-h-[385px] bg-[#9767F8]">
+                            <div className="w-full h-[385px] bg-[#9767F8] relative">
                               {!loading && sala?.[0]?.banner && (
-                                <img
-                                  src={sala[0].banner}
-                                  className="w-full h-full object-cover"
-                                  alt="Banner"
-                                />
+                                <>
+                                  <div className="w-7 h-7 absolute top-4 left-4">
+                                    <ArrowLeft
+                                      className="cursor-pointer w-full h-full"
+                                      onClick={() => router.back()}
+                                    />
+                                  </div>
+                                  <img
+                                    src={sala[0].banner}
+                                    className="w-full h-full object-cover"
+                                    alt="Banner"
+                                  />
+                                </>
                               )}
                             </div>
                             <AnimatePresence>
@@ -403,122 +410,215 @@ export default function LayoutSalas({ children }: SalasProps) {
               <Loading />
             ) : (
               <>
-                <h1 className="text-[25px] leading-none font-medium my-2">
-                  Suas comunidades
-                </h1>
-                <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex gap-1 max-w-full w-full  overflow-hidden"
-                    >
-                      <img
-                        src={`${user.foto}`}
-                        className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
-                        alt="Foto de perfil"
-                      />
-                      <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
-                        <span className="font-semibold truncate">
-                          Matemática
-                        </span>
-                        <span className="font-medium truncate">
-                          {" "}
-                          3,4 mil seguidores
-                        </span>
+                {pathname.startsWith("/home/comunidades/salas_de_estudo/") &&
+                pathname.endsWith("/postagens") ? (
+                  <>
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      {sala[0].nome}
+                    </h1>
+                    <p className="w-full text-[18px] break-all line-clamp-5">
+                      {sala[0].descricao}
+                    </p>
+                    
+
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      Recentes
+                    </h1>
+                    <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 max-w-full w-full  overflow-hidden"
+                        >
+                          <img
+                            src={`${user.foto}`}
+                            className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
+                            alt="Foto de perfil"
+                          />
+                          <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                            <span className="font-semibold truncate">
+                              Matemática
+                            </span>
+                            <span className="font-medium truncate">
+                              {" "}
+                              3,4 mil seguidores
+                            </span>
+                          </div>
+
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                          >
+                            <ChevronRight className="w-full h-full text-[#EB9481]" />
+                          </motion.div>
+                        </div>
+                      ))}
+                      <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                        Ver mais
+                        <ChevronDown className="" stroke="currentColor" />
                       </div>
-
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
-                      >
-                        <ChevronRight className="w-full h-full text-[#EB9481]" />
-                      </motion.div>
                     </div>
-                  ))}
-                  <div className="cursor-pointer cw-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
-                    Ver mais
-                    <ChevronDown className="" stroke="currentColor" />
-                  </div>
-                </div>
 
-                <h1 className="text-[25px] leading-none font-medium my-2">
-                  Recentes
-                </h1>
-                <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex gap-1 max-w-full w-full  overflow-hidden"
-                    >
-                      <img
-                        src={`${user.foto}`}
-                        className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
-                        alt="Foto de perfil"
-                      />
-                      <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
-                        <span className="font-semibold truncate">
-                          Matemática
-                        </span>
-                        <span className="font-medium truncate">
-                          {" "}
-                          3,4 mil seguidores
-                        </span>
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      Postagens Favoritas
+                    </h1>
+                    <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 max-w-full w-full  overflow-hidden"
+                        >
+                          <img
+                            src={`${user.foto}`}
+                            className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
+                            alt="Foto de perfil"
+                          />
+                          <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                            <span className="font-semibold truncate">
+                              Matemática
+                            </span>
+                            <span className="font-medium truncate">
+                              {" "}
+                              3,4 mil seguidores
+                            </span>
+                          </div>
+
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                          >
+                            <ChevronRight className="w-full h-full text-[#EB9481]" />
+                          </motion.div>
+                        </div>
+                      ))}
+                      <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                        Ver mais
+                        <ChevronDown className="" stroke="currentColor" />
                       </div>
-
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
-                      >
-                        <ChevronRight className="w-full h-full text-[#EB9481]" />
-                      </motion.div>
                     </div>
-                  ))}
-                  <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
-                    Ver mais
-                    <ChevronDown className="" stroke="currentColor" />
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <>
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      Suas comunidades
+                    </h1>
+                    <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 max-w-full w-full  overflow-hidden"
+                        >
+                          <img
+                            src={`${user.foto}`}
+                            className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
+                            alt="Foto de perfil"
+                          />
+                          <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                            <span className="font-semibold truncate">
+                              Matemática
+                            </span>
+                            <span className="font-medium truncate">
+                              {" "}
+                              3,4 mil seguidores
+                            </span>
+                          </div>
 
-                <h1 className="text-[25px] leading-none font-medium my-2">
-                  Postagens Favoritas
-                </h1>
-                <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex gap-1 max-w-full w-full  overflow-hidden"
-                    >
-                      <img
-                        src={`${user.foto}`}
-                        className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
-                        alt="Foto de perfil"
-                      />
-                      <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
-                        <span className="font-semibold truncate">
-                          Matemática
-                        </span>
-                        <span className="font-medium truncate">
-                          {" "}
-                          3,4 mil seguidores
-                        </span>
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                          >
+                            <ChevronRight className="w-full h-full text-[#EB9481]" />
+                          </motion.div>
+                        </div>
+                      ))}
+                      <div className="cursor-pointer cw-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                        Ver mais
+                        <ChevronDown className="" stroke="currentColor" />
                       </div>
-
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
-                      >
-                        <ChevronRight className="w-full h-full text-[#EB9481]" />
-                      </motion.div>
                     </div>
-                  ))}
-                  <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
-                    Ver mais
-                    <ChevronDown className="" stroke="currentColor" />
-                  </div>
-                </div>
+
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      Recentes
+                    </h1>
+                    <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 max-w-full w-full  overflow-hidden"
+                        >
+                          <img
+                            src={`${user.foto}`}
+                            className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
+                            alt="Foto de perfil"
+                          />
+                          <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                            <span className="font-semibold truncate">
+                              Matemática
+                            </span>
+                            <span className="font-medium truncate">
+                              {" "}
+                              3,4 mil seguidores
+                            </span>
+                          </div>
+
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                          >
+                            <ChevronRight className="w-full h-full text-[#EB9481]" />
+                          </motion.div>
+                        </div>
+                      ))}
+                      <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                        Ver mais
+                        <ChevronDown className="" stroke="currentColor" />
+                      </div>
+                    </div>
+
+                    <h1 className="text-[25px] leading-none font-medium my-2">
+                      Postagens Favoritas
+                    </h1>
+                    <div className="flex flex-col gap-3 border border-b-[#D7DDEA] ">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 max-w-full w-full  overflow-hidden"
+                        >
+                          <img
+                            src={`${user.foto}`}
+                            className="rounded-full cursor-pointer transition-all w-10 h-10 shadow-md  "
+                            alt="Foto de perfil"
+                          />
+                          <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                            <span className="font-semibold truncate">
+                              Matemática
+                            </span>
+                            <span className="font-medium truncate">
+                              {" "}
+                              3,4 mil seguidores
+                            </span>
+                          </div>
+
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                          >
+                            <ChevronRight className="w-full h-full text-[#EB9481]" />
+                          </motion.div>
+                        </div>
+                      ))}
+                      <div className="w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                        Ver mais
+                        <ChevronDown className="" stroke="currentColor" />
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>

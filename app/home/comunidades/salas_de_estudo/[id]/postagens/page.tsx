@@ -31,11 +31,13 @@ type Sala = {
   id: string;
   nome: string;
   descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
   banner: string;
-  moderadorId: string;
-  tipo: "PUBLICA" | "PRIVADA"; // assuming only these two options
   assunto: string | null;
+  avataresUltimosUsuarios: string[];
   criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
@@ -157,6 +159,50 @@ export default function Materiais() {
     }
   }, []);
 
+   const fetchAll = async () => {
+     try {
+       const userIDRes = await fetch(
+         `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+         {
+           method: "GET",
+           credentials: "include",
+         }
+       );
+
+       const userIDdata = await userIDRes.json(); // parse the response
+       setUserID(userIDdata.userId); // set the state
+
+       const [userRes, postsRes] = await Promise.all([
+         fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+           method: "GET",
+           credentials: "include",
+         }),
+         fetch(
+           `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${salaID}/posts?usuarioId=${userIDdata.userId}`,
+           {
+             method: "GET",
+             credentials: "include",
+           }
+         ),
+       ]);
+
+       const [userData, postsData] = await Promise.all([
+         userRes.json(),
+         postsRes.json(),
+       ]);
+       setUser(userData);
+       setPosts(postsData);
+       console.log(postsData);
+
+       console.log("✅ All data successfully loaded");
+     } catch (err) {
+       console.error("Erro ao carregar dados:", err);
+       setMessage("Erro ao carregar dados.");
+     } finally {
+       setLoading(false);
+     }
+  };
+  
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
   useEffect(() => {
     console.log(curtidaCheck);
@@ -172,6 +218,7 @@ export default function Materiais() {
   function closing() {
     setOpen(false);
     setOpen2(false);
+    setPostText("");
     setImage(0);
   }
 
@@ -302,9 +349,11 @@ export default function Materiais() {
 
       const postarData = await postarRes.json();
       console.log(postarData);
+      console.log(postText);
     } catch (error) {
       console.error("Erro ao curtir:", error);
     } finally {
+      fetchAll();
       closing();
     }
   };
@@ -383,7 +432,7 @@ export default function Materiais() {
                   className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
                 />
 
-                <div className="w-full flex flex-col justify-center h-full gap-4">
+                <div  className="w-full flex flex-col justify-center h-full gap-4">
                   <div className="flex ">
                     <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
                       Fazer postagem:
@@ -402,12 +451,12 @@ export default function Materiais() {
 
                   <div className="w-full text-[18px]  rounded-[25px] overflow-hidden">
                     <textarea
-                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]  "
+                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
                       placeholder="Escreva um comentário..."
                       // value={newComentario}
-                      // value={comentar}
+                      value={postText}
                       onChange={(e) => {
-                        // setComentar(e.target.value);
+                        setPostText(e.target.value);
                         //   setNewComentario(e.target.value)
                         const textarea = e.target;
                         textarea.style.height = "auto"; // reset height
@@ -423,7 +472,8 @@ export default function Materiais() {
                       whileTap={{ scale: 0.98 }}
                       transition={{ ease: "easeInOut" }}
                       onClick={CriarPost}
-                      className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                      type="submit"
+                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
                     >
                       Postar
                     </motion.button>
@@ -546,12 +596,21 @@ export default function Materiais() {
                       />
                     </motion.div>
                     <PostagemDetail
-                      message="a"
-                      onClose={() => {}}
-                      last={10}
+                      message={post.id}
+                      Mine={post.autor.id === userID}
+                      onClose={() => {
+                        setAppear(0);
+                        fetchAll();
+                      }}
+                      last={posts.length}
                       index={index + 1}
                       appear={appear === index + 1 && true}
                     />
+                    {/* <PostagemDetail
+                      message="a"
+                      onClose={() => {setAppear(0)}}
+                      last={posts.length}
+                    /> */}
                   </motion.div>
                 </div>
               </div>

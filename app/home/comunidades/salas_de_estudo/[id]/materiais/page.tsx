@@ -20,14 +20,16 @@ type BannerData = {
   // add other properties if needed
 };
 type Salas = {
-  assunto: string | null;
-  banner: string;
-  criadoEm: string;
-  descricao: string;
   id: string;
-  moderadorId: string;
   nome: string;
-  tipo: "PUBLICA" | "PRIVADA" | string; // you can restrict to known values
+  descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
+  banner: string;
+  assunto: string | null;
+  avataresUltimosUsuarios: string[];
+  criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
   topicos: string[];
 };
 
@@ -85,10 +87,10 @@ export default function Materiais() {
   return (
     <>
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 pb-4">
-        <div className="flex w-full ">
-          <div className="w-full flex justify-center">asd</div>
-          <hr className="h-full w-[2px] bg-[#D7DDEA] " />
-          <div className="w-full flex justify-center">asd</div>
+        <div className="flex w-full sm:flex-row flex-col">
+          <div className="w-full flex justify-center bg-blue-200 ">Material</div>
+          <hr className="sm:h-full sm:w-[2px] w-full bg-[#D7DDEA] mx-2" />
+          <div className="w-full flex justify-center bg-blue-200">Material</div>
         </div>
       </div>
     </>
