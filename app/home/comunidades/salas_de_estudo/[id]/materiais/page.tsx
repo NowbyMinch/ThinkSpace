@@ -217,43 +217,42 @@ export default function Materiais() {
     setTopicos([]);
   }
 
- const postarMaterial = async () => {
-   const userRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
-     method: "GET",
-     credentials: "include",
-   });
-   const userData = await userRes.json();
+  const postarMaterial = async () => {
+    const userRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+      method: "GET",
+      credentials: "include",
+    });
+    const userData = await userRes.json();
 
-   const payload = {
-     salaId: pathname.split("/")[4],
-     materialId: materialDesignado,
-     materiaId: materiaDesignada,
-     autorId: userData.userId,
-     tags: topicos.length ? topicos : [],
-   };
+    const payload = {
+      salaId: pathname.split("/")[4],
+      materialId: materialDesignado,
+      materiaId: materiaDesignada,
+      autorId: userData.userId,
+      tags: topicos.length ? topicos : [],
+    };
 
-   console.log("Payload enviado:", payload);
+    console.log("Payload enviado:", payload);
 
-   const Res = await fetch(
-     `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${pathname.split("/")[4]}/publicar-material`,
-     {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify(payload),
-       credentials: "include",
-     }
-   );
+    const Res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${pathname.split("/")[4]}/publicar-material`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "include",
+      }
+    );
 
-   const Data = await Res.json();
-   console.log(Data, "POSTANDO UM MATERIAL");
-   if (Data.error) {
-     setMessage(Data.message);
-   } else {
-     fetchAll();
-     closing();
-   }
- };
-
+    const Data = await Res.json();
+    console.log(Data, "POSTANDO UM MATERIAL");
+    if (Data.error) {
+      setMessage(Data.message);
+    } else {
+      fetchAll();
+      closing();
+    }
+  };
 
   const VincularMaterial = async () => {
     const userIDRes1 = await fetch(
@@ -289,7 +288,7 @@ export default function Materiais() {
     // router.push(
     //   `/home/materiais/${materiaDesignada}/${materialID}/Resumo`
     // );
-    
+
     closing();
   };
 
@@ -301,55 +300,54 @@ export default function Materiais() {
       )}
       {open && (
         <>
-          <div className="w-full absolute top-0 bottom-0 ">
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="w-full h-full fixed left-0 right-0 flex justify-center overflow-hidden items-center z-[1100] "
+          >
+            <div
+              className="w-full h-full absolute"
+              onClick={() => closing()}
+            ></div>
+
             <motion.div
               key="content"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-full h-full fixed mx-52 flex justify-center overflow-hidden items-center z-[1100] "
+              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
             >
               <div
-                className="w-full h-full absolute"
-                onClick={() => closing()}
-              ></div>
-
-              <motion.div
-                key="content"
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 0.94 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+                id="white-box"
+                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
               >
-                <div
-                  id="white-box"
-                  className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
-                >
-                  <img
-                    src="/Vector.svg"
-                    alt="Decoração"
-                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                  />
+                <img
+                  src="/Vector.svg"
+                  alt="Decoração"
+                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                />
 
-                  <div className="w-full flex flex-col justify-center h-full gap-4">
-                    <div className="flex ">
-                      <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
-                        Enviar Material
-                      </div>
-                      <div className=" w-fit">
-                        <motion.div
-                          whileHover={{ scale: 1.08 }}
-                          whileTap={{ scale: 0.92 }}
-                          onClick={closing}
-                          className="ml-auto cursor-pointer z-1000 w-6 h-6"
-                        >
-                          <X className="w-full h-full" />
-                        </motion.div>
-                      </div>
+                <div className="w-full flex flex-col justify-center h-full gap-4">
+                  <div className="flex ">
+                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                      Enviar Material
                     </div>
+                    <div className=" w-fit">
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={closing}
+                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                      >
+                        <X className="w-full h-full" />
+                      </motion.div>
+                    </div>
+                  </div>
 
-                    <div className="w-full text-[18px] overflow-hidden pb-1 flex flex-col gap-4">
-                      {/* <div className=" flex flex-col gap-1">
+                  <div className="w-full text-[18px] overflow-hidden pb-1 flex flex-col gap-4">
+                    {/* <div className=" flex flex-col gap-1">
                         <h2 className="text-[20px] font-medium">
                           {" "}
                           Nome do material
@@ -363,110 +361,106 @@ export default function Materiais() {
                         />
                       </div> */}
 
-                      <div className="relative flex flex-col gap-1">
-                        <h2 className="text-[20px] font-medium">
-                          Matérial designado:
-                        </h2>
+                    <div className="relative flex flex-col gap-1">
+                      <h2 className="text-[20px] font-medium">
+                        Matérial designado:
+                      </h2>
 
-                        <ComboboxDemoMaterial
-                          value={materialDesignado}
-                          onChange={(id, materiaId) => {
-                            setMaterialDesignado(id);
-                            if (materiaId) setMateriaDesignada(materiaId);
-                            console.log("Selected Material:", id);
-                            console.log("Materia ID:", materiaId);
+                      <ComboboxDemoMaterial
+                        value={materialDesignado}
+                        onChange={(id, materiaId) => {
+                          setMaterialDesignado(id);
+                          if (materiaId) setMateriaDesignada(materiaId);
+                          console.log("Selected Material:", id);
+                          console.log("Materia ID:", materiaId);
+                        }}
+                      />
+                    </div>
+
+                    <div className=" lg:w-full w-[500px] max-w-full h-fit flex flex-col gap-1">
+                      <h1 className="font-medium text-[20px] leading-[20px] ">
+                        Tags
+                      </h1>
+                      <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
+                        <input
+                          type="text"
+                          value={topicoInput}
+                          onChange={(e) => setTopicoInput(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (
+                              e.key === "Enter" &&
+                              topicoInput &&
+                              !topicos.includes(topicoInput)
+                            ) {
+                              setTopicos((prev) => [...prev, topicoInput]);
+                              setTopicoInput("");
+                            }
                           }}
+                          placeholder="Adicionar tags"
+                          className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
                         />
-                      </div>
 
-                      <div className=" lg:w-full w-[500px] max-w-full h-fit flex flex-col gap-1">
-                        <h1 className="font-medium text-[20px] leading-[20px] ">
-                          Tags
-                        </h1>
-                        <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
-                          <input
-                            type="text"
-                            value={topicoInput}
-                            onChange={(e) => setTopicoInput(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (
-                                e.key === "Enter" &&
-                                topicoInput &&
-                                !topicos.includes(topicoInput)
-                              ) {
-                                setTopicos((prev) => [...prev, topicoInput]);
-                                setTopicoInput("");
-                              }
-                            }}
-                            placeholder="Adicionar tags"
-                            className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
-                          />
-
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.92 }}
-                            onClick={() => {
-                              if (
-                                topicoInput &&
-                                !topicos.includes(topicoInput)
-                              ) {
-                                setTopicos((prev) => [...prev, topicoInput]);
-                                setTopicoInput("");
-                              }
-                            }}
-                            className="p-[10px] min-w-[50px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md "
-                          >
-                            <SendHorizonal className="size-6" />
-                          </motion.button>
-                        </div>
-                      </div>
-
-                      <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
-                        <div className="w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
-                          <AnimatePresence>
-                            {topicos.map((topico, index) => (
-                              <motion.div
-                                key={topico + index}
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                id="topicos"
-                                className="flex w-fit h-fit py-1 px-2 gap-2 text-white bg-[#A387DC] rounded-[8px] max-w-full cursor-pointer"
-                              >
-                                <X
-                                  onClick={() => {
-                                    setTopicos((prev) =>
-                                      prev.filter((_, i) => i !== index)
-                                    );
-                                  }}
-                                  className="text-[rgba(0,0,0,0.34)]"
-                                />
-
-                                <span className=" w-full block text-ellipsis overflow-hidden break-words ">
-                                  {topico}
-                                </span>
-                              </motion.div>
-                            ))}
-                          </AnimatePresence>
-                        </div>
-                      </div>
-
-                      <div className="w-full flex justify-center items-center min-h-fit">
                         <motion.button
                           whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          transition={{ ease: "easeInOut" }}
-                          onClick={postarMaterial}
-                          className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                          whileTap={{ scale: 0.92 }}
+                          onClick={() => {
+                            if (topicoInput && !topicos.includes(topicoInput)) {
+                              setTopicos((prev) => [...prev, topicoInput]);
+                              setTopicoInput("");
+                            }
+                          }}
+                          className="p-[10px] min-w-[50px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md "
                         >
-                          Enviar Material
+                          <SendHorizonal className="size-6" />
                         </motion.button>
                       </div>
                     </div>
+
+                    <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
+                      <div className="w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
+                        <AnimatePresence>
+                          {topicos.map((topico, index) => (
+                            <motion.div
+                              key={topico + index}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              id="topicos"
+                              className="flex w-fit h-fit py-1 px-2 gap-2 text-white bg-[#A387DC] rounded-[8px] max-w-full cursor-pointer"
+                            >
+                              <X
+                                onClick={() => {
+                                  setTopicos((prev) =>
+                                    prev.filter((_, i) => i !== index)
+                                  );
+                                }}
+                                className="text-[rgba(0,0,0,0.34)]"
+                              />
+
+                              <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                {topico}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    <div className="w-full flex justify-center items-center min-h-fit">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ ease: "easeInOut" }}
+                        onClick={postarMaterial}
+                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                      >
+                        Enviar Material
+                      </motion.button>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           <div className="w-full absolute flex justify-center items-center">
             <Backdrop3 onClick={() => closing()} />
@@ -476,83 +470,81 @@ export default function Materiais() {
 
       {open2 && (
         <>
-          <div className="w-full absolute top-0 bottom-0 ">
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="w-full h-full fixed left-0 right-0  flex justify-center overflow-hidden items-center z-[1100] "
+          >
+            <div
+              className="w-full h-full absolute"
+              onClick={() => closing()}
+            ></div>
+
             <motion.div
               key="content"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-full h-full fixed mx-52 flex justify-center overflow-hidden items-center z-[1100] "
+              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
             >
               <div
-                className="w-full h-full absolute"
-                onClick={() => closing()}
-              ></div>
-
-              <motion.div
-                key="content"
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 0.94 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+                id="white-box"
+                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
               >
-                <div
-                  id="white-box"
-                  className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
-                >
-                  <img
-                    src="/Vector.svg"
-                    alt="Decoração"
-                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                  />
+                <img
+                  src="/Vector.svg"
+                  alt="Decoração"
+                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                />
 
-                  <div className="w-full flex flex-col justify-center h-full gap-4">
-                    <div className="flex ">
-                      <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
-                        Fazer postagem:
-                      </div>
-                      <div className=" w-fit">
-                        <motion.div
-                          whileHover={{ scale: 1.08 }}
-                          whileTap={{ scale: 0.92 }}
-                          onClick={closing}
-                          className="ml-auto cursor-pointer z-1000 w-6 h-6"
-                        >
-                          <X className="w-full h-full" />
-                        </motion.div>
-                      </div>
+                <div className="w-full flex flex-col justify-center h-full gap-4">
+                  <div className="flex ">
+                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                      Fazer postagem:
                     </div>
-
-                    <div className="relative flex flex-col gap-1">
-                      <h2 className="text-[20px] font-medium">
-                        Matéria designada:
-                      </h2>
-
-                      <ComboboxDemoMateriaPostar
-                        value={materiaDesignada}
-                        onChange={(value) => {
-                          setMateriaDesignada(value);
-                        }}
-                      />
-                    </div>
-
-                    <div className="w-full flex justify-center items-center">
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ ease: "easeInOut" }}
-                        onClick={VincularMaterial}
-                        type="submit"
-                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                    <div className=" w-fit">
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={closing}
+                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
                       >
-                        Vincular
-                      </motion.button>
+                        <X className="w-full h-full" />
+                      </motion.div>
                     </div>
                   </div>
+
+                  <div className="relative flex flex-col gap-1">
+                    <h2 className="text-[20px] font-medium">
+                      Matéria designada:
+                    </h2>
+
+                    <ComboboxDemoMateriaPostar
+                      value={materiaDesignada}
+                      onChange={(value) => {
+                        setMateriaDesignada(value);
+                      }}
+                    />
+                  </div>
+
+                  <div className="w-full flex justify-center items-center">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ ease: "easeInOut" }}
+                      onClick={VincularMaterial}
+                      type="submit"
+                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                    >
+                      Vincular
+                    </motion.button>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           <div className="w-full absolute flex justify-center items-center">
             <Backdrop3 onClick={() => closing()} />
@@ -582,7 +574,8 @@ export default function Materiais() {
             Postar material
           </motion.button>
         </div>
-        <div className="flex gap-3  pb-4 h-fit">
+        {/* lg:flex-row */}
+        <div className="flex gap-3 pb-4 h-fit flex-col">
           {material
             .filter((m) =>
               (m.material.titulo ?? "")
@@ -598,7 +591,8 @@ export default function Materiais() {
               return (
                 <div
                   key={index}
-                  className={`w-full max-w-[50%] min-h-fit h-[500px] p-4 flex gap-2 lg:flex-row flex-col ${index % 2 === 0 && "border-1 border-r-[rgba(0,0,0,0.16)]"}`}
+                  // lg:max-w-[50%]
+                  className={`w-full min-h-fit h-[500px] p-4 flex gap-2 lg:flex-row flex-col ${index % 2 === 0 && "border-1 border-r-[rgba(0,0,0,0.16)]"}`}
                 >
                   <div className="flex  flex-col w-full gap-3 h-fit ">
                     <div className="">
@@ -635,7 +629,7 @@ export default function Materiais() {
                     </div>
                     <div className="shadow-md w-full bg-[rgba(217,217,217,0.34)] flex flex-col justify-between max-w-full max-h-full rounded-[35px] min-h-[400px] h-[400px] mt-auto overflow-hidden mb-2 p-2">
                       {/* Conteúdo do resumo */}
-                      <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-hidden ">
+                      <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
                         <div className="text-[16px] mb-2">
                           Resumo <span className="text-[#726BB6]">IA</span>
                         </div>
