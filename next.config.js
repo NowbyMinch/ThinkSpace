@@ -3,8 +3,14 @@
 const nextConfig = {
   experimental: { serverActions: {} },
   images: {
-    domains: ['ui-avatars.com', 'i.imgur.com'], 
-
+    domains: ["ui-avatars.com", "i.imgur.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+        pathname: "/uc**",
+      },
+    ],
   },
 };
 

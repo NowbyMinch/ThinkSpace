@@ -6,13 +6,14 @@ import {
   useMotionValue,
   animate,
 } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useContext } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Ellipsis, Heart, MessageCircle, Router } from "lucide-react";
 import PostagemDetail from "@/components/postagemDetail";
 import { Backdrop3 } from "../../components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
+import { SearchContext } from "../layout";
 
 type UserData = { primeiroNome?: string; cargo?: string; foto?: string };
 type BannerData = {
@@ -54,8 +55,7 @@ type Postagem = {
   sala: Sala;
 };
 
-
-export default function Postagens(){
+export default function Postagens() {
   const pathname = usePathname();
   const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
@@ -69,12 +69,19 @@ export default function Postagens(){
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const salaID = pathname.split("/")[4];
   const [posts, setPosts] = useState<Postagem[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Postagem[]>([]);
   const [userID, setUserID] = useState<string>("");
   const [curtidaCheck, setCurtidaCheck] = useState<boolean | undefined>(
     undefined
   );
   const [curtidaNumero, setCurtidaNumero] = useState<number>(-1);
+  const { searchTerm } = useContext(SearchContext);
+
+  const filteredPosts = useMemo(() => {
+    if (!searchTerm.trim()) return posts;
+    return posts.filter((p) =>
+      p.conteudo.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, posts]);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -203,7 +210,6 @@ export default function Postagens(){
   };
 
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
-
   function formatNumber(num: number) {
     if (num >= 1_000_000)
       return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -316,6 +322,10 @@ export default function Postagens(){
 
   return (
     <>
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
+
       {open && (
         <>
           <motion.div
@@ -359,7 +369,7 @@ export default function Postagens(){
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
         <h1 className="text-[24px] font-medium">Principais postagens</h1>
 
-        {posts.map((post, index) => {
+        {filteredPosts.map((post, index) => {
           return (
             <div key={index} className="w-full h-fit flex flex-col mb-4">
               <div className="w-full flex flex-col gap-6">
@@ -467,6 +477,9 @@ export default function Postagens(){
                     </motion.div>
                     <PostagemDetail
                       message={post.id}
+                      onError={(message) => {
+                        setMessage(message);
+                      }}
                       Mine={post.autor.id === userID}
                       onClose={() => {
                         setAppear(0);

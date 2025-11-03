@@ -1480,6 +1480,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       ></div>
       <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto mt-[12px] mb-[12px] h-[calc(100vh-24px)] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
         <div className="  w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+          <div className="w-[95%] mt-2 cursor-pointer"><ArrowLeft className="size-7" onClick={() => {router.push("/home/materiais");}}/></div>
           <div className="w-[95%] max-w-[95%] ">
             <div className="w-full mx-auto">
               <h1 className="text-[#1E2351] font-medium text-[30px]">
@@ -1539,31 +1540,32 @@ export default function MateriaisClient({ id }: { id: string }) {
                       key={material.id}
                       href={`/home/materiais/${id}/${material.id}/Resumo`}
                       id="materiais"
-                      className="grid grid-cols-[100px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
+                      className="grid grid-cols-[80px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
                     >
                       {index < 9 ? (
-                        <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">
+                        <h1 className="text-[70px] font-bold text-[#A78CDC] w-fit leading-[90px]">
                           0{index + 1}
                         </h1>
                       ) : (
-                        <h1 className="text-[85px] font-bold text-[#A78CDC] leading-[90px]">
+                        <h1 className="text-[70px] font-bold text-[#A78CDC] leading-[90px]">
                           {index + 1}
                         </h1>
                       )}
 
                       <motion.div
                         whileHover="delete"
-                        className="mt-[18px] flex justify-between items-center "
+                        className="mt-[18px] flex justify-between items-center  w-full min-w-0"
                       >
-                        <div>
-                          <h2 className="text-[25px] font-medium leading-[30px] recentes2 overflow-hidden ">
+                        <div className="flex-1 min-w-0 ">
+                          <h2 className="text-[25px] font-medium leading-[30px] truncate text-ellipsis overflow-hidden whitespace-nowrap">
                             {material.titulo}
                           </h2>
-                          <h2 className="text-[18px] text-[#828181]">
+                          <h2 className="text-[18px] text-[#828181] truncate">
                             Tempo de estudo: 0 horas
                           </h2>
                         </div>
-                        <div className="flex items-center">
+
+                        <div className="flex items-center ">
                           <motion.div
                             initial={{ scale: 0 }}
                             variants={{
@@ -1579,7 +1581,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                             <Trash className="size-8 text-red-500" />
                           </motion.div>
 
-                          <ChevronRight className="size-12 " />
+                          <ChevronRight className="size-10 " />
                         </div>
                       </motion.div>
                     </motion.a>

@@ -1,8 +1,10 @@
 // components/ErrorModal.tsx
 import { Bookmark, ShieldX, Trash, X } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import { useContext } from "react";
+import { FavoritosContext } from "@/app/home/comunidades/layout"; // adjust if path differs
 
 type Props = {
   message?: string;
@@ -12,6 +14,7 @@ type Props = {
   index?: number;
   last?: number;
   onClose?: () => void;
+  onError?: (message: string) => void;
 };
 
 const PostagemDetail: React.FC<Props> = ({
@@ -22,12 +25,33 @@ const PostagemDetail: React.FC<Props> = ({
   index,
   last,
   onClose,
+  onError,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const [userID, setUserID] = useState<string>("");
+
+  const { refreshFavoritos } = useContext(FavoritosContext);
+
   useEffect(() => {
     console.log(Mine);
   }, [Mine]);
+
+  useEffect(() => {
+    const Fetch = async () => {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata = await userIDRes.json(); // parse the response
+      setUserID(userIDdata.userId); // set the state
+    };
+    Fetch();
+  }, []);
 
   const Delete = async () => {
     try {
@@ -72,8 +96,43 @@ const PostagemDetail: React.FC<Props> = ({
     }
   };
 
-  // /sala-estudo/opst / { postId };
+  const Favoritos = async () => {
+    try {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const userIDdata = await userIDRes.json();
 
+      const FavoritarRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post/${message}/salvar/${userIDdata.userId}`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      const FavoritarData = await FavoritarRes.json();
+      console.log("FavoritarData:", FavoritarData);
+
+      if (
+        FavoritarData.message !== "Post salvo com sucesso." &&
+        FavoritarData.message !== "Salvamento removido com sucesso."
+      ) {
+        onError?.(FavoritarData.message);
+      } else {
+        // ✅ Atualiza automaticamente os favoritos no Layout
+        refreshFavoritos();
+      }
+    } catch (error) {
+      console.error("Erro ao curtir:", error);
+    }
+  };
+
+  // /sala-estudo/opst / { postId };
   return (
     <>
       <AnimatePresence>
@@ -101,13 +160,20 @@ const PostagemDetail: React.FC<Props> = ({
                 >
                   <ShieldX /> Denunciar
                 </button>
-                <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                <button
-                  onClick={() => onClose?.()}
-                  className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
-                >
-                  <Bookmark /> Salvar
-                </button>
+                {!comentario && (
+                  <>
+                    <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                    <button
+                      onClick={() => {
+                        Favoritos();
+                        onClose?.();
+                      }}
+                      className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                    >
+                      <Bookmark /> Salvar
+                    </button>
+                  </>
+                )}
                 {Mine && (
                   <>
                     <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />

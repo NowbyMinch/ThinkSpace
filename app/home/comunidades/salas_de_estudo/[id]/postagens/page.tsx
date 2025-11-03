@@ -76,6 +76,7 @@ export default function Materiais() {
   const [curtidaNumero, setCurtidaNumero] = useState<number>(-1);
   const [open2, setOpen2] = useState(false);
   const [postText, setPostText] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -159,50 +160,50 @@ export default function Materiais() {
     }
   }, []);
 
-   const fetchAll = async () => {
-     try {
-       const userIDRes = await fetch(
-         `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
-         {
-           method: "GET",
-           credentials: "include",
-         }
-       );
+  const fetchAll = async () => {
+    try {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
-       const userIDdata = await userIDRes.json(); // parse the response
-       setUserID(userIDdata.userId); // set the state
+      const userIDdata = await userIDRes.json(); // parse the response
+      setUserID(userIDdata.userId); // set the state
 
-       const [userRes, postsRes] = await Promise.all([
-         fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-           method: "GET",
-           credentials: "include",
-         }),
-         fetch(
-           `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${salaID}/posts?usuarioId=${userIDdata.userId}`,
-           {
-             method: "GET",
-             credentials: "include",
-           }
-         ),
-       ]);
+      const [userRes, postsRes] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+          method: "GET",
+          credentials: "include",
+        }),
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${salaID}/posts?usuarioId=${userIDdata.userId}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        ),
+      ]);
 
-       const [userData, postsData] = await Promise.all([
-         userRes.json(),
-         postsRes.json(),
-       ]);
-       setUser(userData);
-       setPosts(postsData);
-       console.log(postsData);
+      const [userData, postsData] = await Promise.all([
+        userRes.json(),
+        postsRes.json(),
+      ]);
+      setUser(userData);
+      setPosts(postsData);
+      console.log(postsData);
 
-       console.log("✅ All data successfully loaded");
-     } catch (err) {
-       console.error("Erro ao carregar dados:", err);
-       setMessage("Erro ao carregar dados.");
-     } finally {
-       setLoading(false);
-     }
+      console.log("✅ All data successfully loaded");
+    } catch (err) {
+      console.error("Erro ao carregar dados:", err);
+      setMessage("Erro ao carregar dados.");
+    } finally {
+      setLoading(false);
+    }
   };
-  
+
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
   useEffect(() => {
     console.log(curtidaCheck);
@@ -403,220 +404,239 @@ export default function Materiais() {
       )}
       {open2 && (
         <>
-          <motion.div
-            key="content"
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 0.94 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
-          >
-            <div
-              className="w-full h-full absolute"
-              onClick={() => closing()}
-            ></div>
-
+          <div className="w-full absolute top-0 bottom-0 ">
             <motion.div
               key="content"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+              className="w-full h-full fixed mx-52 flex justify-center overflow-hidden items-center z-[1100] "
             >
               <div
-                id="white-box"
-                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                className="w-full h-full absolute"
+                onClick={() => closing()}
+              ></div>
+
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
               >
-                <img
-                  src="/Vector.svg"
-                  alt="Decoração"
-                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                />
+                <div
+                  id="white-box"
+                  className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                >
+                  <img
+                    src="/Vector.svg"
+                    alt="Decoração"
+                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                  />
 
-                <div  className="w-full flex flex-col justify-center h-full gap-4">
-                  <div className="flex ">
-                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
-                      Fazer postagem:
+                  <div className="w-full flex flex-col justify-center h-full gap-4">
+                    <div className="flex ">
+                      <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                        Fazer postagem:
+                      </div>
+                      <div className=" w-fit">
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          onClick={closing}
+                          className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                        >
+                          <X className="w-full h-full" />
+                        </motion.div>
+                      </div>
                     </div>
-                    <div className=" w-fit">
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        onClick={closing}
-                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+
+                    <div className="w-full text-[18px]  rounded-[25px] overflow-hidden">
+                      <textarea
+                        className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
+                        placeholder="Escreva um comentário..."
+                        // value={newComentario}
+                        value={postText}
+                        onChange={(e) => {
+                          setPostText(e.target.value);
+                          //   setNewComentario(e.target.value)
+                          const textarea = e.target;
+                          textarea.style.height = "auto"; // reset height
+                          textarea.style.maxHeight = "200px";
+                          textarea.style.height = textarea.scrollHeight + "px";
+                        }}
+                        rows={1}
+                      />
+                    </div>
+                    <div className="w-full flex justify-center items-center">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ ease: "easeInOut" }}
+                        onClick={CriarPost}
+                        type="submit"
+                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
                       >
-                        <X className="w-full h-full" />
-                      </motion.div>
+                        Postar
+                      </motion.button>
                     </div>
-                  </div>
-
-                  <div className="w-full text-[18px]  rounded-[25px] overflow-hidden">
-                    <textarea
-                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
-                      placeholder="Escreva um comentário..."
-                      // value={newComentario}
-                      value={postText}
-                      onChange={(e) => {
-                        setPostText(e.target.value);
-                        //   setNewComentario(e.target.value)
-                        const textarea = e.target;
-                        textarea.style.height = "auto"; // reset height
-                        textarea.style.maxHeight = "200px";
-                        textarea.style.height = textarea.scrollHeight + "px";
-                      }}
-                      rows={1}
-                    />
-                  </div>
-                  <div className="w-full flex justify-center items-center">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ ease: "easeInOut" }}
-                      onClick={CriarPost}
-                      type="submit"
-                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
-                    >
-                      Postar
-                    </motion.button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
 
           <div className="w-full absolute flex justify-center items-center">
             <Backdrop3 onClick={() => closing()} />
           </div>
         </>
       )}
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
 
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 ">
-        <div className="flex justify-between">
-          <h1 className="text-[24px] font-medium">Principais postagens</h1>
+        <div className="flex w-full justify-between">
+          <input
+            type="text"
+            id="nome_materia"
+            placeholder="Pesquisar salas de estudo"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-5 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+          />
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ ease: "easeInOut" }}
             onClick={() => setOpen2(true)}
-            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full"
           >
             Criar post
           </motion.button>
         </div>
 
-        {posts.map((post, index) => {
-          return (
-            <div key={index} className="w-full h-fit flex flex-col mb-4">
-              <div className="w-full flex flex-col gap-6">
-                <div className="flex gap-1">
-                  <img
-                    src={`${post.autor.foto}`}
-                    className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
-                    alt="Foto de perfil"
-                  />
-                  <div className="flex flex-col text-[18px] justify-center">
-                    <span className="font-semibold truncate">
-                      {post.autor.nome}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-[18px]">{post.conteudo}</p>
-
-                <div className="flex justify-between pb-4 border border-b-[#D7DDEA]">
-                  <div className="flex gap-5">
-                    <div className="flex gap-1 font-semibold">
-                      <motion.div
-                        onClick={() => {
-                          Curtir(post.id);
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        animate={{
-                          scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
-                        }}
-                        transition={{
-                          duration: 0.3,
-                          ease: "easeOut",
-                        }}
-                        className="w-6 h-6 cursor-pointer"
-                      >
-                        <Heart
-                          className="text-[#C85959] w-full h-full"
-                          fill={
-                            curtidaCheck !== undefined
-                              ? curtidaCheck
-                                ? "#C85959"
-                                : "transparent"
-                              : post.curtidoPeloUsuario
-                                ? "#C85959"
-                                : "transparent"
-                          }
-                          stroke="currentColor"
-                        />
-                      </motion.div>
-                      {curtidaNumero === -1 ? (
-                        <span>{formatNumber(post.curtidas)}</span>
-                      ) : (
-                        <span>
-                          {curtidaNumero ? formatNumber(curtidaNumero) : 0}
-                        </span>
-                      )}
-                    </div>
-
-                    <div
-                      onClick={() => handleOpenPost(post.id, post.autor.id)}
-                      className="flex gap-1 font-semibold"
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-6 h-6 cursor-pointer"
-                      >
-                        <MessageCircle
-                          className="text-[#726BB6] w-full h-full"
-                          stroke="currentColor"
-                        />
-                      </motion.div>
-                      <span>{formatNumber(post.comentarios.length)}</span>
-                    </div>
-                  </div>
-
-                  <motion.div className="w-6 h-6 relative">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full h-full cursor-pointer relative"
-                      onClick={() =>
-                        setAppear(appear === index + 1 ? 0 : index + 1)
-                      }
-                    >
-                      <Ellipsis
-                        className=" w-full h-full"
-                        stroke="currentColor"
-                      />
-                    </motion.div>
-                    <PostagemDetail
-                      message={post.id}
-                      Mine={post.autor.id === userID}
-                      onClose={() => {
-                        setAppear(0);
-                        fetchAll();
-                      }}
-                      last={posts.length}
-                      index={index + 1}
-                      appear={appear === index + 1 && true}
+        {posts
+          .filter(
+            (post) =>
+              // filter by post content OR author name
+              post.conteudo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              post.autor.nome.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .map((post, index) => {
+            return (
+              <div key={index} className="w-full h-fit flex flex-col mb-4">
+                <div className="w-full flex flex-col gap-6">
+                  <div className="flex gap-1">
+                    <img
+                      src={`${post.autor.foto}`}
+                      className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
+                      alt="Foto de perfil"
                     />
-                    {/* <PostagemDetail
+                    <div className="flex flex-col text-[18px] justify-center">
+                      <span className="font-semibold truncate">
+                        {post.autor.nome}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-[18px]">{post.conteudo}</p>
+
+                  <div className="flex justify-between pb-4 border border-b-[#D7DDEA]">
+                    <div className="flex gap-5">
+                      <div className="flex gap-1 font-semibold">
+                        <motion.div
+                          onClick={() => {
+                            Curtir(post.id);
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          animate={{
+                            scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
+                          }}
+                          transition={{
+                            duration: 0.3,
+                            ease: "easeOut",
+                          }}
+                          className="w-6 h-6 cursor-pointer"
+                        >
+                          <Heart
+                            className="text-[#C85959] w-full h-full"
+                            fill={
+                              curtidaCheck !== undefined
+                                ? curtidaCheck
+                                  ? "#C85959"
+                                  : "transparent"
+                                : post.curtidoPeloUsuario
+                                  ? "#C85959"
+                                  : "transparent"
+                            }
+                            stroke="currentColor"
+                          />
+                        </motion.div>
+                        {curtidaNumero === -1 ? (
+                          <span>{formatNumber(post.curtidas)}</span>
+                        ) : (
+                          <span>
+                            {curtidaNumero ? formatNumber(curtidaNumero) : 0}
+                          </span>
+                        )}
+                      </div>
+
+                      <div
+                        onClick={() => handleOpenPost(post.id, post.autor.id)}
+                        className="flex gap-1 font-semibold"
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-6 h-6 cursor-pointer"
+                        >
+                          <MessageCircle
+                            className="text-[#726BB6] w-full h-full"
+                            stroke="currentColor"
+                          />
+                        </motion.div>
+                        <span>{formatNumber(post.comentarios.length)}</span>
+                      </div>
+                    </div>
+
+                    <motion.div className="w-6 h-6 relative">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full h-full cursor-pointer relative"
+                        onClick={() =>
+                          setAppear(appear === index + 1 ? 0 : index + 1)
+                        }
+                      >
+                        <Ellipsis
+                          className=" w-full h-full"
+                          stroke="currentColor"
+                        />
+                      </motion.div>
+                      <PostagemDetail
+                        message={post.id}
+                        Mine={post.autor.id === userID}
+                        onClose={() => {
+                          setAppear(0);
+                          fetchAll();
+                        }}
+                        last={posts.length}
+                        index={index + 1}
+                        appear={appear === index + 1 && true}
+                      />
+                      {/* <PostagemDetail
                       message="a"
                       onClose={() => {setAppear(0)}}
                       last={posts.length}
                     /> */}
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </>
   );

@@ -170,7 +170,6 @@ export default function HomePage() {
   };
   const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
-  
   function opening() {
     setPop(true);
   }
@@ -272,10 +271,24 @@ export default function HomePage() {
     criadoEm: string;
   };
 
+  type Salas = {
+    id: string;
+    nome: string;
+    descricao: string;
+    tipo: "PUBLICA" | "PRIVADA" | string;
+    banner: string;
+    assunto: string | null;
+    avataresUltimosUsuarios: string[];
+    criadoEm: string; // ISO date string
+    moderadorId: string;
+    quantidadeEstudantes: number;
+    topicos: string[];
+  };
+  
   const [calendario, setCalendario] = useState<CalendarioData>({});
   const [bannerData, setBannerData] = useState<BannerData>({});
   const [user, setUser] = useState<UserData>({});
-  const [salas, setSalas] = useState<Sala[]>([]);
+  const [salas, setSalas] = useState<Salas[]>([]);
   const [avatares, setAvatares] = useState<string[]>([]);
   const [notificacao, setNotificacao] = useState<notificacaoData>({});
   const [loading, setLoading] = useState(true);
@@ -477,6 +490,44 @@ export default function HomePage() {
     fetchAll();
   }, []);
 
+   useEffect(() => {
+     const fetchAll = async () => {
+       try {
+         // Run all fetches in parallel
+         const [userRes, salasRes] = await Promise.all([
+           fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+             method: "GET",
+             credentials: "include",
+           }),
+           fetch(`${process.env.NEXT_PUBLIC_API_URL}/sala-estudo`, {
+             method: "GET",
+             credentials: "include",
+           }),
+         ]);
+
+         // Parse all JSONs in parallel
+         const [userData, salasData] = await Promise.all([
+           userRes.json(),
+           salasRes.json(),
+         ]);
+
+         // ✅ Set states after everything is done
+         setUser(userData);
+         setSalas(salasData.salas);
+         
+         // Extract data from /home/salas-estudo safely
+       } catch (err) {
+         console.error("Erro ao carregar dados:", err);
+         setMessage("Erro ao carregar dados.");
+       } finally {
+         // ✅ Stop loading only after all requests (success or error)
+         setLoading(false);
+       }
+     };
+
+     fetchAll();
+   }, []);
+  
   useEffect(() => {
     if (materias && materias.length > 0 && salas && salas.length > 0) {
       setLoading(false);
@@ -496,6 +547,7 @@ export default function HomePage() {
       {message && (
         <ErrorModal message={message} onClose={() => setMessage(null)} />
       )}
+
       <AnimatePresence initial={false}>
         {pop && <Backdrop key={1} />}
         {pop2 && <Backdrop2 key={2} />}
@@ -1451,48 +1503,33 @@ export default function HomePage() {
                             <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
                           </div>
 
-                          <div className="flex items-center ">
-                            <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                              <>
-                                {avatares[3] && (
+                          <div className="flex items-center">
+                            <div className="flex -space-x-3">
+                              {(sala.avataresUltimosUsuarios ?? [])
+                                .slice(0, 4)
+                                .map((avatar, index) => (
                                   <img
-                                    src={avatares[3]}
-                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
+                                    key={index}
+                                    src={avatar}
                                     alt="Usuário"
+                                    className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
                                   />
-                                )}
-                                {avatares[2] && (
-                                  <img
-                                    src={avatares[2]}
-                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
-                                    alt="Usuário"
-                                  />
-                                )}
-                                {avatares[1] && (
-                                  <img
-                                    src={avatares[1]}
-                                    className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
-                                    alt="Usuário"
-                                  />
-                                )}
-                                {avatares[0] && (
-                                  <img
-                                    src={avatares[0]}
-                                    className="diaOfensiva rounded-full absolute border-white border-[2px]"
-                                    alt="Usuário"
-                                  />
-                                )}
-                              </>
+                                ))}
+
+                              {sala.quantidadeEstudantes > 4 && (
+                                <div className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium">
+                                  +{sala.quantidadeEstudantes - 4}
+                                </div>
+                              )}
                             </div>
-                            <div className="flex justify-between  items-center h-[44px] w-full ">
-                              <h2
-                                className={`text-[18px] ${totalEstudantes > 4 ? "block" : "hidden"} pl-1`}
-                              >
-                                +{totalEstudantes - 4} estudantes
+
+                            <div className="ml-3">
+                              <h2 className="text-[18px]">
+                                {sala.quantidadeEstudantes}{" "}
+                                {sala.quantidadeEstudantes === 1
+                                  ? "estudante"
+                                  : "estudantes"}
                               </h2>
-                              {/* <button className="p-[5px_15px] h-full rounded-full bg-blue-950 text-white text-[18px] shadow-md">
-                                Visitar
-                              </button> */}
                             </div>
                           </div>
                         </div>

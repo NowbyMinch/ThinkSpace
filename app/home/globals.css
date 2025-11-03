@@ -478,6 +478,11 @@ input::-webkit-inner-spin-button {
   font-size: 30px;
 }
 
+.resumo2 h1 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 @media (max-width: 450px) {
   .reply {
     display: none;

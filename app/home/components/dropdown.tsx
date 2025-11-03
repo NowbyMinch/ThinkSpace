@@ -134,15 +134,7 @@ interface Material {
   // add other fields if needed
 }
 
-type materiaItem = {
-  id?: string;
-  nome?: string;
-  cor?: string;
-  icone?: string;
-  usuarioId?: string;
-  materiais?: Material[]; // or specify the correct type if known
-  // add other properties if needed
-};
+
 type MelhorMateria = {
   nome: string;
   xp: number;
@@ -982,6 +974,248 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
     </Popover>
   );
 }
+
+export function ComboboxDemoMateriaPostar({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materiaItem[]>([]);
+
+  useEffect(() => {
+    // Função para buscar matérias
+    const materia = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        setMaterias(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
+
+  const frameworksMateria = materias.map((materia) => ({
+    value: materia.id,
+    label: materia.nome,
+  }));
+
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+
+  //   }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+        >
+          <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
+            {value ? (
+              <div className="">
+                {
+                  frameworksMateria.find(
+                    (framework) => framework.value === value
+                  )?.label as string
+                }
+              </div>
+            ) : (
+              <div className="text-[#9CA3AF]">Matéria designada</div>
+            )}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+        <Command className="rounded-[20px]">
+          <CommandList className="rounded-[20px] ">
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup className="rounded-[20px]">
+              {frameworksMateria.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px] "
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto ",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+type materiaItem = {
+  id?: string;
+  nome?: string;
+  cor?: string;
+  icone?: string;
+  usuarioId?: string;
+  materiais?: Material[]; // or specify the correct type if known
+  // add other properties if needed
+};
+type materialType = {
+  id: string;
+  titulo: string;
+  origem: string; // e.g. "TOPICOS"
+  tipoMaterial: string; // e.g. "COMPLETO"
+  nomeDesignado: string;
+  autorId: string;
+  materiaId: string | null;
+  assunto: string | null;
+  caminhoArquivo: string | null;
+  chatHistoryJson: string | null;
+  conteudo: string | null;
+  criadoEm: string; // ISO date string
+  flashcardsJson: string | null; // JSON string of flashcards
+  quizzesJson: string | null; // JSON string of quizzes
+  respostasQuizJson: string | null; // JSON string of quiz responses
+  resumoIA: string | null;
+  quantidadeFlashcards: number | null;
+  quantidadeQuestoes: number | null;
+  pdfBinario: string | null;
+  tempoAtivo: number;
+  topicos?: string[];
+};
+export type ComboboxDemoPropsPostar = {
+  value: string;
+  onChange: (value: string, materiaId: string | null) => void;
+};
+
+export function ComboboxDemoMaterial({
+  value,
+  onChange,
+}: ComboboxDemoPropsPostar) {
+  const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materialType[]>([]);
+
+  useEffect(() => {
+    const materia = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/materiais`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        const data = await res.json();
+        setMaterias(data.materiais);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
+
+  const frameworksMateria = materias.map((materia) => ({
+    value: materia.id,
+    label: materia.titulo,
+    materiaId: materia.materiaId,
+  }));
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px]"
+        >
+          <span className="font-normal w-full block text-left overflow-hidden text-ellipsis whitespace-nowrap">
+            {value ? (
+              (frameworksMateria.find((f) => f.value === value)?.label ??
+              "Selecionar")
+            ) : (
+              <div className="text-[#9CA3AF]">Matéria designada</div>
+            )}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100]">
+        <Command>
+          <CommandList>
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup>
+              {frameworksMateria.map((framework, index) => (
+                <CommandItem
+                  key={index}
+                  value={framework.value}
+                  className="text-[18px]"
+                  onSelect={() => {
+                    onChange(framework.value, framework.materiaId);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 
 export function CalendarioRepeticao({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);

@@ -316,8 +316,6 @@ export default function Materiais() {
     }
   };
 
-
-
   const CurtirComentario = async (comentarioId: string) => {
     try {
       // Get user ID
@@ -415,9 +413,9 @@ export default function Materiais() {
           credentials: "include",
         }
       );
-
       const comentarData = await comentarRes.json();
-      console.log(comentarData);
+      if (comentarData.error) { setMessage(comentarData.error); return};
+
       fetchAll();
       // Optional: append comment to UI
       setComentar(""); // reset textarea
@@ -431,6 +429,9 @@ export default function Materiais() {
   if (loading) return <Loading />;
   return (
     <>
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
       {open && (
         <>
           <motion.div
@@ -660,7 +661,6 @@ export default function Materiais() {
                     */}
 
                     <p className="text-[18px] ">{comentario.conteudo}</p>
-
                     <div className="flex justify-between pb-3  border border-b-[#D7DDEA]">
                       <div className="flex gap-5">
                         <div className="flex gap-1 font-semibold ">
@@ -723,7 +723,7 @@ export default function Materiais() {
 
                         <PostagemDetail
                           message={comentario.id}
-                          Mine={comentario.autor.id === userID}
+                          Mine={comentario.autor.id === userID || post?.autor.id === userID }
                           onClose={() => {
                             setAppear2(0);
                             fetchAll();
