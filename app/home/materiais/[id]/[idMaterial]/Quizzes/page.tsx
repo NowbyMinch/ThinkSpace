@@ -201,6 +201,9 @@ export default function MaterialClient() {
       final();
     } catch (err) {
       console.error(err);
+    } finally {
+      setFeedback(null); // ✅ reset feedback for next question
+      setSelected(null); //
     }
   };
 
@@ -213,9 +216,9 @@ export default function MaterialClient() {
 
     try {
 
-      await new Promise((res) => setTimeout(res, 400));
-      setFeedback(null);
-      setSelected(null);
+      //await new Promise((res) => setTimeout(res, 400));
+      //setFeedback(null);
+      //setSelected(null);
 
       // send the answer
       await questao(indice);
