@@ -70,6 +70,9 @@ export default function MaterialClient() {
     } catch (err) {
       console.error(err);
       throw err; // so you can catch it in handleClick
+    } finally {
+      setFeedback(null); // ✅ reset feedback for next question
+      setSelected(null); //
     }
   };
 
@@ -201,10 +204,7 @@ export default function MaterialClient() {
       final();
     } catch (err) {
       console.error(err);
-    } finally {
-      setFeedback(null); // ✅ reset feedback for next question
-      setSelected(null); //
-    }
+    } 
   };
 
   const handleClick = async (indice: number) => {
