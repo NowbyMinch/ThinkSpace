@@ -247,7 +247,7 @@ export default function Materiais() {
     const Data = await Res.json();
     console.log(Data, "POSTANDO UM MATERIAL");
     if (Data.error) {
-      setMessage(Data.message);
+      setMessage(Data.error);
     } else {
       fetchAll();
       closing();
@@ -416,7 +416,7 @@ export default function Materiais() {
                       </div>
                     </div>
 
-                    <div className="lg:w-full w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)]">
+                    <div className="lg:w-full min-h-[50px] w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)] items-center">
                       <div className="w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
                         <AnimatePresence>
                           {topicos.map((topico, index) => (
@@ -583,7 +583,6 @@ export default function Materiais() {
                 .includes(searchTerm.toLowerCase())
             )
             .map((sala, index) => {
-              console.log(sala, "SALA", index);
               const html = sala.material.resumoIA
                 ? marked.parse(sala.material.resumoIA)
                 : "";
@@ -627,8 +626,13 @@ export default function Materiais() {
                         {sala.material.titulo}
                       </h1>
                     </div>
-                    <div className="shadow-md w-full bg-[rgba(217,217,217,0.34)] flex flex-col justify-between max-w-full max-h-full rounded-[35px] min-h-[400px] h-[400px] mt-auto overflow-hidden mb-2 p-2">
+                    <div className="shadow-md w-full bg-[rgba(217,217,217,0.34)] flex flex-col justify-between max-w-full max-h-full rounded-[35px] min-h-[400px] h-[400px] mt-auto overflow-hidden mb-2 p-4">
                       {/* Conteúdo do resumo */}
+
+                      <motion.span className="text-[28px] leading-none">
+                        Prévia
+                      </motion.span>
+
                       <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
                         <div className="text-[16px] mb-2">
                           Resumo <span className="text-[#726BB6]">IA</span>
@@ -639,8 +643,67 @@ export default function Materiais() {
                         />
                       </div>
 
-                      {/* Botão fixo */}
-                      <div className="mt-2 flex justify-center items-center w-full">
+                      {/* Botão ixo */}
+                      <div className="mt-2 flex justify-between items-center w-full">
+                        <div className=" flex justify-center items-center w-fit text-[20px] font-medium gap-3">
+                          <motion.a
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="cursor-pointer h-full"
+                          >
+                            <motion.span
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              Resumo
+                            </motion.span>
+                            {pathname.endsWith("materiais") && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 1 }}
+                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                              ></motion.div>
+                            )}
+                          </motion.a>
+
+                          <motion.a
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="cursor-pointer h-full"
+                          >
+                            <motion.span className="text-nowrap">
+                              Flashcards
+                            </motion.span>
+                            {pathname.endsWith("postagens") && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 1 }}
+                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                              ></motion.div>
+                            )}
+                          </motion.a>
+
+                          <motion.a
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="cursor-pointer h-full"
+                          >
+                            <motion.span className="text-nowrap">
+                              Quizzes
+                            </motion.span>
+                            {pathname.endsWith("postagens") && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 1 }}
+                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                              ></motion.div>
+                            )}
+                          </motion.a>
+                        </div>
+
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}

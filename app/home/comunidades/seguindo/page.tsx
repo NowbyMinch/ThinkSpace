@@ -95,7 +95,7 @@ export default function SalasdeEstudo() {
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
         {salas.map((sala, index) => {
           const randomColor = cor[Math.floor(Math.random() * cor.length)];
-          console.log(sala);
+          
 
           return (
             <div

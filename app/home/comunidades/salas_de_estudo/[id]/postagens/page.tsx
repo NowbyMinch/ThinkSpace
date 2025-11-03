@@ -351,6 +351,12 @@ export default function Materiais() {
       const postarData = await postarRes.json();
       console.log(postarData);
       console.log(postText);
+      if (postarData.error) {
+        setMessage(postarData.error);
+        console.log(postarData.error);
+        return;
+      }
+      
     } catch (error) {
       console.error("Erro ao curtir:", error);
     } finally {

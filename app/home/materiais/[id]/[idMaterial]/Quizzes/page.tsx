@@ -54,6 +54,8 @@ export default function MaterialClient() {
   const [finalizado, setFinalizado] = useState(false);
   const [finalizadoPop, setFinalizadoPop] = useState(false);
   const [feedback, setFeedback] = useState<number | null>(null);
+  // add near your other useState declarations
+  const [feedbackQuestion, setFeedbackQuestion] = useState<number | null>(null);
 
   const final = async (): Promise<Final> => {
     try {
@@ -65,18 +67,19 @@ export default function MaterialClient() {
         }
       );
       const data: Final = await res.json();
+
+      // setTimeout(() => {
+      //   setFeedback(null);
+      //   setSelected(null);
+      // }, 500);
+
       setEstado(data);
-      
-      setTimeout(() => {
-      setFeedback(null);
-      setSelected(null);
-    }, 500);
-      
+
       return data; // ✅ return it!
     } catch (err) {
       console.error(err);
       throw err; // so you can catch it in handleClick
-    } 
+    }
   };
 
   useEffect(() => {
@@ -207,49 +210,61 @@ export default function MaterialClient() {
       final();
     } catch (err) {
       console.error(err);
-    } 
+    }
   };
 
   const handleClick = async (indice: number) => {
     if (disabled) return;
     setDisabled(true);
+
+    // associate feedback with the CURRENT question index
     setFeedback(indice);
+    setFeedbackQuestion(questaoIndex);
     const letra = letraPorIndice[indice];
     setSelected(letra);
 
     try {
-
-      //await new Promise((res) => setTimeout(res, 400));
-      //setFeedback(null);
-      //setSelected(null);
-
-      // send the answer
+      // send the answer (backend)
       await questao(indice);
 
-      // fetch latest state from backend
+      // fetch updated state (respondidas, respostasQuiz, etc.)
       const novoEstado = await final();
 
-      if (novoEstado.respondidas < novoEstado.totalQuestoes) {
-        //setFeedback(null); // ✅ reset feedback for next question
-        //setSelected(null); // ✅ reset selected for next question
-        setQuestaoIndex(novoEstado.respondidas);
-        setDisabled(false);
-      } else {
-        // finalize quiz
-        let acertouLocal = 0;
-        for (let i = 0; i < novoEstado.totalQuestoes; i++) {
-          if (novoEstado.respostasQuiz[i] === quizzes[i]?.correta) {
-            acertouLocal++;
+      // keep visual feedback visible for 500ms
+      await new Promise((res) => setTimeout(res, 500));
+
+      setTimeout(() => {
+        // CLEAR visual feedback FIRST
+        setFeedback(null);
+        setSelected(null);
+        setFeedbackQuestion(null);
+
+        // THEN navigate to the next question or finish
+        if (novoEstado.respondidas < novoEstado.totalQuestoes) {
+          setQuestaoIndex(novoEstado.respondidas);
+          setDisabled(false);
+        } else {
+          // finalize logic (unchanged)
+          let acertouLocal = 0;
+          for (let i = 0; i < novoEstado.totalQuestoes; i++) {
+            if (novoEstado.respostasQuiz[i] === quizzes[i]?.correta) {
+              acertouLocal++;
+            }
           }
+          xpQuiz(novoEstado.totalQuestoes, acertouLocal);
+          setFinalizadoPop(true);
+          setFinalizado(true);
+          setTimeout(() => setFinalizadoPop(false), 3000);
         }
-        xpQuiz(novoEstado.totalQuestoes, acertouLocal);
-        setFinalizadoPop(true);
-        setFinalizado(true);
-        setTimeout(() => setFinalizadoPop(false), 3000);
-      }
+      }, 500);
     } catch (error) {
       console.error("Erro ao enviar resposta:", error);
       setMessage("Erro ao enviar resposta.");
+      // ensure UI unlock if error
+      setFeedback(null);
+      setSelected(null);
+      setFeedbackQuestion(null);
+      setDisabled(false);
     }
   };
 
@@ -258,8 +273,8 @@ export default function MaterialClient() {
     const letra = letraPorIndice[indice];
     const correta = quizzes[questaoIndex]?.correta;
 
-    // Durante feedback imediato
-    if (feedback !== null) {
+    // Immediate feedback only if it was for the CURRENT displayed question
+    if (feedback !== null && feedbackQuestion === questaoIndex) {
       return indice === feedback
         ? letra === correta
           ? "#7BC396"
@@ -267,38 +282,37 @@ export default function MaterialClient() {
         : "white";
     }
 
-    // Depois de finalizado, marcar todas as respostas
+    // After quiz finalizado: show answers from estado (keep existing logic)
     if (finalizado && estado?.respostasQuiz) {
       const respostasArray = estado.respostasQuiz as string[]; // assume array de letras
       const minhaResposta = respostasArray[questaoIndex];
 
-      if (letra === correta) return "#7BC396"; // verde para a correta sempre
-      if (letra === minhaResposta && letra !== correta) return "#CF848E"; // vermelho se errou
+      if (letra === correta) return "#7BC396"; // green for correct
+      if (letra === minhaResposta && letra !== correta) return "#CF848E"; // red for wrong
     }
 
     return "white";
   };
-
 
   // Text color with feedback
   const getColor = (indice: number) => {
     const letra = letraPorIndice[indice];
     const correta = quizzes[questaoIndex]?.correta;
 
-    // Durante feedback imediato
-    if (feedback !== null) {
+    // Immediate feedback color only for the matching question
+    if (feedback !== null && feedbackQuestion === questaoIndex) {
       return indice === feedback ? "#FFFFFF" : "black";
     }
 
-    // Depois de finalizado, marcar todas as respostas
+    // After finalizado use estado
     if (finalizado && estado?.respostasQuiz) {
-      const respostasArray = Object.values(estado.respostasQuiz);
+      const respostasArray = Object.values(estado.respostasQuiz) as string[];
       const minhaResposta = respostasArray[questaoIndex];
-      if (letra === correta) return "#FFFFFF"; // branco na letra correta
-      if (letra === minhaResposta && letra !== correta) return "#FFFFFF"; // branco se errou
+      if (letra === correta) return "#FFFFFF";
+      if (letra === minhaResposta && letra !== correta) return "#FFFFFF";
     }
 
-    return "black"; // default
+    return "black";
   };
 
   if (!idMaterial) return null;
