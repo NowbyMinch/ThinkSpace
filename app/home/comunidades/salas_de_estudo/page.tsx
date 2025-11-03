@@ -260,9 +260,12 @@ export default function SalasdeEstudo() {
                   whileTap={{ scale: 0.99 }}
                   transition={{ ease: "easeInOut" }}
                   onClick={() => {
-                    router.push(
-                      `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
-                    );
+                    if (sala.id) {
+                      router.push(
+                         `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
+                      );
+                    }
+                    
                   }}
                   className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full  py-3 shadow-md"
                 >

@@ -363,7 +363,7 @@ export default function Materiais() {
 
                     <div className="relative flex flex-col gap-1">
                       <h2 className="text-[20px] font-medium">
-                        Matérial designado:
+                        Material designado:
                       </h2>
 
                       <ComboboxDemoMaterial

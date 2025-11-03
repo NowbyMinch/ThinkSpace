@@ -104,7 +104,7 @@ export default function SalasdeEstudo() {
             >
               <div className="flex h-full flex-col min-w-[60%] w-full ">
                 <div className="flex items-center w-full justify-between">
-                  <h1>Esportes</h1>
+                  <h1>{sala.nome}</h1>
                 </div>
                 <div className="shadow-md flex justify-center items-center w-full h-full max-h-full rounded-[35px] min-h-[160px] overflow-hidden">
                   <img

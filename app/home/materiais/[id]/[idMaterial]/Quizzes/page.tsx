@@ -66,11 +66,17 @@ export default function MaterialClient() {
       );
       const data: Final = await res.json();
       setEstado(data);
+      
+      setTimeout(() => {
+      setFeedback(null);
+      setSelected(null);
+    }, 500);
+      
       return data; // ✅ return it!
     } catch (err) {
       console.error(err);
       throw err; // so you can catch it in handleClick
-    }
+    } 
   };
 
   useEffect(() => {
@@ -201,7 +207,7 @@ export default function MaterialClient() {
       final();
     } catch (err) {
       console.error(err);
-    }
+    } 
   };
 
   const handleClick = async (indice: number) => {
@@ -212,6 +218,11 @@ export default function MaterialClient() {
     setSelected(letra);
 
     try {
+
+      //await new Promise((res) => setTimeout(res, 400));
+      //setFeedback(null);
+      //setSelected(null);
+
       // send the answer
       await questao(indice);
 
@@ -219,8 +230,8 @@ export default function MaterialClient() {
       const novoEstado = await final();
 
       if (novoEstado.respondidas < novoEstado.totalQuestoes) {
-        setFeedback(null); // ✅ reset feedback for next question
-        setSelected(null); // ✅ reset selected for next question
+        //setFeedback(null); // ✅ reset feedback for next question
+        //setSelected(null); // ✅ reset selected for next question
         setQuestaoIndex(novoEstado.respondidas);
         setDisabled(false);
       } else {
