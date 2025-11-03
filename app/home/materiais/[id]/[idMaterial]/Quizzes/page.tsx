@@ -212,6 +212,11 @@ export default function MaterialClient() {
     setSelected(letra);
 
     try {
+
+      await new Promise((res) => setTimeout(res, 400));
+      setFeedback(null);
+      setSelected(null);
+
       // send the answer
       await questao(indice);
 
@@ -219,8 +224,8 @@ export default function MaterialClient() {
       const novoEstado = await final();
 
       if (novoEstado.respondidas < novoEstado.totalQuestoes) {
-        setFeedback(null); // ✅ reset feedback for next question
-        setSelected(null); // ✅ reset selected for next question
+        //setFeedback(null); // ✅ reset feedback for next question
+        //setSelected(null); // ✅ reset selected for next question
         setQuestaoIndex(novoEstado.respondidas);
         setDisabled(false);
       } else {
