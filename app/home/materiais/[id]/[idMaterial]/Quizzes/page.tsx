@@ -66,14 +66,17 @@ export default function MaterialClient() {
       );
       const data: Final = await res.json();
       setEstado(data);
+      
+      setTimeout(() => {
+      setFeedback(null);
+      setSelected(null);
+    }, 500);
+      
       return data; // ✅ return it!
     } catch (err) {
       console.error(err);
       throw err; // so you can catch it in handleClick
-    } finally {
-      setFeedback(null); // ✅ reset feedback for next question
-      setSelected(null); //
-    }
+    } 
   };
 
   useEffect(() => {
