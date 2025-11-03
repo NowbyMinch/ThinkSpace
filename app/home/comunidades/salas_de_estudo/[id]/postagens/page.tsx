@@ -409,7 +409,7 @@ export default function Materiais() {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 0.94 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="w-full h-full fixed left-0 right-0 flex justify-center overflow-hidden items-center z-[1100] bg-red-500 mx-auto"
+            className="w-full h-full fixed left-0 right-0 flex justify-center overflow-hidden items-center z-[1100] mx-auto"
           >
             <div
               className="w-full h-full absolute"
