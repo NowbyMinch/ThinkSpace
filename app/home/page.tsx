@@ -186,10 +186,10 @@ export default function HomePage() {
     setTimeout(() => setPop2(false), 10);
     if (notificacao.notificacoes) {
       for (let n = 0; n < notificacao.notificacoes.length; n++) {
-        console.log(
-          notificacao.notificacoes[n].id,
-          "Notificacao ---------------------------------------------------------------------------------"
-        );
+        // console.log(
+        //   notificacao.notificacoes[n].id,
+        //   "Notificacao ---------------------------------------------------------------------------------"
+        // );
         try {
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/users/notificacoes/${notificacao.notificacoes[n].id}`,
@@ -199,7 +199,7 @@ export default function HomePage() {
             }
           );
           const noti = await res.json();
-          console.log("Notificacao detalhe:", noti);
+          // console.log("Notificacao detalhe:", noti);
 
           fetchAll();
         } catch (err) {

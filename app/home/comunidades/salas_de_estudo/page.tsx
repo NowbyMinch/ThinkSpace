@@ -258,7 +258,9 @@ export default function SalasdeEstudo() {
                   className="w-full flex flex-col justify-center h-full gap-4"
                 >
                   <div className="flex w-full ">
-                    <h1 className="text-[35px] font-medium ">Criar sala de estudo:</h1>
+                    <h1 className="text-[35px] font-medium ">
+                      Criar sala de estudo:
+                    </h1>
                     <div className=" w-fit">
                       <motion.div
                         whileHover={{ scale: 1.08 }}
@@ -299,7 +301,7 @@ export default function SalasdeEstudo() {
                                 if (e.key === "Enter") {
                                   e.preventDefault();
                                 }
-                                
+
                                 if (
                                   e.key === "Enter" &&
                                   topicoInput &&
@@ -365,7 +367,11 @@ export default function SalasdeEstudo() {
                       <div className="w-full h-full flex flex-col">
                         <h2 className="text-[20px] font-medium">Descrição:</h2>
 
-                        <textarea onChange={(e) => setDescricao(e.target.value)} value={descricao} className=" border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]" />
+                        <textarea
+                          onChange={(e) => setDescricao(e.target.value)}
+                          value={descricao}
+                          className=" border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]"
+                        />
                       </div>
                     </div>
                   </div>
@@ -397,7 +403,7 @@ export default function SalasdeEstudo() {
       )}
 
       <div className="w-full mt-1 h-fit flex flex-col px-4 py-2 gap-3 overflow-y-auto overflow-x-hidden">
-        {/* <motion.button
+        <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ ease: "easeInOut" }}
@@ -405,10 +411,10 @@ export default function SalasdeEstudo() {
           className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full self-end"
         >
           Criar sala de estudo
-        </motion.button> */}
+        </motion.button>
         {(filteredPosts ?? []).map((sala, index) => {
+          // console.log(sala);
           const randomColor = cor[Math.floor(Math.random() * cor.length)];
-          
 
           return (
             <div
@@ -481,7 +487,6 @@ export default function SalasdeEstudo() {
                       .map((avatar, i) => {
                         // compute a zIndex so earlier avatars appear on top of later ones
                         const z = 100 - i;
-                        console.log(avatar);
                         return (
                           <div
                             key={i}
