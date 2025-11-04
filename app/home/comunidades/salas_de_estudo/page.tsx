@@ -403,7 +403,7 @@ export default function SalasdeEstudo() {
       )}
 
       <div className="w-full mt-1 h-fit flex flex-col px-4 py-2 gap-3 overflow-y-auto overflow-x-hidden">
-        <motion.button
+        {/* <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ ease: "easeInOut" }}
@@ -411,7 +411,7 @@ export default function SalasdeEstudo() {
           className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full self-end"
         >
           Criar sala de estudo
-        </motion.button>
+        </motion.button> */}
         {(filteredPosts ?? []).map((sala, index) => {
           // console.log(sala);
           const randomColor = cor[Math.floor(Math.random() * cor.length)];
