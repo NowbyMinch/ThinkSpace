@@ -490,43 +490,43 @@ export default function HomePage() {
     fetchAll();
   }, []);
 
-   useEffect(() => {
-     const fetchAll = async () => {
-       try {
-         // Run all fetches in parallel
-         const [userRes, salasRes] = await Promise.all([
-           fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-             method: "GET",
-             credentials: "include",
-           }),
-           fetch(`${process.env.NEXT_PUBLIC_API_URL}/sala-estudo`, {
-             method: "GET",
-             credentials: "include",
-           }),
-         ]);
+  //  useEffect(() => {
+  //    const fetchAll = async () => {
+  //      try {
+  //        // Run all fetches in parallel
+  //        const [userRes, salasRes] = await Promise.all([
+  //          fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //            method: "GET",
+  //            credentials: "include",
+  //          }),
+  //          fetch(`${process.env.NEXT_PUBLIC_API_URL}/sala-estudo`, {
+  //            method: "GET",
+  //            credentials: "include",
+  //          }),
+  //        ]);
 
-         // Parse all JSONs in parallel
-         const [userData, salasData] = await Promise.all([
-           userRes.json(),
-           salasRes.json(),
-         ]);
+  //        // Parse all JSONs in parallel
+  //        const [userData, salasData] = await Promise.all([
+  //          userRes.json(),
+  //          salasRes.json(),
+  //        ]);
 
-         // ✅ Set states after everything is done
-         setUser(userData);
-         setSalas(salasData.salas);
+  //        // ✅ Set states after everything is done
+  //        setUser(userData);
+  //        setSalas(salasData.salas);
          
-         // Extract data from /home/salas-estudo safely
-       } catch (err) {
-         console.error("Erro ao carregar dados:", err);
-         setMessage("Erro ao carregar dados.");
-       } finally {
-         // ✅ Stop loading only after all requests (success or error)
-         setLoading(false);
-       }
-     };
+  //        // Extract data from /home/salas-estudo safely
+  //      } catch (err) {
+  //        console.error("Erro ao carregar dados:", err);
+  //        setMessage("Erro ao carregar dados.");
+  //      } finally {
+  //        // ✅ Stop loading only after all requests (success or error)
+  //        setLoading(false);
+  //      }
+  //    };
 
-     fetchAll();
-   }, []);
+  //    fetchAll();
+  //  }, []);
   
   useEffect(() => {
     if (materias && materias.length > 0 && salas && salas.length > 0) {
@@ -996,7 +996,7 @@ export default function HomePage() {
                                                       {nota.mensagem}
                                                     </span>
                                                   </div>
-                                                  <div
+                                                  {/* <div
                                                     style={{
                                                       backgroundColor: `#F92A4633`,
                                                     }}
@@ -1006,7 +1006,7 @@ export default function HomePage() {
                                                     //     "white",
                                                     // }}
                                                     className="pb-2 pr-1 font-medium text-[#1E2351]"
-                                                  ></div>
+                                                  ></div> */}
                                                 </motion.div>
                                               )}
                                             </AnimatePresence>

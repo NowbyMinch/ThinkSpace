@@ -594,7 +594,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </AnimatePresence>
                       )}
                     </div>
-                    <div className="h-full flex w-full max-w-[100dvw] rounded-[35px] bg-white flex-col items-center shadow-md border border-[#00000031]">
+                    <div className="h-full flex w-full max-w-[100dvw] rounded-[35px] max-h-full bg-white flex-col items-center shadow-md border border-[#00000031] overflow-hidden">
                       <AnimatePresence>
                         {/* sticky wrapper (no overflow here) */}
                         {/* STICKY HEADER (safe-area) */}
@@ -647,7 +647,6 @@ export default function LayoutSalas({ children }: SalasProps) {
                           </div>
                         </div>
                       </AnimatePresence>
-
                       {loading ? <Loading /> : children}
                     </div>
                   </>
@@ -804,7 +803,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                                     </p>
                                   </motion.div>
                                 );
-                              } else if (index === 4) {
+                              } else if (index > 3) {
                                 <div className="cursor-pointer w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center mb-2">
                                   Ver mais
                                   <ChevronDown

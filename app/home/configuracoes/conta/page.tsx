@@ -906,8 +906,7 @@ export default function Conta() {
             <h1 className="font-medium text-[20px]">Excluir sua conta</h1>
             <p className="text-[18px] ">
               Ao excluir a sua conta, você não poderá mais acessar os seus
-              estudos ou fazer login em nossa plataforma. Sua conta no
-              ThinkSpace foi criada em 10:00, 10 de jan. de 2025.
+              estudos ou fazer login em nossa plataforma.
             </p>
           </div>
 

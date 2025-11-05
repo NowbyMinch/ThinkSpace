@@ -29,6 +29,7 @@ export default function LayoutClient({
   const [concluiu, setConcluiu] = useState(false);
   const [user, setUser] = useState<UserData>({});
   const [documento, setDocumento] = useState(false);
+  const [concluido, setConcluido] = useState(false);
 
   // ------------------- Carregar dados -------------------
   useEffect(() => {
@@ -53,6 +54,7 @@ export default function LayoutClient({
         );
         const data = await res.json();
 
+        console.log(data);
         if (data.material.origem === "DOCUMENTO") {
           setDocumento(true);
         }
