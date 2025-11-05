@@ -597,72 +597,53 @@ export default function LayoutSalas({ children }: SalasProps) {
                     <div className="h-full flex w-full max-w-[100dvw] rounded-[35px] bg-white flex-col items-center shadow-md border border-[#00000031]">
                       <AnimatePresence>
                         {/* sticky wrapper (no overflow here) */}
-                        <div className="sticky top-0 z-30 w-full max-w-[100dvw] pt-[env(safe-area-inset-top)] rounded-t-[35px] border-b border-b-[#D7DDEA]">
-                          {/* inner scroller — put overflow on this element */}
-                          {/* <div
+                        {/* STICKY HEADER (safe-area) */}
+                        <div className="sticky top-0 z-30 w-full max-w-[100dvw] pt-[env(safe-area-inset-top)] rounded-t-[35px] border-b border-b-[#D7DDEA] bg-white">
+                          {/* SCROLLER: put overflow here (child of sticky) */}
+                          <div
                             className="overflow-x-auto hide-scrollbar"
                             style={{ WebkitOverflowScrolling: "touch" }}
                           >
-
-                          </div> */}
-                          <div className="inline-flex items-center py-2 px-4 space-x-4 text-[22px] font-medium">
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/postagens"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span
+                            {/* CONTENT ROW: must be able to overflow horizontally */}
+                            <div className="inline-flex items-center py-2 px-4 space-x-4 text-[22px] font-medium min-w-max whitespace-nowrap">
+                              <motion.a
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/postagens"
+                                className="cursor-pointer"
                               >
-                                Postagens
-                              </motion.span>
-                              {pathname.endsWith("postagens") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className="h-[5px] origin-center bg-[#A39CEC] rounded-3xl -mb-1"
-                                />
-                              )}
-                            </motion.a>
+                                <motion.span>Postagens</motion.span>
+                                {pathname.endsWith("postagens") && (
+                                  <motion.div className="h-[5px] origin-center bg-[#A39CEC] rounded-3xl -mb-1" />
+                                )}
+                              </motion.a>
 
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/salas_de_estudo"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span className="text-nowrap">
-                                Salas de estudo
-                              </motion.span>
-                              {pathname.endsWith("salas_de_estudo") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className={`origin-center -mb-1 rounded-3xl h-[5px] bg-[#A39CEC]`}
-                                ></motion.div>
-                              )}
-                            </motion.a>
+                              <motion.a
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/salas_de_estudo"
+                                className="cursor-pointer"
+                              >
+                                <motion.span>Salas de estudo</motion.span>
+                                {pathname.endsWith("salas_de_estudo") && (
+                                  <motion.div className="h-[5px] origin-center bg-[#A39CEC] rounded-3xl -mb-1" />
+                                )}
+                              </motion.a>
 
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/seguindo"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span>Seguindo</motion.span>
-                              {pathname.endsWith("seguindo") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className={`origin-center -mb-1 rounded-3xl h-[5px] bg-[#A39CEC]`}
-                                ></motion.div>
-                              )}
-                            </motion.a>
+                              <motion.a
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/seguindo"
+                                className="cursor-pointer"
+                              >
+                                <motion.span>Seguindo</motion.span>
+                                {pathname.endsWith("seguindo") && (
+                                  <motion.div className="h-[5px] origin-center bg-[#A39CEC] rounded-3xl -mb-1" />
+                                )}
+                              </motion.a>
+
+                              {/* add more items to force overflow when needed */}
+                            </div>
                           </div>
                         </div>
                       </AnimatePresence>
