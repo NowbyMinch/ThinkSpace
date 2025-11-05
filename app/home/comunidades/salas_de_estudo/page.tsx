@@ -238,7 +238,7 @@ export default function SalasdeEstudo() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[640px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+              className="w-[640px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100] "
             >
               <div
                 id="white-box"
@@ -257,11 +257,11 @@ export default function SalasdeEstudo() {
                   }}
                   className="w-full flex flex-col justify-center h-full gap-4"
                 >
-                  <div className="flex w-full ">
+                  <div className="flex w-full justify-between">
                     <h1 className="text-[35px] font-medium ">
                       Criar sala de estudo:
                     </h1>
-                    <div className=" w-fit">
+                    <div className=" w-fit ">
                       <motion.div
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.92 }}
@@ -402,8 +402,15 @@ export default function SalasdeEstudo() {
         <ErrorModal message={message} onClose={() => setMessage(null)} />
       )}
 
-      <div className="w-full mt-1 h-fit flex flex-col px-4 py-2 gap-3 overflow-y-auto overflow-x-hidden">
-        {/* <motion.button
+      <div
+        className="w-full mt-1 flex flex-col px-4 py-2 gap-3"
+        style={{
+          overflowY: "auto",
+          overflowX: "hidden",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ ease: "easeInOut" }}
@@ -411,146 +418,117 @@ export default function SalasdeEstudo() {
           className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full self-end"
         >
           Criar sala de estudo
-        </motion.button> */}
-        {(filteredPosts ?? []).map((sala, index) => {
-          // console.log(sala);
-          const randomColor = cor[Math.floor(Math.random() * cor.length)];
+        </motion.button>
 
-          return (
-            <div
-              key={index}
-              className="w-full min-h-fit h-[300px] border-2 border-[rgba(0,0,0,0.3)] rounded-[35px] shadow-md p-4 flex gap-3 lg:flex-row flex-col "
-            >
-              <div className="flex h-full flex-col min-w-[60%] w-full ">
-                <div className="flex items-center w-full justify-between">
-                  <h1>{sala.nome}</h1>
-                </div>
-                <div className="shadow-md flex justify-center items-center w-full h-full max-h-full rounded-[35px] min-h-[160px] overflow-hidden">
-                  <div className="w-full h-64 relative overflow-hidden rounded-lg">
-                    <img
-                      src={sala.banner} // fallback if null
-                      alt={sala.nome}
-                      className="w-full h-full object-cover rounded-[35px]"
-                    />
-                  </div>
-                  {/* <div className="max-w-[50%] w-[50%] max-h-full h-full flex justify-center items-center">
-                    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
-                  </div> */}
-                </div>
+        {(filteredPosts ?? []).map((sala, index) => (
+          <div
+            key={index}
+            className="w-full min-h-fit border-2 border-[rgba(0,0,0,0.3)] rounded-[35px] shadow-md p-4 flex gap-3 lg:flex-row flex-col"
+          >
+            {/* WRAPPER NÃO-FLEX PARA EVITAR O BUG */}
+            <div className="w-full flex flex-col min-w-[60%]">
+              <div className="flex items-center w-full justify-between">
+                <h1 className="text-[20px] font-semibold">{sala.nome}</h1>
               </div>
 
-              <div className="flex flex-col gap-5 w-full justify-center">
-                <div className="flex flex-wrap gap-1 w-full ">
-                  {sala.topicos.slice(0, 5).map((topico, index) => {
-                    const randomColor =
-                      cor[Math.floor(Math.random() * cor.length)];
-                    return (
-                      <span
-                        key={index}
-                        style={{ backgroundColor: randomColor }}
-                        className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
-                      >
-                        {topico}
-                      </span>
-                    );
-                  })}
-                  {sala.topicos.length > 6 && (
-                    <span className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md bg-gray-300">
-                      +{sala.topicos.length - 5} more
-                    </span>
-                  )}
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                  transition={{ ease: "easeInOut" }}
-                  onClick={() => {
-                    if (sala.id) {
-                      router.push(
-                        `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
-                      );
-                    }
-                  }}
-                  className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full  py-3 shadow-md"
-                >
-                  Visualizar
-                </motion.button>
-
-                <p className="w-full break-all line-clamp-5">
-                  {sala.descricao}
-                </p>
-                <div className="flex items-center">
-                  {/* container must allow overflow so avatars aren't clipped */}
-                  <div className="relative flex items-center overflow-visible">
-                    {(sala.avataresUltimosUsuarios ?? [])
-                      .slice(0, 4)
-                      .map((avatar, i) => {
-                        // compute a zIndex so earlier avatars appear on top of later ones
-                        const z = 100 - i;
-                        return (
-                          <div
-                            key={i}
-                            className="relative"
-                            style={{ marginLeft: i === 0 ? 0 : -12, zIndex: z }} // negative overlap
-                          >
-                            {avatar ? (
-                              <img
-                                src={avatar}
-                                onError={(e) => {
-                                  // fallback to show initials if image fails
-                                  (
-                                    e.currentTarget as HTMLImageElement
-                                  ).style.display = "none";
-                                  const parent = (
-                                    e.currentTarget as HTMLImageElement
-                                  ).parentElement;
-                                  if (parent)
-                                    parent.classList.add(
-                                      "bg-gray-300",
-                                      "flex",
-                                      "items-center",
-                                      "justify-center",
-                                      "text-sm",
-                                      "text-gray-700"
-                                    );
-                                }}
-                                alt={`avatar-${i}`}
-                                className="w-10 h-10 rounded-full border-[3px] border-white object-cover block"
-                                style={{ display: "block" }}
-                              />
-                            ) : (
-                              <div className="w-10 h-10 rounded-full bg-gray-300 border-[3px] border-white flex items-center justify-center text-sm text-gray-700">
-                                {/* could put initials here */}?
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-
-                    {/* +N bubble when there are more than 4 avatars */}
-                    {(sala.avataresUltimosUsuarios ?? []).length > 4 && (
-                      <div
-                        className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium ml-[-12px]"
-                        style={{ zIndex: 50 }}
-                      >
-                        +{(sala.quantidadeEstudantes ?? 0) - 4}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="ml-3">
-                    <h2 className="text-[18px]">
-                      {sala.quantidadeEstudantes ?? 0}{" "}
-                      {sala.quantidadeEstudantes === 1
-                        ? "estudante"
-                        : "estudantes"}
-                    </h2>
-                  </div>
+              {/* ✅ WRAPPER NÃO-FLEX COM OVERFLOW CORRETO */}
+              <div className="w-full overflow-hidden rounded-[35px]">
+                <div className="w-full h-64 relative">
+                  <img
+                    src={sala.banner}
+                    alt={sala.nome}
+                    className="w-full h-full object-cover rounded-[35px]"
+                  />
                 </div>
               </div>
             </div>
-          );
-        })}
+
+            <div className="flex flex-col gap-5 w-full justify-center">
+              <div className="flex flex-wrap gap-1 w-full">
+                {(sala.topicos ?? []).slice(0, 5).map((topico, index) => (
+                  <span
+                    key={index}
+                    className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
+                    style={{
+                      backgroundColor:
+                        cor[Math.floor(Math.random() * cor.length)],
+                    }}
+                  >
+                    {topico}
+                  </span>
+                ))}
+                {sala.topicos.length > 6 && (
+                  <span className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md bg-gray-300">
+                    +{sala.topicos.length - 5} more
+                  </span>
+                )}
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ ease: "easeInOut" }}
+                onClick={() =>
+                  sala.id &&
+                  router.push(
+                    `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
+                  )
+                }
+                className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full py-3 shadow-md"
+              >
+                Visualizar
+              </motion.button>
+
+              <p className="w-full break-all line-clamp-5">{sala.descricao}</p>
+
+              <div className="flex items-center mt-1">
+                <div className="relative flex items-center overflow-visible">
+                  {(sala.avataresUltimosUsuarios ?? [])
+                    .slice(0, 4)
+                    .map((avatar, i) => {
+                      const zIndex = 100 - i;
+                      return (
+                        <div
+                          key={i}
+                          className="relative"
+                          style={{ marginLeft: i === 0 ? 0 : -12, zIndex }}
+                        >
+                          {avatar ? (
+                            <img
+                              src={avatar}
+                              className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-gray-300 border-[3px] border-white flex items-center justify-center text-sm text-gray-700">
+                              ?
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                  {(sala.avataresUltimosUsuarios ?? []).length > 4 && (
+                    <div
+                      className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium ml-[-12px]"
+                      style={{ zIndex: 50 }}
+                    >
+                      +{(sala.quantidadeEstudantes ?? 0) - 4}
+                    </div>
+                  )}
+                </div>
+
+                <div className="ml-3">
+                  <h2 className="text-[18px]">
+                    {sala.quantidadeEstudantes ?? 0}{" "}
+                    {sala.quantidadeEstudantes === 1
+                      ? "estudante"
+                      : "estudantes"}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
