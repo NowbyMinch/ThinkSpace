@@ -335,7 +335,7 @@ export default function landingPage() {
                   <Image
                     width={300}
                     height={500}
-                    src="/landingpage/func5.svg"
+                    src="/landingpage/func5v2.svg"
                     alt="Funcionalidade 5"
                     className="absolute md:flex hidden top-[-15px] right-[0] w-[90%] md:w-[85%] lg:w-[75%] "
                   />
@@ -507,7 +507,7 @@ export default function landingPage() {
                             alt="Alt"
                           />
                           <h1 className=" h-[60px] text-white text-[25px] leading-8 max-w-[230px] text-center flex justify-center ">
-                            Estudante programadora autodidata
+                            Estudante programadora
                           </h1>
                           <h2 className="embla_text text-white max-w-[230px] text-center text-[18px]">
                             Aprende por conta própria sobre programação e

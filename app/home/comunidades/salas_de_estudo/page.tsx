@@ -221,173 +221,191 @@ export default function SalasdeEstudo() {
     <>
       {open2 && (
         <>
+          {/* Overlay (clica fora para fechar) */}
           <motion.div
-            key="content"
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 0.94 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="w-full h-full fixed left-0 right-0 top-0 bottom-0 flex justify-center overflow-hidden items-center z-[1100] "
+            key="backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100]"
           >
-            <div
-              className="w-full h-full absolute"
-              onClick={() => closing()}
-            ></div>
+            {/* Fundo clicável */}
+            <div className="absolute inset-0" onClick={() => closing()} />
 
+            {/* WRAPPER com border-radius + overflow-hidden (faz o recorte) */}
             <motion.div
-              key="content"
+              key="modal-wrapper"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[640px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100] "
+              className="relative z-[1101] rounded-[40px] overflow-hidden shadow-md"
+              style={{ width: 640 }} // ou className w-[640px]
             >
+              {/* SCROLLER: filho que realmente rola; define max-height pra conter o tamanho do modal */}
               <div
-                id="white-box"
-                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                className="bg-white w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+                style={{
+                  WebkitOverflowScrolling: "touch", // momentum scrolling iOS
+                  // garante que a barra de rolagem seja recortada pelos bordas arredondadas
+                  clipPath: "inset(0 round 40px)",
+                }}
               >
-                <img
-                  src="/Vector.svg"
-                  alt="Decoração"
-                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                />
-
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    CriarSala();
-                  }}
-                  className="w-full flex flex-col justify-center h-full gap-4"
+                {/* Conteúdo interno (pode ser flex column etc) */}
+                <div
+                  id="white-box"
+                  className="p-6 gap-4 w-full flex flex-col relative"
                 >
-                  <div className="flex w-full justify-between">
-                    <h1 className="text-[35px] font-medium ">
-                      Criar sala de estudo:
-                    </h1>
-                    <div className=" w-fit ">
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        onClick={closing}
-                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                  {/* seu conteúdo: título, form, inputs, etc */}
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      CriarSala();
+                    }}
+                    className="w-full flex flex-col gap-4"
+                  >
+                    <div className="flex justify-between items-start">
+                      <h1 className="text-[35px] font-medium">
+                        Criar sala de estudo:
+                      </h1>
+                      <div className="w-fit">
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          onClick={closing}
+                          className="cursor-pointer w-6 h-6"
+                        >
+                          <X className="w-full h-full" />
+                        </motion.div>
+                      </div>
+                    </div>
+                    <div className="relative flex flex-col gap-4 min-h-fit ">
+                      <div className="min-h-fit">
+                        <h2 className="text-[20px] font-medium">
+                          Nome da sala:
+                        </h2>
+                        <input
+                          type="text"
+                          id="nome_materia"
+                          placeholder="Pesquisar salas de estudo"
+                          value={nomeSala}
+                          onChange={(e) => setNomeSala(e.target.value)}
+                          className="pl-5 text-[18px] max-w-[700px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)] shadow-md"
+                        />{" "}
+                      </div>
+
+                      <div className="flex min-h-fit flex-col sm:flex-row gap-4">
+                        <div className=" w-full lg:w-full max-w-full sm:h-full sm:max-h-[350px] min-h-fit overflow-y-auto overflow-x-hidden flex justify-center flex-col gap-4">
+                          <div className=" lg:w-full w-[500px] max-w-full h-fit min-h-fit flex flex-col gap-1 ">
+                            <h1 className="font-medium text-[20px] leading-[20px] ">
+                              Tags
+                            </h1>
+                            <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
+                              <input
+                                type="text"
+                                value={topicoInput}
+                                onChange={(e) => setTopicoInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                  }
+
+                                  if (
+                                    e.key === "Enter" &&
+                                    topicoInput &&
+                                    !topicos.includes(topicoInput)
+                                  ) {
+                                    setTopicos((prev) => [
+                                      ...prev,
+                                      topicoInput,
+                                    ]);
+                                    setTopicoInput("");
+                                  }
+                                }}
+                                placeholder="Adicionar tags"
+                                className="shadow-md pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                              />
+
+                              <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.92 }}
+                                onClick={() => {
+                                  if (
+                                    topicoInput &&
+                                    !topicos.includes(topicoInput)
+                                  ) {
+                                    setTopicos((prev) => [
+                                      ...prev,
+                                      topicoInput,
+                                    ]);
+                                    setTopicoInput("");
+                                  }
+                                }}
+                                type="button"
+                                className="p-[10px] min-w-[50px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md "
+                              >
+                                <SendHorizonal className="size-6" />
+                              </motion.button>
+                            </div>
+                          </div>
+                          <div className="shadow-md lg:w-full min-h-[50px] w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)] items-center">
+                            <div className=" w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
+                              <AnimatePresence>
+                                {topicos.map((topico, index) => (
+                                  <motion.div
+                                    key={topico + index}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    id="topicos"
+                                    className="flex w-fit h-fit py-1 px-2 gap-2 text-white bg-[#A387DC] rounded-[8px] max-w-full cursor-pointer"
+                                  >
+                                    <X
+                                      onClick={() => {
+                                        setTopicos((prev) =>
+                                          prev.filter((_, i) => i !== index)
+                                        );
+                                      }}
+                                      className="text-[rgba(0,0,0,0.34)]"
+                                    />
+
+                                    <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                      {topico}
+                                    </span>
+                                  </motion.div>
+                                ))}
+                              </AnimatePresence>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* ------------------------------------------------------------------------------------------------------------------- */}
+
+                        <div className="w-full h-full flex flex-col">
+                          <h2 className="text-[20px] font-medium">
+                            Descrição:
+                          </h2>
+
+                          <textarea
+                            onChange={(e) => setDescricao(e.target.value)}
+                            value={descricao}
+                            className="shadow-md border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="w-full flex justify-center items-center ">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ ease: "easeInOut" }}
+                        type="submit"
+                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
                       >
-                        <X className="w-full h-full" />
-                      </motion.div>
+                        Criar sala de estudo
+                      </motion.button>
                     </div>
-                  </div>
-
-                  <div className="relative flex flex-col gap-4">
-                    <div className="">
-                      <h2 className="text-[20px] font-medium">Nome da sala:</h2>
-                      <input
-                        type="text"
-                        id="nome_materia"
-                        placeholder="Pesquisar salas de estudo"
-                        value={nomeSala}
-                        onChange={(e) => setNomeSala(e.target.value)}
-                        className="pl-5 text-[18px] max-w-[700px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)] shadow-md"
-                      />{" "}
-                    </div>
-
-                    <div className="min-h-fit flex gap-4">
-                      <div className="w-full lg:w-full max-w-full h-full max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center flex-col gap-4">
-                        <div className=" lg:w-full w-[500px] max-w-full h-fit min-h-fit flex flex-col gap-1 ">
-                          <h1 className="font-medium text-[20px] leading-[20px] ">
-                            Tags
-                          </h1>
-                          <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
-                            <input
-                              type="text"
-                              value={topicoInput}
-                              onChange={(e) => setTopicoInput(e.target.value)}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                }
-
-                                if (
-                                  e.key === "Enter" &&
-                                  topicoInput &&
-                                  !topicos.includes(topicoInput)
-                                ) {
-                                  setTopicos((prev) => [...prev, topicoInput]);
-                                  setTopicoInput("");
-                                }
-                              }}
-                              placeholder="Adicionar tags"
-                              className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
-                            />
-
-                            <motion.button
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.92 }}
-                              onClick={() => {
-                                if (
-                                  topicoInput &&
-                                  !topicos.includes(topicoInput)
-                                ) {
-                                  setTopicos((prev) => [...prev, topicoInput]);
-                                  setTopicoInput("");
-                                }
-                              }}
-                              type="button"
-                              className="p-[10px] min-w-[50px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md "
-                            >
-                              <SendHorizonal className="size-6" />
-                            </motion.button>
-                          </div>
-                        </div>
-                        <div className="lg:w-full min-h-[50px] w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)] items-center">
-                          <div className="w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
-                            <AnimatePresence>
-                              {topicos.map((topico, index) => (
-                                <motion.div
-                                  key={topico + index}
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  id="topicos"
-                                  className="flex w-fit h-fit py-1 px-2 gap-2 text-white bg-[#A387DC] rounded-[8px] max-w-full cursor-pointer"
-                                >
-                                  <X
-                                    onClick={() => {
-                                      setTopicos((prev) =>
-                                        prev.filter((_, i) => i !== index)
-                                      );
-                                    }}
-                                    className="text-[rgba(0,0,0,0.34)]"
-                                  />
-
-                                  <span className=" w-full block text-ellipsis overflow-hidden break-words ">
-                                    {topico}
-                                  </span>
-                                </motion.div>
-                              ))}
-                            </AnimatePresence>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="w-full h-full flex flex-col">
-                        <h2 className="text-[20px] font-medium">Descrição:</h2>
-
-                        <textarea
-                          onChange={(e) => setDescricao(e.target.value)}
-                          value={descricao}
-                          className=" border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full flex justify-center items-center">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ ease: "easeInOut" }}
-                      type="submit"
-                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
-                    >
-                      Criar sala de estudo
-                    </motion.button>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -428,7 +446,7 @@ export default function SalasdeEstudo() {
             {/* WRAPPER NÃO-FLEX PARA EVITAR O BUG */}
             <div className="w-full flex flex-col min-w-[60%]">
               <div className="flex items-center w-full justify-between">
-                <h1 className="text-[20px] font-semibold">{sala.nome}</h1>
+                <h1 className="font-medium">{sala.nome}</h1>
               </div>
 
               {/* ✅ WRAPPER NÃO-FLEX COM OVERFLOW CORRETO */}
