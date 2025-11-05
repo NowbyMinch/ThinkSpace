@@ -594,80 +594,75 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </AnimatePresence>
                       )}
                     </div>
-                    <div className="h-full flex w-full rounded-[35px] bg-white flex-col items-center shadow-md border border-[#00000031]">
+                    <div className="h-full flex w-full max-w-[100dvw] rounded-[35px] bg-white flex-col items-center shadow-md border border-[#00000031]">
                       <AnimatePresence>
-                        {/* BARRA FIXA */}
-                        <div
-                          className="
-                              sticky top-0      
-                              pt-[env(safe-area-inset-top)]
-                              z-[30]
-                              flex max-w-full min-h-fit w-full
-                              overflow-x-auto hide-scrollbar overflow-y-hidden
-                              border 
-                              border-b-[#D7DDEA]
-                              rounded-t-[35px]
-                              text-[22px] font-medium gap-4 pl-4
-                            "
-                        >
-                          <div className="flex min-w-fit gap-4 py-2">
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/postagens"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span
+                        {/* sticky wrapper (no overflow here) */}
+                        <div className="sticky top-0 z-30 w-full max-w-[100dvw] pt-[env(safe-area-inset-top)] rounded-t-[35px] border-b border-b-[#D7DDEA]">
+                          {/* inner scroller — put overflow on this element */}
+                          <div
+                            className="overflow-x-auto hide-scrollbar"
+                            style={{ WebkitOverflowScrolling: "touch" }}
+                          >
+                            {/* inline-flex keeps children in one row and allows smooth horizontal scroll */}
+                            <div className="inline-flex items-center py-2 px-4 space-x-4 text-[22px] font-medium">
+                              <motion.a
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/postagens"
+                                className=" cursor-pointer "
                               >
-                                Postagens
-                              </motion.span>
-                              {pathname.endsWith("postagens") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}
-                                ></motion.div>
-                              )}
-                            </motion.a>
+                                <motion.span
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                >
+                                  Postagens
+                                </motion.span>
+                                {pathname.endsWith("postagens") && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    exit={{ scale: 1 }}
+                                    className="h-[5px] origin-center bg-[#A39CEC] rounded-3xl -mb-1"
+                                  />
+                                )}
+                              </motion.a>
 
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/salas_de_estudo"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span className="text-nowrap">
-                                Salas de estudo
-                              </motion.span>
-                              {pathname.endsWith("salas_de_estudo") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}
-                                ></motion.div>
-                              )}
-                            </motion.a>
+                              <motion.a
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/salas_de_estudo"
+                                className=" cursor-pointer "
+                              >
+                                <motion.span className="text-nowrap">
+                                  Salas de estudo
+                                </motion.span>
+                                {pathname.endsWith("salas_de_estudo") && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    exit={{ scale: 1 }}
+                                    className={`origin-center -mb-1 rounded-3xl h-[5px] bg-[#A39CEC]`}
+                                  ></motion.div>
+                                )}
+                              </motion.a>
 
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href="/home/comunidades/seguindo"
-                              className=" cursor-pointer "
-                            >
-                              <motion.span>Seguindo</motion.span>
-                              {pathname.endsWith("seguindo") && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  exit={{ scale: 1 }}
-                                  className={`origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]`}
-                                ></motion.div>
-                              )}
-                            </motion.a>
+                              <motion.a
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                href="/home/comunidades/seguindo"
+                                className=" cursor-pointer "
+                              >
+                                <motion.span>Seguindo</motion.span>
+                                {pathname.endsWith("seguindo") && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    exit={{ scale: 1 }}
+                                    className={`origin-center -mb-1 rounded-3xl h-[5px] bg-[#A39CEC]`}
+                                  ></motion.div>
+                                )}
+                              </motion.a>
+                            </div>
                           </div>
                         </div>
                       </AnimatePresence>
