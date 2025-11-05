@@ -32,6 +32,7 @@ export default function RegistrarInner() {
   const [selectedObjetivo, setSelectedObjetivo] = useState("");
   const [ code, setCode ] = useState<number[]>([]);
   const [message, setMessage] = useState<string | null>(null);
+  const [concordo, setConcordo] = useState<boolean>(false);
 
   const [form, setForm] = useState({ primeiroNome: "", sobrenome: "", email: "", senha: "", confirmarSenha: "", dataNascimento: ""});
   const [formFunc, setFormFunc] = useState({ email: form.email, funcao: ""})
@@ -393,11 +394,16 @@ export default function RegistrarInner() {
                             return (
                               <div className="min-w-[75%] max-w-[90%] flex justify-center h-fit items-center flex-col gap-[51px] mb-10">
                                 <div className="w-full max-w-[1000px] flex flex-col gap-4 text-center h-full lg:h-[280px]  max-h-[90%] ">
-                                  <h2 className="text-gray-700 text-[18px]">Escolha sua categoria:</h2>
+                                  <h2 className="text-gray-700 text-[18px]">
+                                    Escolha sua categoria:
+                                  </h2>
                                   <div className="flex gap-5 w-full h-full flex-col justify-center items-center ">
-                                    <AnimatePresence >
-                                      <form onSubmit={handleFuncao} 
-                                        method="POST" className=" block lg:flex w-full h-full gap-9">
+                                    <AnimatePresence>
+                                      <form
+                                        onSubmit={handleFuncao}
+                                        method="POST"
+                                        className=" block lg:flex w-full h-full gap-9"
+                                      >
                                         <motion.button
                                           initial={{ y: 10 }}
                                           animate={{ y: 0 }}
@@ -405,23 +411,34 @@ export default function RegistrarInner() {
                                           whileTap={{ scale: 1.03 }}
                                           whileHover="hovered"
                                           key="usuario"
-                                          onClick={() => setCategoria("usuario")}
-                                          type='submit'
-                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative ">
+                                          onClick={() =>
+                                            setCategoria("usuario")
+                                          }
+                                          type="submit"
+                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] rounded-[20px] group overflow-hidden relative "
+                                        >
                                           <motion.div
                                             variants={{
-                                              hovered: { paddingLeft: "35px" }
+                                              hovered: { paddingLeft: "35px" },
                                             }}
-                                            className=" w-full h-full pb-3 pl-5 rounded-[20px] flex text-[50px] font-semibold items-end text-white z-[10]">
-                                            <div className='flex justify-center items-center'>
-                                              <h1 className='text-[40px]'>Usuário</h1>
-                                              <ChevronRight className='size-10' />
+                                            className=" w-full h-full pb-3 pl-5 rounded-[20px] flex text-[50px] font-semibold items-end text-white z-[10]"
+                                          >
+                                            <div className="flex justify-center items-center">
+                                              <h1 className="text-[40px]">
+                                                Usuário
+                                              </h1>
+                                              <ChevronRight className="size-10" />
                                             </div>
                                           </motion.div>
-                                          <motion.div
-                                            className="w-full h-full absolute ">
+                                          <motion.div className="w-full h-full absolute ">
                                             <div className="w-[290px] absolute right-[2%] top-[0%]">
-                                              <Image alt='usuario background' width={300} height={500} src="/acessousuario.svg" className='w-full' />
+                                              <Image
+                                                alt="usuario background"
+                                                width={300}
+                                                height={500}
+                                                src="/acessousuario.svg"
+                                                className="w-full"
+                                              />
                                             </div>
                                           </motion.div>
                                         </motion.button>
@@ -430,28 +447,40 @@ export default function RegistrarInner() {
                                           initial={{ y: 10 }}
                                           animate={{ y: 0 }}
                                           exit={{ y: 10 }}
-                                          whileTap={{ scale: 1.03 }}
-                                          whileHover="hovered"
-                                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                                          // whileTap={{ scale: 1.03 }}
+                                          // whileHover="hovered"
+                                          transition={{
+                                            duration: 0.3,
+                                            ease: "easeInOut",
+                                          }}
                                           key="restrito"
-                                          type='submit'
-                                          onClick={() => setCategoria("restrito")}
-                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] mt-9 lg:mt-0 rounded-[20px] group overflow-hidden relative ">
+                                          type="button"
+                                          // onClick={() => setCategoria("restrito")}
+                                          className=" w-full max-lg:h-[230px] flex items-end bg-[#9767F8] mt-9 lg:mt-0 rounded-[20px] group overflow-hidden relative saturate-0"
+                                        >
                                           <motion.div
-                                            variants={{
-                                              hovered: { paddingLeft: "35px" }
-                                            }}
-                                            className="h-[50%] w-full pb-3 pl-5 rounded-[20px] flex text-[50px] font-semibold items-end text-white z-[10]">
-                                            <div className='flex justify-center items-center w-min leading-none'>
-                                              <h1 className='w-min text-start text-[40px]'>Acesso Restrito</h1>
-                                              <ChevronRight className='size-10' />
+                                            // variants={{
+                                            //   hovered: { paddingLeft: "35px" },
+                                            // }}
+                                            className="h-[50%] w-full pb-3 pl-5 rounded-[20px] flex text-[50px] font-semibold items-end text-white z-[10]"
+                                          >
+                                            <div className="flex justify-center items-center w-min leading-none">
+                                              <h1 className="w-min text-start text-[40px]">
+                                                Acesso Restrito
+                                              </h1>
+                                              <ChevronRight className="size-10" />
                                             </div>
                                           </motion.div>
 
-                                          <motion.div
-                                            className="w-full h-full absolute ">
+                                          <motion.div className="w-full h-full absolute ">
                                             <div className="w-[275px] absolute right-[2%] top-[0%]">
-                                              <Image alt='usuario background' width={300} height={500} src="/acessorestrito.svg" className='w-full' />
+                                              <Image
+                                                alt="usuario background"
+                                                width={300}
+                                                height={500}
+                                                src="/acessorestrito.svg"
+                                                className="w-full saturate-0"
+                                              />
                                             </div>
                                           </motion.div>
                                         </motion.button>
@@ -462,11 +491,22 @@ export default function RegistrarInner() {
 
                                 <motion.div className=" flex justify-center items-center gap-10 relative w-[550px] max-w-[90%] mx-auto">
                                   <div className="flex flex-col w-[200px] gap-10 max-w-[90%] ">
-                                    <motion.button whileTap={{ scale: 0.99 }} whileHover={{ scale: 1.01 }} transition={{ duration: 0.2, ease: "easeInOut" }} onClick={() => setSubStep(subStep - 1)} className='bg-[#804EE5] py-[8px] text-white text-[20px] rounded-[25px] shadow-md'>Voltar</motion.button>
+                                    <motion.button
+                                      whileTap={{ scale: 0.99 }}
+                                      whileHover={{ scale: 1.01 }}
+                                      transition={{
+                                        duration: 0.2,
+                                        ease: "easeInOut",
+                                      }}
+                                      onClick={() => setSubStep(subStep - 1)}
+                                      className="bg-[#804EE5] py-[8px] text-white text-[20px] rounded-[25px] shadow-md"
+                                    >
+                                      Voltar
+                                    </motion.button>
                                   </div>
                                 </motion.div>
                               </div>
-                            )
+                            );
                           }
                           else if (categoria === "usuario" && subStep === 3) {
                             return (
@@ -514,7 +554,7 @@ export default function RegistrarInner() {
 
                                   <motion.div className=" flex justify-center items-center relative w-[550px] max-w-[90%] mx-auto flex-col gap-9">
                                     <div className="h-fit flex justify-center items-center gap-2 overflow-hidden">
-                                      <input type="checkbox" required className='size-4 accent-[#804EE5] cursor-pointer'/> 
+                                      <input onClick={() => setConcordo(!concordo) } type="checkbox" required className='size-4 accent-[#804EE5] cursor-pointer'/> 
                                       <h2 className='text-[18px]'>Li e concordo com os <a className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36' href="/termos-de-uso">Termos de uso</a> e a <a href="/politica-de-privacidade" className=' cursor-pointer text-[#3881AF] w-fit text-[18px] -mt-36'>Política de Privacidade</a>.</h2>
                                     </div>
 
