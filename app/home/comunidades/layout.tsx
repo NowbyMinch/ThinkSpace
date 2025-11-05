@@ -594,10 +594,23 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </AnimatePresence>
                       )}
                     </div>
-                    <div className="h-full flex w-full  rounded-[35px] overflow-hidden bg-white  flex-col items-center shadow-md border border-[#00000031]">
+                    <div className="h-full flex w-full rounded-[35px] bg-white flex-col items-center shadow-md border border-[#00000031]">
                       <AnimatePresence>
-                        <div className="flex max-w-full min-h-fit w-full overflow-x-auto hide-scrollbar overflow-y-hidden border border-b-[#D7DDEA] relative text-[22px] font-medium gap-4 pl-4">
-                          <div className="flex min-w-fit w-full relative gap-4 h-fit py-2">
+                        {/* BARRA FIXA */}
+                        <div
+                          className="
+                              sticky top-0      
+                              pt-[env(safe-area-inset-top)]
+                              z-[30]
+                              flex max-w-full min-h-fit w-full
+                              overflow-x-auto hide-scrollbar overflow-y-hidden
+                              border 
+                              border-b-[#D7DDEA]
+                              rounded-t-[35px]
+                              text-[22px] font-medium gap-4 pl-4
+                            "
+                        >
+                          <div className="flex min-w-fit gap-4 py-2">
                             <motion.a
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
