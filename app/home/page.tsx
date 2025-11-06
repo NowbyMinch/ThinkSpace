@@ -81,6 +81,7 @@ import {
 } from "lucide-react";
 import * as Icons from "lucide-react";
 import { avatar } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 const icons = [
   // Educação e aprendizado
@@ -157,7 +158,86 @@ const icons = [
   { id: "squarePen", Icon: SquarePen },
 ];
 
+type BannerData = {
+  mensagem?: string;
+  relatorio?: string;
+  relatorioUrl?: string;
+  // add other properties if needed
+};
+type UserData = {
+  primeiroNome?: string;
+  cargo?: string;
+  foto?: string;
+  // add other properties if needed
+};
+type DiaData = {
+  diaNumero?: number;
+  diaSemana?: number;
+  // add other properties if needed
+};
+type CalendarioData = {
+  mesAtual?: string;
+  anoAtual?: number;
+  dias?: DiaData[];
+  diaAtual?: number;
+  // add other properties if needed
+};
+type notificacoesType = {
+  cor: string;
+  data: string;
+  dataAnotacao: string;
+  id: string;
+  lida: false;
+  mensagem: string;
+  usuarioId: string;
+  subtitulo: string;
+  titulo: string;
+  // add other properties if needed
+};
+type notificacaoData = {
+  userId?: string;
+  notificacoes?: notificacoesType[];
+
+  // add other properties if needed
+};
+type Materia = {
+  id: string;
+  nome: string;
+  cor: string; // "SALMAO"
+  icone: string; // "divide"
+  usuarioId: string;
+  tempoAtivo: number; // 0
+  ultimaRevisao: string; // ISO date string: "2025-11-06T02:04:23.825Z"
+  xpAcumulada: number; // 17
+  barraProgresso: number; // 1–100 or any numeric progress
+};
+
+type Sala = {
+  id: string;
+  nome: string;
+  descricao: string;
+  topicos: string[];
+  banner: string;
+  moderadorId: string;
+  assuntoId: string | null;
+  criadoEm: string;
+};
+type Salas = {
+  id: string;
+  nome: string;
+  descricao: string;
+  tipo: "PUBLICA" | "PRIVADA" | string;
+  banner: string;
+  assunto: string | null;
+  avataresUltimosUsuarios: string[];
+  criadoEm: string; // ISO date string
+  moderadorId: string;
+  quantidadeEstudantes: number;
+  topicos: string[];
+};
+
 export default function HomePage() {
+  const router = useRouter();
   const [pop, setPop] = useState(false);
   const [pop2, setPop2] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -209,82 +289,6 @@ export default function HomePage() {
     }
   }
 
-  type BannerData = {
-    mensagem?: string;
-    relatorio?: string;
-    relatorioUrl?: string;
-    // add other properties if needed
-  };
-  type UserData = {
-    primeiroNome?: string;
-    cargo?: string;
-    foto?: string;
-    // add other properties if needed
-  };
-  type DiaData = {
-    diaNumero?: number;
-    diaSemana?: number;
-    // add other properties if needed
-  };
-  type CalendarioData = {
-    mesAtual?: string;
-    anoAtual?: number;
-    dias?: DiaData[];
-    diaAtual?: number;
-    // add other properties if needed
-  };
-  type notificacoesType = {
-    cor: string;
-    data: string;
-    dataAnotacao: string;
-    id: string;
-    lida: false;
-    mensagem: string;
-    usuarioId: string;
-    subtitulo: string;
-    titulo: string;
-    // add other properties if needed
-  };
-  type notificacaoData = {
-    userId?: string;
-    notificacoes?: notificacoesType[];
-
-    // add other properties if needed
-  };
-  type materiaItem = {
-    id?: string;
-    nome?: string;
-    cor?: string;
-    icone?: string;
-    usuarioId?: string;
-    materiais?: any[]; // or specify the correct type if known
-    // add other properties if needed
-  };
-  type Sala = {
-    id: string;
-    nome: string;
-    descricao: string;
-    topicos: string[];
-    banner: string;
-    moderadorId: string;
-    assuntoId: string | null;
-    criadoEm: string;
-  };
-
-  type Salas = {
-    id: string;
-    nome: string;
-    descricao: string;
-    tipo: "PUBLICA" | "PRIVADA" | string;
-    banner: string;
-    assunto: string | null;
-    avataresUltimosUsuarios: string[];
-    criadoEm: string; // ISO date string
-    moderadorId: string;
-    quantidadeEstudantes: number;
-    topicos: string[];
-  };
-  
   const [calendario, setCalendario] = useState<CalendarioData>({});
   const [bannerData, setBannerData] = useState<BannerData>({});
   const [user, setUser] = useState<UserData>({});
@@ -292,7 +296,7 @@ export default function HomePage() {
   const [avatares, setAvatares] = useState<string[]>([]);
   const [notificacao, setNotificacao] = useState<notificacaoData>({});
   const [loading, setLoading] = useState(true);
-  const [materias, setMaterias] = useState<materiaItem[]>([]);
+  const [materias, setMaterias] = useState<Materia[]>([]);
   const [ofensiva, setOfensiva] = useState();
   const [ofensivaMensagem, setOfensivaMensagem] = useState("");
   const [totalEstudantes, setTotalEstudantes] = useState(0);
@@ -400,6 +404,17 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchAll = async () => {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      // setUserID(userIDdata1.userId); // set the state
+
       try {
         // Run all fetches in parallel
         const [
@@ -411,7 +426,7 @@ export default function HomePage() {
           notificacaoRes,
           ofensivaRes,
         ] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/materias`, {
             method: "GET",
             credentials: "include",
           }),
@@ -427,10 +442,13 @@ export default function HomePage() {
             method: "GET",
             credentials: "include",
           }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
-            method: "GET",
-            credentials: "include",
-          }),
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/salas-recentes`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          ),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/notificacoes`, {
             method: "GET",
             credentials: "include",
@@ -462,6 +480,7 @@ export default function HomePage() {
 
         // ✅ Set states after everything is done
         setMaterias(materiaData);
+        console.log(materiaData, "materiaRes");
         setBannerData(bannerData);
         setUser(userData);
         setCalendario(calendarioData);
@@ -469,13 +488,14 @@ export default function HomePage() {
         setOfensivaMensagem(ofensivaData.mensagemOfensiva);
         setOfensiva(ofensivaData.status);
 
-        // Extract data from /home/salas-estudo safely
-        if (salasData) {
-          console.log("/home/salas-estudo aqui", salasData);
+        if (salasData.length > 0) {
           setAvatares(salasData.avataresUltimosUsuarios);
           setTotalEstudantes(salasData.totalEstudantes);
-          setSalas(salasData.salasMembro);
+          setSalas(Array.isArray(salasData) ? salasData : []);
         }
+        // Extract data from /home/salas-estudo safely
+        // if (salasData) {
+        // }
 
         console.log("✅ All data successfully loaded");
       } catch (err) {
@@ -514,7 +534,7 @@ export default function HomePage() {
   //        // ✅ Set states after everything is done
   //        setUser(userData);
   //        setSalas(salasData.salas);
-         
+
   //        // Extract data from /home/salas-estudo safely
   //      } catch (err) {
   //        console.error("Erro ao carregar dados:", err);
@@ -527,7 +547,7 @@ export default function HomePage() {
 
   //    fetchAll();
   //  }, []);
-  
+
   useEffect(() => {
     if (materias && materias.length > 0 && salas && salas.length > 0) {
       setLoading(false);
@@ -1147,7 +1167,7 @@ export default function HomePage() {
                         return (
                           <CarouselItem
                             key={index}
-                            className="basis-full sm:basis-[49%] lg:basis-[32.2%] cursor-pointer"
+                            className=" basis-full sm:basis-[49%] lg:basis-[32.2%] cursor-pointer"
                           >
                             <Card
                               style={{
@@ -1195,7 +1215,7 @@ export default function HomePage() {
                                         XP
                                       </span>
                                       <span className="font-medium text-[17px]">
-                                        0xp
+                                        {material.xpAcumulada}xp
                                       </span>
                                     </div>
                                   </div>
@@ -1294,8 +1314,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="lg:w-[40%] w-full overflow-hidden ">
-            <div className=" bg-white h-[230px] flex flex-col justify-center items-center rounded-[35px] shadow-md bg border border-[#00000031]">
+          <div className="lg:w-[40%] w-full  ">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ ease: "easeInOut" }}
+              onClick={() => {router.push("/home/calendario")}}
+              className="cursor-pointer bg-white h-[230px] flex flex-col justify-center items-center rounded-[35px] shadow-md bg border border-[#00000031] overflow-hidden"
+            >
               <div className=" w-full flex h-[40%] text-center justify-center gap-20 items-center relative">
                 <h1 className="text-[30px] font-bold ">
                   {calendario.mesAtual} {calendario.anoAtual}
@@ -1424,7 +1450,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             <h1 className="text-[30px] mt-4 mb-4 ">
               Salas de estudo recentes:
@@ -1467,74 +1493,93 @@ export default function HomePage() {
               {salas.length > 0 && (
                 <>
                   {salas.map((sala, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="bg-white w-full h-[350px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]"
-                      >
-                        <div className="w-[90%] h-[90%] flex flex-col justify-between ">
-                          <div className="flex gap-[8px]">
-                            {sala.topicos.map((topico, index) => {
-                              const randomColor =
-                                cor[Math.floor(Math.random() * cor.length)];
-                              return (
-                                <h2
-                                  key={index}
-                                  style={{ backgroundColor: randomColor }}
-                                  className="text-[18px] px-3 text-white rounded-full "
-                                >
-                                  {topico}
-                                </h2>
-                              );
-                            })}
-                          </div>
+                    if (index < 5) {
+                      return (
+                        <div
+                          key={index}
+                          className="bg-white min-h-fit w-full h-[350px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031] p-4 "
+                        >
+                          <div className="flex flex-col justify-between w-full gap-4">
+                            <div className="flex gap-[8px]">
+                              {sala.topicos.map((topico, index) => {
+                                const randomColor =
+                                  cor[Math.floor(Math.random() * cor.length)];
+                                return (
+                                  <h2
+                                    key={index}
+                                    style={{ backgroundColor: randomColor }}
+                                    className="text-[18px] px-3 text-white rounded-full "
+                                  >
+                                    {topico}
+                                  </h2>
+                                );
+                              })}
+                            </div>
 
-                          <div className="w-full leading-[55px]">
-                            <h1 className="font-medium text-[30px]">
+                            <h1 className="font-medium text-[30px] leading-none">
                               {sala.nome}
                             </h1>
-                            <div className="h-[150px] w-full ">
-                              <img
-                                src={sala.banner}
-                                alt="Sala de Estudo"
-                                className="w-full h-full object-cover rounded-[25px] shadow-md"
-                              />
-                            </div>
-                            <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
-                          </div>
-
-                          <div className="flex items-center">
-                            <div className="flex -space-x-3">
-                              {(sala.avataresUltimosUsuarios ?? [])
-                                .slice(0, 4)
-                                .map((avatar, index) => (
-                                  <img
-                                    key={index}
-                                    src={avatar}
-                                    alt="Usuário"
-                                    className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
-                                  />
-                                ))}
-
-                              {sala.quantidadeEstudantes > 4 && (
-                                <div className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium">
-                                  +{sala.quantidadeEstudantes - 4}
-                                </div>
-                              )}
+                            <div className="w-full leading-[55px]">
+                              <div className="h-[200px] w-full ">
+                                <img
+                                  src={sala.banner}
+                                  alt="Sala de Estudo"
+                                  className="w-full h-full object-cover rounded-[25px] shadow-md"
+                                />
+                              </div>
+                              <div className="w-full h-[1px] bg-[#1E2351] mt-3 "></div>
                             </div>
 
-                            <div className="ml-3">
-                              <h2 className="text-[18px]">
-                                {sala.quantidadeEstudantes}{" "}
-                                {sala.quantidadeEstudantes === 1
-                                  ? "estudante"
-                                  : "estudantes"}
-                              </h2>
+                            <div className="flex items-center ">
+                              <motion.button
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                                transition={{ ease: "easeInOut" }}
+                                onClick={() =>
+                                  sala.id &&
+                                  router.push(
+                                    `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
+                                  )
+                                }
+                                className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full py-3 shadow-md"
+                              >
+                                Visualizar
+                              </motion.button>
+                            </div>
+
+                            <div className="flex items-center ">
+                              <div className="flex -space-x-3">
+                                {(sala.avataresUltimosUsuarios ?? [])
+                                  .slice(0, 4)
+                                  .map((avatar, index) => (
+                                    <img
+                                      key={index}
+                                      src={avatar}
+                                      alt="Usuário"
+                                      className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
+                                    />
+                                  ))}
+
+                                {sala.quantidadeEstudantes > 4 && (
+                                  <div className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium">
+                                    +{sala.quantidadeEstudantes - 4}
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="ml-3">
+                                <h2 className="text-[18px] leading-none">
+                                  {sala.quantidadeEstudantes}{" "}
+                                  {sala.quantidadeEstudantes === 1
+                                    ? "estudante"
+                                    : "estudantes"}
+                                </h2>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
+                      );
+                    }
                   })}
 
                   {/* <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">

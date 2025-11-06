@@ -356,7 +356,10 @@ export const Sidebar = () => {
                 </Tooltip>
               </Link>
 
-              <Link href={`/home/${bannerData.relatorioUrl}`} className="">
+              <Link
+                href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
+                className=""
+              >
                 <Tooltip
                   closeDelay={0}
                   content="Métricas"
@@ -608,7 +611,10 @@ export const Sidebar = () => {
                 </Tooltip>
               </Link>
 
-              <Link href={`/home/${bannerData.relatorioUrl}`} className="">
+              <Link
+                href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
+                className=""
+              >
                 <Tooltip
                   closeDelay={0}
                   content="Métricas"

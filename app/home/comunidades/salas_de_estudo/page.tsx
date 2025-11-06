@@ -499,45 +499,29 @@ export default function SalasdeEstudo() {
 
               <p className="w-full break-all line-clamp-5">{sala.descricao}</p>
 
-              <div className="flex items-center mt-1">
-                <div className="relative flex items-center overflow-visible">
+              <div className="flex items-center ">
+                <div className="flex -space-x-3">
                   {(sala.avataresUltimosUsuarios ?? [])
                     .slice(0, 4)
-                    .map((avatar, i) => {
-                      const zIndex = 100 - i;
-                      return (
-                        <div
-                          key={i}
-                          className="relative"
-                          style={{ marginLeft: i === 0 ? 0 : -12, zIndex }}
-                        >
-                          {avatar ? (
-                            <img
-                              src={avatar}
-                              className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
-                            />
-                          ) : (
-                            <div className="w-10 h-10 rounded-full bg-gray-300 border-[3px] border-white flex items-center justify-center text-sm text-gray-700">
-                              ?
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                    .map((avatar, index) => (
+                      <img
+                        key={index}
+                        src={avatar}
+                        alt="Usuário"
+                        className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
+                      />
+                    ))}
 
-                  {(sala.avataresUltimosUsuarios ?? []).length > 4 && (
-                    <div
-                      className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium ml-[-12px]"
-                      style={{ zIndex: 50 }}
-                    >
-                      +{(sala.quantidadeEstudantes ?? 0) - 4}
+                  {sala.quantidadeEstudantes > 4 && (
+                    <div className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium">
+                      +{sala.quantidadeEstudantes - 4}
                     </div>
                   )}
                 </div>
 
                 <div className="ml-3">
-                  <h2 className="text-[18px]">
-                    {sala.quantidadeEstudantes ?? 0}{" "}
+                  <h2 className="text-[18px] leading-none">
+                    {sala.quantidadeEstudantes}{" "}
                     {sala.quantidadeEstudantes === 1
                       ? "estudante"
                       : "estudantes"}

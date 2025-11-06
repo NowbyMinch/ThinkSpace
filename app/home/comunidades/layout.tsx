@@ -685,7 +685,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </div>
 
                         <h1 className="text-[25px] leading-none font-medium my-2">
-                          Recentes
+                          Recentes:
                         </h1>
                         <div className="flex flex-col gap-3 ">
                           {recentes.map((item, index) => {
@@ -749,7 +749,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </div>
 
                         <h1 className="text-[25px] leading-none font-medium my-2">
-                          Postagens Favoritas
+                          Postagens Favoritas:
                         </h1>
                         <motion.div className="flex flex-col gap-3 pb-3">
                           {favorito &&
@@ -803,14 +803,17 @@ export default function LayoutSalas({ children }: SalasProps) {
                                     </p>
                                   </motion.div>
                                 );
-                              } else if (index > 3) {
-                                <div className="cursor-pointer w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center mb-2">
-                                  Ver mais
-                                  <ChevronDown
-                                    className=""
-                                    stroke="currentColor"
-                                  />
-                                </div>;
+                              } else if (index === 5) {
+                                console.log("Index", index);
+                                return (
+                                  <div key={index} className="cursor-pointer w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center mb-2">
+                                    Ver mais
+                                    <ChevronDown
+                                      className=""
+                                      stroke="currentColor"
+                                    />
+                                  </div>
+                                );
                               }
                             })}
                           {favorito.length === 0 && (
@@ -826,7 +829,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                     ) : (
                       <>
                         <h1 className="text-[25px] leading-none font-medium my-2">
-                          Recentes
+                          Recentes:
                         </h1>
                         <div className="flex flex-col gap-3 ">
                           {recentes.map((item, index) => {
@@ -890,7 +893,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </div>
 
                         <h1 className="text-[25px] leading-none font-medium my-2">
-                          Postagens Favoritas
+                          Postagens Favoritas:
                         </h1>
                         <motion.div className="flex flex-col gap-3 ">
                           {favorito &&
