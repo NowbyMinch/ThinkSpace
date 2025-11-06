@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Search,
   User,
+  X,
 } from "lucide-react";
 import path from "path";
 import { Backdrop3 } from "../components/backdrop";
@@ -432,9 +433,24 @@ export default function LayoutSalas({ children }: SalasProps) {
                   alt="Decoração"
                   className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
                 />
-                <span className="text-[20px] font-medium">
-                  Postagens salvas:
-                </span>
+
+                <div className="flex justify-between items-center w-full">
+                  <h1 className="text-[35px] font-medium self-end ">
+                    Criar sala de estudo:
+                  </h1>
+                  <div className="w-fit">
+                    <motion.div
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.92 }}
+                      onClick={closing}
+                      className="cursor-pointer w-6 h-6"
+                    >
+                      <X className="w-full h-full" />
+                    </motion.div>
+                  </div>
+                </div>
+
+
               </div>
             </motion.div>
           </motion.div>

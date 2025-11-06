@@ -468,6 +468,90 @@ export default function Materiais() {
         </>
       )}
 
+      {open2 && (
+        <>
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="w-full h-full fixed left-0 right-0  flex justify-center overflow-hidden items-center z-[1100] "
+          >
+            <div
+              className="w-full h-full absolute"
+              onClick={() => closing()}
+            ></div>
+
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+            >
+              <div
+                id="white-box"
+                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+              >
+                <img
+                  src="/Vector.svg"
+                  alt="Decoração"
+                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                />
+
+                <div className="w-full flex flex-col justify-center h-full gap-4">
+                  <div className="flex ">
+                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                      Fazer postagem:
+                    </div>
+                    <div className=" w-fit">
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={closing}
+                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                      >
+                        <X className="w-full h-full" />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  <div className="relative flex flex-col gap-1">
+                    <h2 className="text-[20px] font-medium">
+                      Matéria designada:
+                    </h2>
+
+                    <ComboboxDemoMateriaPostar
+                      value={materiaDesignada}
+                      onChange={(value) => {
+                        setMateriaDesignada(value);
+                      }}
+                    />
+                  </div>
+
+                  <div className="w-full flex justify-center items-center">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ ease: "easeInOut" }}
+                      onClick={VincularMaterial}
+                      type="submit"
+                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                    >
+                      Vincular
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="w-full absolute flex justify-center items-center">
+            <Backdrop3 onClick={() => closing()} />
+          </div>
+        </>
+      )}
+
       <div className="w-full flex flex-col px-4 py-4 gap-4 h-fit ">
         <div className="flex w-full justify-between gap-2">
           <input
@@ -485,7 +569,7 @@ export default function Materiais() {
             onClick={() => setOpen(true)}
             className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full text-nowrap"
           >
-            Postar material 
+            Postar material
           </motion.button>
         </div>
         {/* lg:flex-row */}
@@ -634,7 +718,7 @@ export default function Materiais() {
                         whileTap={{ scale: 0.98 }}
                         transition={{ ease: "easeInOut" }}
                         onClick={() => {
-                          setOpen(true);
+                          setOpen2(true);
                           setMaterialID(sala.material.id);
                         }}
                         className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md rounded-full text-nowrap"
