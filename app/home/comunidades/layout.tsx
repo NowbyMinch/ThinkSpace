@@ -5,17 +5,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { createContext, useEffect, useRef, useState } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "../loading";
+import Loading2 from "@/components/ui/loading";
 import {
   ArrowLeft,
   CalendarDays,
   ChevronDown,
   ChevronRight,
+  Ellipsis,
+  Heart,
+  MessageCircle,
   Search,
   User,
   X,
 } from "lucide-react";
 import path from "path";
 import { Backdrop3 } from "../components/backdrop";
+import PostagemDetail from "@/components/postagemDetail";
 
 type UserData = {
   primeiroNome?: string;
@@ -116,7 +121,12 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [userID, setUserID] = useState("");
   const [favorito, setFavorito] = useState<Favorito[]>([]);
   const [recentes, setRecentes] = useState<Recentes[]>([]);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [curtidaCheck, setCurtidaCheck] = useState<boolean | undefined>(
+    undefined
+  );
+  const [curtidaNumero, setCurtidaNumero] = useState<number>(-1);
+  const [appear, setAppear] = useState(0);
 
   const refreshFavoritos = async () => {
     try {
@@ -193,9 +203,8 @@ export default function LayoutSalas({ children }: SalasProps) {
         ]);
 
       // ✅ Set states after everything is done
-      if (favoritosData.length > 0) {
-        setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
-      }
+      setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
+
       setUser(userData);
       setSala(salaData);
       setUserID(userIDdata.userId);
@@ -338,9 +347,7 @@ export default function LayoutSalas({ children }: SalasProps) {
         }
         console.log(recentesData, "recentesData ");
 
-        if (favoritosData.length > 0) {
-          setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
-        }
+        setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
 
         // const salasRecentes = await fetch(
         //   `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata.userId}/salas-recentes`,
@@ -391,84 +398,343 @@ export default function LayoutSalas({ children }: SalasProps) {
     return () => saveScroll();
   }, [pathname]);
 
-  
   function closing() {
     setOpen(false);
   }
 
+  const CurtidaCheck = async (postID: string) => {
+    try {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
-  if (loading) return <Loading />;
+      const userIDdata = await userIDRes.json(); // parse the response
+      setUserID(userIDdata.userId); // set the state
+
+      const CurtidaCheck = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post/${postID}?usuarioId=${userIDdata.userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const curtidaData = await CurtidaCheck.json(); // parse the response
+      setCurtidaCheck(curtidaData.curtidoPeloUsuario);
+
+      console.log("✅CURTIDA CHECK ", curtidaData);
+    } catch (err) {
+      console.error("Erro ao carregar dados:", err);
+      setMessage("Erro ao carregar dados.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const Curtir = async (id: string) => {
+    try {
+      // 🔹 Atualizar o post localmente (otimista)
+      setFavorito((prevPosts) =>
+        prevPosts.map((post) => {
+          if (post.id !== id) return post; // não mexe nos outros posts
+          const newLiked = !post.curtidoPeloUsuario;
+          const newLikes = newLiked
+            ? post.curtidas + 1
+            : Math.max(post.curtidas - 1, 0);
+          return { ...post, curtidoPeloUsuario: newLiked, curtidas: newLikes };
+        })
+      );
+
+      // 🔹 Pegar userID
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const userIDdata = await userIDRes.json();
+      const userID = userIDdata.userId;
+
+      // 🔹 POST para backend
+      const curtirRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post/${id}/curtir/${userID}`,
+        { method: "POST", credentials: "include" }
+      );
+
+      // 🔹 GET para confirmar o estado atualizado
+      const curtirCheckRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/post/${id}?usuarioId=${userID}`,
+        { method: "GET", credentials: "include" }
+      );
+
+      if (!curtirRes.ok || !curtirCheckRes.ok)
+        throw new Error("Erro ao curtir");
+
+      const curtidaData = await curtirCheckRes.json();
+
+      // 🔹 Sincronizar com backend
+      setFavorito((prevPosts) =>
+        prevPosts.map((post) => {
+          if (post.id !== id) return post;
+          return {
+            ...post,
+            curtidoPeloUsuario: curtidaData.curtidoPeloUsuario,
+            curtidas: curtidaData.curtidas,
+          };
+        })
+      );
+    } catch (error) {
+      console.error("Erro ao curtir:", error);
+    }
+  };
+
+  // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
+  function formatNumber(num: number) {
+    if (num >= 1_000_000)
+      return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "k";
+    return num.toString();
+  }
+
+  const handleOpenPost = (postId: string, autorId: string) => {
+    sessionStorage.setItem("materiaisScroll", String(window.scrollY));
+    sessionStorage.setItem("materiaisPosts", JSON.stringify(favorito));
+    router.push(`/home/comunidades/postagens/${autorId}/${postId}`);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      // If clicked on something that is NOT part of PostagemDetail or the "..."
+      if (
+        !(e.target as HTMLElement).closest(".postagem-detail") &&
+        !(e.target as HTMLElement).closest(".ellipsis-button")
+      ) {
+        setAppear(0);
+      }
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <>
       {message && (
         <ErrorModal message={message} onClose={() => setMessage(null)} />
       )}
-      {open && (
-        <>
-          <motion.div
-            key="content"
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 0.94 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
-          >
-            <div
-              className="w-full h-full absolute"
-              onClick={() => closing()}
-            ></div>
-
-            <motion.div
-              key="content"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 0.94 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[700px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
-            >
-              <div
-                id="white-box"
-                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
-              >
-                <img
-                  src="/Vector.svg"
-                  alt="Decoração"
-                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                />
-
-                <div className="flex justify-between items-center w-full">
-                  <h1 className="text-[35px] font-medium self-end ">
-                    Criar sala de estudo:
-                  </h1>
-                  <div className="w-fit">
-                    <motion.div
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.92 }}
-                      onClick={closing}
-                      className="cursor-pointer w-6 h-6"
-                    >
-                      <X className="w-full h-full" />
-                    </motion.div>
-                  </div>
-                </div>
-
-
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <div className="w-full absolute flex justify-center items-center">
-            <Backdrop3 onClick={() => closing()} />
-          </div>
-        </>
-      )}
 
       <FavoritosContext.Provider value={{ refreshFavoritos }}>
         {/* h-[calc(100vh-24px)] */}
         <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
+          {open && favorito && (
+            <>
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
+              >
+                <div
+                  className="w-full h-full absolute"
+                  onClick={() => closing()}
+                ></div>
+
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 0.94 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="w-[700px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+                >
+                  <div
+                    id="white-box"
+                    className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                  >
+                    <img
+                      src="/Vector.svg"
+                      alt="Decoração"
+                      className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                    />
+
+                    <div className="flex justify-between items-center w-full">
+                      <h1 className="text-[35px] font-medium self-end ">
+                        Postagens favoritas:
+                      </h1>
+                      <div className="w-fit">
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          onClick={closing}
+                          className="cursor-pointer w-6 h-6"
+                        >
+                          <X className="w-full h-full" />
+                        </motion.div>
+                      </div>
+                    </div>
+
+                    <motion.div className="flex flex-wrap gap-3 w-full overflow-y-auto overflow-x-hidden pr-1 ">
+                      {favorito &&
+                        favorito.map((favoritoUnique, index) => {
+                          return (
+                            <motion.div
+                              key={index}
+                              className="flex flex-col w-full cursor-pointer p-2 border-1 border-[#b8b8b8] rounded-[10px] shadow-md gap-3 "
+                            >
+                              <motion.div
+                                key={index}
+                                className="flex gap-1 max-w-full w-full overflow-hidden"
+                              >
+                                <img
+                                  src={favoritoUnique.autor.foto}
+                                  className="rounded-full cursor-pointer transition-all w-10 h-10 object-cover shadow-md  "
+                                  alt="Foto de perfil"
+                                />
+                                <div className="flex flex-col text-[18px] leading-none gap-1 truncate justify-center">
+                                  <span className="font-semibold truncate">
+                                    {favoritoUnique.autor.nome}
+                                  </span>
+                                  {/* <span className="font-medium truncate">
+                                    {" "}
+                                    {favorito.} seguidores
+                                  </span> */}
+                                </div>
+
+                                <motion.div
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.92 }}
+                                  className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
+                                >
+                                  <ChevronRight className="w-full h-full text-[#EB9481]" />
+                                </motion.div>
+                              </motion.div>
+
+                              <motion.p className="break-all line-clamp-4 text-[18px]">
+                                {favoritoUnique.conteudo}
+                              </motion.p>
+
+                              <motion.div className=" flex justify-between items-center pb-4 border border-b-[#D7DDEA] ">
+                                <div className=" gap-5 flex justify-between items-center h-fit">
+                                  <div className="flex gap-1 font-semibold ">
+                                    <motion.div
+                                      onClick={() => {
+                                        Curtir(favoritoUnique.id);
+                                      }}
+                                      whileHover={{ scale: 1.05 }}
+                                      whileTap={{ scale: 0.95 }}
+                                      animate={{
+                                        scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
+                                      }}
+                                      transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                      }}
+                                      className="w-6 h-6 cursor-pointer"
+                                    >
+                                      <Heart
+                                        className="text-[#C85959] w-full h-full"
+                                        fill={
+                                          curtidaCheck !== undefined
+                                            ? curtidaCheck
+                                              ? "#C85959"
+                                              : "transparent"
+                                            : favoritoUnique.curtidoPeloUsuario
+                                              ? "#C85959"
+                                              : "transparent"
+                                        }
+                                        stroke="currentColor"
+                                      />
+                                    </motion.div>
+                                    {curtidaNumero === -1 ? (
+                                      <span>
+                                        {formatNumber(favoritoUnique.curtidas)}
+                                      </span>
+                                    ) : (
+                                      <span>
+                                        {curtidaNumero
+                                          ? formatNumber(curtidaNumero)
+                                          : 0}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <div
+                                    onClick={() =>
+                                      handleOpenPost(
+                                        favoritoUnique.id,
+                                        favoritoUnique.autor.id
+                                      )
+                                    }
+                                    className="flex gap-1 font-semibold "
+                                  >
+                                    <motion.div
+                                      whileHover={{ scale: 1.05 }}
+                                      whileTap={{ scale: 0.95 }}
+                                      className="w-6 h-6 cursor-pointer"
+                                    >
+                                      <MessageCircle
+                                        className="text-[#726BB6] w-full h-full"
+                                        stroke="currentColor"
+                                      />
+                                    </motion.div>
+                                    <span>
+                                      {formatNumber(
+                                        favoritoUnique.comentarios.length
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <motion.div className="w-6 h-6 relative ">
+                                  <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="ellipsis-button w-full h-full cursor-pointer relative"
+                                    onClick={() =>
+                                      setAppear(
+                                        appear === index + 1 ? 0 : index + 1
+                                      )
+                                    }
+                                  >
+                                    <Ellipsis
+                                      className="w-full h-full"
+                                      stroke="currentColor"
+                                    />
+                                  </motion.div>
+                                  <PostagemDetail
+                                    message={favoritoUnique.id}
+                                    Mine={favoritoUnique.autor.id === userID}
+                                    onClose={() => {
+                                      setAppear(0);
+                                    }}
+                                    last={favorito.length}
+                                    index={index + 1}
+                                    appear={appear === index + 1}
+                                  />
+                                </motion.div>
+                              </motion.div>
+                            </motion.div>
+                          );
+                        })}
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              <div className="w-full absolute flex justify-center items-center">
+                <Backdrop3 onClick={() => closing()} />
+              </div>
+            </>
+          )}
           <div
             ref={scrollRef}
-            className="w-full h-screen flex justify-center items-start"
+            className="w-full h-screen flex justify-center items-start overflow-hidden"
           >
-            <div className="w-[1600px] max-w-[98%] py-2 h-full gap-3 rounded-[35px] flex flex-row">
+            <div className="w-[1600px] max-w-[98%]  py-2 h-full gap-3 rounded-[35px] flex flex-row">
               <div className="w-full h-full overflow-hidden flex flex-col items-center gap-2 ">
                 {(pathname.startsWith("/home/comunidades/salas_de_estudo/") &&
                   pathname.endsWith("/postagens")) ||
@@ -719,9 +985,9 @@ export default function LayoutSalas({ children }: SalasProps) {
                 )}
               </div>
 
-              <div className="sm:flex hidden sm:max-w-[38%] md:max-w-[35%] lg:max-w-[30%] w-full sm:flex-col pt-4 gap-2 px-4 h-full bg-white rounded-[35px] h0 shadow-md overflow-hidden border border-[#00000031] overflow-y-auto">
+              <div className="sm:flex hidden sm:max-w-[38%] md:max-w-[35%] lg:max-w-[30%] w-full sm:flex-col pt-4 gap-2 px-4 h-full bg-white rounded-[35px] h0 shadow-md overflow-hidden border border-[#00000031] overflow-y-auto overflow-x-hidden ">
                 {loading ? (
-                  <Loading />
+                  <Loading2 />
                 ) : (
                   <>
                     {(pathname.startsWith(
@@ -755,60 +1021,43 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </h1>
                         <div className="flex flex-col gap-2 ">
                           {recentes.map((item, index) => {
-                            if (index < 4) {
-                              return (
-                                <motion.div
-                                  whileHover={{ scale: 1.01 }}
-                                  whileTap={{ scale: 0.99 }}
-                                  onClick={() => {
-                                    router.push(
-                                      `/home/comunidades/salas_de_estudo/${item.id}/postagens`
-                                    );
-                                  }}
-                                  key={index}
-                                  className="flex gap-1 max-w-full w-full  overflow-hidden cursor-pointer hover:bg-[rgba(0,0,0,0.06)] px-2 py-2 rounded-[10px]"
-                                >
-                                  <img
-                                    src={item.banner ? item.banner : "a"}
-                                    className="rounded-full cursor-pointer transition-all w-10 h-10 object-cover shadow-md  "
-                                    alt="Foto de perfil"
-                                  />
-                                  <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
-                                    <span className="font-semibold truncate">
-                                      {item && item.nome}
-                                    </span>
-                                    <span className="font-medium truncate">
-                                      {" "}
-                                      {item && item.quantidadeEstudantes}{" "}
-                                      seguidores
-                                    </span>
-                                  </div>
+                            return (
+                              <motion.div
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                                onClick={() => {
+                                  router.push(
+                                    `/home/comunidades/salas_de_estudo/${item.id}/postagens`
+                                  );
+                                }}
+                                key={index}
+                                className="flex gap-1 max-w-full w-full  overflow-hidden cursor-pointer hover:bg-[rgba(0,0,0,0.06)] px-2 py-2 rounded-[10px]"
+                              >
+                                <img
+                                  src={item.banner ? item.banner : "a"}
+                                  className="rounded-full cursor-pointer transition-all w-10 h-10 object-cover shadow-md  "
+                                  alt="Foto de perfil"
+                                />
+                                <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                                  <span className="font-semibold truncate">
+                                    {item && item.nome}
+                                  </span>
+                                  <span className="font-medium truncate">
+                                    {" "}
+                                    {item && item.quantidadeEstudantes}{" "}
+                                    seguidores
+                                  </span>
+                                </div>
 
-                                  <motion.div
-                                    whileHover={{ scale: 1.08 }}
-                                    whileTap={{ scale: 0.92 }}
-                                    className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
-                                  >
-                                    <ChevronRight className="w-full h-full text-[#EB9481]" />
-                                  </motion.div>
-                                </motion.div>
-                              );
-                            } else if (index === 4) {
-                              return (
                                 <motion.div
-                                  whileHover={{ scale: 1.01 }}
-                                  whileTap={{ scale: 0.99 }}
-                                  key={index}
-                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.92 }}
+                                  className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
                                 >
-                                  Ver mais
-                                  <ChevronDown
-                                    className=""
-                                    stroke="currentColor"
-                                  />
+                                  <ChevronRight className="w-full h-full text-[#EB9481]" />
                                 </motion.div>
-                              );
-                            }
+                              </motion.div>
+                            );
                           })}
                           {recentes.length === 0 && (
                             <div className="w-full h-fit rounded-[25px] border-2 border-[#CAC5FF] p-4 text-center">
@@ -869,12 +1118,12 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         <ChevronRight className="w-full h-full text-[#EB9481]" />
                                       </motion.div>
                                     </div>
-                                    <p className="break-all line-clamp-4">
+                                    <p className="break-all line-clamp-4 text-[18px]">
                                       {favorito.conteudo}
                                     </p>
                                   </motion.div>
                                 );
-                              } else if (index === 5) {
+                              } else if (index === 4) {
                                 console.log("Index", index);
                                 return (
                                   <motion.div
@@ -912,61 +1161,43 @@ export default function LayoutSalas({ children }: SalasProps) {
                         </h1>
                         <div className="flex flex-col gap-2 ">
                           {recentes.map((item, index) => {
-                            console.log(index);
-                            if (index < 4) {
-                              return (
-                                <motion.div
-                                  whileHover={{ scale: 1.01 }}
-                                  whileTap={{ scale: 0.99 }}
-                                  onClick={() => {
-                                    router.push(
-                                      `/home/comunidades/salas_de_estudo/${item.id}/postagens`
-                                    );
-                                  }}
-                                  key={index}
-                                  className="flex gap-1 max-w-full w-full  overflow-hidden cursor-pointer hover:bg-[rgba(0,0,0,0.06)] px-2 py-2 rounded-[10px]"
-                                >
-                                  <img
-                                    src={item.banner ? item.banner : "a"}
-                                    className="rounded-full cursor-pointer transition-all w-10 h-10 object-cover shadow-md  "
-                                    alt="Foto de perfil"
-                                  />
-                                  <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
-                                    <span className="font-semibold truncate">
-                                      {item && item.nome}
-                                    </span>
-                                    <span className="font-medium truncate">
-                                      {" "}
-                                      {item && item.quantidadeEstudantes}{" "}
-                                      seguidores
-                                    </span>
-                                  </div>
+                            return (
+                              <motion.div
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                                onClick={() => {
+                                  router.push(
+                                    `/home/comunidades/salas_de_estudo/${item.id}/postagens`
+                                  );
+                                }}
+                                key={index}
+                                className="flex gap-1 max-w-full w-full  overflow-hidden cursor-pointer hover:bg-[rgba(0,0,0,0.06)] px-2 py-2 rounded-[10px]"
+                              >
+                                <img
+                                  src={item.banner ? item.banner : "a"}
+                                  className="rounded-full cursor-pointer transition-all w-10 h-10 object-cover shadow-md  "
+                                  alt="Foto de perfil"
+                                />
+                                <div className="flex flex-col text-[18px] leading-none gap-1 truncate ">
+                                  <span className="font-semibold truncate">
+                                    {item && item.nome}
+                                  </span>
+                                  <span className="font-medium truncate">
+                                    {" "}
+                                    {item && item.quantidadeEstudantes}{" "}
+                                    seguidores
+                                  </span>
+                                </div>
 
-                                  <motion.div
-                                    whileHover={{ scale: 1.08 }}
-                                    whileTap={{ scale: 0.92 }}
-                                    className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
-                                  >
-                                    <ChevronRight className="w-full h-full text-[#EB9481]" />
-                                  </motion.div>
-                                </motion.div>
-                              );
-                            } else if (index === 4) {
-                              return (
                                 <motion.div
-                                  whileHover={{ scale: 1.01 }}
-                                  whileTap={{ scale: 0.99 }}
-                                  key={index}
-                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.92 }}
+                                  className="w-8 h-8 cursor-pointer ml-auto flex justify-center items-center"
                                 >
-                                  Ver mais
-                                  <ChevronDown
-                                    className=""
-                                    stroke="currentColor"
-                                  />
+                                  <ChevronRight className="w-full h-full text-[#EB9481]" />
                                 </motion.div>
-                              );
-                            }
+                              </motion.div>
+                            );
                           })}
                           {recentes.length === 0 && (
                             <div className="w-full h-fit rounded-[25px] border-2 border-[#CAC5FF] p-4 text-center">
@@ -1027,24 +1258,29 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         <ChevronRight className="w-full h-full text-[#EB9481]" />
                                       </motion.div>
                                     </div>
-                                    <p className="break-all line-clamp-4">
+                                    <p className="break-all line-clamp-4 text-[18px]">
                                       {favorito.conteudo}
                                     </p>
                                   </motion.div>
                                 );
                               } else if (index === 4) {
-                                <motion.div
-                                  whileHover={{ scale: 1.01 }}
-                                  whileTap={{ scale: 0.99 }}
-                                  key={index}
-                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
-                                >
-                                  Ver mais
-                                  <ChevronDown
-                                    className=""
-                                    stroke="currentColor"
-                                  />
-                                </motion.div>;
+                                return (
+                                  <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    key={index}
+                                    onClick={() => {
+                                      setOpen(true);
+                                    }}
+                                    className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                  >
+                                    Ver mais
+                                    <ChevronDown
+                                      className=""
+                                      stroke="currentColor"
+                                    />
+                                  </motion.div>
+                                );
                               }
                             })}
                           {favorito.length === 0 && (

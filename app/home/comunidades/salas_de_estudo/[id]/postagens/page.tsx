@@ -134,7 +134,6 @@ export default function Materiais() {
         ]);
         setUser(userData);
         setPosts(postsData);
-        console.log(postsData);
 
         console.log("✅ All data successfully loaded");
       } catch (err) {
@@ -193,7 +192,6 @@ export default function Materiais() {
       ]);
       setUser(userData);
       setPosts(postsData);
-      console.log(postsData);
 
       console.log("✅ All data successfully loaded");
     } catch (err) {
@@ -364,6 +362,46 @@ export default function Materiais() {
     }
   };
 
+  
+  const reloadPosts = async () => {
+    try {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata = await userIDRes.json(); // parse the response
+      setUserID(userIDdata.userId);
+
+      // ✅ fetch only posts here
+      const postsRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${salaID}/posts?usuarioId=${userIDdata.userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const postsData = await postsRes.json();
+
+      // ✅ Guarantee array
+      if (Array.isArray(postsData)) {
+        setPosts(postsData);
+      } else {
+        console.error("❌ Expected array, got instead:", postsData);
+        setPosts([]);
+      }
+
+      console.log("✅ Posts reloaded");
+    } catch (err) {
+      console.error("Erro ao recarregar postagens:", err);
+      setMessage("Erro ao recarregar postagens.");
+    }
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -443,7 +481,7 @@ export default function Materiais() {
                     <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
                       Fazer postagem:
                     </div>
-                    <div className=" w-fit">
+                    <div className=" w-fit flex justify-center items-center">
                       <motion.div
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.92 }}
@@ -629,12 +667,27 @@ export default function Materiais() {
                         Mine={post.autor.id === userID}
                         onClose={() => {
                           setAppear(0);
+                          reloadPosts();
+                        }}
+                        last={posts.length}
+                        index={index + 1}
+                        appear={appear === index + 1}
+                      />
+
+                      {/* <PostagemDetail
+                        message={post.id}
+                        onError={(message) => {
+                          setMessage(message);
+                        }}
+                        Mine={post.autor.id === userID}
+                        onClose={() => {
+                          setAppear(0);
                           fetchAll();
                         }}
                         last={posts.length}
                         index={index + 1}
                         appear={appear === index + 1 && true}
-                      />
+                      /> */}
                       {/* <PostagemDetail
                       message="a"
                       onClose={() => {setAppear(0)}}

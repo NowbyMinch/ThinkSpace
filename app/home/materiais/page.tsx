@@ -370,6 +370,22 @@ export default function Materiais() {
     setColor("");
     setCriarMateria({ nome: "", cor: "", icone: "" });
   }
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      // If clicked on something that is NOT part of PostagemDetail or the "..."
+      if (
+        !(e.target as HTMLElement).closest(".postagem-detail") &&
+        !(e.target as HTMLElement).closest(".ellipsis-button")
+      ) {
+        setOpenPop(null);
+      }
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   if (loading) return <Loading />;
   return (
     <>
@@ -974,7 +990,7 @@ export default function Materiais() {
                                   key={0}
                                   className="p-1 flex justify-start items-end"
                                 >
-                                  <Ellipsis className="opacity-[80%] size-6" />
+                                  <Ellipsis className="ellipsis-button opacity-[80%] size-6" />
                                 </button>
 
                                 {openPop === index && (
@@ -998,7 +1014,7 @@ export default function Materiais() {
                                       <div className="absolute -top-2 right-4 w-5 h-5 rounded-sm bg-white rotate-45 border-[1px] border-[rgba(0,0,0,0.26)] shadow -z-10"></div>
                                       <div className="flex flex-col w-full gap-1 text-base">
                                         <button
-                                          className="mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2"
+                                          className="postagem-detail mx-2 text-[#726BB6] text-[20px] px-2 w-[98%] py-2 items-center flex gap-2"
                                           onClick={() => {
                                             setEditar(true);
                                             setTemp([

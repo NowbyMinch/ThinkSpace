@@ -107,11 +107,13 @@ export default function MateriaisClient({ id }: { id: string }) {
   const [terminado, setTerminado] = useState(false);
 
   const handleCheck = async (value: string) => {
+    // Se clicar no mesmo filtro, desmarca e recarrega todos os materiais
     if (selectedFiltro === value) {
-      setSelectedFiltro(null); // desmarca se clicar de novo
+      setSelectedFiltro(null);
+      await materiais(); // ✅ volta a lista completa
     } else {
       setSelectedFiltro(value);
-      await materiaisFiltro(value); // chama a função que já existe
+      await materiaisFiltro(value); // ✅ aplica o filtro
     }
   };
 
@@ -1530,6 +1532,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           {/*  ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2 */}
           <div className="w-[95%] max-w-[95%] h-full overflow-y-auto">
             <div className="w-full h-full flex overflow-y-auto overflow-x-hidden flex-col items-center">
+            
               {materiaisNome
                 .filter(
                   (material) =>
@@ -1641,13 +1644,6 @@ export default function MateriaisClient({ id }: { id: string }) {
                     </h2>
                   </div>
                 </div>
-              </div>
-
-              <div className=" mt-[30px] w-full max-w-[95%]">
-                <h1 className="text-[30px] w-fit font-medium leading-6">
-                  Matérias recentes
-                </h1>
-                {/* <h1 className="text-[18px] italic w-fit font-medium text-[#9767F8] " >{recente[0]?.nome}</h1> */}
               </div>
 
               <div className="flex flex-col gap-1 mb-[5px] mt-2 items-center relative max-w-[95%] w-full">

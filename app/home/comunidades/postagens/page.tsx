@@ -209,6 +209,7 @@ export default function Postagens() {
     }
   };
 
+
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
   function formatNumber(num: number) {
     if (num >= 1_000_000)
@@ -318,6 +319,46 @@ export default function Postagens() {
     }
   };
 
+  
+  const reloadPosts = async () => {
+    try {
+      const userIDRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata = await userIDRes.json(); // parse the response
+      setUserID(userIDdata.userId);
+
+      // ✅ fetch only posts here
+      const postsRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/posts-gerais?usuarioId=${userIDdata.userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const postsData = await postsRes.json();
+
+      // ✅ Guarantee array
+      if (Array.isArray(postsData)) {
+        setPosts(postsData);
+      } else {
+        console.error("❌ Expected array, got instead:", postsData);
+        setPosts([]);
+      }
+
+      console.log("✅ Posts reloaded");
+    } catch (err) {
+      console.error("Erro ao recarregar postagens:", err);
+      setMessage("Erro ao recarregar postagens.");
+    }
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -366,136 +407,136 @@ export default function Postagens() {
         </>
       )}
 
-      <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
-        <h1 className="text-[24px] font-medium">Principais postagens</h1>
+        <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
+          <h1 className="text-[24px] font-medium">Principais postagens</h1>
 
-        {filteredPosts.map((post, index) => {
-          return (
-            <div key={index} className="w-full h-fit flex flex-col mb-4">
-              <div className="w-full flex flex-col gap-6">
-                <div className="flex gap-1">
-                  <img
-                    src={`${post.autor.foto}`}
-                    className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
-                    alt="Foto de perfil"
-                  />
-                  <div className="flex flex-col text-[18px]">
-                    <span className="font-semibold truncate">
-                      {post.autor.nome}
-                    </span>
-                    <span className="font-medium">
-                      {" "}
-                      <span
-                        onClick={() => {
-                          router.push(
-                            `/home/comunidades/salas_de_estudo/${post.sala.id}/postagens`
-                          );
-                        }}
-                        className="cursor-pointer font-medium"
-                      >
-                        {" "}
-                        {post.sala.nome}
+          {filteredPosts.map((post, index) => {
+            return (
+              <div key={index} className="w-full h-fit flex flex-col mb-4">
+                <div className="w-full flex flex-col gap-6">
+                  <div className="flex gap-1">
+                    <img
+                      src={`${post.autor.foto}`}
+                      className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
+                      alt="Foto de perfil"
+                    />
+                    <div className="flex flex-col text-[18px]">
+                      <span className="font-semibold truncate">
+                        {post.autor.nome}
                       </span>
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-[18px]">{post.conteudo}</p>
-
-                <div className="flex justify-between pb-4 border border-b-[#D7DDEA]">
-                  <div className="flex gap-5">
-                    <div className="flex gap-1 font-semibold">
-                      <motion.div
-                        onClick={() => {
-                          Curtir(post.id);
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        animate={{
-                          scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
-                        }}
-                        transition={{
-                          duration: 0.3,
-                          ease: "easeOut",
-                        }}
-                        className="w-6 h-6 cursor-pointer"
-                      >
-                        <Heart
-                          className="text-[#C85959] w-full h-full"
-                          fill={
-                            curtidaCheck !== undefined
-                              ? curtidaCheck
-                                ? "#C85959"
-                                : "transparent"
-                              : post.curtidoPeloUsuario
-                                ? "#C85959"
-                                : "transparent"
-                          }
-                          stroke="currentColor"
-                        />
-                      </motion.div>
-                      {curtidaNumero === -1 ? (
-                        <span>{formatNumber(post.curtidas)}</span>
-                      ) : (
-                        <span>
-                          {curtidaNumero ? formatNumber(curtidaNumero) : 0}
+                      <span className="font-medium">
+                        {" "}
+                        <span
+                          onClick={() => {
+                            router.push(
+                              `/home/comunidades/salas_de_estudo/${post.sala.id}/postagens`
+                            );
+                          }}
+                          className="cursor-pointer font-medium"
+                        >
+                          {" "}
+                          {post.sala.nome}
                         </span>
-                      )}
-                    </div>
-
-                    <div
-                      onClick={() => handleOpenPost(post.id, post.autor.id)}
-                      className="flex gap-1 font-semibold"
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-6 h-6 cursor-pointer"
-                      >
-                        <MessageCircle
-                          className="text-[#726BB6] w-full h-full"
-                          stroke="currentColor"
-                        />
-                      </motion.div>
-                      <span>{formatNumber(post.comentarios.length)}</span>
+                      </span>
                     </div>
                   </div>
 
-                  <motion.div className="w-6 h-6 relative">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full h-full cursor-pointer relative"
-                      onClick={() =>
-                        setAppear(appear === index + 1 ? 0 : index + 1)
-                      }
-                    >
-                      <Ellipsis
-                        className=" w-full h-full"
-                        stroke="currentColor"
+                  <p className="text-[18px]">{post.conteudo}</p>
+
+                  <div className="flex justify-between pb-4 border border-b-[#D7DDEA]">
+                    <div className="flex gap-5">
+                      <div className="flex gap-1 font-semibold">
+                        <motion.div
+                          onClick={() => {
+                            Curtir(post.id);
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          animate={{
+                            scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
+                          }}
+                          transition={{
+                            duration: 0.3,
+                            ease: "easeOut",
+                          }}
+                          className="w-6 h-6 cursor-pointer"
+                        >
+                          <Heart
+                            className="text-[#C85959] w-full h-full"
+                            fill={
+                              curtidaCheck !== undefined
+                                ? curtidaCheck
+                                  ? "#C85959"
+                                  : "transparent"
+                                : post.curtidoPeloUsuario
+                                  ? "#C85959"
+                                  : "transparent"
+                            }
+                            stroke="currentColor"
+                          />
+                        </motion.div>
+                        {curtidaNumero === -1 ? (
+                          <span>{formatNumber(post.curtidas)}</span>
+                        ) : (
+                          <span>
+                            {curtidaNumero ? formatNumber(curtidaNumero) : 0}
+                          </span>
+                        )}
+                      </div>
+
+                      <div
+                        onClick={() => handleOpenPost(post.id, post.autor.id)}
+                        className="flex gap-1 font-semibold"
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-6 h-6 cursor-pointer"
+                        >
+                          <MessageCircle
+                            className="text-[#726BB6] w-full h-full"
+                            stroke="currentColor"
+                          />
+                        </motion.div>
+                        <span>{formatNumber(post.comentarios.length)}</span>
+                      </div>
+                    </div>
+
+                    <motion.div className="w-6 h-6 relative">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full h-full cursor-pointer relative"
+                        onClick={() =>
+                          setAppear(appear === index + 1 ? 0 : index + 1)
+                        }
+                      >
+                        <Ellipsis
+                          className=" w-full h-full"
+                          stroke="currentColor"
+                        />
+                      </motion.div>
+                      <PostagemDetail
+                        message={post.id}
+                        onError={(message) => {
+                          setMessage(message);
+                        }}
+                        Mine={post.autor.id === userID}
+                        onClose={() => {
+                          setAppear(0);
+                          reloadPosts();
+                        }}
+                        last={posts.length}
+                        index={index + 1}
+                        appear={appear === index + 1 && true}
                       />
                     </motion.div>
-                    <PostagemDetail
-                      message={post.id}
-                      onError={(message) => {
-                        setMessage(message);
-                      }}
-                      Mine={post.autor.id === userID}
-                      onClose={() => {
-                        setAppear(0);
-                        fetchAll();
-                      }}
-                      last={posts.length}
-                      index={index + 1}
-                      appear={appear === index + 1 && true}
-                    />
-                  </motion.div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
     </>
   );
 }

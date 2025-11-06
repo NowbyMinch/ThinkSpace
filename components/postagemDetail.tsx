@@ -67,6 +67,7 @@ const PostagemDetail: React.FC<Props> = ({
 
   const { refreshFavoritos } = useContext(FavoritosContext);
 
+
   useEffect(() => {
     console.log(Mine);
   }, [Mine]);
@@ -98,7 +99,6 @@ const PostagemDetail: React.FC<Props> = ({
     const [favoritosData] = await Promise.all([favoritosRes.json()]);
 
     // ✅ Set states after everything is done
-    
 
     const PostSalvo = favoritosData.filter(
       (item: Favorito) => item.id === message
@@ -134,9 +134,8 @@ const PostagemDetail: React.FC<Props> = ({
 
       // Parse all JSONs in parallel
       const [favoritosData] = await Promise.all([favoritosRes.json()]);
-
+      console.log(favoritosData)
       // ✅ Set states after everything is done
-      
 
       const PostSalvo = favoritosData.filter(
         (item: Favorito) => item.id === message
@@ -192,6 +191,9 @@ const PostagemDetail: React.FC<Props> = ({
   };
 
   const Favoritos = async () => {
+    console.log(message)
+    console.log(Mine)
+
     try {
       const userIDRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
@@ -264,6 +266,8 @@ const PostagemDetail: React.FC<Props> = ({
                         <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
                         <button
                           onClick={() => {
+                              console.log("HAHAHAHAH");
+
                             Favoritos();
                             onClose?.();
                           }}
@@ -276,7 +280,8 @@ const PostagemDetail: React.FC<Props> = ({
                       <>
                         <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
                         <button
-                          onClick={() => {
+                            onClick={() => {
+                              console.log('HAHAHAHAH')
                             Favoritos();
                             onClose?.();
                           }}

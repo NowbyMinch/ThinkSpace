@@ -334,12 +334,12 @@ export default function Materiais() {
                     <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
                       Enviar Material
                     </div>
-                    <div className=" w-fit">
+                    <div className=" w-fit flex justify-center items-center">
                       <motion.div
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.92 }}
                         onClick={closing}
-                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                        className="ml-auto cursor-pointer z-1000 w-6 h-6 "
                       >
                         <X className="w-full h-full" />
                       </motion.div>
@@ -502,9 +502,9 @@ export default function Materiais() {
                 <div className="w-full flex flex-col justify-center h-full gap-4">
                   <div className="flex ">
                     <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
-                      Fazer postagem:
+                      Vincular matéria:
                     </div>
-                    <div className=" w-fit">
+                    <div className=" w-fit flex justify-center items-center">
                       <motion.div
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.92 }}

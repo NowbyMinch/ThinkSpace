@@ -269,7 +269,7 @@ export default function SalasdeEstudo() {
                     className="w-full flex flex-col gap-4"
                   >
                     <div className="flex justify-between items-start">
-                      <h1 className="text-[35px] font-medium self-end bg-red-500">
+                      <h1 className="text-[35px] font-medium self-end ">
                         Criar sala de estudo:
                       </h1>
                       <div className="w-fit">
@@ -438,7 +438,7 @@ export default function SalasdeEstudo() {
           whileTap={{ scale: 0.98 }}
           transition={{ ease: "easeInOut" }}
           onClick={() => setOpen2(true)}
-          className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+          className="self-end bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
         >
           Criar sala de estudo
         </motion.button>

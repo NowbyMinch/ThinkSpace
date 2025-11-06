@@ -838,7 +838,7 @@ export default function landingPage() {
                 <div className=" flex justify-center items-center gap-4 ">
                   <a href="/termos-de-uso">Termos de uso</a>
                   <a href="/politica-de-privacidade">Política de privacidade</a>
-                  <a href="">Suporte</a>
+                  <a href="mailto:suporte.thinkspace@gmail.com">Suporte</a>
                 </div>
 
                 <div className="w-full flex justify-center items-center gap-4 mt-2">

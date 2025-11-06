@@ -1131,7 +1131,7 @@ export default function HomePage() {
               />
             </div>
 
-            <h1 className="text-[30px] mt-4 mb-4">Seu progresso semanal:</h1>
+            <h1 className="text-[30px] mt-4 mb-4">Matérias recentes:</h1>
             <div className="w-full ">
               {materias && materias.length === 0 && (
                 <div className="w-full h-[230px] bg-[#CCB2FF] shadow-md rounded-[35px] flex items-center relative border border-[#00000031] ">
