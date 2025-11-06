@@ -684,7 +684,8 @@ export default function Materiais() {
                             </h1>
                             <div className="text-[18px]">
                               <h2 className="material_text leading-none">
-                                Materiais de estudo: {temp[0]?.quantidadeMateriais}
+                                Materiais de estudo:{" "}
+                                {temp[0]?.quantidadeMateriais}
                               </h2>
                               <h2 className="material_text leading-none">
                                 Tempo ativo: 0
@@ -1149,7 +1150,9 @@ export default function Materiais() {
                   </h2>
                   <div className=" h-2 rounded-[18px] bg-[#1e235138]">
                     <div
-                      style={{ width: `${userXP?.progresso ?? 0}%` }}
+                      style={{
+                        width: `${userXP ? (userXP?.xp / userXP?.maxXp) * 100 : 0}%`,
+                      }}
                       className={` h-2 rounded-[25px] bg-purple-600 `}
                     ></div>
                   </div>
@@ -1167,7 +1170,7 @@ export default function Materiais() {
                     })()}
 
                     <h2 className="font-medium text-[18px] text-[#A39CEC]">
-                      {userXP?.xp} XP
+                      {userXP?.xp}XP
                     </h2>
                   </div>
                 </div>

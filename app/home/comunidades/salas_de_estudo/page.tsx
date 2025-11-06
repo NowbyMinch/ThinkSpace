@@ -253,8 +253,13 @@ export default function SalasdeEstudo() {
                 {/* Conteúdo interno (pode ser flex column etc) */}
                 <div
                   id="white-box"
-                  className="p-6 gap-4 w-full flex flex-col relative"
+                  className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
                 >
+                  <img
+                    src="/Vector.svg"
+                    alt="Decoração"
+                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                  />
                   {/* seu conteúdo: título, form, inputs, etc */}
                   <form
                     onSubmit={(e) => {
@@ -264,7 +269,7 @@ export default function SalasdeEstudo() {
                     className="w-full flex flex-col gap-4"
                   >
                     <div className="flex justify-between items-start">
-                      <h1 className="text-[35px] font-medium">
+                      <h1 className="text-[35px] font-medium self-end bg-red-500">
                         Criar sala de estudo:
                       </h1>
                       <div className="w-fit">
@@ -399,9 +404,9 @@ export default function SalasdeEstudo() {
                         whileTap={{ scale: 0.98 }}
                         transition={{ ease: "easeInOut" }}
                         type="submit"
-                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                        className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
                       >
-                        Criar sala de estudo
+                        Criar
                       </motion.button>
                     </div>
                   </form>
@@ -433,7 +438,7 @@ export default function SalasdeEstudo() {
           whileTap={{ scale: 0.98 }}
           transition={{ ease: "easeInOut" }}
           onClick={() => setOpen2(true)}
-          className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full self-end"
+          className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
         >
           Criar sala de estudo
         </motion.button>

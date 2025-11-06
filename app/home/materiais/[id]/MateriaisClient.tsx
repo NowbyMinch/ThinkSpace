@@ -1480,7 +1480,14 @@ export default function MateriaisClient({ id }: { id: string }) {
       ></div>
       <div className=" w-[1800px] max-w-[98%] lg:max-w-[90%] mx-auto mt-[12px] mb-[12px] h-[calc(100vh-24px)] lg:my-auto gap-3 rounded-[35px] flex justify-center items-center ">
         <div className="  w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
-          <div className="w-[95%] mt-2 cursor-pointer"><ArrowLeft className="size-7" onClick={() => {router.push("/home/materiais");}}/></div>
+          <div className="w-[95%] mt-2 cursor-pointer">
+            <ArrowLeft
+              className="size-7"
+              onClick={() => {
+                router.push("/home/materiais");
+              }}
+            />
+          </div>
           <div className="w-[95%] max-w-[95%] ">
             <div className="w-full mx-auto">
               <h1 className="text-[#1E2351] font-medium text-[30px]">
@@ -1610,7 +1617,9 @@ export default function MateriaisClient({ id }: { id: string }) {
                   </h2>
                   <div className=" h-2 rounded-[18px] bg-[#1e235138]">
                     <div
-                      style={{ width: `${userXP?.progresso ?? 0}%` }}
+                      style={{
+                        width: `${userXP ? (userXP?.xp / userXP?.maxXp) * 100 : 0}%`,
+                      }}
                       className={` h-2 rounded-[25px] bg-purple-600 `}
                     ></div>
                   </div>

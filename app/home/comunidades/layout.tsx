@@ -115,7 +115,7 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [userID, setUserID] = useState("");
   const [favorito, setFavorito] = useState<Favorito[]>([]);
   const [recentes, setRecentes] = useState<Recentes[]>([]);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const refreshFavoritos = async () => {
     try {
@@ -421,7 +421,7 @@ export default function LayoutSalas({ children }: SalasProps) {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+              className="w-[700px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
             >
               <div
                 id="white-box"
@@ -432,6 +432,9 @@ export default function LayoutSalas({ children }: SalasProps) {
                   alt="Decoração"
                   className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
                 />
+                <span className="text-[20px] font-medium">
+                  Postagens salvas:
+                </span>
               </div>
             </motion.div>
           </motion.div>
@@ -441,6 +444,7 @@ export default function LayoutSalas({ children }: SalasProps) {
           </div>
         </>
       )}
+
       <FavoritosContext.Provider value={{ refreshFavoritos }}>
         {/* h-[calc(100vh-24px)] */}
         <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
@@ -861,7 +865,9 @@ export default function LayoutSalas({ children }: SalasProps) {
                                     whileHover={{ scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
                                     key={index}
-                                    onClick={() => {setOpen(true)}}
+                                    onClick={() => {
+                                      setOpen(true);
+                                    }}
                                     className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
                                   >
                                     Ver mais
@@ -1011,18 +1017,18 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </motion.div>
                                 );
                               } else if (index === 4) {
-                                 <motion.div
-                                   whileHover={{ scale: 1.01 }}
-                                   whileTap={{ scale: 0.99 }}
-                                   key={index}
-                                   className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
-                                 >
-                                   Ver mais
-                                   <ChevronDown
-                                     className=""
-                                     stroke="currentColor"
-                                   />
-                                 </motion.div>
+                                <motion.div
+                                  whileHover={{ scale: 1.01 }}
+                                  whileTap={{ scale: 0.99 }}
+                                  key={index}
+                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                >
+                                  Ver mais
+                                  <ChevronDown
+                                    className=""
+                                    stroke="currentColor"
+                                  />
+                                </motion.div>;
                               }
                             })}
                           {favorito.length === 0 && (

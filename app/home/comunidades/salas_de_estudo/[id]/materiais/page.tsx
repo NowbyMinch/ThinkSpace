@@ -634,7 +634,7 @@ export default function Materiais() {
                         whileTap={{ scale: 0.98 }}
                         transition={{ ease: "easeInOut" }}
                         onClick={() => {
-                          setOpen2(true);
+                          setOpen(true);
                           setMaterialID(sala.material.id);
                         }}
                         className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md rounded-full text-nowrap"

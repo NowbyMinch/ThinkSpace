@@ -305,14 +305,14 @@ export default function Métricas() {
 
                     <div className="w-full h-[12px] rounded-[25px] bg-[#1e235138]">
                       <div
-                        style={{ width: `${userXP?.progresso ?? 0}%` }}
+                        style={{ width: `${userXP ? (userXP?.xp / userXP?.maxXp)*100 : 0}%` }}
                         className={` h-[12px] rounded-[25px] bg-purple-600 `}
                       ></div>
                     </div>
 
                     <div className="flex justify-between w-full">
                       <h2 className="font-medium text-[20px] text-[#A39CEC]">
-                        {userXP?.xp} XP
+                        {userXP?.xp}XP
                       </h2>
                       {(() => {
                         if (!userXP?.maxXp) {
@@ -324,7 +324,7 @@ export default function Métricas() {
                         } else {
                           return (
                             <h2 className="font-medium text-[20px] text-[#A39CEC]">
-                              {userXP?.maxXp} XP
+                              {userXP?.maxXp}XP
                             </h2>
                           );
                         }
