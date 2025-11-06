@@ -14,6 +14,7 @@ import {
   User,
 } from "lucide-react";
 import path from "path";
+import { Backdrop3 } from "../components/backdrop";
 
 type UserData = {
   primeiroNome?: string;
@@ -114,6 +115,7 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [userID, setUserID] = useState("");
   const [favorito, setFavorito] = useState<Favorito[]>([]);
   const [recentes, setRecentes] = useState<Recentes[]>([]);
+  const [open, setOpen] = useState(false);
 
   const refreshFavoritos = async () => {
     try {
@@ -131,7 +133,8 @@ export default function LayoutSalas({ children }: SalasProps) {
     }
   };
 
-  const fetchAll = async () => {
+  const fetchAllConst = async () => {
+    setLoading(true);
     try {
       const userIDRes1 = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
@@ -189,6 +192,9 @@ export default function LayoutSalas({ children }: SalasProps) {
         ]);
 
       // ✅ Set states after everything is done
+      if (favoritosData.length > 0) {
+        setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
+      }
       setUser(userData);
       setSala(salaData);
       setUserID(userIDdata.userId);
@@ -196,10 +202,6 @@ export default function LayoutSalas({ children }: SalasProps) {
         setRecentes(Array.isArray(recentesData) ? recentesData : []);
       }
       console.log(recentesData, "recentesData ");
-
-      if (favoritosData.length > 0) {
-        setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
-      }
 
       // const salasRecentes = await fetch(
       //   `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata.userId}/salas-recentes`,
@@ -226,12 +228,11 @@ export default function LayoutSalas({ children }: SalasProps) {
   useEffect(() => {
     setSalaID(pathname.split("/")[4]);
     console.log(salaID);
-    fetchAll();
+    fetchAllConst();
     if (
       pathname.startsWith("/home/comunidades/salas_de_estudo/") &&
       (pathname.endsWith("/materiais") || pathname.endsWith("/postagens"))
     ) {
-      console.log("Aqui dentro foi ???", pathname);
       const Fetch = async () => {
         const userIDRes1 = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
@@ -269,9 +270,8 @@ export default function LayoutSalas({ children }: SalasProps) {
   }, [loading, pathname]);
 
   useEffect(() => {
-    setLoading(true);
-
     const fetchAll = async () => {
+      setLoading(true);
       try {
         const userIDRes1 = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
@@ -363,7 +363,7 @@ export default function LayoutSalas({ children }: SalasProps) {
     };
     // ALL ---------------------------------------------------------
     fetchAll();
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     return () => {
@@ -390,10 +390,56 @@ export default function LayoutSalas({ children }: SalasProps) {
     return () => saveScroll();
   }, [pathname]);
 
+  
+  function closing() {
+    setOpen(false);
+  }
+
+
+  if (loading) return <Loading />;
   return (
     <>
       {message && (
         <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
+      {open && (
+        <>
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="w-full h-full fixed  flex justify-center overflow-hidden items-center z-[1100] "
+          >
+            <div
+              className="w-full h-full absolute"
+              onClick={() => closing()}
+            ></div>
+
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+            >
+              <div
+                id="white-box"
+                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+              >
+                <img
+                  src="/Vector.svg"
+                  alt="Decoração"
+                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="w-full absolute flex justify-center items-center">
+            <Backdrop3 onClick={() => closing()} />
+          </div>
+        </>
       )}
       <FavoritosContext.Provider value={{ refreshFavoritos }}>
         {/* h-[calc(100vh-24px)] */}
@@ -664,7 +710,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                       pathname.endsWith("/postagens")) ||
                     pathname.endsWith("/materiais") ? (
                       <>
-                        <h1 className="text-[25px] leading-none font-medium my-2">
+                        <h1 className="text-[25px] leading-none font-medium ">
                           {sala && sala.nome}
                         </h1>
                         <p className="w-full text-[18px] break-all line-clamp-6 min-h-fit">
@@ -687,9 +733,9 @@ export default function LayoutSalas({ children }: SalasProps) {
                         <h1 className="text-[25px] leading-none font-medium my-2">
                           Recentes:
                         </h1>
-                        <div className="flex flex-col gap-3 ">
+                        <div className="flex flex-col gap-2 ">
                           {recentes.map((item, index) => {
-                            if (index < 5) {
+                            if (index < 4) {
                               return (
                                 <motion.div
                                   whileHover={{ scale: 1.01 }}
@@ -727,16 +773,21 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </motion.div>
                                 </motion.div>
                               );
-                            } else if (index === 5) {
-                              {
-                                <div className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                            } else if (index === 4) {
+                              return (
+                                <motion.div
+                                  whileHover={{ scale: 1.01 }}
+                                  whileTap={{ scale: 0.99 }}
+                                  key={index}
+                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                >
                                   Ver mais
                                   <ChevronDown
                                     className=""
                                     stroke="currentColor"
                                   />
-                                </div>;
-                              }
+                                </motion.div>
+                              );
                             }
                           })}
                           {recentes.length === 0 && (
@@ -806,13 +857,19 @@ export default function LayoutSalas({ children }: SalasProps) {
                               } else if (index === 5) {
                                 console.log("Index", index);
                                 return (
-                                  <div key={index} className="cursor-pointer w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center mb-2">
+                                  <motion.div
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    key={index}
+                                    onClick={() => {setOpen(true)}}
+                                    className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                  >
                                     Ver mais
                                     <ChevronDown
                                       className=""
                                       stroke="currentColor"
                                     />
-                                  </div>
+                                  </motion.div>
                                 );
                               }
                             })}
@@ -831,9 +888,10 @@ export default function LayoutSalas({ children }: SalasProps) {
                         <h1 className="text-[25px] leading-none font-medium my-2">
                           Recentes:
                         </h1>
-                        <div className="flex flex-col gap-3 ">
+                        <div className="flex flex-col gap-2 ">
                           {recentes.map((item, index) => {
-                            if (index < 5) {
+                            console.log(index);
+                            if (index < 4) {
                               return (
                                 <motion.div
                                   whileHover={{ scale: 1.01 }}
@@ -871,16 +929,21 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </motion.div>
                                 </motion.div>
                               );
-                            } else if (index === 5) {
-                              {
-                                <div className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center">
+                            } else if (index === 4) {
+                              return (
+                                <motion.div
+                                  whileHover={{ scale: 1.01 }}
+                                  whileTap={{ scale: 0.99 }}
+                                  key={index}
+                                  className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                >
                                   Ver mais
                                   <ChevronDown
                                     className=""
                                     stroke="currentColor"
                                   />
-                                </div>;
-                              }
+                                </motion.div>
+                              );
                             }
                           })}
                           {recentes.length === 0 && (
@@ -948,13 +1011,18 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </motion.div>
                                 );
                               } else if (index === 4) {
-                                <div className="cursor-pointer w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center mb-2">
-                                  Ver mais
-                                  <ChevronDown
-                                    className=""
-                                    stroke="currentColor"
-                                  />
-                                </div>;
+                                 <motion.div
+                                   whileHover={{ scale: 1.01 }}
+                                   whileTap={{ scale: 0.99 }}
+                                   key={index}
+                                   className="cursor-pointer -mt-2 w-full text-[#EB9481] text-center text-[18px] flex justify-center items-center"
+                                 >
+                                   Ver mais
+                                   <ChevronDown
+                                     className=""
+                                     stroke="currentColor"
+                                   />
+                                 </motion.div>
                               }
                             })}
                           {favorito.length === 0 && (

@@ -17,6 +17,38 @@ type Props = {
   onError?: (message: string) => void;
 };
 
+export type Autor = {
+  foto: string;
+  id: string;
+  nome: string;
+  perfil: string | null;
+};
+
+export type Comentario = {
+  id: string;
+  conteudo: string;
+  criadoEm: string; // ISO date string
+  autorId: string;
+};
+
+export type SalaFav = {
+  id: string;
+  nome: string;
+};
+
+export type Favorito = {
+  autor: Autor;
+  comentarios: Comentario[];
+  conteudo: string;
+  criadoEm: string; // ISO date string
+  curtidas: number;
+  curtidoPeloUsuario: boolean;
+  id: string;
+  quantidadeComentarios: number;
+  sala: SalaFav;
+  salvo: boolean;
+};
+
 const PostagemDetail: React.FC<Props> = ({
   message,
   comentario,
@@ -30,12 +62,51 @@ const PostagemDetail: React.FC<Props> = ({
   const router = useRouter();
   const pathname = usePathname();
   const [userID, setUserID] = useState<string>("");
+  const [favorito, setFavorito] = useState<Favorito[]>([]);
+  const [salvo, setSalvo] = useState(false);
 
   const { refreshFavoritos } = useContext(FavoritosContext);
 
   useEffect(() => {
     console.log(Mine);
   }, [Mine]);
+
+  const Fetch = async () => {
+    const userIDRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const userIDdata = await userIDRes.json(); // parse the response
+    // setUserID(userIDdata.userId); // set the state
+
+    // Run all fetches in parallel
+    const [favoritosRes] = await Promise.all([
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata.userId}/favoritos`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      ),
+    ]);
+
+    // Parse all JSONs in parallel
+    const [favoritosData] = await Promise.all([favoritosRes.json()]);
+
+    // ✅ Set states after everything is done
+    
+
+    const PostSalvo = favoritosData.filter(
+      (item: Favorito) => item.id === message
+    );
+    if (PostSalvo) {
+      setFavorito(PostSalvo);
+    }
+  };
 
   useEffect(() => {
     const Fetch = async () => {
@@ -48,7 +119,31 @@ const PostagemDetail: React.FC<Props> = ({
       );
 
       const userIDdata = await userIDRes.json(); // parse the response
-      setUserID(userIDdata.userId); // set the state
+      // setUserID(userIDdata.userId); // set the state
+
+      // Run all fetches in parallel
+      const [favoritosRes] = await Promise.all([
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata.userId}/favoritos`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        ),
+      ]);
+
+      // Parse all JSONs in parallel
+      const [favoritosData] = await Promise.all([favoritosRes.json()]);
+
+      // ✅ Set states after everything is done
+      
+
+      const PostSalvo = favoritosData.filter(
+        (item: Favorito) => item.id === message
+      );
+      if (PostSalvo) {
+        setFavorito(PostSalvo);
+      }
     };
     Fetch();
   }, []);
@@ -129,6 +224,8 @@ const PostagemDetail: React.FC<Props> = ({
       }
     } catch (error) {
       console.error("Erro ao curtir:", error);
+    } finally {
+      Fetch();
     }
   };
 
@@ -162,16 +259,33 @@ const PostagemDetail: React.FC<Props> = ({
                 </button>
                 {!comentario && (
                   <>
-                    <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
-                    <button
-                      onClick={() => {
-                        Favoritos();
-                        onClose?.();
-                      }}
-                      className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
-                    >
-                      <Bookmark /> Salvar
-                    </button>
+                    {favorito && favorito.length > 0 && favorito[0].salvo ? (
+                      <>
+                        <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                        <button
+                          onClick={() => {
+                            Favoritos();
+                            onClose?.();
+                          }}
+                          className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                        >
+                          <Bookmark fill="currentColor" /> Desfavoritar
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <hr className="border-t-[2px] border-[#D7DDEA] mx-4" />
+                        <button
+                          onClick={() => {
+                            Favoritos();
+                            onClose?.();
+                          }}
+                          className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                        >
+                          <Bookmark /> Favoritar
+                        </button>
+                      </>
+                    )}
                   </>
                 )}
                 {Mine && (

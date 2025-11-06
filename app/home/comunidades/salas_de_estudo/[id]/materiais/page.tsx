@@ -468,114 +468,28 @@ export default function Materiais() {
         </>
       )}
 
-      {open2 && (
-        <>
-          <motion.div
-            key="content"
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 0.94 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="w-full h-full fixed left-0 right-0  flex justify-center overflow-hidden items-center z-[1100] "
-          >
-            <div
-              className="w-full h-full absolute"
-              onClick={() => closing()}
-            ></div>
-
-            <motion.div
-              key="content"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 0.94 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
-            >
-              <div
-                id="white-box"
-                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
-              >
-                <img
-                  src="/Vector.svg"
-                  alt="Decoração"
-                  className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
-                />
-
-                <div className="w-full flex flex-col justify-center h-full gap-4">
-                  <div className="flex ">
-                    <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
-                      Fazer postagem:
-                    </div>
-                    <div className=" w-fit">
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        onClick={closing}
-                        className="ml-auto cursor-pointer z-1000 w-6 h-6"
-                      >
-                        <X className="w-full h-full" />
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  <div className="relative flex flex-col gap-1">
-                    <h2 className="text-[20px] font-medium">
-                      Matéria designada:
-                    </h2>
-
-                    <ComboboxDemoMateriaPostar
-                      value={materiaDesignada}
-                      onChange={(value) => {
-                        setMateriaDesignada(value);
-                      }}
-                    />
-                  </div>
-
-                  <div className="w-full flex justify-center items-center">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ ease: "easeInOut" }}
-                      onClick={VincularMaterial}
-                      type="submit"
-                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
-                    >
-                      Vincular
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <div className="w-full absolute flex justify-center items-center">
-            <Backdrop3 onClick={() => closing()} />
-          </div>
-        </>
-      )}
-
       <div className="w-full flex flex-col px-4 py-4 gap-4 h-fit ">
-        <div className="flex w-full justify-between ">
+        <div className="flex w-full justify-between gap-2">
           <input
             type="text"
             id="nome_materia"
-            placeholder="Pesquisar salas de estudo"
+            placeholder="Pesquisar material"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-5 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
           />
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ ease: "easeInOut" }}
-            onClick={() => {
-              setOpen(true);
-            }}
-            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full leading-none"
+            onClick={() => setOpen(true)}
+            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full text-nowrap"
           >
-            Postar material
+            Postar material 
           </motion.button>
         </div>
         {/* lg:flex-row */}
-        <div className="flex gap-3 pb-4 h-fit flex-col">
+        <div className="flex gap-3 pb-4 h-fit flex-col ">
           {material
             .filter((m) =>
               (m.material.titulo ?? "")
@@ -591,10 +505,10 @@ export default function Materiais() {
                 <div
                   key={index}
                   // lg:max-w-[50%]
-                  className={`w-full min-h-fit h-[500px] p-4 flex gap-2 lg:flex-row flex-col ${index % 2 === 0 && "border-1 border-r-[rgba(0,0,0,0.16)]"}`}
+                  className={`w-full min-h-fit h-[500px] flex gap-2 lg:flex-row flex-col`}
                 >
-                  <div className="flex  flex-col w-full gap-3 h-fit ">
-                    <div className="">
+                  <div className="flex flex-col w-full gap-3 h-fit">
+                    <div className="w-full">
                       <div className="flex gap-1 overflow-x-hidden">
                         <img
                           src={`${sala.autor?.foto}`}
@@ -626,13 +540,84 @@ export default function Materiais() {
                         {sala.material.titulo}
                       </h1>
                     </div>
-                    <div className="shadow-md w-full bg-[rgba(217,217,217,0.34)] flex flex-col justify-between max-w-full max-h-full rounded-[35px] min-h-[400px] h-[400px] mt-auto overflow-hidden mb-2 p-4">
+                    <div className=" shadow-md w-full bg-[rgba(217,217,217,0.34)] flex gap-3 flex-col justify-between max-w-full max-h-full rounded-[35px] min-h-[400px] h-[500px] mt-auto overflow-hidden mb-2 p-4">
                       {/* Conteúdo do resumo */}
+
+                      {/* <div className=" flex justify-center items-center w-fit text-[20px] font-medium gap-3">
+                        <motion.a
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="cursor-pointer h-full"
+                        >
+                          <motion.span
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            Resumo
+                          </motion.span>
+                          {pathname.endsWith("materiais") && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              exit={{ scale: 1 }}
+                              className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                            ></motion.div>
+                          )}
+                        </motion.a>
+
+                        <motion.a
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="cursor-pointer h-full"
+                        >
+                          <motion.span className="text-nowrap">
+                            Flashcards
+                          </motion.span>
+                          {pathname.endsWith("postagens") && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              exit={{ scale: 1 }}
+                              className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                            ></motion.div>
+                          )}
+                        </motion.a>
+
+                        <motion.a
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="cursor-pointer h-full"
+                        >
+                          <motion.span className="text-nowrap">
+                            Quizzes
+                          </motion.span>
+                          {pathname.endsWith("postagens") && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              exit={{ scale: 1 }}
+                              className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
+                            ></motion.div>
+                          )}
+                        </motion.a>
+                      </div> */}
 
                       <motion.span className="text-[28px] leading-none">
                         Prévia
                       </motion.span>
 
+                      {/* RESUMO: */}
+                      {/* <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
+                        <div className="text-[16px] mb-2">
+                          Resumo <span className="text-[#726BB6]">IA</span>
+                        </div>
+                        <p
+                          className="text-[16px] resumo2 break-words line-clamp-7"
+                          dangerouslySetInnerHTML={{ __html: html }}
+                        />
+                      </div> */}
+
+                      {/* FLASHCARDS: */}
                       <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
                         <div className="text-[16px] mb-2">
                           Resumo <span className="text-[#726BB6]">IA</span>
@@ -642,103 +627,21 @@ export default function Materiais() {
                           dangerouslySetInnerHTML={{ __html: html }}
                         />
                       </div>
-
                       {/* Botão ixo */}
-                      <div className="mt-2 flex justify-between items-center w-full">
-                        <div className=" flex justify-center items-center w-fit text-[20px] font-medium gap-3">
-                          <motion.a
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="cursor-pointer h-full"
-                          >
-                            <motion.span
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                            >
-                              Resumo
-                            </motion.span>
-                            {pathname.endsWith("materiais") && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                exit={{ scale: 1 }}
-                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
-                              ></motion.div>
-                            )}
-                          </motion.a>
 
-                          <motion.a
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="cursor-pointer h-full"
-                          >
-                            <motion.span className="text-nowrap">
-                              Flashcards
-                            </motion.span>
-                            {pathname.endsWith("postagens") && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                exit={{ scale: 1 }}
-                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
-                              ></motion.div>
-                            )}
-                          </motion.a>
-
-                          <motion.a
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="cursor-pointer h-full"
-                          >
-                            <motion.span className="text-nowrap">
-                              Quizzes
-                            </motion.span>
-                            {pathname.endsWith("postagens") && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                exit={{ scale: 1 }}
-                                className="origin-center -mb-1 rounded-3xl transition-all ease-in-out h-[5px] bg-[#A39CEC]"
-                              ></motion.div>
-                            )}
-                          </motion.a>
-                        </div>
-
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          transition={{ ease: "easeInOut" }}
-                          onClick={() => {
-                            setOpen2(true);
-                            setMaterialID(sala.material.id);
-                          }}
-                          className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md rounded-full"
-                        >
-                          Vincular matéria
-                        </motion.button>
-                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ ease: "easeInOut" }}
+                        onClick={() => {
+                          setOpen2(true);
+                          setMaterialID(sala.material.id);
+                        }}
+                        className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md rounded-full text-nowrap"
+                      >
+                        Vincular matéria
+                      </motion.button>
                     </div>
-
-                    {/* <div className="flex flex-wrap gap-1 w-full h-[24px] ">
-                      {sala.topicos.slice(0, 5).map((topico, index) => {
-                        const randomColor =
-                          cor[Math.floor(Math.random() * cor.length)];
-                        return (
-                          <span
-                            key={index}
-                            style={{ backgroundColor: randomColor }}
-                            className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
-                          >
-                            {topico}
-                          </span>
-                        );
-                      })}
-                      {sala.topicos.length > 6 && (
-                        <span className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md bg-gray-300">
-                          +{sala.topicos.length - 5} more
-                        </span>
-                      )}
-                    </div> */}
                   </div>
                 </div>
               );

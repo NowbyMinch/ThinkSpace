@@ -356,7 +356,6 @@ export default function Materiais() {
         console.log(postarData.error);
         return;
       }
-      
     } catch (error) {
       console.error("Erro ao curtir:", error);
     } finally {
@@ -456,9 +455,15 @@ export default function Materiais() {
                     </div>
                   </div>
 
-                  <div className="w-full text-[18px]  rounded-[25px] overflow-hidden">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 0.94 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="w-full text-[18px]  rounded-[25px] overflow-hidden"
+                  >
                     <textarea
-                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)]"
+                      style={{ backgroundClip: "padding-box" }}
+                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)] caret-black"
                       placeholder="Escreva um comentário..."
                       // value={newComentario}
                       value={postText}
@@ -472,7 +477,7 @@ export default function Materiais() {
                       }}
                       rows={1}
                     />
-                  </div>
+                  </motion.div>
                   <div className="w-full flex justify-center items-center">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
@@ -500,21 +505,21 @@ export default function Materiais() {
       )}
 
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 ">
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between gap-2">
           <input
             type="text"
             id="nome_materia"
             placeholder="Pesquisar salas de estudo"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-5 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
           />
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ ease: "easeInOut" }}
             onClick={() => setOpen2(true)}
-            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full"
+            className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md my-auto rounded-full text-nowrap"
           >
             Criar post
           </motion.button>
