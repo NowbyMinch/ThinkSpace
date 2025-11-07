@@ -837,6 +837,7 @@ export default function RegistrarInner() {
                                     <motion.input
                                       whileHover={{ scale: 1.05 }}
                                       whileTap={{ scale: 0.95 }}
+                                      checked={form2.aceitouTermos} 
                                       onClick={() => {
                                         setForm2((prev) => ({
                                           ...prev,
