@@ -181,6 +181,7 @@ export default function SalasdeEstudo() {
       descricao: descricao,
       tipo: "PUBLICA",
       autorId: userIDdata1.userId,
+      topicos: topicos
     };
     console.log(payload);
 

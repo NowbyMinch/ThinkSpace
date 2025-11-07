@@ -179,7 +179,7 @@ export default function LayoutSalas({ children }: SalasProps) {
             credentials: "include",
           }),
           fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}?usuarioId=${userIDdata1.userId}`,
             {
               method: "GET",
               credentials: "include",
@@ -263,7 +263,7 @@ export default function LayoutSalas({ children }: SalasProps) {
       // Run all fetches in parallel
       const [salaRes] = await Promise.all([
         fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}?usuarioId=${userIDdata1.userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -349,7 +349,7 @@ export default function LayoutSalas({ children }: SalasProps) {
               credentials: "include",
             }),
             fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}`,
+              `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}?usuarioId=${userIDdata1.userId}`,
               {
                 method: "GET",
                 credentials: "include",
@@ -564,6 +564,7 @@ export default function LayoutSalas({ children }: SalasProps) {
 
   const seguir = async () => {
     if (sala?.id && userID) {
+      console.log(userID);
       const seguirRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/seguir/${userID}`,
         {

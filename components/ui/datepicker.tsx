@@ -25,9 +25,7 @@ import { IMaskInput } from "react-imask";
 import IMask from "imask";
 import React from "react";
 
-type DatePickerProps = {
-  onChange: (date: string) => void; // formato "YYYY-MM-DD"
-};
+
 type DiaData = {
   diaNumero?: number;
   diaSemana?: number;
@@ -37,6 +35,10 @@ type CalendarioData = {
   anoAtual?: number;
   dias?: DiaData[];
   diaAtual?: number;
+};
+
+type DatePickerProps = {
+  onChange: (date: string) => void; // formato "YYYY-MM-DD"
 };
 
 export function DatePicker({ onChange }: DatePickerProps) {
@@ -53,6 +55,32 @@ export function DatePicker({ onChange }: DatePickerProps) {
   const ValueRef = useRef<HTMLInputElement | null>(null);
   const ValueRef2 = useRef<HTMLInputElement | null>(null);
   const ValueRef3 = useRef<HTMLInputElement | null>(null);
+
+  // ✅ ✅ LOAD SAVED DATE ON MOUNT
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const saved = localStorage.getItem("saved_birth_date");
+    if (!saved) return;
+
+    const restored = new Date(saved);
+    if (isNaN(restored.getTime())) return;
+
+    setSelectedDate(restored);
+    setCalendarMonth(restored);
+
+    // set input fields
+    const day = restored.getDate().toString().padStart(2, "0");
+    const month = (restored.getMonth() + 1).toString().padStart(2, "0");
+    const year = restored.getFullYear().toString();
+
+    setInputValue(day);
+    setInputValue2(month);
+    setInputValue3(year);
+
+    // send date to parent
+    onChange(restored.toISOString().split("T")[0]);
+  }, []);
 
   const handleKeyUp = (
     index: number,
@@ -103,7 +131,6 @@ export function DatePicker({ onChange }: DatePickerProps) {
       inputValue2 === "10" ||
       inputValue2 === "12"
     ) {
-      console.log(inputValue2);
       if (parseInt(inputValue) > 31) {
         setInputValue("31");
       }
@@ -113,14 +140,10 @@ export function DatePicker({ onChange }: DatePickerProps) {
       inputValue2 === "9" ||
       inputValue2 === "11"
     ) {
-      console.log(inputValue2);
-
       if (parseInt(inputValue) > 30) {
         setInputValue("30");
       }
     } else if (inputValue2 === "2") {
-      console.log(inputValue2);
-
       if (parseInt(inputValue) > 28) {
         setInputValue("28");
       }
@@ -148,7 +171,6 @@ export function DatePicker({ onChange }: DatePickerProps) {
   useEffect(() => {
     if (parseInt(inputValue3) > (new Date().getFullYear() ?? 0)) {
       if (new Date().getFullYear() !== undefined) {
-        // let raw = e.target.value.replace(/\D/g, ""); // remove non-numeric
         setInputValue3(new Date().getFullYear().toString());
       }
     } else {
@@ -162,16 +184,28 @@ export function DatePicker({ onChange }: DatePickerProps) {
     }
   }, [inputValue3]);
 
+  // ✅ SAVE WHEN USER TYPES A COMPLETE VALID DATE
   useEffect(() => {
     let date = inputValue3 + "-" + inputValue2 + "-" + inputValue;
     onChange(date);
+
+    if (
+      inputValue.length === 2 &&
+      inputValue2.length === 2 &&
+      inputValue3.length === 4
+    ) {
+      const typed = new Date(date);
+      if (!isNaN(typed.getTime())) {
+        localStorage.setItem("saved_birth_date", typed.toString());
+      }
+    }
   }, [inputValue, inputValue2, inputValue3]);
 
   const currentYear = new Date().getFullYear();
 
   const handleDateSelect = (date: Date) => {
     if (date.getFullYear() < 1900 || date.getFullYear() > currentYear) return;
-    // console.log(date);
+
     const formatted = format(date, "dd/MM/yyyy");
     setSelectedDate(date);
     setInputValue(formatted.slice(0, 2));
@@ -179,7 +213,10 @@ export function DatePicker({ onChange }: DatePickerProps) {
     setInputValue3(formatted.slice(6, 10));
     setCalendarMonth(date);
     setShowPicker(false);
-    onChange(date.toISOString().split("T")[0]); // mantém "YYYY-MM-DD"
+    onChange(date.toISOString().split("T")[0]);
+
+    // ✅ SAVE DATE FROM CALENDAR
+    localStorage.setItem("saved_birth_date", date.toString());
   };
 
   const generateCalendar = () => {

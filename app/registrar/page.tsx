@@ -42,16 +42,16 @@ export default function RegistrarInner() {
     confirmarSenha: "",
     dataNascimento: "",
   });
-  const [formFunc, setFormFunc] = useState({ email: form.email, funcao: "" });
   const [form2, setForm2] = useState({
-    email: form.email,
+    email: "",
     escolaridade: selectedEscolaridade,
     objetivoNaPlataforma: selectedObjetivo,
     areaDeInteresse: "",
     instituicaoNome: "",
     aceitouTermos: concordo,
   });
-  const [form3, setForm3] = useState({ email: form.email, code: "" });
+  const [form3, setForm3] = useState({ email: "", code: "" });
+  const [formFunc, setFormFunc] = useState({ email: "", funcao: "" });
 
   // const handleEntrar = async () => {
 
@@ -132,19 +132,21 @@ export default function RegistrarInner() {
   const handleSubmit2 = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(form2);
-    
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/completar-cadastro`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form2),
-    });
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/completar-cadastro`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form2),
+      }
+    );
 
     const data = await res.json();
-    if (data.message === "Código de verificação enviado para o e-mail."){
-      setSubStep(4)
-    }
-    else{
-      setMessage(data.message)
+    if (data.message === "Código de verificação enviado para o e-mail.") {
+      setSubStep(4);
+    } else {
+      setMessage(data.message);
     }
     console.log(data);
   };
@@ -273,6 +275,47 @@ export default function RegistrarInner() {
     }, 200);
   }
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const savedForm = localStorage.getItem("form");
+    const savedForm2 = localStorage.getItem("form2");
+    const savedForm3 = localStorage.getItem("form3");
+    const savedFunc = localStorage.getItem("formFunc");
+    const savedCat = localStorage.getItem("categoria");
+    const savedStep = localStorage.getItem("subStep");
+
+    if (savedForm) setForm(JSON.parse(savedForm));
+    if (savedForm2) setForm2(JSON.parse(savedForm2));
+    if (savedForm3) setForm3(JSON.parse(savedForm3));
+    if (savedFunc) setFormFunc(JSON.parse(savedFunc));
+    if (savedCat) setCategoria(JSON.parse(savedCat));
+    if (savedStep) setSubStep(Number(savedStep));
+    console.log(savedForm);
+    console.log(savedForm2);
+    console.log(savedForm3);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("form", JSON.stringify(form));
+  }, [form]);
+
+  useEffect(() => {
+    localStorage.setItem("form2", JSON.stringify(form2));
+  }, [form2]);
+
+  useEffect(() => {
+    localStorage.setItem("form3", JSON.stringify(form3));
+  }, [form3]);
+
+  useEffect(() => {
+    localStorage.setItem("categoria", JSON.stringify(categoria));
+  }, [categoria]);
+
+  useEffect(() => {
+    localStorage.setItem("formFunc", JSON.stringify(formFunc));
+  }, [formFunc]);
+
   return (
     <>
       {message && (
@@ -384,6 +427,7 @@ export default function RegistrarInner() {
                                         </label>
                                         <input
                                           type="text"
+                                          value={form.primeiroNome}
                                           onChange={(e) =>
                                             setForm({
                                               ...form,
@@ -405,6 +449,7 @@ export default function RegistrarInner() {
                                         </label>
                                         <input
                                           type="text"
+                                          value={form.sobrenome}
                                           onChange={(e) =>
                                             setForm({
                                               ...form,
@@ -426,6 +471,7 @@ export default function RegistrarInner() {
                                         </label>
                                         <input
                                           type="email"
+                                          value={form.email}
                                           onChange={(e) =>
                                             setForm({
                                               ...form,
@@ -448,6 +494,7 @@ export default function RegistrarInner() {
                                           Data de nascimento{" "}
                                         </label>
                                         <DatePicker
+                                        
                                           onChange={(val) => {
                                             setForm({
                                               ...form,
@@ -469,6 +516,7 @@ export default function RegistrarInner() {
                                             type={
                                               showPassword ? "text" : "password"
                                             }
+                                            value={form.senha}
                                             onChange={(e) =>
                                               setForm({
                                                 ...form,
@@ -509,6 +557,7 @@ export default function RegistrarInner() {
                                                 ? "text"
                                                 : "password"
                                             }
+                                          value={form.confirmarSenha}
                                             onChange={(e) =>
                                               setForm({
                                                 ...form,
@@ -725,6 +774,7 @@ export default function RegistrarInner() {
                                       </label>
                                       <input
                                         type="text"
+                                        value={form2.areaDeInteresse}
                                         onChange={(e) =>
                                           setForm2({
                                             ...form2,
@@ -767,6 +817,7 @@ export default function RegistrarInner() {
                                       </label>
                                       <input
                                         type="text"
+                                        value={form2.instituicaoNome}
                                         onChange={(e) =>
                                           setForm2({
                                             ...form2,

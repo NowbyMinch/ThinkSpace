@@ -284,9 +284,9 @@ export default function HomePage() {
             }
           );
           const noti = await res.json();
-          // console.log("Notificacao detalhe:", noti);
 
-          fetchAll();
+          ReloadNotification();
+          // console.log("Notificacao detalhe:", noti);
         } catch (err) {
           console.error("Erro ao buscar notificação:", err);
         }
@@ -322,83 +322,32 @@ export default function HomePage() {
     console.log("Notificação:", notificacao);
   }, [notificacao]);
 
-  const fetchAll = async () => {
+  const ReloadNotification = async () => {
+    // const userIDRes1 = await fetch(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+    //   {
+    //     method: "GET",
+    //     credentials: "include",
+    //   }
+    // );
+
+    // const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
+
     try {
       // Run all fetches in parallel
-      const [
-        materiaRes,
-        bannerRes,
-        userRes,
-        calendarioRes,
-        salasRes,
-        notificacaoRes,
-        ofensivaRes,
-      ] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/banner`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/calendario`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`, {
-          method: "GET",
-          credentials: "include",
-        }),
+      const [notificacaoRes] = await Promise.all([
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/notificacoes`, {
-          method: "GET",
-          credentials: "include",
-        }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/ofensiva`, {
           method: "GET",
           credentials: "include",
         }),
       ]);
 
       // Parse all JSONs in parallel
-      const [
-        materiaData,
-        bannerData,
-        userData,
-        calendarioData,
-        salasData,
-        notificacaoData,
-        ofensivaData,
-      ] = await Promise.all([
-        materiaRes.json(),
-        bannerRes.json(),
-        userRes.json(),
-        calendarioRes.json(),
-        salasRes.json(),
-        notificacaoRes.json(),
-        ofensivaRes.json(),
-      ]);
+      const [notificacaoData] = await Promise.all([notificacaoRes.json()]);
 
       // ✅ Set states after everything is done
-      setMaterias(materiaData);
-      setBannerData(bannerData);
-      setUser(userData);
-      setCalendario(calendarioData);
       setNotificacao(notificacaoData);
-      setOfensivaMensagem(ofensivaData.mensagemOfensiva);
-      setOfensiva(ofensivaData.status);
-
-      // Extract data from /home/salas-estudo safely
-      if (salasData) {
-        console.log("/home/salas-estudo aqui", salasData);
-        setAvatares(salasData.avataresUltimosUsuarios);
-        setTotalEstudantes(salasData.totalEstudantes);
-        setSalas(salasData.salasMembro);
-      }
 
       console.log("✅ All data successfully loaded");
     } catch (err) {
@@ -627,7 +576,7 @@ export default function HomePage() {
                     </div>
 
                     <img
-                      src="/homeImg.svg"
+                      src="/homeIMG.svg"
                       alt="Decoração"
                       className="w-[380px] max-w-[50%] h-auto  sm:mx-0 mx-auto"
                     />
@@ -855,7 +804,6 @@ export default function HomePage() {
                       inteligente — com foco no que realmente importa, no seu
                       ritmo e com ferramentas que potencializam o aprendizado.
                     </p>
-
                   </div>
                   {/* <div className="w-[90%] self-center">
                     <motion.button
@@ -1090,62 +1038,6 @@ export default function HomePage() {
                                   </>
                                 );
                               }
-
-                              // else {
-                              //     return (
-                              //       <>
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">DOM</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">SEG</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">TER</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">QUA</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">QUI</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">SEX</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //         <div className="flex flex-col text-center ">
-                              //           <span className="text-[15px]">SAB</span>
-                              //             <div className="diaOfensiva flex justify-center items-center rounded-[8px] border border-[#00000031] shadow-md bg-[#A59EF0]">
-                              //               <Check className="text-white stroke-3 size-7"/>
-                              //             </div>
-                              //         </div>
-
-                              //       </>
-                              //     )
-                              // }
                             })()}
                           </div>
                         </div>
@@ -1197,8 +1089,8 @@ export default function HomePage() {
                             </h2>
                           </div>
 
-                          <div className="w-full h-fit max-h-[390px] py-1 bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-hidden z-100">
-                            <div className=" w-full rounded-[20px] max-h-full grid gap-1 pt-2 pb-2 pl-2 pr-2 overflow-auto ">
+                          <div className="w-full h-fit max-h-[390px] py-1 bg-[rgb(217,217,217,57%)] rounded-[8px] flex items-center flex-col overflow-auto z-100">
+                            <div className=" w-full rounded-[20px] max-h-full grid gap-1 pt-2 pb-2 pl-2 pr-2 overflow-y-auto overflow-x-auto">
                               {notificacao?.notificacoes &&
                                 notificacao?.notificacoes?.length === 0 && (
                                   <>
@@ -1229,125 +1121,261 @@ export default function HomePage() {
                                   <>
                                     {notificacao.notificacoes.map(
                                       (nota, index) => {
-
-                                        
-                                        return (
-                                          <motion.div
-                                            id="perguntas"
-                                            key={nota.id}
-                                            whileTap={{ scale: 0.99 }}
-                                            whileHover={{ scale: 1.01 }}
-                                            transition={{
-                                              duration: 0.2,
-                                              ease: "easeInOut",
-                                            }}
-                                            className={`border w-full max-w-full min-h-[55px] border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
-                                          >
-                                            {/* Header */}
-                                            <button
-                                              onClick={() => toggle(index)}
+                                        if (
+                                          nota.titulo !==
+                                          "Denúncia por violação na comunidade"
+                                        ) {
+                                          return (
+                                            <motion.div
+                                              id="perguntas"
+                                              key={nota.id || index}
+                                              whileTap={{ scale: 0.99 }}
+                                              whileHover={{ scale: 1.01 }}
+                                              transition={{
+                                                duration: 0.2,
+                                                ease: "easeInOut",
+                                              }}
                                               style={{
                                                 backgroundColor:
-                                                  nota.cor || "#9767f8",
+                                                  `${nota.cor}33` || "#9767f8",
                                               }}
-                                              className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out items-center"
+                                              className={`border min-h-fit w-full max-w-full border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
                                             >
-                                              <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 ">
-                                                {nota.titulo}
-                                              </span>
-
-                                              <span
-                                                className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-                                              ${openIndex === index ? "-rotate-90" : ""}`}
+                                              <button
+                                                onClick={() => toggle(index)}
+                                                className="w-full min-h-[55px] h-fit flex flex-col justify-between  text-left text-[18px] text-white font-medium transition-all ease-in-out  items-center"
                                               >
-                                                <ChevronLeft className="text-white" />
-                                              </span>
-                                            </button>
-
-                                            {/* Animated Content */}
-                                            <AnimatePresence initial={false}>
-                                              {openIndex === index && (
-                                                <motion.div
-                                                  key="content"
-                                                  initial={{
-                                                    height: 0,
-                                                    opacity: 0,
-                                                    filter: "blur(1px)",
+                                                <div
+                                                  style={{
+                                                    backgroundColor:
+                                                      nota.cor || "white",
                                                   }}
-                                                  animate={{
-                                                    height: "auto",
-                                                    opacity: 1,
-                                                    filter: "blur(0px)",
-                                                  }}
-                                                  exit={{
-                                                    height: 0,
-                                                    opacity: 0,
-                                                    filter: "blur(1px)",
-                                                  }}
-                                                  transition={{
-                                                    duration: 0.3,
-                                                    ease: "easeInOut",
-                                                  }}
+                                                  className="w-full flex justify-between min-h-[55px] h-fit items-center px-6 "
                                                 >
-                                                  <div
-                                                    style={{
-                                                      backgroundColor: `${nota.cor}33`,
-                                                    }}
-                                                    className="w-full pr-1 pt-1 flex justify-end"
+                                                  <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 line-clamp-4 py-1">
+                                                    {nota.titulo}
+                                                  </span>
+
+                                                  <span
+                                                    className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full ${openIndex === index ? "-rotate-90" : ""}`}
                                                   >
-                                                    <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
-                                                      {new Date(
-                                                        nota.data
-                                                      ).toLocaleDateString(
-                                                        "pt-BR",
-                                                        {
-                                                          day: "numeric",
-                                                          month: "long",
-                                                          year: "numeric",
-                                                        }
-                                                      )}
-                                                    </span>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      backgroundColor: `${nota.cor}33`,
-                                                    }}
-                                                    className="px-6 text-[15px] font-medium text-[#1E2351] pb-[15px]"
+                                                    <ChevronLeft className="text-white" />
+                                                  </span>
+                                                </div>
+
+                                                <AnimatePresence
+                                                  initial={false}
+                                                >
+                                                  {openIndex === index && (
+                                                    <motion.div
+                                                      key="content"
+                                                      initial={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                        filter: "blur(1px)",
+                                                      }}
+                                                      animate={{
+                                                        height: "auto",
+                                                        opacity: 1,
+                                                        filter: "blur(0px)",
+                                                      }}
+                                                      exit={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                        filter: "blur(1px)",
+                                                      }}
+                                                      transition={{
+                                                        duration: 0.3,
+                                                        ease: "easeInOut",
+                                                      }}
+                                                      className="w-full px-6  "
+                                                    >
+                                                      <div className="w-full pr-1 pt-1 flex justify-end ">
+                                                        <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
+                                                          {new Date(
+                                                            nota.data
+                                                          ).toLocaleDateString(
+                                                            "pt-BR",
+                                                            {
+                                                              day: "numeric",
+                                                              month: "long",
+                                                              year: "numeric",
+                                                            }
+                                                          )}
+                                                        </span>
+                                                      </div>
+                                                      <div className=" min-h-fit text-[15px] font-medium text-[#1E2351] pb-4 h-fit">
+                                                        <div className="flex gap-1 items-center text-wrap ">
+                                                          <div
+                                                            style={{
+                                                              borderColor:
+                                                                nota.cor ||
+                                                                "#9767f8",
+                                                            }}
+                                                            className={`min-w-4 min-h-4 border-3 rounded-full`}
+                                                          ></div>
+                                                          <span className=" break-words whitespace-normal w-full">
+                                                            {nota.subtitulo}
+                                                          </span>
+                                                        </div>
+                                                        <span className="break-words whitespace-normal w-full h-fit">
+                                                          {nota.mensagem}
+                                                        </span>
+                                                      </div>
+                                                    </motion.div>
+                                                  )}
+                                                </AnimatePresence>
+                                              </button>
+                                            </motion.div>
+                                          );
+                                        } else {
+                                          return (
+                                            <motion.div
+                                              id="perguntas"
+                                              key={nota.id || index}
+                                              whileTap={{ scale: 0.99 }}
+                                              whileHover={{ scale: 1.01 }}
+                                              transition={{
+                                                duration: 0.2,
+                                                ease: "easeInOut",
+                                              }}
+                                              className={`bg-[#EB9481] border min-h-fit w-full max-w-full border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
+                                            >
+                                              <button
+                                                onClick={() => toggle(index)}
+                                                className="w-full min-h-[55px] h-fit flex flex-col justify-between  text-left text-[18px] text-white font-medium transition-all ease-in-out  items-center"
+                                              >
+                                                <div className="w-full flex justify-between min-h-[55px] h-fit items-center px-6 ">
+                                                  <span className="flex gap-1 min-w-0 break-all leading-none whitespace-normal pr-3 line-clamp-4 py-1 items-center">
+                                                    <Icons.TriangleAlert className="text-[#994533] size-8 " />
+                                                    {nota.titulo}
+                                                  </span>
+
+                                                  <span
+                                                    className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full ${openIndex === index ? "-rotate-90" : ""}`}
                                                   >
-                                                    <span className="break-words whitespace-normal text-[20px] max-w-[90%]">
-                                                      {nota.titulo}
-                                                    </span>
-                                                    <div className="flex gap-1 items-center text-wrap ">
-                                                      <div
-                                                        style={{
-                                                          borderColor: `${nota.cor}`,
-                                                        }}
-                                                        className={`min-w-4 min-h-4 border-2 rounded-full`}
-                                                      ></div>
-                                                      <span className=" break-words whitespace-normal max-w-[90%]">
-                                                        {nota.subtitulo}
-                                                      </span>
-                                                    </div>
-                                                    <span className="break-words whitespace-normal max-w-[90%]">
-                                                      {nota.mensagem}
-                                                    </span>
-                                                  </div>
-                                                  {/* <div
-                                                    style={{
-                                                      backgroundColor: `#F92A4633`,
-                                                    }}
-                                                    // style={{
-                                                    //   backgroundColor:
-                                                    //     `${nota.cor}33` ||
-                                                    //     "white",
-                                                    // }}
-                                                    className="pb-2 pr-1 font-medium text-[#1E2351]"
-                                                  ></div> */}
-                                                </motion.div>
-                                              )}
-                                            </AnimatePresence>
-                                          </motion.div>
-                                        );
+                                                    <ChevronLeft className="text-white" />
+                                                  </span>
+                                                </div>
+
+                                                <AnimatePresence
+                                                  initial={false}
+                                                >
+                                                  {openIndex === index && (
+                                                    <motion.div
+                                                      key="content"
+                                                      initial={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                        filter: "blur(1px)",
+                                                      }}
+                                                      animate={{
+                                                        height: "auto",
+                                                        opacity: 1,
+                                                        filter: "blur(0px)",
+                                                      }}
+                                                      exit={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                        filter: "blur(1px)",
+                                                      }}
+                                                      transition={{
+                                                        duration: 0.3,
+                                                        ease: "easeInOut",
+                                                      }}
+                                                      className="w-full px-6  "
+                                                    >
+                                                      <div className="w-full pr-1 pt-1 flex justify-end ">
+                                                        <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#753527]">
+                                                          {new Date(
+                                                            nota.data
+                                                          ).toLocaleDateString(
+                                                            "pt-BR",
+                                                            {
+                                                              day: "numeric",
+                                                              month: "long",
+                                                              year: "numeric",
+                                                            }
+                                                          )}
+                                                        </span>
+                                                      </div>
+                                                      <div className=" min-h-fit text-[15px] font-medium text-[#753527] pb-4 h-fit">
+                                                        <div className="flex gap-1 items-center text-wrap ">
+                                                          <span className=" break-words whitespace-normal w-full">
+                                                            {nota.subtitulo}
+                                                          </span>
+                                                        </div>
+                                                        <div className="break-words whitespace-normal w-full h-fit">
+                                                          {/* {
+                                                            nota.mensagem.split(
+                                                              "Motivo"
+                                                            )[0]
+                                                          } */}
+                                                          <div>
+                                                            Pedimos que leia
+                                                            atentamente as
+                                                            diretrizes da
+                                                            comunidade nos
+                                                            termos de
+                                                            privacidade antes de
+                                                            publicar novamente.
+                                                          </div>
+                                                          <div>
+                                                            Nosso objetivo é
+                                                            manter um ambiente
+                                                            seguro, respeitoso e
+                                                            produtivo para todos
+                                                            os membros.
+                                                          </div>
+                                                          <div>
+                                                            Por favor, evite
+                                                            repetir esse tipo de
+                                                            conteúdo no futuro.
+                                                            Agradecemos sua
+                                                            compreensão e
+                                                            colaboração.
+                                                          </div>
+                                                          <div>
+                                                            — Equipe de
+                                                            Moderação ThinkSpace
+                                                          </div>
+                                                        </div>
+                                                        <div className="break-words whitespace-normal w-full h-fit">
+                                                          {
+                                                            nota.mensagem.split(
+                                                              "comunidade."
+                                                            )[1]
+                                                          }
+                                                        </div>
+                                                        <div className="w-full rounded-[15px] bg-[#AD6359] p-4 flex flex-col gap-2  ">
+                                                          <span className="w-full text-[18px] leading-none text-white">
+                                                            {nota.mensagem
+                                                              .split(
+                                                                "alimentares"
+                                                              )[1]
+                                                              .split(":")[0] +
+                                                              nota.mensagem.split(
+                                                                "denunciado"
+                                                              )[1][0]}
+                                                          </span>
+                                                          <div className="w-full h-full rounded-[15px] bg-[#fff] p-2">
+                                                            <div className="break-words whitespace-normal w-full h-fit text-black">
+                                                              {
+                                                                nota.mensagem.split(
+                                                                  "denunciado:"
+                                                                )[1]
+                                                              }
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </motion.div>
+                                                  )}
+                                                </AnimatePresence>
+                                              </button>
+                                            </motion.div>
+                                          );
+                                        }
                                       }
                                     )}
                                   </>
@@ -1732,10 +1760,7 @@ export default function HomePage() {
                 <div className="  flex justify-center">
                   <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">
-                      {
-                        calendario.dias?.[(calendario.diaAtual ?? 0) + 1]
-                          ?.diaSemana
-                      }
+                      {calendario.dias?.[calendario.diaAtual ?? 0]?.diaSemana}
                     </h2>
                     <h1 className="font-bold text-[32px]">
                       {calendario.dias?.[calendario.diaAtual ?? 0]?.diaNumero}
@@ -1747,7 +1772,7 @@ export default function HomePage() {
                   <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">
                       {
-                        calendario.dias?.[(calendario.diaAtual ?? 0) + 2]
+                        calendario.dias?.[(calendario.diaAtual ?? 0) + 1]
                           ?.diaSemana
                       }
                     </h2>
@@ -1764,7 +1789,7 @@ export default function HomePage() {
                   <div className=" rounded-[15px]  justify-center  ">
                     <h2 className="text-[16px]">
                       {
-                        calendario.dias?.[(calendario.diaAtual ?? 0) + 3]
+                        calendario.dias?.[(calendario.diaAtual ?? 0) + 2]
                           ?.diaSemana
                       }
                     </h2>
