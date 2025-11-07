@@ -192,6 +192,7 @@ export default function Materiais() {
       ]);
       setUser(userData);
       setPosts(postsData);
+      console.log("POSTS DATA ", postsData);
 
       console.log("✅ All data successfully loaded");
     } catch (err) {
@@ -362,7 +363,6 @@ export default function Materiais() {
     }
   };
 
-  
   const reloadPosts = async () => {
     try {
       const userIDRes = await fetch(

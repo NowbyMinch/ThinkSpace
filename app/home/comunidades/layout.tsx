@@ -47,6 +47,7 @@ type Sala = {
   moderadorId: string;
   quantidadeEstudantes: number;
   topicos: string[];
+  usuarioSegue: boolean;
 };
 
 type SalasProps = {
@@ -107,6 +108,8 @@ export const SearchContext = createContext({
   setSearchTerm: (value: string) => {},
 });
 
+const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
+
 export default function LayoutSalas({ children }: SalasProps) {
   const router = useRouter();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -122,6 +125,14 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [favorito, setFavorito] = useState<Favorito[]>([]);
   const [recentes, setRecentes] = useState<Recentes[]>([]);
   const [open, setOpen] = useState(false);
+  
+  const [editar, setEditar] = useState(false);
+  
+  const [editarNome, setEditarNome] = useState("");
+  const [editarDescricao, setEditarDescricao] = useState("");
+  
+
+  const [deletar, setDeletar] = useState(false);
   const [curtidaCheck, setCurtidaCheck] = useState<boolean | undefined>(
     undefined
   );
@@ -233,6 +244,40 @@ export default function LayoutSalas({ children }: SalasProps) {
       setLoading(false);
     }
   };
+
+  const SegueUpdate = async () => {
+    try {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      setUserID(userIDdata1.userId); // set the state
+
+      // Run all fetches in parallel
+      const [salaRes] = await Promise.all([
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/${pathname.split("/")[4]}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        ),
+      ]);
+
+      // Parse all JSONs in parallel
+      const [salaData] = await Promise.all([salaRes.json()]);
+
+      setSala(salaData);
+    } catch (err) {
+      console.error("Erro ao carregar dados:", err);
+      setMessage("Erro ao carregar dados.");
+    }
+  };
   // ALL ---------------------------------------------------------
 
   useEffect(() => {
@@ -341,6 +386,11 @@ export default function LayoutSalas({ children }: SalasProps) {
         // ✅ Set states after everything is done
         setUser(userData);
         setSala(salaData);
+        setEditarNome(salaData?.nome);  
+        setEditarDescricao(salaData?.descricao);  
+        console.log(salaData.nome)
+        console.log(salaData.descricao)
+          
         setUserID(userIDdata.userId);
         if (recentesData.length > 0) {
           setRecentes(Array.isArray(recentesData) ? recentesData : []);
@@ -400,6 +450,7 @@ export default function LayoutSalas({ children }: SalasProps) {
 
   function closing() {
     setOpen(false);
+    setEditar(false);
   }
 
   const CurtidaCheck = async (postID: string) => {
@@ -506,6 +557,73 @@ export default function LayoutSalas({ children }: SalasProps) {
     router.push(`/home/comunidades/postagens/${autorId}/${postId}`);
   };
 
+  // /sala-estudo/sala/{salaId}/seguir/{usuarioId}
+
+  const seguir = async () => {
+    if (sala?.id && userID) {
+      const seguirRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/seguir/${userID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      const seguirData = await seguirRes.json();
+      console.log(seguirData);
+      if (seguirData.error) {
+        setMessage(seguirData.error);
+      } else {
+        SegueUpdate();
+      }
+    }
+  };
+
+  const editarFunction = async () => {
+    if (sala?.id && userID) {
+      const seguirRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/seguir/${userID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      const seguirData = await seguirRes.json();
+      console.log(seguirData);
+      if (seguirData.error) {
+        setMessage(seguirData.error);
+      } else {
+        SegueUpdate();
+      }
+    }
+  };
+
+  const excluir = async () => {
+    if (sala?.id && userID) {
+      const excluirRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/excluir/${userID}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      const excluirData = await excluirRes.json();
+      console.log(excluirData);
+      if (excluirData.error) {
+        setMessage(excluirData.error);
+      } else {
+        if (
+          excluirData.message ===
+          "Sala de estudo excluída com sucesso. Os materiais publicados permanecem disponíveis para seus autores e usuários que copiaram."
+        ) {
+          router.back();
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       // If clicked on something that is NOT part of PostagemDetail or the "..."
@@ -577,12 +695,22 @@ export default function LayoutSalas({ children }: SalasProps) {
                       </div>
                     </div>
 
-                    <motion.div className="flex flex-wrap gap-3 w-full overflow-y-auto overflow-x-hidden pr-1 ">
+                    <motion.div className="flex flex-wrap gap-3 w-full overflow-y-auto overflow-x-hidden pr-1 p-1">
                       {favorito &&
                         favorito.map((favoritoUnique, index) => {
                           return (
                             <motion.div
                               key={index}
+                              whileHover={{ scale: 1.01 }}
+                              whileTap={{ scale: 0.99 }}
+                              transition={{ ease: "easeInOut" }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(
+                                  `/home/comunidades/postagens/${favoritoUnique.autor.id}/${favoritoUnique.id}`
+                                );
+                                setOpen(false);
+                              }}
                               className="flex flex-col w-full cursor-pointer p-2 border-1 border-[#b8b8b8] rounded-[10px] shadow-md gap-3 "
                             >
                               <motion.div
@@ -621,17 +749,10 @@ export default function LayoutSalas({ children }: SalasProps) {
                                 <div className=" gap-5 flex justify-between items-center h-fit">
                                   <div className="flex gap-1 font-semibold ">
                                     <motion.div
-                                      onClick={() => {
+                                      onPointerDown={(e) => e.stopPropagation()}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
                                         Curtir(favoritoUnique.id);
-                                      }}
-                                      whileHover={{ scale: 1.05 }}
-                                      whileTap={{ scale: 0.95 }}
-                                      animate={{
-                                        scale: curtidaCheck ? [1, 1.4, 1] : 1, // 💓 bounce animation
-                                      }}
-                                      transition={{
-                                        duration: 0.3,
-                                        ease: "easeOut",
                                       }}
                                       className="w-6 h-6 cursor-pointer"
                                     >
@@ -663,12 +784,14 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </div>
 
                                   <div
-                                    onClick={() =>
+                                    onClick={(e) => {
+                                      e.stopPropagation();
                                       handleOpenPost(
                                         favoritoUnique.id,
                                         favoritoUnique.autor.id
-                                      )
-                                    }
+                                      );
+                                      setOpen(false);
+                                    }}
                                     className="flex gap-1 font-semibold "
                                   >
                                     <motion.div
@@ -689,16 +812,19 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </div>
                                 </div>
 
-                                <motion.div className="w-6 h-6 relative ">
+                                {/* <motion.div
+                                  onClick={(e) => {e.stopPropagation();} }
+                                  className="w-6 h-6 relative ">
                                   <motion.div
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="ellipsis-button w-full h-full cursor-pointer relative"
-                                    onClick={() =>
+                                    onClick={() => {
+                                      
                                       setAppear(
                                         appear === index + 1 ? 0 : index + 1
-                                      )
-                                    }
+                                      );
+                                    }}
                                   >
                                     <Ellipsis
                                       className="w-full h-full"
@@ -715,7 +841,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                                     index={index + 1}
                                     appear={appear === index + 1}
                                   />
-                                </motion.div>
+                                </motion.div> */}
                               </motion.div>
                             </motion.div>
                           );
@@ -730,6 +856,187 @@ export default function LayoutSalas({ children }: SalasProps) {
               </div>
             </>
           )}
+          {editar && (
+            <>
+              <motion.div
+                key="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100]"
+              >
+                <div className="absolute inset-0" onClick={() => closing()} />
+
+                <motion.div
+                  key="modal-wrapper"
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 0.94 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="relative z-[1101] rounded-[40px] overflow-hidden shadow-md"
+                  style={{ width: 640 }} 
+                >
+                  <div
+                    className="bg-white w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+                    style={{
+                      WebkitOverflowScrolling: "touch", 
+                      clipPath: "inset(0 round 40px)",
+                    }}
+                  >
+                    <div
+                      id="white-box"
+                      className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                    >
+                      <img
+                        src="/Vector.svg"
+                        alt="Decoração"
+                        className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                      />
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          editarFunction();
+                        }}
+                        className="w-full flex flex-col gap-4"
+                      >
+                        <div className="flex justify-between items-start">
+                          <h1 className="text-[35px] font-medium self-end ">
+                            Editar sala de estudo:
+                          </h1>
+                          <div className="w-fit">
+                            <motion.div
+                              whileHover={{ scale: 1.08 }}
+                              whileTap={{ scale: 0.92 }}
+                              onClick={closing}
+                              className="cursor-pointer w-6 h-6"
+                            >
+                              <X className="w-full h-full" />
+                            </motion.div>
+                          </div>
+                        </div>
+                        <div className="relative flex flex-col gap-4 min-h-fit ">
+                          <div className="min-h-fit">
+                            <h2 className="text-[20px] font-medium">
+                              Nome da sala:
+                            </h2>
+                            <input
+                              type="text"
+                              id="nome_materia"
+                              placeholder="Pesquisar salas de estudo"
+                              value={editarNome}
+                              onChange={(e) => setEditarNome(e.target.value)}
+                              className="pl-5 text-[18px] max-w-[700px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)] shadow-md"
+                            />{" "}
+                          </div>
+
+                          <div className="w-full h-full flex flex-col">
+                            <h2 className="text-[20px] font-medium">
+                              Descrição:
+                            </h2>
+
+                            <textarea
+                              onChange={(e) => setEditarDescricao(e.target.value)}
+                              value={editarDescricao}
+                              className="shadow-md border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]"
+                            />
+                          </div>
+                          <div className="flex min-h-fit flex-col sm:flex-row gap-4"></div>
+                        </div>
+
+                        <div className="w-full flex justify-center items-center ">
+                          <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ ease: "easeInOut" }}
+                            type="submit"
+                            className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                          >
+                            Editar
+                          </motion.button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              <div className="w-full absolute flex justify-center items-center">
+                <Backdrop3 onClick={() => closing()} />
+              </div>
+            </>
+          )}
+          {deletar && (
+            <>
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className={`w-full h-full fixed flex justify-center items-center opacity-1 z-[1100] `}
+              >
+                <div
+                  className="w-full h-full absolute"
+                  onClick={() => setDeletar(false)}
+                ></div>
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 0.94 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className={`w-[700px] p-4 h-[250px] flex rounded-[40px] z-[1100]  opacity-1 `}
+                >
+                  <div
+                    id="white-box"
+                    className={` w-full h-full rounded-[40px] bg-white shadow-md flex justify-center items-center relative overflow-hidden z-[1100] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]`}
+                  >
+                    <img
+                      src="/Vector.svg"
+                      alt="Decoração"
+                      className="absolute top-0 left-[-180px] rotate-90 w-[550px]"
+                    />
+                    <img
+                      src="/Vector.svg"
+                      alt="Decoração"
+                      className="absolute bottom-[-40px] right-[-170px] -rotate-90 w-[550px]"
+                    />
+
+                    <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
+                      <h1 className="text-center text-[20px] font-medium my-auto">
+                        Você deseja mesmo excluir essa sala de estudo? Isso
+                        também apagará todas as postagens .
+                      </h1>
+                      <div className="w-full flex justify-center gap-4 mt-auto">
+                        <motion.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => setDeletar(false)}
+                          className="p-[10px_15px] rounded-[20px] text-[18px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]"
+                        >
+                          Voltar
+                        </motion.button>
+
+                        <motion.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => {
+                            setDeletar(false);
+                            excluir();
+                          }}
+                          className="p-[10px_15px] min-w-[65px] rounded-[20px] text-[18px] text-white bg-[#F55571] border border-[rgba(68,68,68, 0.17)]"
+                        >
+                          Excluir
+                        </motion.button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              <div className="w-full absolute flex justify-center items-center ">
+                <Backdrop3 onClick={() => setDeletar(false)} />
+              </div>
+            </>
+          )}
+
           <div
             ref={scrollRef}
             className="w-full h-screen flex justify-center items-start overflow-hidden"
@@ -1002,7 +1309,28 @@ export default function LayoutSalas({ children }: SalasProps) {
                         <p className="w-full text-[18px] break-all line-clamp-6 min-h-fit">
                           {sala && sala.descricao}
                         </p>
-                        <div className="flex gap-1 border border-b-[#D7DDEA] pb-4">
+
+                        <div className="flex flex-wrap gap-1">
+                          {Array.isArray(sala?.topicos) &&
+                            sala.topicos.slice(0, 5).map((topico, index) => {
+                              return (
+                                <span
+                                  key={index}
+                                  className="text-[16px] px-3 w-fit rounded-full"
+                                  style={{
+                                    backgroundColor:
+                                      cor[
+                                        Math.floor(Math.random() * cor.length)
+                                      ],
+                                  }}
+                                >
+                                  {topico}
+                                </span>
+                              );
+                            })}
+                        </div>
+
+                        <div className="flex gap-1 ">
                           <CalendarDays />
                           Criada em{" "}
                           {sala &&
@@ -1014,6 +1342,54 @@ export default function LayoutSalas({ children }: SalasProps) {
                                 year: "numeric",
                               }
                             )}
+                        </div>
+
+                        <div className="w-full flex border border-b-[#D7DDEA] pb-2 gap-2 mt-2">
+                          {userID === sala?.moderadorId && (
+                            <>
+                              <motion.button
+                                whileHover={{
+                                  scale: 1.02,
+                                  backgroundColor: "#9B79E0",
+                                  color: "#fff",
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ ease: "easeInOut" }}
+                                onClick={() => setEditar(true)}
+                                className=" border-1 border-[#9B79E0] text-[#667880 px-4 py-1 text-[16px] font-normal shadow-md my-auto rounded-full text-nowrap"
+                              >
+                                Editar sala
+                              </motion.button>
+
+                              <motion.button
+                                whileHover={{
+                                  scale: 1.02,
+                                  backgroundColor: "#F55571",
+                                  color: "#fff",
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ ease: "easeInOut" }}
+                                onClick={() => {
+                                  setDeletar(true);
+                                }}
+                                className=" border-1 border-[#F55571] text-[#667880 px-4 py-1 text-[16px] font-normal shadow-md my-auto rounded-full text-nowrap"
+                              >
+                                Excluir sala
+                              </motion.button>
+                            </>
+                          )}
+
+                          <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ ease: "easeInOut" }}
+                            onClick={seguir}
+                            className=" bg-[#9B79E0] text-white px-4 py-2 text-[16px] font-normal shadow-md my-auto rounded-full text-nowrap"
+                          >
+                            {sala?.usuarioSegue
+                              ? "Deixar de seguir sala"
+                              : "Seguir sala"}
+                          </motion.button>
                         </div>
 
                         <h1 className="text-[25px] leading-none font-medium my-2">
@@ -1104,10 +1480,10 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         <span className="font-semibold truncate">
                                           {favorito.autor.nome}
                                         </span>
-                                        {/* <span className="font-medium truncate">
-                                      {" "}
-                                      {favorito.} seguidores
-                                    </span> */}
+                                        <span className="font-medium truncate text-[16px]">
+                                          {" "}
+                                          {favorito.sala.nome}
+                                        </span>
                                       </div>
 
                                       <motion.div
@@ -1124,7 +1500,6 @@ export default function LayoutSalas({ children }: SalasProps) {
                                   </motion.div>
                                 );
                               } else if (index === 4) {
-                                console.log("Index", index);
                                 return (
                                   <motion.div
                                     whileHover={{ scale: 1.01 }}
@@ -1229,7 +1604,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         `/home/comunidades/postagens/${favorito.autor.id}/${favorito.id}`
                                       );
                                     }}
-                                    className="w-full cursor-pointer p-2 border-1 border-[#b8b8b8] rounded-[10px] shadow-md "
+                                    className="w-full cursor-pointer p-2 border-1 border-[#b8b8b8] rounded-[10px] shadow-md"
                                   >
                                     <div
                                       key={index}
@@ -1244,10 +1619,10 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         <span className="font-semibold truncate">
                                           {favorito.autor.nome}
                                         </span>
-                                        {/* <span className="font-medium truncate">
-                                      {" "}
-                                      {favorito.} seguidores
-                                    </span> */}
+                                        <span className="font-medium truncate text-[16px]">
+                                          {" "}
+                                          {favorito.sala.nome}
+                                        </span>
                                       </div>
 
                                       <motion.div

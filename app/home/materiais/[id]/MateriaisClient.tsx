@@ -95,7 +95,7 @@ export default function MateriaisClient({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
   const [materiaisNome, setMateriaisNome] = useState<
-    Array<{ id: string; titulo?: string; origem: string }>
+    Array<{ id: string; titulo?: string; origem: string; tempoAtivo: number }>
   >([]);
   const [deletarId, setDeletarId] = useState("");
   const [tipo, setTipo] = useState("");
@@ -286,8 +286,8 @@ export default function MateriaisClient({ id }: { id: string }) {
         const materiaisFiltrados = data.materiais.filter(
           (material: any) => material.materiaId === id
         );
+        console.log("data", data);
         console.log("materiaisFiltrados", materiaisFiltrados);
-
         setMateriaisNome(materiaisFiltrados);
       } catch (err) {
         console.error(err);
@@ -1571,7 +1571,12 @@ export default function MateriaisClient({ id }: { id: string }) {
                             {material.titulo}
                           </h2>
                           <h2 className="text-[18px] text-[#828181] truncate">
-                            Tempo de estudo: 0 horas
+                            Tempo de estudo:{" "}
+                            {material.tempoAtivo
+                              ? material.tempoAtivo < 60
+                                ? `${material.tempoAtivo} minuto${material.tempoAtivo > 1 ? "s" : ""}`
+                                : `${Math.floor(material.tempoAtivo / 60)}h ${material.tempoAtivo % 60}min`
+                              : "0 minuto"}
                           </h2>
                         </div>
 

@@ -527,16 +527,32 @@ type Sala = {
   criadoEm: string;
 };
 
-export function ComboboxDemomMetricas() {
+
+interface ComboboxDemoPropsMetricas {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetricas) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const [salas, setSalas] = useState<Sala[]>([]);
 
   useEffect(() => {
     const salasDeEstudo = async () => {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      // setUserID(userIDdata1.userId); // set the state
+
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/home/salas-estudo`,
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/salas-participando`,
           {
             method: "GET",
             credentials: "include",
@@ -544,8 +560,9 @@ export function ComboboxDemomMetricas() {
         );
 
         const data = await res.json();
-        // console.log(data);
-        setSalas(data.salasMembro);
+        setSalas(data);
+
+        console.log("DATA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA", data);
       } catch (err) {
         console.error(err);
       }
@@ -563,10 +580,9 @@ export function ComboboxDemomMetricas() {
           className="w-fit min-w-[180px] flex gap-4 justify-center rounded-[10px]"
         >
           <span>
-            {salas[0]?.nome}
-            {/* {value
+            {value
               ? salas.find((framework) => framework.nome === value)?.nome
-              : "Selecione a sala de estudo"} */}
+              : "Selecione a sala de estudo"}
           </span>
 
           <ChevronsUpDown className="opacity-50" />
@@ -577,24 +593,27 @@ export function ComboboxDemomMetricas() {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {salas.map((framework) => (
-                <CommandItem
-                  key={framework.id}
-                  value={framework.nome}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {framework.nome}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.nome ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
+              {salas
+                ? salas.map((framework) => (
+                    <CommandItem
+                      key={framework.id}
+                      value={framework.nome}
+                      className="text-[18px]"
+                      onSelect={(currentValue) => {
+                        onChange(currentValue === value ? "" : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      {framework.nome}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          value === framework.nome ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))
+                : ""}
             </CommandGroup>
           </CommandList>
         </Command>

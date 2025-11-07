@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Backdrop } from "./components/backdrop";
+import { Backdrop, Backdrop3 } from "./components/backdrop";
 import { Backdrop2 } from "./components/backdrop";
 import { CarouselLinks } from "./components/carousel";
 import { motion, AnimatePresence } from "framer-motion";
@@ -258,6 +258,11 @@ export default function HomePage() {
     setTimeout(() => setPop(false), 10);
   }
 
+  function closingLink() {
+    setLinkUtil1(false);
+    setLinkUtil2(false);
+  }
+
   function opening2() {
     setPop2(true);
   }
@@ -301,6 +306,9 @@ export default function HomePage() {
   const [ofensivaMensagem, setOfensivaMensagem] = useState("");
   const [totalEstudantes, setTotalEstudantes] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const [linkUtil1, setLinkUtil1] = useState(false);
+  const [linkUtil2, setLinkUtil2] = useState(false);
 
   const toggle = (index: number) => {
     setOpenIndex(index === openIndex ? null : index);
@@ -571,6 +579,333 @@ export default function HomePage() {
       <AnimatePresence initial={false}>
         {pop && <Backdrop key={1} />}
         {pop2 && <Backdrop2 key={2} />}
+        {linkUtil1 && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100] "
+            >
+              <div className="absolute inset-0" onClick={() => closingLink()} />
+
+              <motion.div
+                key="modal-wrapper"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="relative z-[1101] rounded-[40px] shadow-md bg-white h-[1400px] max-h-full overflow-hidden border-[10px] border-[#1E2351]"
+                style={{ width: 1200 }} // ou className w-[640px]
+              >
+                <div className="h-full w-full overflow-y-auto overflow-x-auto flex flex-col gap-8 pb-10">
+                  <div className="h-[420px] min-h-fit w-full bg-[rgba(74,58,242,0.08)] flex sm:flex-row flex-col overflow-hidden relative px-4 shadow-md">
+                    <img
+                      src="/homeVector.svg"
+                      alt="Decoração"
+                      className="absolute top-0 -right-3 rotate-[5deg] min-w-[60%] -z-10"
+                    />
+
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setLinkUtil1(false);
+                      }}
+                      className="absolute top-4 right-4 w-6 h-6"
+                    >
+                      <X className="w-full h-full" />
+                    </motion.button>
+                    <div className="self-center sm:hidden flex-col flex ">
+                      <h1 className="text-[#726BB6] text-[55px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[20px] font-medium max-w-[350px]">
+                        Como os grupos de estudo podem te ajudar na sua
+                        trajetória acadêmica?
+                      </p>
+                    </div>
+
+                    <img
+                      src="/homeImg.svg"
+                      alt="Decoração"
+                      className="w-[380px] max-w-[50%] h-auto  sm:mx-0 mx-auto"
+                    />
+
+                    <div className="self-center sm:flex flex-col hidden ">
+                      <h1 className="text-[#726BB6] text-[60px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[22px] font-medium max-w-[350px]">
+                        Como os grupos de estudo podem te ajudar na sua
+                        trajetória acadêmica?
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-[90%] self-center min-h-fit text-[18px] text-[rgb(150,150,150)] font-medium">
+                    <p className="text-justify leading-relaxed">
+                      Aprender é um processo muito mais produtivo quando é feito
+                      em comunidade. Por isso, os grupos de estudo dentro da
+                      nossa plataforma foram criados para aproximar estudantes
+                      com os mesmos objetivos, promovendo trocas de
+                      conhecimento, incentivo mútuo e uma rotina de estudos mais
+                      leve e organizada.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Na aba Comunidade, você pode criar sua própria sala de
+                      estudo e convidar colegas para participar. Essa
+                      funcionalidade permite que cada grupo tenha um espaço
+                      personalizado, com o foco que preferir — seja para revisar
+                      conteúdos de uma disciplina específica, estudar para o
+                      Enem, preparar-se para vestibulares, concursos ou até
+                      mesmo compartilhar experiências sobre a vida
+                      universitária.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Dentro das salas, é possível anexar materiais de estudo,
+                      que incluem como resumos de IA, flashcards e quizzes, além
+                      do histórico de chat de IA. Por exemplo, um grupo de
+                      Biologia pode criar um tópico sobre “Ecologia” e anexar um
+                      material de estudo, enquanto outro estudante compartilha
+                      flashcards e um terceiro posta sobre dúvidas em relação à
+                      matéria, como "O que são organelas?". Assim, todos
+                      colaboram e constroem juntos um repositório de
+                      conhecimento acessível e dinâmico.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Além disso, a interação é um dos pontos mais importantes.
+                      Você pode curtir e responder comentários, salvar postagens
+                      relevantes e participar de discussões que ampliam sua
+                      compreensão dos temas estudados. Imagine um grupo de
+                      Redação, onde os participantes compartilham seus textos e
+                      recebem feedbacks construtivos de outros colegas — essa
+                      troca é valiosa e contribui diretamente para o
+                      aperfeiçoamento de cada um.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Para garantir que todos se sintam à vontade e respeitados,
+                      nossa plataforma também oferece a opção de denúncia. Caso
+                      algum comportamento inadequado aconteça — como
+                      desrespeito, linguagem ofensiva ou compartilhamento
+                      indevido de conteúdo — qualquer usuário pode realizar uma
+                      denúncia de forma simples e rápida. Assim, todos colaboram
+                      para manter um ambiente seguro, acolhedor e saudável, onde
+                      o foco é o aprendizado e o respeito mútuo.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Participar de grupos de estudo também desenvolve
+                      habilidades socioemocionais e acadêmicas, como trabalho em
+                      equipe, comunicação, organização e empatia — competências
+                      que são fundamentais tanto para a vida acadêmica quanto
+                      para o mercado de trabalho.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Em resumo, os grupos de estudo da nossa plataforma não são
+                      apenas espaços para trocar informações, mas verdadeiras
+                      comunidades de aprendizado. Aqui, cada contribuição conta,
+                      e o conhecimento é construído de forma coletiva,
+                      conectando pessoas que compartilham os mesmos sonhos e
+                      metas.
+                    </p>
+                  </div>
+                  <div className="w-[90%] self-center">
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      onClick={() => {
+                        setLinkUtil1(false);
+                        setLinkUtil2(true);
+                      }}
+                      className=" text-[#704FE6] text-[18px] w-fit p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center bg-[#A39CEC] cursor-pointer  "
+                    >
+                      <span className="line-clamp-2 break-words text-[#FFFFFF]">
+                        Próximo Link Útil
+                      </span>
+                      <div className="bg-[rgba(255,255,255,0.77)] p-3 rounded-full ">
+                        {" "}
+                        <ArrowRight className="text-[#A39CEC] size-5" />{" "}
+                      </div>
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+            <div className="w-full absolute flex justify-center items-center">
+              <Backdrop3 onClick={() => closingLink()} />
+            </div>
+          </>
+        )}
+
+        {linkUtil2 && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100] "
+            >
+              <div className="absolute inset-0" onClick={() => closingLink()} />
+
+              <motion.div
+                key="modal-wrapper"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="relative z-[1101] rounded-[40px] shadow-md bg-white h-[1400px] max-h-full overflow-hidden border-[10px] border-[#1E2351]"
+                style={{ width: 1200 }} // ou className w-[640px]
+              >
+                <div className="h-full w-full overflow-y-auto overflow-x-auto flex flex-col gap-8 pb-10">
+                  <div className="h-[420px] min-h-fit w-full bg-[rgba(74,58,242,0.08)] flex sm:flex-row flex-col overflow-hidden relative px-4 shadow-md">
+                    <img
+                      src="/homeVector.svg"
+                      alt="Decoração"
+                      className="absolute top-0 -right-3 rotate-[5deg] min-w-[60%] -z-10"
+                    />
+
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setLinkUtil2(false);
+                      }}
+                      className="absolute top-4 right-4 w-6 h-6"
+                    >
+                      <X className="w-full h-full" />
+                    </motion.button>
+                    <div className="self-center sm:hidden flex-col flex ">
+                      <h1 className="text-[#726BB6] text-[55px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[20px] font-medium max-w-[350px]">
+                        Como os grupos de estudo podem te ajudar na sua
+                        trajetória acadêmica?
+                      </p>
+                    </div>
+
+                    <img
+                      src="/homeImg.svg"
+                      alt="Decoração"
+                      className="w-[380px] max-w-[50%] h-auto  sm:mx-0 mx-auto"
+                    />
+
+                    <div className="self-center sm:flex flex-col hidden ">
+                      <h1 className="text-[#726BB6] text-[60px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[22px] font-medium max-w-[350px]">
+                        Como os grupos de estudo podem te ajudar na sua
+                        trajetória acadêmica?
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-[90%] self-center min-h-fit text-[18px] text-[rgb(150,150,150)] font-medium">
+                    <p className="text-justify leading-relaxed">
+                      Aprender é um processo muito mais produtivo quando é feito
+                      em comunidade. Por isso, os grupos de estudo dentro da
+                      nossa plataforma foram criados para aproximar estudantes
+                      com os mesmos objetivos, promovendo trocas de
+                      conhecimento, incentivo mútuo e uma rotina de estudos mais
+                      leve e organizada.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Na aba Comunidade, você pode criar sua própria sala de
+                      estudo e convidar colegas para participar. Essa
+                      funcionalidade permite que cada grupo tenha um espaço
+                      personalizado, com o foco que preferir — seja para revisar
+                      conteúdos de uma disciplina específica, estudar para o
+                      Enem, preparar-se para vestibulares, concursos ou até
+                      mesmo compartilhar experiências sobre a vida
+                      universitária.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Dentro das salas, é possível anexar materiais de estudo,
+                      que incluem como resumos de IA, flashcards e quizzes, além
+                      do histórico de chat de IA. Por exemplo, um grupo de
+                      Biologia pode criar um tópico sobre “Ecologia” e anexar um
+                      material de estudo, enquanto outro estudante compartilha
+                      flashcards e um terceiro posta sobre dúvidas em relação à
+                      matéria, como "O que são organelas?". Assim, todos
+                      colaboram e constroem juntos um repositório de
+                      conhecimento acessível e dinâmico.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Além disso, a interação é um dos pontos mais importantes.
+                      Você pode curtir e responder comentários, salvar postagens
+                      relevantes e participar de discussões que ampliam sua
+                      compreensão dos temas estudados. Imagine um grupo de
+                      Redação, onde os participantes compartilham seus textos e
+                      recebem feedbacks construtivos de outros colegas — essa
+                      troca é valiosa e contribui diretamente para o
+                      aperfeiçoamento de cada um.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Para garantir que todos se sintam à vontade e respeitados,
+                      nossa plataforma também oferece a opção de denúncia. Caso
+                      algum comportamento inadequado aconteça — como
+                      desrespeito, linguagem ofensiva ou compartilhamento
+                      indevido de conteúdo — qualquer usuário pode realizar uma
+                      denúncia de forma simples e rápida. Assim, todos colaboram
+                      para manter um ambiente seguro, acolhedor e saudável, onde
+                      o foco é o aprendizado e o respeito mútuo.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Participar de grupos de estudo também desenvolve
+                      habilidades socioemocionais e acadêmicas, como trabalho em
+                      equipe, comunicação, organização e empatia — competências
+                      que são fundamentais tanto para a vida acadêmica quanto
+                      para o mercado de trabalho.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Em resumo, os grupos de estudo da nossa plataforma não são
+                      apenas espaços para trocar informações, mas verdadeiras
+                      comunidades de aprendizado. Aqui, cada contribuição conta,
+                      e o conhecimento é construído de forma coletiva,
+                      conectando pessoas que compartilham os mesmos sonhos e
+                      metas.
+                    </p>
+                  </div>
+                  {/* <div className="w-[90%] self-center">
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      onClick={() => {
+                        setLinkUtil1(false);
+                        setLinkUtil2(true);
+                      }}
+                      className=" text-[#704FE6] text-[18px] w-fit p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center bg-[#A39CEC] cursor-pointer  "
+                    >
+                      <span className="line-clamp-2 break-words text-[#FFFFFF]">
+                        Próximo Link Útil
+                      </span>
+                      <div className="bg-[rgba(255,255,255,0.77)] p-3 rounded-full ">
+                        {" "}
+                        <ArrowRight className="text-[#A39CEC] size-5" />{" "}
+                      </div>
+                    </motion.button>
+                  </div> */}
+                </div>
+              </motion.div>
+            </motion.div>
+            <div className="w-full absolute flex justify-center items-center">
+              <Backdrop3 onClick={() => closingLink()} />
+            </div>
+          </>
+        )}
       </AnimatePresence>
 
       <div className=" w-[1580px] max-w-[90%] lg:max-w-[90%] mx-auto h-full  pb-8 max-h-full  ">
@@ -1242,7 +1577,12 @@ export default function HomePage() {
             <div className="">
               <Carousel className="w-full" opts={{ align: "start" }}>
                 <CarouselContent className="gap-4 min-h-[200px]">
-                  <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer">
+                  <CarouselItem
+                    onClick={() => {
+                      setLinkUtil1(true);
+                    }}
+                    className="basis-full sm:basis-[49%] cursor-pointer"
+                  >
                     <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
                       <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[92%] h-[95%] ">
@@ -1264,7 +1604,10 @@ export default function HomePage() {
                     </Card>
                   </CarouselItem>
 
-                  <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer">
+                  <CarouselItem
+                    onClick={() => {setLinkUtil2(true)}}
+                    className="basis-full sm:basis-[49%] cursor-pointer"
+                  >
                     <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
                       <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[92%] h-[95%] ">
@@ -1278,15 +1621,14 @@ export default function HomePage() {
                             />
                           </div>
                           <p className="text-white text-[18px]">
-                            Como os grupos de estudo podem te ajudar na sua
-                            trajetória acadêmica?
+                            Como posso estudar de forma eficiente?
                           </p>
                         </div>
                       </CardContent>
                     </Card>
                   </CarouselItem>
 
-                  <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer">
+                  {/* <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer">
                     <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
                       <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[92%] h-[95%] ">
@@ -1306,7 +1648,7 @@ export default function HomePage() {
                         </div>
                       </CardContent>
                     </Card>
-                  </CarouselItem>
+                  </CarouselItem> */}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
@@ -1319,7 +1661,9 @@ export default function HomePage() {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               transition={{ ease: "easeInOut" }}
-              onClick={() => {router.push("/home/calendario")}}
+              onClick={() => {
+                router.push("/home/calendario");
+              }}
               className="cursor-pointer bg-white h-[230px] flex flex-col justify-center items-center rounded-[35px] shadow-md bg border border-[#00000031] overflow-hidden"
             >
               <div className=" w-full flex h-[40%] text-center justify-center gap-20 items-center relative">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext, useMemo, createContext } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Plus } from "lucide-react";
@@ -33,6 +33,11 @@ type Salas = {
   topicos: string[];
 };
 
+export const SearchContext = createContext({
+  searchTerm: "",
+  setSearchTerm: (value: string) => {},
+});
+
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
 export default function SalasdeEstudo() {
@@ -44,8 +49,27 @@ export default function SalasdeEstudo() {
   const [salas, setSalas] = useState<Salas[]>([]);
   const [avatares, setAvatares] = useState<string[]>([]);
 
+  const { searchTerm } = useContext(SearchContext);
+
+  const filteredPosts = useMemo(() => {
+    if (!searchTerm.trim()) return salas;
+    return salas.filter((p) =>
+      p.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, salas]);
+
   useEffect(() => {
     const fetchAll = async () => {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      // setUserID(userIDdata1.userId); // set the state
+
       try {
         // Run all fetches in parallel
         const [userRes, salasRes] = await Promise.all([
@@ -53,10 +77,13 @@ export default function SalasdeEstudo() {
             method: "GET",
             credentials: "include",
           }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/sala-estudo`, {
-            method: "GET",
-            credentials: "include",
-          }),
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/salas-participando`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          ),
         ]);
 
         // Parse all JSONs in parallel
@@ -67,14 +94,15 @@ export default function SalasdeEstudo() {
 
         // ✅ Set states after everything is done
         setUser(userData);
-        setSalas(salasData.salas);
+        const lista = Array.isArray(salasData) ? salasData : [];
+        setSalas(lista);
+        console.log(salasData);
 
-        for (let a = 0; a < salasData.salas.length; a++) {
-          setAvatares((prev) => [
-            ...prev,
-            ...salasData.salas[a].avataresUltimosUsuarios,
-          ]);
-        }
+        lista.forEach((s: Salas) => {
+          if (Array.isArray(s.avataresUltimosUsuarios)) {
+            setAvatares((prev) => [...prev, ...s.avataresUltimosUsuarios]);
+          }
+        });
 
         // Extract data from /home/salas-estudo safely
       } catch (err) {
@@ -93,9 +121,8 @@ export default function SalasdeEstudo() {
   return (
     <>
       <div className="w-full h-full flex flex-col px-4 py-2 gap-4 overflow-y-auto overflow-x-hidden">
-        {salas.map((sala, index) => {
+        {(filteredPosts ?? []).map((sala, index) => {
           const randomColor = cor[Math.floor(Math.random() * cor.length)];
-          
 
           return (
             <div

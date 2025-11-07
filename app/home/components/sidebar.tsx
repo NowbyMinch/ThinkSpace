@@ -144,7 +144,7 @@ export const Sidebar = () => {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 0.94 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className={`w-[700px] h-[380px] flex rounded-[40px] z-[1100]  opacity-1 `}
+              className={`w-[700px] p-4 h-[350px] min-fit flex rounded-[40px] z-[1100]  opacity-1 `}
             >
               <div
                 id="white-box"
@@ -178,7 +178,7 @@ export const Sidebar = () => {
                     <span className="text-[20px]"></span>
                   </div>
 
-                  <h1 className="text-center text-[20px] font-medium">
+                  <h1 className="text-center text-[20px] font-medium my-auto">
                     Saindo da conta. Até a próxima sessão!
                   </h1>
                   <div className="w-full flex justify-center gap-4 mt-auto">

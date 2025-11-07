@@ -45,15 +45,15 @@ export default function SalasdeEstudo() {
   const [loading, setLoading] = useState(false);
   const [salas, setSalas] = useState<Salas[]>([]);
   const [avatares, setAvatares] = useState<string[]>([]);
-  const { searchTerm } = useContext(SearchContext);
   const [open2, setOpen2] = useState(false);
   const [topicos, setTopicos] = useState<string[]>([]);
   const [topicoInput, setTopicoInput] = useState("");
-
+  
   const [nomeSala, setNomeSala] = useState("");
   const [descricao, setDescricao] = useState("");
   const [tipo, setTipo] = useState("");
-
+  
+  const { searchTerm } = useContext(SearchContext);
   const filteredPosts = useMemo(() => {
     if (!searchTerm.trim()) return salas;
     return salas.filter((p) =>
@@ -95,10 +95,7 @@ export default function SalasdeEstudo() {
       // ✅ Set states after everything is done
       setUser(userData);
       setSalas(salasData.salas);
-      console.log(
-        salasData,
-        "DATA SALAS DATA SALAS DATA SALAS DATA SALAS DATA SALAS "
-      );
+      
 
       // Extract data from /home/salas-estudo safely
     } catch (err) {

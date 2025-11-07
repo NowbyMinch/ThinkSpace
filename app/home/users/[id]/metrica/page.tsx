@@ -85,6 +85,9 @@ export default function Métricas() {
   const [userID, setUserID] = useState("");
   const [metricasUser, setMetricasUser] = useState<MetricasUser>();
   const [melhores, setMelhores] = useState();
+  
+  const [sala, setSala] = useState("");
+  
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -340,7 +343,7 @@ export default function Métricas() {
                     Ranking
                     <div className="flex gap-2">
                       {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#D9D9D9] flex justify-center items-center text-[18px] text-black cursor-pointer">Geral</div> */}
-                      <ComboboxDemomMetricas />
+                      <ComboboxDemomMetricas value={sala} onChange={(value) => {setSala(value)}} />
                       {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#9767f85e] flex justify-center items-center text-[18px] text-black cursor-pointer">
                                                 Sala de estudos
                                                 <ChevronDown/>

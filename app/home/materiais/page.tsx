@@ -92,7 +92,7 @@ type editar = {
   cor?: string;
   icone?: string;
   quantidadeMateriais?: number;
-  tempoAtivo?: string;
+  tempoAtivo?: number;
   ultimaRevisao?: string;
   // add other properties if needed
 };
@@ -235,6 +235,7 @@ export default function Materiais() {
         setUserXP(rankingData);
 
         if (recentesData.materiasRecentes) {
+          console.log("RECENTES RECENTES", recentesData.materiasRecentes);
           setRecente(recentesData.materiasRecentes);
         }
 
@@ -704,7 +705,12 @@ export default function Materiais() {
                                 {temp[0]?.quantidadeMateriais}
                               </h2>
                               <h2 className="material_text leading-none">
-                                Tempo ativo: 0
+                                Tempo ativo:{" "}
+                                {temp[0].tempoAtivo
+                                  ? temp[0].tempoAtivo < 60
+                                    ? `${temp[0].tempoAtivo} minuto${temp[0].tempoAtivo > 1 ? "s" : ""}`
+                                    : `${Math.floor(temp[0].tempoAtivo / 60)}h ${temp[0].tempoAtivo % 60}min`
+                                  : "0 minuto"}
                               </h2>
                               <h2 className="material_text leading-none">
                                 Última revisão: {temp[0]?.ultimaRevisao}
@@ -1025,7 +1031,7 @@ export default function Materiais() {
                                                 icone: material.icone,
                                                 quantidadeMateriais:
                                                   material.quantidadeMateriais,
-                                                tempoAtivo: "0",
+                                                tempoAtivo: material.tempoAtivo,
                                                 ultimaRevisao: String(
                                                   new Date(
                                                     material.ultimaRevisao
@@ -1096,7 +1102,10 @@ export default function Materiais() {
                                     {material.quantidadeMateriais}
                                   </h2>
                                   <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit">
-                                    Tempo ativo: 0 horas
+                                    Tempo ativo:{" "}
+                                    {material.tempoAtivo < 60
+                                      ? `${material.tempoAtivo} minuto${material.tempoAtivo > 1 ? "s" : ""}`
+                                      : `${Math.floor(material.tempoAtivo / 60)}h ${material.tempoAtivo % 60}min`}
                                   </h2>
                                   <h2 className="material_text break-words leading-none text-[18px] opacity-[75%] font-medium w-fit">
                                     Última revisão:{" "}
@@ -1215,15 +1224,20 @@ export default function Materiais() {
                         <div className="recentes  ">
                           <h2
                             className="
-                                                w-full
-                                                break-words 
-                                                text-[25px] 
-                                                max-w-[250px] line-clamp-2 breake-words  font-medium leading-none"
+                            w-full
+                            break-words 
+                            text-[25px] 
+                            max-w-[250px] line-clamp-2 breake-words  font-medium leading-none"
                           >
                             {materia.nome}
                           </h2>
                           <h2 className="text-[18px] text-[#828181]">
-                            Tempo de estudo: 0 horas
+                            Tempo de estudo:{" "}
+                            {materia.tempoAtivo
+                              ? materia.tempoAtivo < 60
+                                ? `${materia.tempoAtivo} minuto${materia.tempoAtivo > 1 ? "s" : ""}`
+                                : `${Math.floor(materia.tempoAtivo / 60)}h ${materia.tempoAtivo % 60}min`
+                              : "0 minuto"}
                           </h2>
                         </div>
 
