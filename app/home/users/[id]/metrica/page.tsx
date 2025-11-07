@@ -85,9 +85,29 @@ export default function Métricas() {
   const [userID, setUserID] = useState("");
   const [metricasUser, setMetricasUser] = useState<MetricasUser>();
   const [melhores, setMelhores] = useState();
-  
-  const [sala, setSala] = useState("");
-  
+
+  const [sala, setSala] = useState({ nome: "", id: "" });
+
+  useEffect(() => {
+    if (sala) {
+      const Ranking = async () => {
+        if (userID) {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/metricas/ranking?salaId=${sala.id}`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+
+          const data = await res.json();
+          setRanking(data);
+          setLoading(false);
+        }
+      };
+      Ranking();
+    }
+  }, [sala]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -124,7 +144,6 @@ export default function Métricas() {
         // Apply state updates after all are done
         setUser(userData);
         setUserXP(userXPData);
-        setRanking(rankingData);
         setUserID(userIDData.userId);
 
         console.log("All data loaded successfully:", {
@@ -308,7 +327,9 @@ export default function Métricas() {
 
                     <div className="w-full h-[12px] rounded-[25px] bg-[#1e235138]">
                       <div
-                        style={{ width: `${userXP ? (userXP?.xp / userXP?.maxXp)*100 : 0}%` }}
+                        style={{
+                          width: `${userXP ? (userXP?.xp / userXP?.maxXp) * 100 : 0}%`,
+                        }}
                         className={` h-[12px] rounded-[25px] bg-purple-600 `}
                       ></div>
                     </div>
@@ -343,11 +364,16 @@ export default function Métricas() {
                     Ranking
                     <div className="flex gap-2">
                       {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#D9D9D9] flex justify-center items-center text-[18px] text-black cursor-pointer">Geral</div> */}
-                      <ComboboxDemomMetricas value={sala} onChange={(value) => {setSala(value)}} />
+                      <ComboboxDemomMetricas
+                        value={sala.nome}
+                        onChange={(value, id) => {
+                          setSala({ nome: value, id: id });
+                        }}
+                      />
                       {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#9767f85e] flex justify-center items-center text-[18px] text-black cursor-pointer">
-                                                Sala de estudos
-                                                <ChevronDown/>
-                                            </div> */}
+                          Sala de estudos
+                          <ChevronDown/>
+                      </div> */}
                     </div>
                   </h1>
 

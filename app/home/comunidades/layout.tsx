@@ -15,12 +15,13 @@ import {
   Heart,
   MessageCircle,
   Search,
+  SendHorizonal,
   User,
   X,
 } from "lucide-react";
 import path from "path";
 import { Backdrop3 } from "../components/backdrop";
-import PostagemDetail from "@/components/postagemDetail";
+import PostagemDetail from "@/components/ui/postagemDetail";
 
 type UserData = {
   primeiroNome?: string;
@@ -125,12 +126,11 @@ export default function LayoutSalas({ children }: SalasProps) {
   const [favorito, setFavorito] = useState<Favorito[]>([]);
   const [recentes, setRecentes] = useState<Recentes[]>([]);
   const [open, setOpen] = useState(false);
-  
+
   const [editar, setEditar] = useState(false);
-  
+
   const [editarNome, setEditarNome] = useState("");
   const [editarDescricao, setEditarDescricao] = useState("");
-  
 
   const [deletar, setDeletar] = useState(false);
   const [curtidaCheck, setCurtidaCheck] = useState<boolean | undefined>(
@@ -138,6 +138,8 @@ export default function LayoutSalas({ children }: SalasProps) {
   );
   const [curtidaNumero, setCurtidaNumero] = useState<number>(-1);
   const [appear, setAppear] = useState(0);
+  const [topicos, setTopicos] = useState<string[]>([]);
+  const [topicoInput, setTopicoInput] = useState("");
 
   const refreshFavoritos = async () => {
     try {
@@ -386,11 +388,12 @@ export default function LayoutSalas({ children }: SalasProps) {
         // ✅ Set states after everything is done
         setUser(userData);
         setSala(salaData);
-        setEditarNome(salaData?.nome);  
-        setEditarDescricao(salaData?.descricao);  
-        console.log(salaData.nome)
-        console.log(salaData.descricao)
-          
+        setEditarNome(salaData?.nome);
+        setEditarDescricao(salaData?.descricao);
+        setTopicos(salaData?.topicos);
+        console.log(salaData.nome);
+        console.log(salaData.descricao);
+
         setUserID(userIDdata.userId);
         if (recentesData.length > 0) {
           setRecentes(Array.isArray(recentesData) ? recentesData : []);
@@ -580,22 +583,44 @@ export default function LayoutSalas({ children }: SalasProps) {
   };
 
   const editarFunction = async () => {
-    if (sala?.id && userID) {
-      const seguirRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/seguir/${userID}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
-      const seguirData = await seguirRes.json();
-      console.log(seguirData);
-      if (seguirData.error) {
-        setMessage(seguirData.error);
-      } else {
-        SegueUpdate();
+    const userIDRes1 = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
       }
+    );
+
+    const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
+
+    const payload = {
+      nome: editarNome,
+      descricao: editarDescricao,
+      topicos: topicos,
+    };
+
+    const editarRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/editar/${userIDdata1.userId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "include",
+      }
+    );
+    const editarData = await editarRes.json();
+
+    console.log(
+      "editarData editarData editarData editarData editarData ",
+      editarData
+    );
+
+    if (editarData.message === "Sala de estudo editada com sucesso.") {
+      setEditar(false);
+      fetchAllConst();
+    } else if (editarData.error) {
+      setMessage(editarData.error);
     }
   };
 
@@ -856,6 +881,7 @@ export default function LayoutSalas({ children }: SalasProps) {
               </div>
             </>
           )}
+
           {editar && (
             <>
               <motion.div
@@ -873,12 +899,12 @@ export default function LayoutSalas({ children }: SalasProps) {
                   animate={{ opacity: 1, scale: 0.94 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="relative z-[1101] rounded-[40px] overflow-hidden shadow-md"
-                  style={{ width: 640 }} 
+                  style={{ width: 640 }}
                 >
                   <div
                     className="bg-white w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
                     style={{
-                      WebkitOverflowScrolling: "touch", 
+                      WebkitOverflowScrolling: "touch",
                       clipPath: "inset(0 round 40px)",
                     }}
                   >
@@ -934,12 +960,97 @@ export default function LayoutSalas({ children }: SalasProps) {
                             </h2>
 
                             <textarea
-                              onChange={(e) => setEditarDescricao(e.target.value)}
+                              onChange={(e) =>
+                                setEditarDescricao(e.target.value)
+                              }
                               value={editarDescricao}
                               className="shadow-md border-2 border-[rgba(0,0,0,0.19)] w-full min-h-[95px] rounded-[25px] p-2 outline-[rgba(151,103,248,0.6)]"
                             />
                           </div>
-                          <div className="flex min-h-fit flex-col sm:flex-row gap-4"></div>
+                          <div className=" w-full lg:w-full max-w-full sm:h-full sm:max-h-[350px] min-h-fit overflow-y-auto overflow-x-hidden flex justify-center flex-col gap-4">
+                            <div className=" lg:w-full w-[500px] max-w-full h-fit min-h-fit flex flex-col gap-1 ">
+                              <h1 className="font-medium text-[20px] leading-[20px] ">
+                                Tags
+                              </h1>
+                              <div className=" max-w-[600px] h-fit flex gap-1 justify-center items-end ">
+                                <input
+                                  type="text"
+                                  value={topicoInput}
+                                  onChange={(e) =>
+                                    setTopicoInput(e.target.value)
+                                  }
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                      e.preventDefault();
+                                    }
+
+                                    if (
+                                      e.key === "Enter" &&
+                                      topicoInput &&
+                                      !topicos.includes(topicoInput)
+                                    ) {
+                                      setTopicos((prev) => [
+                                        ...prev,
+                                        topicoInput,
+                                      ]);
+                                      setTopicoInput("");
+                                    }
+                                  }}
+                                  placeholder="Adicionar tags"
+                                  className="shadow-md pl-5 text-[18px] w-full h-[50px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                                />
+
+                                <motion.button
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.92 }}
+                                  onClick={() => {
+                                    if (
+                                      topicoInput &&
+                                      !topicos.includes(topicoInput)
+                                    ) {
+                                      setTopicos((prev) => [
+                                        ...prev,
+                                        topicoInput,
+                                      ]);
+                                      setTopicoInput("");
+                                    }
+                                  }}
+                                  type="button"
+                                  className="p-[10px] min-w-[50px] bg-[#A39CEC] rounded-[27%] text-white flex justify-center items-center text-[20px] font-semibold shadow-md "
+                                >
+                                  <SendHorizonal className="size-6" />
+                                </motion.button>
+                              </div>
+                            </div>
+                            <div className="shadow-md lg:w-full min-h-[50px] w-[500px] max-w-full h-full rounded-[25px] max-h-[350px] overflow-y-auto overflow-x-hidden flex justify-center border-2 border-[rgba(0,0,0,0.19)] items-center">
+                              <div className=" w-[95%] px-2 py-2 h-min mt-2 flex flex-wrap gap-2 overflow-auto min-h-fit max-h-[30px] ">
+                                <AnimatePresence>
+                                  {topicos.map((topico, index) => (
+                                    <motion.div
+                                      key={topico + index}
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      id="topicos"
+                                      className="flex w-fit h-fit py-1 px-2 gap-2 text-white bg-[#A387DC] rounded-[8px] max-w-full cursor-pointer"
+                                    >
+                                      <X
+                                        onClick={() => {
+                                          setTopicos((prev) =>
+                                            prev.filter((_, i) => i !== index)
+                                          );
+                                        }}
+                                        className="text-[rgba(0,0,0,0.34)]"
+                                      />
+
+                                      <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                        {topico}
+                                      </span>
+                                    </motion.div>
+                                  ))}
+                                </AnimatePresence>
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         <div className="w-full flex justify-center items-center ">
@@ -964,6 +1075,7 @@ export default function LayoutSalas({ children }: SalasProps) {
               </div>
             </>
           )}
+
           {deletar && (
             <>
               <motion.div
@@ -1060,16 +1172,20 @@ export default function LayoutSalas({ children }: SalasProps) {
                                 <div className="w-full h-[385px] bg-[#9767F8] relative">
                                   {!loading && (
                                     <>
-                                      <div className="w-7 h-7 absolute top-4 left-4">
+                                      <motion.div
+                                        whileHover={{ scale: 1.04 }}
+                                        whileTap={{ scale: 0.96 }}
+                                        className="w-7 h-7 absolute top-4 left-4 p-1 rounded-full bg-[#9767F8]"
+                                      >
                                         <ArrowLeft
-                                          className="cursor-pointer w-full h-full "
+                                          className="cursor-pointer w-full h-full text-white  "
                                           onClick={() => {
                                             router.push(
                                               "/home/comunidades/salas_de_estudo"
                                             );
                                           }}
                                         />
-                                      </div>
+                                      </motion.div>
 
                                       <img
                                         src={sala ? sala.banner : "a"}
@@ -1316,7 +1432,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                               return (
                                 <span
                                   key={index}
-                                  className="text-[16px] px-3 w-fit rounded-full"
+                                  className="text-[16px] px-3 w-fit rounded-full text-white"
                                   style={{
                                     backgroundColor:
                                       cor[
@@ -1379,17 +1495,21 @@ export default function LayoutSalas({ children }: SalasProps) {
                             </>
                           )}
 
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            transition={{ ease: "easeInOut" }}
-                            onClick={seguir}
-                            className=" bg-[#9B79E0] text-white px-4 py-2 text-[16px] font-normal shadow-md my-auto rounded-full text-nowrap"
-                          >
-                            {sala?.usuarioSegue
-                              ? "Deixar de seguir sala"
-                              : "Seguir sala"}
-                          </motion.button>
+                          {userID !== sala?.moderadorId && (
+                            <>
+                              <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ ease: "easeInOut" }}
+                                onClick={seguir}
+                                className=" bg-[#9B79E0] text-white px-4 py-2 text-[16px] font-normal shadow-md my-auto rounded-full text-nowrap"
+                              >
+                                {sala?.usuarioSegue
+                                  ? "Deixar de seguir sala"
+                                  : "Seguir sala"}
+                              </motion.button>
+                            </>
+                          )}
                         </div>
 
                         <h1 className="text-[25px] leading-none font-medium my-2">

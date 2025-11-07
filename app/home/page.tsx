@@ -785,15 +785,14 @@ export default function HomePage() {
                         Links úteis
                       </h1>
                       <p className="text-[20px] font-medium max-w-[350px]">
-                        Como os grupos de estudo podem te ajudar na sua
-                        trajetória acadêmica?
+                        Como posso estudar de forma eficiente?
                       </p>
                     </div>
 
                     <img
-                      src="/homeImg.svg"
+                      src="/eficiente.svg"
                       alt="Decoração"
-                      className="w-[380px] max-w-[50%] h-auto  sm:mx-0 mx-auto"
+                      className="w-[580px] max-w-[50%] h-auto sm:mx-0 mx-auto"
                     />
 
                     <div className="self-center sm:flex flex-col hidden ">
@@ -801,82 +800,62 @@ export default function HomePage() {
                         Links úteis
                       </h1>
                       <p className="text-[22px] font-medium max-w-[350px]">
-                        Como os grupos de estudo podem te ajudar na sua
-                        trajetória acadêmica?
+                        Como posso estudar de forma eficiente?
                       </p>
                     </div>
                   </div>
                   <div className="w-[90%] self-center min-h-fit text-[18px] text-[rgb(150,150,150)] font-medium">
                     <p className="text-justify leading-relaxed">
-                      Aprender é um processo muito mais produtivo quando é feito
-                      em comunidade. Por isso, os grupos de estudo dentro da
-                      nossa plataforma foram criados para aproximar estudantes
-                      com os mesmos objetivos, promovendo trocas de
-                      conhecimento, incentivo mútuo e uma rotina de estudos mais
-                      leve e organizada.
+                      Estudar de forma eficiente com o ThinkSpace é simples,
+                      pois a plataforma foi desenvolvida justamente para
+                      otimizar o aprendizado e tornar o processo mais dinâmico e
+                      personalizado. Tudo começa com os materiais de estudo: o
+                      aluno pode carregar textos, apostilas ou temas de aula, e
+                      a inteligência artificial integrada transforma o conteúdo
+                      em resumos claros e diretos, destacando os principais
+                      tópicos. Isso facilita a compreensão e reduz o tempo gasto
+                      na leitura de grandes volumes de informação.
                     </p>
 
                     <p className="text-justify leading-relaxed mt-4">
-                      Na aba Comunidade, você pode criar sua própria sala de
-                      estudo e convidar colegas para participar. Essa
-                      funcionalidade permite que cada grupo tenha um espaço
-                      personalizado, com o foco que preferir — seja para revisar
-                      conteúdos de uma disciplina específica, estudar para o
-                      Enem, preparar-se para vestibulares, concursos ou até
-                      mesmo compartilhar experiências sobre a vida
-                      universitária.
+                      Com base nesses materiais, o ThinkSpace cria flashcards
+                      automáticos e quizzes personalizados, permitindo revisar o
+                      conteúdo de forma prática e interativa. Essa técnica
+                      estimula a memorização ativa, considerada uma das formas
+                      mais eficazes de retenção de conhecimento.
                     </p>
 
                     <p className="text-justify leading-relaxed mt-4">
-                      Dentro das salas, é possível anexar materiais de estudo,
-                      que incluem como resumos de IA, flashcards e quizzes, além
-                      do histórico de chat de IA. Por exemplo, um grupo de
-                      Biologia pode criar um tópico sobre “Ecologia” e anexar um
-                      material de estudo, enquanto outro estudante compartilha
-                      flashcards e um terceiro posta sobre dúvidas em relação à
-                      matéria, como "O que são organelas?". Assim, todos
-                      colaboram e constroem juntos um repositório de
-                      conhecimento acessível e dinâmico.
+                      Além disso, o calendário de estudos ajuda o estudante a
+                      manter uma rotina organizada, registrando prazos, provas e
+                      metas de aprendizado. Dessa forma, é possível planejar o
+                      tempo de estudo de maneira equilibrada, evitando
+                      sobrecarga e esquecimentos.
                     </p>
 
                     <p className="text-justify leading-relaxed mt-4">
-                      Além disso, a interação é um dos pontos mais importantes.
-                      Você pode curtir e responder comentários, salvar postagens
-                      relevantes e participar de discussões que ampliam sua
-                      compreensão dos temas estudados. Imagine um grupo de
-                      Redação, onde os participantes compartilham seus textos e
-                      recebem feedbacks construtivos de outros colegas — essa
-                      troca é valiosa e contribui diretamente para o
-                      aperfeiçoamento de cada um.
+                      As métricas de desempenho também são um diferencial
+                      importante: elas mostram o progresso do aluno, apontando
+                      quais áreas precisam de reforço e quais já estão
+                      consolidadas. Assim, é possível ajustar o ritmo e as
+                      estratégias de estudo de forma personalizada.
                     </p>
 
                     <p className="text-justify leading-relaxed mt-4">
-                      Para garantir que todos se sintam à vontade e respeitados,
-                      nossa plataforma também oferece a opção de denúncia. Caso
-                      algum comportamento inadequado aconteça — como
-                      desrespeito, linguagem ofensiva ou compartilhamento
-                      indevido de conteúdo — qualquer usuário pode realizar uma
-                      denúncia de forma simples e rápida. Assim, todos colaboram
-                      para manter um ambiente seguro, acolhedor e saudável, onde
-                      o foco é o aprendizado e o respeito mútuo.
+                      Por fim, o ThinkSpace conta com salas de estudo e uma
+                      comunidade interativa, onde os usuários podem compartilhar
+                      materiais, tirar dúvidas e trocar experiências com outros
+                      estudantes. Esse ambiente colaborativo torna o aprendizado
+                      mais leve, motivador e eficiente.
                     </p>
 
                     <p className="text-justify leading-relaxed mt-4">
-                      Participar de grupos de estudo também desenvolve
-                      habilidades socioemocionais e acadêmicas, como trabalho em
-                      equipe, comunicação, organização e empatia — competências
-                      que são fundamentais tanto para a vida acadêmica quanto
-                      para o mercado de trabalho.
+                      Em resumo, o ThinkSpace combina tecnologia, organização e
+                      interação para ajudar o aluno a estudar de maneira mais
+                      inteligente — com foco no que realmente importa, no seu
+                      ritmo e com ferramentas que potencializam o aprendizado.
                     </p>
 
-                    <p className="text-justify leading-relaxed mt-4">
-                      Em resumo, os grupos de estudo da nossa plataforma não são
-                      apenas espaços para trocar informações, mas verdadeiras
-                      comunidades de aprendizado. Aqui, cada contribuição conta,
-                      e o conhecimento é construído de forma coletiva,
-                      conectando pessoas que compartilham os mesmos sonhos e
-                      metas.
-                    </p>
                   </div>
                   {/* <div className="w-[90%] self-center">
                     <motion.button
@@ -1250,6 +1229,8 @@ export default function HomePage() {
                                   <>
                                     {notificacao.notificacoes.map(
                                       (nota, index) => {
+
+                                        
                                         return (
                                           <motion.div
                                             id="perguntas"
@@ -1605,7 +1586,9 @@ export default function HomePage() {
                   </CarouselItem>
 
                   <CarouselItem
-                    onClick={() => {setLinkUtil2(true)}}
+                    onClick={() => {
+                      setLinkUtil2(true);
+                    }}
                     className="basis-full sm:basis-[49%] cursor-pointer"
                   >
                     <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">

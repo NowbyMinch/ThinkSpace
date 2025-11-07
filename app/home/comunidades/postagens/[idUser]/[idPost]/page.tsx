@@ -10,7 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Ellipsis, Heart, MessageCircle } from "lucide-react";
-import PostagemDetail from "@/components/postagemDetail";
+import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
 import { stringify } from "querystring";
@@ -414,7 +414,10 @@ export default function Materiais() {
         }
       );
       const comentarData = await comentarRes.json();
-      if (comentarData.error) { setMessage(comentarData.error); return};
+      if (comentarData.error) {
+        setMessage(comentarData.error);
+        return;
+      }
 
       fetchAll();
       // Optional: append comment to UI
@@ -723,7 +726,10 @@ export default function Materiais() {
 
                         <PostagemDetail
                           message={comentario.id}
-                          Mine={comentario.autor.id === userID || post?.autor.id === userID }
+                          Mine={
+                            comentario.autor.id === userID ||
+                            post?.autor.id === userID
+                          }
                           onClose={() => {
                             setAppear2(0);
                             fetchAll();

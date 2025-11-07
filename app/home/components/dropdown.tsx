@@ -530,10 +530,13 @@ type Sala = {
 
 interface ComboboxDemoPropsMetricas {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, id: string) => void;
 }
 
-export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetricas) {
+export function ComboboxDemomMetricas({
+  value,
+  onChange,
+}: ComboboxDemoPropsMetricas) {
   const [open, setOpen] = useState(false);
   const [salas, setSalas] = useState<Sala[]>([]);
 
@@ -547,8 +550,7 @@ export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetr
         }
       );
 
-      const userIDdata1 = await userIDRes1.json(); // parse the response
-      // setUserID(userIDdata1.userId); // set the state
+      const userIDdata1 = await userIDRes1.json();
 
       try {
         const res = await fetch(
@@ -561,8 +563,6 @@ export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetr
 
         const data = await res.json();
         setSalas(data);
-
-        console.log("DATA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA", data);
       } catch (err) {
         console.error(err);
       }
@@ -588,32 +588,33 @@ export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetr
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-[200px] p-0 rounded-[10px]">
         <Command className="rounded-[10px]">
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {salas
-                ? salas.map((framework) => (
-                    <CommandItem
-                      key={framework.id}
-                      value={framework.nome}
-                      className="text-[18px]"
-                      onSelect={(currentValue) => {
-                        onChange(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      {framework.nome}
-                      <Check
-                        className={cn(
-                          "ml-auto",
-                          value === framework.nome ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  ))
-                : ""}
+              {salas &&
+                salas.map((framework) => (
+                  <CommandItem
+                    key={framework.id}
+                    value={framework.nome}
+                    className="text-[18px]"
+                    onSelect={() => {
+                      // ✅ Send name AND id
+                      onChange(framework.nome, framework.id);
+                      setOpen(false);
+                    }}
+                  >
+                    {framework.nome}
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        value === framework.nome ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
             </CommandGroup>
           </CommandList>
         </Command>
@@ -621,6 +622,7 @@ export function ComboboxDemomMetricas({ value, onChange }: ComboboxDemoPropsMetr
     </Popover>
   );
 }
+
 
 interface ComboboxDemoProps {
   value: string;

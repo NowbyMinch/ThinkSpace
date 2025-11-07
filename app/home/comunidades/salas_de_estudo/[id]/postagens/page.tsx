@@ -10,7 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Ellipsis, Heart, MessageCircle, Router, X } from "lucide-react";
-import PostagemDetail from "@/components/postagemDetail";
+import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
 

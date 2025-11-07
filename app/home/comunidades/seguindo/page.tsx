@@ -1,11 +1,19 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef, useContext, useMemo, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useMemo,
+  createContext,
+} from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { SearchContext } from "@/app/context/SearchContext";
 
 type UserData = {
   primeiroNome?: string;
@@ -32,11 +40,6 @@ type Salas = {
   quantidadeEstudantes: number;
   topicos: string[];
 };
-
-export const SearchContext = createContext({
-  searchTerm: "",
-  setSearchTerm: (value: string) => {},
-});
 
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
@@ -127,99 +130,92 @@ export default function SalasdeEstudo() {
           return (
             <div
               key={index}
-              className="w-full min-h-fit h-[300px] border-2 border-[rgba(0,0,0,0.3)] rounded-[35px] shadow-md p-4 flex gap-3 lg:flex-row flex-col "
+              className="w-full min-h-fit border-2 border-[rgba(0,0,0,0.3)] rounded-[35px] shadow-md p-4 flex gap-3 lg:flex-row flex-col"
             >
-              <div className="flex h-full flex-col min-w-[60%] w-full ">
+              {/* WRAPPER NÃO-FLEX PARA EVITAR O BUG */}
+              <div className="w-full flex flex-col min-w-[60%]">
                 <div className="flex items-center w-full justify-between">
-                  <h1>{sala.nome}</h1>
+                  <h1 className="font-medium">{sala.nome}</h1>
                 </div>
-                <div className="shadow-md flex justify-center items-center w-full h-full max-h-full rounded-[35px] min-h-[160px] overflow-hidden">
-                  <img
-                    src={`${sala.banner}`}
-                    className="w-full h-full object-cover"
-                    alt=""
-                  />
-                  {/* <div className="max-w-[50%] w-[50%] max-h-full h-full flex justify-center items-center">
-                    <Plus className="w-[50%] max-w-[155px] h-[70%]" />
-                  </div> */}
+
+                {/* ✅ WRAPPER NÃO-FLEX COM OVERFLOW CORRETO */}
+                <div className="w-full overflow-hidden rounded-[35px]">
+                  <div className="w-full h-64 relative">
+                    <img
+                      src={sala.banner}
+                      alt={sala.nome}
+                      className="w-full h-full object-cover rounded-[35px]"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="flex flex-col gap-5 w-full justify-center">
-                <div className="flex gap-1 w-full ">
-                  {sala.topicos.map((topico, index) => {
-                    const randomColor =
-                      cor[Math.floor(Math.random() * cor.length)];
-
-                    return (
-                      <span
-                        key={index}
-                        style={{ backgroundColor: randomColor }}
-                        className={` text-[16px] px-3 rounded-full h-fit w-fit shadow-md`}
-                      >
-                        {topico}
-                      </span>
-                    );
-                  })}
+                <div className="flex flex-wrap gap-1 w-full">
+                  {(sala.topicos ?? []).slice(0, 5).map((topico, index) => (
+                    <span
+                      key={index}
+                      className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
+                      style={{
+                        backgroundColor:
+                          cor[Math.floor(Math.random() * cor.length)],
+                      }}
+                    >
+                      {topico}
+                    </span>
+                  ))}
+                  {sala.topicos.length > 6 && (
+                    <span className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md bg-gray-300">
+                      +{sala.topicos.length - 5} more
+                    </span>
+                  )}
                 </div>
+
                 <motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   transition={{ ease: "easeInOut" }}
-                  onClick={() => {
+                  onClick={() =>
+                    sala.id &&
                     router.push(
                       `/home/comunidades/salas_de_estudo/${sala.id}/postagens`
-                    );
-                  }}
-                  className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full  py-3 shadow-md"
+                    )
+                  }
+                  className="text-white font-medium text-[20px] bg-[#1E2351] w-full max-w-[230px] rounded-full py-3 shadow-md"
                 >
                   Visualizar
                 </motion.button>
 
                 <p className="w-full break-all line-clamp-5">
                   {sala.descricao}
-                  {sala.descricao}
                 </p>
+
                 <div className="flex items-center ">
-                  <div className="relative w-[160px] h-[50px] flex ">
-                    {sala.avataresUltimosUsuarios.map((avatar, index) => (
-                      <div key={index} className="">
-                        {index === 0 && (
-                          <img
-                            src={avatar}
-                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[72px]"
-                            alt="Usuário"
-                          />
-                        )}
-                        {index === 1 && (
-                          <img
-                            src={avatar}
-                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[48px]"
-                            alt="Usuário"
-                          />
-                        )}
-                        {index === 2 && (
-                          <img
-                            src={avatar}
-                            className="diaOfensiva rounded-full absolute border-white border-[3px] left-[24px]"
-                            alt="Usuário"
-                          />
-                        )}
-                        {index === 3 && (
-                          <img
-                            src={avatar}
-                            className="diaOfensiva rounded-full absolute border-white border-[3px]"
-                            alt="Usuário"
-                          />
-                        )}
+                  <div className="flex -space-x-3">
+                    {(sala.avataresUltimosUsuarios ?? [])
+                      .slice(0, 4)
+                      .map((avatar, index) => (
+                        <img
+                          key={index}
+                          src={avatar}
+                          alt="Usuário"
+                          className="w-10 h-10 rounded-full border-[3px] border-white object-cover"
+                        />
+                      ))}
+
+                    {sala.quantidadeEstudantes > 4 && (
+                      <div className="w-10 h-10 rounded-full bg-[#9B79E0] border-[3px] border-white flex items-center justify-center text-white text-sm font-medium">
+                        +{sala.quantidadeEstudantes - 4}
                       </div>
-                    ))}
+                    )}
                   </div>
-                  <div className="flex justify-between  items-center h-[44px] w-full ">
-                    <h2
-                      className={`text-[18px] ${sala.quantidadeEstudantes > 4 ? "block" : "hidden"} pl-3`}
-                    >
-                      +{sala.quantidadeEstudantes - 4} estudantes
+
+                  <div className="ml-3">
+                    <h2 className="text-[18px] leading-none">
+                      {sala.quantidadeEstudantes}{" "}
+                      {sala.quantidadeEstudantes === 1
+                        ? "estudante"
+                        : "estudantes"}
                     </h2>
                   </div>
                 </div>
