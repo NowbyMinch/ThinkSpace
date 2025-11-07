@@ -596,7 +596,7 @@ export default function RegistrarInner() {
                                           ease: "easeInOut",
                                         }}
                                         type="button"
-                                        onClick={() => router.back()}
+                                        onClick={() => router.push("/login")}
                                         className="bg-[#804EE5] py-[8px] text-white text-[20px] rounded-[25px] shadow-md"
                                       >
                                         Voltar

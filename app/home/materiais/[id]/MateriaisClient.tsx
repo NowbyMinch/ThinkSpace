@@ -1582,11 +1582,11 @@ export default function MateriaisClient({ id }: { id: string }) {
 
                         <div className="flex items-center ">
                           <motion.div
-                            initial={{ scale: 0 }}
-                            variants={{
-                              delete: { scale: 1 },
-                            }}
-                            className="div"
+                            // initial={{ scale: 0 }}
+                            // variants={{
+                            //   delete: { scale: 1 },
+                            // }}
+                            className="" 
                             onClick={(e) => {
                               e.preventDefault();
                               setDeletar(true);

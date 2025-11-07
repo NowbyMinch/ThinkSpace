@@ -887,114 +887,105 @@ export default function Materiais() {
                         .map((nota, index) => (
                           <motion.div
                             id="perguntas"
-                            key={nota.id}
+                            key={nota.id || index}
                             whileTap={{ scale: 0.99 }}
                             whileHover={{ scale: 1.01 }}
-                            transition={{ duration: 0.2, ease: "easeInOut" }}
-                            style={{
-                              backgroundColor: `${nota.cor}33` || "white",
+                            transition={{
+                              duration: 0.2,
+                              ease: "easeInOut",
                             }}
-                            className={`border w-full max-w-full min-h-[55px] border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
+                            style={{
+                              backgroundColor: `${nota.cor}33` || "#9767f8",
+                            }}
+                            className={`border min-h-fit w-full max-w-full border-[rgba(18,18,18,0.14)] rounded-[20px] overflow-hidden shadow-md `}
                           >
-                            {/* Header */}
                             <button
                               onClick={() => toggle2(index)}
-                              style={{
-                                backgroundColor: nota.cor || "#9767f8",
-                              }}
-                              className="w-full min-h-[55px] flex justify-between px-6 text-left text-[18px] text-white font-medium transition-all ease-in-out  items-center"
+                              className="w-full min-h-[55px] h-fit flex flex-col justify-between  text-left text-[18px] text-white font-medium transition-all ease-in-out  items-center"
                             >
-                              <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 line-clamp-4 py-1">
-                                {nota.titulo}
-                              </span>
-
-                              <span
-                                className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full 
-                                ${openIndex2 === index ? "-rotate-90" : ""}`}
+                              <div
+                                style={{
+                                  backgroundColor: nota.cor || "white",
+                                }}
+                                className="w-full flex justify-between min-h-[55px] h-fit items-center px-6 "
                               >
-                                <ChevronLeft className="text-white" />
-                              </span>
-                            </button>
+                                <span className="flex-1 min-w-0 break-all leading-none whitespace-normal pr-4 line-clamp-4 py-1">
+                                  {nota.titulo}
+                                </span>
 
-                            {/* Animated Content */}
-                            <AnimatePresence initial={false}>
-                              {openIndex2 === index && (
-                                <motion.div
-                                  key="content"
-                                  initial={{
-                                    height: 0,
-                                    opacity: 0,
-                                    filter: "blur(1px)",
-                                  }}
-                                  animate={{
-                                    height: "auto",
-                                    maxHeight: "500px",
-                                    opacity: 1,
-                                    overflowY: "auto",
-                                    filter: "blur(0px)",
-                                  }}
-                                  exit={{
-                                    height: 0,
-                                    opacity: 0,
-                                    filter: "blur(1px)",
-                                  }}
-                                  transition={{
-                                    duration: 0.3,
-                                    ease: "easeInOut",
-                                  }}
+                                <span
+                                  className={`text-[18px] text-[rgba(151,103,248,1)] transform transition-transform duration-300 flex justify-center items-center rounded-full ${openIndex === index ? "-rotate-90" : ""}`}
                                 >
-                                  <div className="w-full pr-1 pt-1 flex justify-end ">
-                                    <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
-                                      {new Date(
-                                        nota.dataInicio
-                                      ).toLocaleDateString("pt-BR", {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric",
-                                      })}
-                                    </span>
-                                  </div>
-                                  <div
-                                    style={{
-                                      backgroundColor:
-                                        `${nota.cor}33` || "white",
+                                  <ChevronLeft className="text-white" />
+                                </span>
+                              </div>
+
+                              <AnimatePresence initial={false}>
+                                {openIndex2 === index && (
+                                  <motion.div
+                                    key="content"
+                                    initial={{
+                                      height: 0,
+                                      opacity: 0,
+                                      filter: "blur(1px)",
                                     }}
-                                    className="px-6 min-h-fit text-[15px] font-medium text-[#1E2351] pb-4  h-fit"
+                                    animate={{
+                                      height: "auto",
+                                      opacity: 1,
+                                      filter: "blur(0px)",
+                                    }}
+                                    exit={{
+                                      height: 0,
+                                      opacity: 0,
+                                      filter: "blur(1px)",
+                                    }}
+                                    transition={{
+                                      duration: 0.3,
+                                      ease: "easeInOut",
+                                    }}
+                                    className="w-full px-6  "
                                   >
-                                    <div className="flex gap-1 items-center text-wrap ">
-                                      <div
-                                        style={{
-                                          borderColor: nota.cor || "#9767f8",
-                                        }}
-                                        className={`min-w-4 min-h-4 border-2 rounded-full`}
-                                      ></div>
-                                      <span className=" break-words whitespace-normal max-w-[90%]">
-                                        {nota.subtitulo}
+                                    <div className="w-full pr-1 pt-1 flex justify-end ">
+                                      <span className="ml-auto text-[15px] flex gap-1 font-medium text-[#1E2351]">
+                                        {new Date(
+                                          nota.dataInicio
+                                        ).toLocaleDateString("pt-BR", {
+                                          day: "numeric",
+                                          month: "long",
+                                          year: "numeric",
+                                        })}
                                       </span>
                                     </div>
-                                    <span className="break-words whitespace-normal max-w-[90%] h-fit">
-                                      {nota.descricao}
-                                    </span>
-                                  </div>
-                                  <div
-                                    style={{
-                                      backgroundColor:
-                                        `${nota.cor}33` || "white",
-                                    }}
-                                    className="pb-2 pr-1 font-medium text-[#1E2351]"
-                                  >
-                                    <motion.div
-                                      whileHover={{ scale: 1.05 }}
-                                      whileTap={{ scale: 0.95 }}
-                                      onClick={() => Deletar(nota.id)}
-                                      className="ml-auto w-5 h-5 cursor-pointer"
-                                    >
-                                      <Trash className=" w-full h-full " />
-                                    </motion.div>
-                                  </div>
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
+                                    <div className=" min-h-fit text-[15px] font-medium text-[#1E2351] pb-4 h-fit">
+                                      <div className="flex gap-1 items-center text-wrap ">
+                                        <div
+                                          style={{
+                                            borderColor: nota.cor || "#9767f8",
+                                          }}
+                                          className={`min-w-4 min-h-4 border-3 rounded-full`}
+                                        ></div>
+                                        <span className=" break-words whitespace-normal w-full">
+                                          {nota.subtitulo}
+                                        </span>
+                                      </div>
+                                      <span className="break-words whitespace-normal w-full h-fit">
+                                        {nota.descricao}
+                                      </span>
+                                    </div>
+                                    <div className="pb-2 pr-1 font-medium text-[#1E2351]">
+                                      <motion.div
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => Deletar(nota.id)}
+                                        className="ml-auto w-5 h-5 cursor-pointer"
+                                      >
+                                        <Trash className=" w-full h-full " />
+                                      </motion.div>
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </button>
                           </motion.div>
                         ))}
                     </div>

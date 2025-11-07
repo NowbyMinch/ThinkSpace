@@ -1433,7 +1433,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                               return (
                                 <span
                                   key={index}
-                                  className="text-[16px] px-3 w-fit rounded-full text-white"
+                                  className="text-[16px] px-3 w-fit rounded-full text-black"
                                   style={{
                                     backgroundColor:
                                       cor[

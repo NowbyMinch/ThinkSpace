@@ -142,10 +142,6 @@ export default function SalasdeEstudo() {
         // ✅ Set states after everything is done
         setUser(userData);
         setSalas(salasData.salas);
-        console.log(
-          salasData,
-          "DATA SALAS DATA SALAS DATA SALAS DATA SALAS DATA SALAS "
-        );
 
         // Extract data from /home/salas-estudo safely
       } catch (err) {

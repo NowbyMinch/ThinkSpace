@@ -1246,7 +1246,7 @@ export default function HomePage() {
                                                 className="w-full min-h-[55px] h-fit flex flex-col justify-between  text-left text-[18px] text-white font-medium transition-all ease-in-out  items-center"
                                               >
                                                 <div className="w-full flex justify-between min-h-[55px] h-fit items-center px-6 ">
-                                                  <span className="flex gap-1 min-w-0 break-all leading-none whitespace-normal pr-3 line-clamp-4 py-1 items-center">
+                                                  <span className="flex gap-1 min-w-0 break-all leading-none whitespace-normal pr-1 line-clamp-4 py-1 items-center">
                                                     <Icons.TriangleAlert className="text-[#994533] size-8 " />
                                                     {nota.titulo}
                                                   </span>

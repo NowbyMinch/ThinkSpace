@@ -1055,10 +1055,11 @@ export default function Materiais() {
                                         <button
                                           onClick={() => {
                                             setDeletarPop(true);
+                                            console.log(material.id);
                                             setDeletar(material.id!);
                                             setOpenPop(null);
                                           }}
-                                          className="mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
+                                          className="postagem-detail mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center"
                                         >
                                           <SquareX className="icon-3" /> Excluir
                                         </button>

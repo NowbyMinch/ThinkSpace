@@ -9,6 +9,7 @@ import {
   Cog,
   LogOut,
   ChevronUp,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
@@ -33,6 +34,8 @@ export const Sidebar = () => {
   const [user, setUser] = useState<UserData>({});
   const [visible, setVisible] = useState(false);
   const bottomBar = useRef<HTMLDivElement>(null);
+  const [newToComunityPop, setNewToComunityPop] = useState(false);
+  const [newUser, setNewUser] = useState(false);
 
   const handleLogout = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
@@ -114,7 +117,108 @@ export const Sidebar = () => {
       }
     };
     user();
+
+    const newToComunityGET = async () => {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      // setUserID(userIDdata1.userId); // set the state
+
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/status-termos-comunidade`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        const data = await res.json();
+        setNewUser(data.aceitouTermosComunidade);
+
+        console.log("TERMOS TERMOS TERMOS TERMOS ", data);
+      } catch (err) {
+        setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    };
+    newToComunityGET();
   }, []);
+
+  const newToComunityGET = async () => {
+    const userIDRes1 = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/status-termos-comunidade`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      setNewUser(data.aceitouTermosComunidade);
+
+      console.log("TERMOS TERMOS TERMOS TERMOS ", data);
+    } catch (err) {
+      setMessage("Erro ao carregar saudação.");
+      console.error(err);
+    }
+  };
+
+  const setNewToComunityState = async () => {
+    const userIDRes1 = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/aceitar-termos-comunidade`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      console.log(data);
+      if (data.message === "Termos de uso da comunidade aceitos com sucesso.") {
+        setNewUser(true);
+      } else {
+        setMessage(data.message);
+      }
+    } catch (err) {
+      setMessage("Erro ao carregar saudação.");
+      console.error(err);
+    }
+  };
+
+  function closing() {
+    setNewToComunityPop(false);
+  }
 
   return (
     <>
@@ -203,39 +307,141 @@ export const Sidebar = () => {
                     </motion.button>
                   </div>
                 </div>
-
-                {/* <div className="w-[80%] h-[85%] flex flex-col items-center gap-2 z-[900] ">
-                                        <div className="flex flex-col justify-center items-center">
-                                            <img src={`${user.foto}`} alt="Foto de perfil" className="rounded-full w-20 h-20"/>
-                                            <span className="font-medium text-[30px]">{user.primeiroNome} </span>
-                                            <span className="text-[20px]"></span>
-                                        </div>
-
-                                        <h1 className="text-center text-[35px] font-medium">Saindo da conta. Até a próxima sessão!</h1>
-                                        <div className="w-[60%] flex justify-between mt-auto">
-                                            <motion.button 
-                                            whileHover={{ scale: 1.03 }}
-                                            whileTap={{ scale: 0.97 }}
-                                            onClick={() => setLogoutPop(false)}
-                                            className="w-[140px] rounded-[20px] text-[26px] bg-[#F1F1F1] border border-[rgba(68,68,68, 0.17)]">
-                                                Voltar
-                                            </motion.button>
-                                            <motion.button 
-                                            whileHover={{ scale: 1.03 }}
-                                            whileTap={{ scale: 0.97 }}
-                                            onClick={() => {setLogoutPop(false); handleLogout()}}
-                                            className="w-[140px] rounded-[20px] text-[26px] text-white bg-[#9767F8] border border-[rgba(68,68,68, 0.17)]">
-                                                Sair
-                                            </motion.button>
-                                        </div>
-
-                                    </div> */}
               </div>
             </motion.div>
           </motion.div>
 
           <div className="w-full absolute flex justify-center items-center ">
             <Backdrop3 onClick={() => setLogoutPop(false)} />
+          </div>
+        </>
+      )}
+
+      {newToComunityPop && (
+        <>
+          <motion.div
+            key={`denuncia-${message}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100]"
+          >
+            <div className="absolute inset-0" onClick={() => closing()} />
+
+            <motion.div
+              key="modal-wrapper"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative z-[1101] rounded-[40px] overflow-hidden shadow-md"
+              style={{ width: 700 }}
+            >
+              <div
+                className="bg-white w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+                style={{
+                  WebkitOverflowScrolling: "touch",
+                  clipPath: "inset(0 round 40px)",
+                }}
+              >
+                <div
+                  id="white-box"
+                  className="p-7 gap-3 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                >
+                  <img
+                    src="/Vector.svg"
+                    alt="Decoração"
+                    className="absolute bottom-0 right-[-180px] rotate-[260deg] w-[550px] -z-10"
+                  />
+
+                  <div className="flex justify-between items-center w-full">
+                    <h1 className="text-[35px] font-medium self-end leading-none">
+                      Bem vindo! 🌟
+                    </h1>
+                    {/* <div className="w-fit">
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={closing}
+                        className="cursor-pointer w-6 h-6"
+                      >
+                        <X className="w-full h-full" />
+                      </motion.div>
+                    </div> */}
+                  </div>
+                  <p className="text-[#5e5e5e] text-[20px] font-medium">
+                    Essa é a aba Comunidade — um espaço criado para tornar o
+                    aprendizado mais colaborativo, respeitoso e produtivo. Aqui,
+                    você pode criar salas personalizadas, interagir com colegas,
+                    compartilhar materiais e trocar experiências de estudo. Para
+                    que todos aproveitem esse ambiente de forma positiva e
+                    segura, é essencial seguir algumas regras de convivência:
+                  </p>
+                  <ul className="text-[#5e5e5e] text-[18px] font-medium list-disc list-outside pl-4">
+                    <li>
+                      Evite mensagens repetitivas, propagandas ou conteúdos
+                      falsos;
+                    </li>
+                    <li>
+                      Não compartilhe informações sem fonte confiável ou que
+                      possam induzir outros ao erro;
+                    </li>
+                    <li>
+                      Proibição de incentivo a comportamentos arriscados ou
+                      prejudiciais;
+                    </li>
+                    <li>
+                      Respeite todas as pessoas, independentemente de suas
+                      diferenças;
+                    </li>
+                    <li>
+                      Qualquer forma de intimidação, ataque pessoal ou
+                      humilhação é inaceitável;
+                    </li>
+                    <li>
+                      É estritamente proibido defender, apoiar ou incentivar
+                      atividades terroristas;
+                    </li>
+                    <li>
+                      Mantenha o ambiente adequado para todas as idades e fins
+                      educacionais;
+                    </li>
+                    <li>
+                      Não compartilhe imagens, vídeos ou textos com conteúdo
+                      violento ou repulsivo;
+                    </li>
+                    <li>
+                      Temas relacionados a suicídio, automutilação ou
+                      transtornos alimentares devem ser tratados com
+                      responsabilidade e nunca incentivados;
+                    </li>
+                    <li>
+                      Qualquer material ou menção a abuso infantil será
+                      imediatamente reportado.
+                    </li>
+                  </ul>
+                  <p className="text-[#5e5e5e] text-[20px] font-medium">
+                    Caso deseje rever essas e outras diretrizes, consulte nossos
+                    Termos de Uso disponíveis na plataforma. Juntos, podemos
+                    construir uma comunidade de aprendizado segura, acolhedora e
+                    inspiradora.
+                  </p>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ ease: "easeInOut" }}
+                    onClick={setNewToComunityState}
+                    className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                  >
+                    Aceitar termos
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="w-full absolute flex justify-center items-center">
+            <Backdrop3 onClick={() => closing()} />
           </div>
         </>
       )}
@@ -328,7 +534,17 @@ export const Sidebar = () => {
                 </Tooltip>
               </Link>
 
-              <Link href="/home/comunidades/postagens" className="">
+              {/* href="/home/comunidades/postagens" */}
+              <div
+                onClick={() => {
+                  if (newUser) {
+                    router.push("/home/comunidades/postagens");
+                  } else {
+                    setNewToComunityPop(true);
+                  }
+                }}
+                className=""
+              >
                 <Tooltip
                   closeDelay={0}
                   content="Comunidades"
@@ -354,7 +570,7 @@ export const Sidebar = () => {
                     />
                   </motion.button>
                 </Tooltip>
-              </Link>
+              </div>
 
               <Link
                 href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
