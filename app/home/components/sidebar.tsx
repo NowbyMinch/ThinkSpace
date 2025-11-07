@@ -207,6 +207,7 @@ export const Sidebar = () => {
       console.log(data);
       if (data.message === "Termos de uso da comunidade aceitos com sucesso.") {
         setNewUser(true);
+        router.push("/home/comunidades/postagens");
       } else {
         setMessage(data.message);
       }
