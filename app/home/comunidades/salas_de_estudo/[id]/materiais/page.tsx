@@ -159,7 +159,7 @@ export default function Materiais() {
 
       // Extract data from /home/salas-estudo safely
 
-      console.log("✅ All data successfully loaded");
+      //  console.log("✅ All data successfully loaded");
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -180,7 +180,7 @@ export default function Materiais() {
 
     const MateriaisData = await MateriaisRes.json(); // parse the response
     setMaterial(MateriaisData);
-    console.log(MateriaisData);
+    //  console.log(MateriaisData);
 
     closing();
   };
@@ -228,7 +228,7 @@ export default function Materiais() {
 
         // Extract data from /home/salas-estudo safely
 
-        console.log("✅ All data successfully loaded");
+        //  console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -265,7 +265,7 @@ export default function Materiais() {
       tags: topicos.length ? topicos : [],
     };
 
-    console.log("Payload enviado:", payload);
+    //  console.log("Payload enviado:", payload);
 
     const Res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${pathname.split("/")[4]}/publicar-material`,
@@ -278,7 +278,7 @@ export default function Materiais() {
     );
 
     const Data = await Res.json();
-    console.log(Data, "POSTANDO UM MATERIAL");
+    //  console.log(Data, "POSTANDO UM MATERIAL");
     if (Data.error) {
       setMessage(Data.error);
     } else {
@@ -304,7 +304,7 @@ export default function Materiais() {
       materiaId: materiaDesignada,
     };
 
-    console.log(payload);
+    //  console.log(payload);
 
     const Res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/adicionar-material`,
@@ -316,12 +316,11 @@ export default function Materiais() {
       }
     );
     if (!Res.ok) {
-      setMessage("Você já possui essa matéria em sua conta.")
+      setMessage("Você já possui essa matéria em sua conta.");
       return; // or throw
     }
     const Data = Res.json();
-    console.log(Data, "VINCULANDO UM MATERIAL");
-
+    //  console.log(Data, "VINCULANDO UM MATERIAL");
 
     // router.push(
     //   `/home/materiais/${materiaDesignada}/${materialID}/Resumo`
@@ -409,8 +408,8 @@ export default function Materiais() {
                         onChange={(id, materiaId) => {
                           setMaterialDesignado(id);
                           if (materiaId) setMateriaDesignada(materiaId);
-                          console.log("Selected Material:", id);
-                          console.log("Materia ID:", materiaId);
+                          //  console.log("Selected Material:", id);
+                          //  console.log("Materia ID:", materiaId);
                         }}
                       />
                     </div>

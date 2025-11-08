@@ -235,11 +235,11 @@ export default function Materiais() {
         setUserXP(rankingData);
 
         if (recentesData.materiasRecentes) {
-          console.log("RECENTES RECENTES", recentesData.materiasRecentes);
+        //  console.log("RECENTES RECENTES", recentesData.materiasRecentes);
           setRecente(recentesData.materiasRecentes);
         }
 
-        console.log("All data loaded successfully:", {
+      //  console.log("All data loaded successfully:", {
           materiaData,
           userData,
           recentesData,
@@ -263,7 +263,7 @@ export default function Materiais() {
   }, [materias, user]);
 
   useEffect(() => {
-    console.log("UserXP: ", userXP);
+  //  console.log("UserXP: ", userXP);
   }, [userXP]);
 
   useEffect(() => {
@@ -285,7 +285,7 @@ export default function Materiais() {
       });
 
       const data = await res.json();
-      console.log(data);
+    //  console.log(data);
       setMaterias(data);
     } catch (err) {
       console.error(err);
@@ -294,7 +294,7 @@ export default function Materiais() {
 
   // Função para criar nova matéria
   const criar = async () => {
-    console.log(criarMateria);
+  //  console.log(criarMateria);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
@@ -305,7 +305,7 @@ export default function Materiais() {
       });
 
       const data = await res.json();
-      console.log(data);
+    //  console.log(data);
       if (data.message === "Matéria criada com sucesso.") {
         closing();
       } else {
@@ -328,7 +328,7 @@ export default function Materiais() {
       );
 
       const result = await res.json();
-      console.log(result.message); // Matéria excluída com sucesso.
+    //  console.log(result.message); // Matéria excluída com sucesso.
 
       materia();
     } catch (error) {
@@ -356,7 +356,7 @@ export default function Materiais() {
       );
 
       const result = await res.json();
-      console.log(result.message); // Matéria excluída com sucesso.
+    //  console.log(result.message); // Matéria excluída com sucesso.
 
       materia();
       closing();
@@ -448,7 +448,7 @@ export default function Materiais() {
                             ...criarMateria,
                             nome: e.target.value,
                           });
-                          console.log(criarMateria);
+                        //  console.log(criarMateria);
                         }}
                         placeholder="Nome da matéria"
                         className="pl-5 text-[18px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
@@ -622,7 +622,7 @@ export default function Materiais() {
                             ...criarMateria,
                             nome: e.target.value,
                           });
-                          console.log(criarMateria);
+                        //  console.log(criarMateria);
                         }}
                         placeholder="Nome da matéria"
                         className="pl-5 text-[18px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
@@ -1055,7 +1055,7 @@ export default function Materiais() {
                                         <button
                                           onClick={() => {
                                             setDeletarPop(true);
-                                            console.log(material.id);
+                                          //  console.log(material.id);
                                             setDeletar(material.id!);
                                             setOpenPop(null);
                                           }}

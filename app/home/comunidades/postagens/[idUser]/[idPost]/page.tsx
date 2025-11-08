@@ -147,7 +147,7 @@ export default function Materiais() {
         const userIDdata = await userIDRes.json(); // parse the response
         setUserID(userIDdata.userId); // set the state
 
-        console.log(postID);
+        //  console.log(postID);
         // Run all fetches in parallel
         const [userRes, postRes, comentariosRes] = await Promise.all([
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
@@ -181,11 +181,11 @@ export default function Materiais() {
         setUser(userData);
         setPost(postData);
         setComentarios(comentariosData);
-        console.log(comentariosData);
+        //  console.log(comentariosData);
 
         // Extract data from /home/salas-estudo safely
 
-        console.log("✅ All data successfully loaded");
+        //  console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -211,7 +211,7 @@ export default function Materiais() {
       const userIDdata = await userIDRes.json(); // parse the response
       setUserID(userIDdata.userId); // set the state
 
-      console.log(postID);
+      //  console.log(postID);
       // Run all fetches in parallel
       const [userRes, postRes, comentariosRes] = await Promise.all([
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
@@ -245,11 +245,11 @@ export default function Materiais() {
       setUser(userData);
       setPost(postData);
       setComentarios(comentariosData);
-      console.log(comentariosData);
+      //  console.log(comentariosData);
 
       // Extract data from /home/salas-estudo safely
 
-      console.log("✅ All data successfully loaded");
+      //  console.log("✅ All data successfully loaded");
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");

@@ -43,7 +43,10 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
   const offset = useRef({ x: 0, y: 0 });
   const resizeDirection = useRef<{ right?: boolean; bottom?: boolean }>({});
 
-  const beginResize = (dir: "right" | "bottom" | "corner", e: React.MouseEvent<HTMLDivElement>) => {
+  const beginResize = (
+    dir: "right" | "bottom" | "corner",
+    e: React.MouseEvent<HTMLDivElement>
+  ) => {
     e.preventDefault();
     e.stopPropagation();
     setIsResizing(true);
@@ -112,10 +115,13 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         const data = await res.json();
         setUser(data);
       } catch (err) {
@@ -158,7 +164,10 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
     const tempId = Date.now().toString();
 
     // adiciona localmente
-    setHistoricoUsuario((prev) => [...prev, { id: tempId, mensagemUsuario: mensagem }]);
+    setHistoricoUsuario((prev) => [
+      ...prev,
+      { id: tempId, mensagemUsuario: mensagem },
+    ]);
     setHistoricoBot((prev) => [...prev, { id: tempId, mensagemIa: null }]);
 
     const texto = mensagem;
@@ -167,13 +176,16 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
     scrollToBottom();
 
     try {
-        console.log(texto);
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/chatbox/${idMaterial}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mensagem: texto }),
-        credentials: "include",
-      });
+      //  console.log(texto);
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/materiais/chatbox/${idMaterial}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mensagem: texto }),
+          credentials: "include",
+        }
+      );
 
       // Atualiza histórico completo da IA
       await ReceberMensagem();
@@ -205,7 +217,8 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
         >
           {/* Header */}
           <div className="text-gray-400 p-2 text-center font-semibold">
-            Para manter a experiência leve e segura, suas conversas ficam salvas por até 30 dias.
+            Para manter a experiência leve e segura, suas conversas ficam salvas
+            por até 30 dias.
           </div>
 
           {/* Messages */}
@@ -215,10 +228,16 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
                 {/* User */}
                 <div className="flex flex-col w-fit gap-1 ml-auto items-end justify-end ">
                   <div className="shadow-md h-min rounded-full w-[50px]">
-                    <img alt="Profile Picture" src={user.foto} className="rounded-full w-full" />
+                    <img
+                      alt="Profile Picture"
+                      src={user.foto}
+                      className="rounded-full w-full"
+                    />
                   </div>
                   <div className="bg-[#FF9F93] w-fit max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tr-none flex justify-center items-center shadow-md">
-                    <p className="text-[18px] break-words text-white">{m.mensagemUsuario}</p>
+                    <p className="text-[18px] break-words text-white">
+                      {m.mensagemUsuario}
+                    </p>
                   </div>
                 </div>
 
@@ -236,7 +255,9 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
 
                   <div className="bg-[#A39CEC] w-fit max-w-[75%] border border-[rgba(0,0,0,0.53)] p-3 rounded-[25px] rounded-tl-none flex justify-center items-center shadow-md">
                     {historicoBot[i]?.mensagemIa ? (
-                      <p className="text-[18px] break-words text-white">{historicoBot[i].mensagemIa}</p>
+                      <p className="text-[18px] break-words text-white">
+                        {historicoBot[i].mensagemIa}
+                      </p>
                     ) : insideLoading ? (
                       <LoadingMessage />
                     ) : null}

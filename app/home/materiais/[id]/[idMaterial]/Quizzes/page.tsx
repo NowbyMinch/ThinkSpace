@@ -115,7 +115,7 @@ export default function MaterialClient() {
           );
 
           const data = await res.json();
-          console.log(data);
+          //  console.log(data);
           setQuizzes(data.quizzes);
         } else {
           const res = await fetch(
@@ -127,7 +127,7 @@ export default function MaterialClient() {
           );
 
           const data = await res.json();
-          console.log(data);
+          //  console.log(data);
           setQuizzes(data.quizzes);
         }
       } catch (err) {
@@ -149,7 +149,7 @@ export default function MaterialClient() {
 
   const xpQuiz = async (totalQuestoes: number, certas: number) => {
     try {
-      console.log(totalQuestoes, certas);
+      //  console.log(totalQuestoes, certas);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/calcular-xp-quiz/${idMaterial}`,
         {
@@ -165,7 +165,7 @@ export default function MaterialClient() {
 
       const data = await res.json();
       setXP(data);
-      console.log("XPPPPPPP", data);
+      //  console.log("XPPPPPPP", data);
     } catch (err) {
       console.error(err);
     }
@@ -206,7 +206,7 @@ export default function MaterialClient() {
       );
 
       const data = await res.json();
-      console.log("QUESTAO", data);
+      //  console.log("QUESTAO", data);
       final();
     } catch (err) {
       console.error(err);
@@ -475,7 +475,7 @@ export default function MaterialClient() {
                   onClick={() => {
                     if (questaoIndex !== 0) {
                       setQuestaoIndex(questaoIndex - 1);
-                      console.log(questaoIndex);
+                      //  console.log(questaoIndex);
                     } else {
                       return;
                     }
@@ -492,7 +492,7 @@ export default function MaterialClient() {
                   onClick={() => {
                     if (questaoIndex !== quizzes.length - 1) {
                       setQuestaoIndex(questaoIndex + 1);
-                      console.log(questaoIndex);
+                      //  console.log(questaoIndex);
                     } else {
                       return;
                     }

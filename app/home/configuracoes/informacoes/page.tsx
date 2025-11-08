@@ -1,8 +1,11 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { ComboboxDemoSettings, ComboboxDemoSettings2 } from '../../components/dropdown';
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  ComboboxDemoSettings,
+  ComboboxDemoSettings2,
+} from "../../components/dropdown";
 import ErrorModal from "@/components/ui/ErrorModal";
 
 type UserData = {
@@ -24,7 +27,7 @@ type UsuarioData = {
   email?: string;
   emailVerificado?: boolean;
   escolaridade?: string;
-  funca?: string; 
+  funca?: string;
   id?: string;
   instituicaoId?: string;
   nomeCompleto?: string;
@@ -57,19 +60,30 @@ export default function Informacoes() {
       setLoading(true);
       try {
         // User data
-        const resUser = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, { method: 'GET', credentials: 'include' });
+        const resUser = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`,
+          { method: "GET", credentials: "include" }
+        );
         const userData = await resUser.json();
         setUser(userData);
 
         // Usuario configuracoes
-        const resUsuario = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, { method: 'GET', credentials: 'include' });
+        const resUsuario = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`,
+          { method: "GET", credentials: "include" }
+        );
         const dataUsuario = await resUsuario.json();
-        const escolaridadeFormatted = (dataUsuario.usuario.escolaridade ?? "").toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
+        const escolaridadeFormatted = (dataUsuario.usuario.escolaridade ?? "")
+          .toLowerCase()
+          .replace(/^\w/, (c: string) => c.toUpperCase());
         setEscola(escolaridadeFormatted);
         setUsuario(dataUsuario.usuario);
 
         // Instituicao
-        const resInstituicao = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/instituicao/nome`, { method: 'GET', credentials: 'include' });
+        const resInstituicao = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/instituicao/nome`,
+          { method: "GET", credentials: "include" }
+        );
         const dataInstituicao = await resInstituicao.json();
         setInstituicao(dataInstituicao.nome);
 
@@ -88,7 +102,8 @@ export default function Informacoes() {
     setConfiguracoes({
       primeiroNome: usuario.primeiroNome ?? "",
       sobrenome: usuario.sobrenome ?? "",
-      dataNascimento: usuario.dataNascimento?.split("T")[0].replaceAll("-", "/") ?? "",
+      dataNascimento:
+        usuario.dataNascimento?.split("T")[0].replaceAll("-", "/") ?? "",
       instituicao: instituicao ?? "",
       cargo: user.cargo ?? "",
       escolaridade: escola ?? "",
@@ -98,9 +113,14 @@ export default function Informacoes() {
   // Reload configuracoes from backend
   const reloadConfiguracoes = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, { method: 'GET', credentials: 'include' });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`,
+        { method: "GET", credentials: "include" }
+      );
       const data = await res.json();
-      const escolaridadeFormatted = (data.usuario.escolaridade ?? "").toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
+      const escolaridadeFormatted = (data.usuario.escolaridade ?? "")
+        .toLowerCase()
+        .replace(/^\w/, (c: string) => c.toUpperCase());
       setEscola(escolaridadeFormatted);
       setUsuario(data.usuario);
     } catch (err) {
@@ -139,36 +159,49 @@ export default function Informacoes() {
           );
 
           const result = await res.json();
-          console.log(`Resultado do PATCH ${key}:`, result);
+          //  console.log(`Resultado do PATCH ${key}:`, result);
         }
       }
 
       // Refresh usuario state after updates
       await reloadConfiguracoes();
-
     } catch (err) {
       console.error("Erro ao atualizar configurações:", err);
       setMessage("Erro ao atualizar configurações");
     }
   };
-  
-  if (loading) return (
-    <div className="flex justify-center items-center w-full h-full">
-      <div className="animate-spin w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full" />
-    </div>
-  );
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <div className="animate-spin w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full" />
+      </div>
+    );
 
   return (
     <>
-      {message && <ErrorModal message={message} onClose={() => setMessage(null)} />}
-      <form onSubmit={(e) => { e.preventDefault(); Check(); }} className="mt-4 flex flex-col gap-4 overflow-hidden w-[90%]">
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          Check();
+        }}
+        className="mt-4 flex flex-col gap-4 overflow-hidden w-[90%]"
+      >
         {/* Primeiro Nome */}
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Primeiro nome</h1>
           <input
             type="text"
             value={configuracoes.primeiroNome}
-            onChange={(e) => setConfiguracoes({ ...configuracoes, primeiroNome: e.target.value })}
+            onChange={(e) =>
+              setConfiguracoes({
+                ...configuracoes,
+                primeiroNome: e.target.value,
+              })
+            }
             className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
         </div>
@@ -179,7 +212,9 @@ export default function Informacoes() {
           <input
             type="text"
             value={configuracoes.sobrenome}
-            onChange={(e) => setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })}
+            onChange={(e) =>
+              setConfiguracoes({ ...configuracoes, sobrenome: e.target.value })
+            }
             className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
         </div>
@@ -190,7 +225,12 @@ export default function Informacoes() {
           <input
             type="text"
             value={configuracoes.dataNascimento}
-            onChange={(e) => setConfiguracoes({ ...configuracoes, dataNascimento: e.target.value })}
+            onChange={(e) =>
+              setConfiguracoes({
+                ...configuracoes,
+                dataNascimento: e.target.value,
+              })
+            }
             className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
         </div>
@@ -201,7 +241,12 @@ export default function Informacoes() {
           <input
             type="text"
             value={configuracoes.instituicao}
-            onChange={(e) => setConfiguracoes({ ...configuracoes, instituicao: e.target.value })}
+            onChange={(e) =>
+              setConfiguracoes({
+                ...configuracoes,
+                instituicao: e.target.value,
+              })
+            }
             className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
         </div>
@@ -211,7 +256,9 @@ export default function Informacoes() {
           <h1 className="text-[20px] font-medium">Cargo ou Posição</h1>
           <ComboboxDemoSettings
             value={configuracoes.cargo}
-            onChange={(value) => setConfiguracoes({ ...configuracoes, cargo: value })}
+            onChange={(value) =>
+              setConfiguracoes({ ...configuracoes, cargo: value })
+            }
           />
         </div>
 
@@ -220,14 +267,17 @@ export default function Informacoes() {
           <h1 className="text-[20px] font-medium">Nível de escolaridade</h1>
           <ComboboxDemoSettings2
             value={configuracoes.escolaridade}
-            onChange={(value) => {setConfiguracoes({ ...configuracoes, escolaridade: value }); console.log(value);}}
+            onChange={(value) => {
+              setConfiguracoes({ ...configuracoes, escolaridade: value });
+              console.log(value);
+            }}
           />
         </div>
 
         <motion.button
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          type='submit'
+          type="submit"
           id="editar_conta"
           className="mt-2 mb-1 ml-1 py-2 px-10 w-min h-min rounded-[30px] text-[18px] font-medium border border-[#1E2351]"
         >

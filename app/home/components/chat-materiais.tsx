@@ -233,8 +233,8 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
 
   const Mensagem = async (texto: string) => {
     if (!texto.trim()) return;
-      const tempId = Date.now().toString();
-      
+    const tempId = Date.now().toString();
+
     // Mostra a mensagem do usuário imediatamente
     setHistoricoUsuario((prev) => [
       ...prev,
@@ -255,9 +255,9 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
           credentials: "include",
         }
       );
-      console.log(mensagem, "Mensagem");
+      //  console.log(mensagem, "Mensagem");
 
-      console.log(res, "Res");
+      //  console.log(res, "Res");
 
       await ReceberMensagem();
     } catch (err) {
@@ -273,8 +273,8 @@ export const ChatMateriais = ({ idMaterial, appear }: ChatMateriaisProps) => {
   }, [idMaterial]);
 
   useEffect(() => {
-    console.log(historicoBot);
-    console.log(historicoUsuario);
+    //  console.log(historicoBot);
+    //  console.log(historicoUsuario);
   }, []);
 
   useEffect(() => {

@@ -63,14 +63,14 @@ export default function RegistrarInner() {
   //     });
 
   //     const data = await res.json();
-  //     console.log(form);
+  //   //  console.log(form);
   //     if (data.message === "Login realizado com sucesso") {
   //       router.push("/home");
   //     } else {
   //       setMessage(data.message);
-  //       console.log(message)
+  //     //  console.log(message)
   //     }
-  //     console.log(data);
+  //   //  console.log(data);
   //   };
 
   useEffect(() => {
@@ -99,8 +99,8 @@ export default function RegistrarInner() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form.dataNascimento);
-    console.log(form.dataNascimento.length);
+    //  console.log(form.dataNascimento);
+    //  console.log(form.dataNascimento.length);
     if (form.dataNascimento.length < 10) {
       setMessage("Data de nacimento inválida.");
       return;
@@ -115,7 +115,7 @@ export default function RegistrarInner() {
     );
 
     const data = await res.json();
-    console.log(form);
+    //  console.log(form);
     if (
       data.message ===
       "Dados iniciais recebidos. Escolha a função (administrador ou usuário comum)."
@@ -126,12 +126,12 @@ export default function RegistrarInner() {
     } else {
       setMessage(data.message);
     }
-    console.log(data);
+    //  console.log(data);
   };
 
   const handleSubmit2 = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form2);
+    //  console.log(form2);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/completar-cadastro`,
@@ -148,7 +148,7 @@ export default function RegistrarInner() {
     } else {
       setMessage(data.message);
     }
-    console.log(data);
+    //  console.log(data);
   };
 
   const handleFuncao = async (e: React.FormEvent) => {
@@ -175,9 +175,9 @@ export default function RegistrarInner() {
     } else {
       setMessage(data.message);
     }
-    console.log(formFunc);
-    console.log(funcObj);
-    console.log(data);
+    //  console.log(formFunc);
+    //  console.log(funcObj);
+    //  console.log(data);
   };
 
   const handleSubmit3 = async (e: React.FormEvent) => {
@@ -198,7 +198,7 @@ export default function RegistrarInner() {
     );
 
     const data = await res.json();
-    console.log(newForm3);
+    //  console.log(newForm3);
     if (
       data.message === "E-mail verificado e cadastro concluído." ||
       data.message ===
@@ -209,7 +209,7 @@ export default function RegistrarInner() {
     } else {
       setMessage(data.message);
     }
-    console.log(data);
+    //  console.log(data);
   };
 
   const reenviar = async (e: React.FormEvent) => {
@@ -224,13 +224,13 @@ export default function RegistrarInner() {
       }
     );
 
-    console.log(form);
+    //  console.log(form);
     const data = await res.json();
     if (data.message !== "Novo código enviado para o e-mail.") {
       setMessage(data.message);
     }
 
-    console.log(data);
+    //  console.log(data);
   };
 
   const handleChange = (
@@ -291,9 +291,9 @@ export default function RegistrarInner() {
     if (savedFunc) setFormFunc(JSON.parse(savedFunc));
     if (savedCat) setCategoria(JSON.parse(savedCat));
     if (savedStep) setSubStep(Number(savedStep));
-    console.log(savedForm);
-    console.log(savedForm2);
-    console.log(savedForm3);
+    //  console.log(savedForm);
+    //  console.log(savedForm2);
+    //  console.log(savedForm3);
   }, []);
 
   useEffect(() => {
@@ -494,7 +494,6 @@ export default function RegistrarInner() {
                                           Data de nascimento{" "}
                                         </label>
                                         <DatePicker
-                                        
                                           onChange={(val) => {
                                             setForm({
                                               ...form,
@@ -557,7 +556,7 @@ export default function RegistrarInner() {
                                                 ? "text"
                                                 : "password"
                                             }
-                                          value={form.confirmarSenha}
+                                            value={form.confirmarSenha}
                                             onChange={(e) =>
                                               setForm({
                                                 ...form,
@@ -837,7 +836,7 @@ export default function RegistrarInner() {
                                     <motion.input
                                       whileHover={{ scale: 1.05 }}
                                       whileTap={{ scale: 0.95 }}
-                                      checked={form2.aceitouTermos} 
+                                      checked={form2.aceitouTermos}
                                       onClick={() => {
                                         setForm2((prev) => ({
                                           ...prev,

@@ -137,7 +137,7 @@ export default function Materiais() {
         setUser(userData);
         setPosts(postsData);
 
-        console.log("✅ All data successfully loaded");
+        //  console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -194,9 +194,9 @@ export default function Materiais() {
       ]);
       setUser(userData);
       setPosts(postsData);
-      console.log("POSTS DATA ", postsData);
+      //  console.log("POSTS DATA ", postsData);
 
-      console.log("✅ All data successfully loaded");
+      //  console.log("✅ All data successfully loaded");
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -207,7 +207,7 @@ export default function Materiais() {
 
   // --- Fetch posts + user, with sessionStorage caching for scroll + posts ---
   useEffect(() => {
-    console.log(curtidaCheck);
+    //  console.log(curtidaCheck);
   }, [curtidaCheck]);
 
   function formatNumber(num: number) {
@@ -253,7 +253,7 @@ export default function Materiais() {
       const curtidaData = await CurtidaCheck.json(); // parse the response
       setCurtidaCheck(curtidaData.curtidoPeloUsuario);
 
-      console.log("✅CURTIDA CHECK ", curtidaData);
+      //  console.log("✅CURTIDA CHECK ", curtidaData);
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -352,11 +352,11 @@ export default function Materiais() {
       );
 
       const postarData = await postarRes.json();
-      console.log(postarData);
-      console.log(postText);
+      //  console.log(postarData);
+      //  console.log(postText);
       if (postarData.error) {
         setMessage(postarData.error);
-        console.log(postarData.error);
+        //  console.log(postarData.error);
         return;
       }
     } catch (error) {
@@ -400,7 +400,7 @@ export default function Materiais() {
         setPosts([]);
       }
 
-      console.log("✅ Posts reloaded");
+      //  console.log("✅ Posts reloaded");
     } catch (err) {
       console.error("Erro ao recarregar postagens:", err);
       setMessage("Erro ao recarregar postagens.");

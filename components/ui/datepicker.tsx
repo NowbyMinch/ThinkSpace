@@ -25,7 +25,6 @@ import { IMaskInput } from "react-imask";
 import IMask from "imask";
 import React from "react";
 
-
 type DiaData = {
   diaNumero?: number;
   diaSemana?: number;
@@ -475,7 +474,7 @@ export function DatePicker2({ onChange }: DatePickerProps) {
       inputValue2 === "10" ||
       inputValue2 === "12"
     ) {
-      console.log(inputValue2);
+      //  console.log(inputValue2);
       if (parseInt(inputValue) > 31) {
         setInputValue("31");
       }
@@ -485,13 +484,13 @@ export function DatePicker2({ onChange }: DatePickerProps) {
       inputValue2 === "9" ||
       inputValue2 === "11"
     ) {
-      console.log(inputValue2);
+      //  console.log(inputValue2);
 
       if (parseInt(inputValue) > 30) {
         setInputValue("30");
       }
     } else if (inputValue2 === "2") {
-      console.log(inputValue2);
+      //  console.log(inputValue2);
 
       if (parseInt(inputValue) > 28) {
         setInputValue("28");
@@ -518,7 +517,6 @@ export function DatePicker2({ onChange }: DatePickerProps) {
   }, [inputValue2]);
 
   useEffect(() => {
-    
     if (inputValue3.length === 4) {
       ValueRef3.current?.blur();
       setInputValue3(inputValue3.slice(0, 4));
@@ -533,9 +531,8 @@ export function DatePicker2({ onChange }: DatePickerProps) {
     onChange(date);
   }, [inputValue, inputValue2, inputValue3]);
 
-
   const handleDateSelect = (date: Date) => {
-    if (date.getFullYear() < 1900 ) return;
+    if (date.getFullYear() < 1900) return;
     // console.log(date);
     const formatted = format(date, "dd/MM/yyyy");
     setSelectedDate(date);

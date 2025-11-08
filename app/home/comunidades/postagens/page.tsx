@@ -139,9 +139,9 @@ export default function Postagens() {
         ]);
         setUser(userData);
         setPosts(postsData);
-        console.log(postsData);
+        //  console.log(postsData);
 
-        console.log("✅ All data successfully loaded");
+        //  console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -198,9 +198,9 @@ export default function Postagens() {
       ]);
       setUser(userData);
       setPosts(postsData);
-      console.log(postsData);
+      //  console.log(postsData);
 
-      console.log("✅ All data successfully loaded");
+      //  console.log("✅ All data successfully loaded");
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -251,7 +251,7 @@ export default function Postagens() {
       const curtidaData = await CurtidaCheck.json(); // parse the response
       setCurtidaCheck(curtidaData.curtidoPeloUsuario);
 
-      console.log("✅CURTIDA CHECK ", curtidaData);
+      //  console.log("✅CURTIDA CHECK ", curtidaData);
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -350,7 +350,7 @@ export default function Postagens() {
         setPosts([]);
       }
 
-      console.log("✅ Posts reloaded");
+      //  console.log("✅ Posts reloaded");
     } catch (err) {
       console.error("Erro ao recarregar postagens:", err);
       setMessage("Erro ao recarregar postagens.");

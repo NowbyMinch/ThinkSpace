@@ -146,12 +146,6 @@ export default function Métricas() {
         setUserXP(userXPData);
         setUserID(userIDData.userId);
 
-        console.log("All data loaded successfully:", {
-          userData,
-          userXPData,
-          rankingData,
-          userIDData,
-        });
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
       } finally {
@@ -214,7 +208,7 @@ export default function Métricas() {
 
           const data = await res.json();
           setMelhores(data);
-          console.log("IGNORE Melhores: ", data);
+        //  console.log("IGNORE Melhores: ", data);
         } catch (err) {
           console.error(err);
         }
@@ -224,7 +218,7 @@ export default function Métricas() {
   }, [userID]);
 
   useEffect(() => {
-    console.log("USERXP", userXP);
+  //  console.log("USERXP", userXP);
   }, [userXP]);
 
   if (loading) return <Loading />;
@@ -359,8 +353,8 @@ export default function Métricas() {
               </div>
 
               <div className="w-full h-full min-h-[340px] md:min-h-[290px] bg-white rounded-[35px] shadow-md flex justify-center items-center border border-[#00000031]">
-                <div className="w-[90%] h-[92%] flex flex-col gap-2">
-                  <h1 className="leading-none font-medium flex justify-between items-end text-[30px]">
+                <div className="w-[90%] min-h-[252px] flex flex-col gap-2  ">
+                  <h1 className="leading-none font-medium flex justify-between items-end text-[30px] ">
                     Ranking
                     <div className="flex gap-2">
                       {/* <div className="w-fit px-3 h-8 rounded-[30px] bg-[#D9D9D9] flex justify-center items-center text-[18px] text-black cursor-pointer">Geral</div> */}
@@ -387,7 +381,9 @@ export default function Métricas() {
                           >
                             <div className="flex items-center gap-2 min-w-[194px]  ">
                               <div className="flex justify-center items-center gap-[6px]">
-                                <span className="w-fit font-medium text-[25px]">{index + 1}</span>
+                                <span className="w-fit font-medium text-[25px]">
+                                  {index + 1}
+                                </span>
 
                                 <img
                                   width={300}

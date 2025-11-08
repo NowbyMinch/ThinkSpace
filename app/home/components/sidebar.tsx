@@ -47,7 +47,7 @@ export const Sidebar = () => {
     if (data.message === "Logout realizado com sucesso") {
       router.push("/");
     }
-    console.log(data);
+    //  console.log(data);
   };
 
   type BannerData = {
@@ -59,7 +59,7 @@ export const Sidebar = () => {
 
   const bar = () => {
     if (!visible) {
-      console.log(visible + " tornando visível");
+      //  console.log(visible + " tornando visível");
 
       if (bottomBar.current) {
         bottomBar.current.style.width = "90%";
@@ -68,7 +68,7 @@ export const Sidebar = () => {
         setVisible(!visible);
       }, 100);
     } else {
-      console.log(visible + " tornando invisível");
+      //  console.log(visible + " tornando invisível");
       setVisible(!visible);
 
       setTimeout(() => {
@@ -142,7 +142,7 @@ export const Sidebar = () => {
         const data = await res.json();
         setNewUser(data.aceitouTermosComunidade);
 
-        console.log("TERMOS TERMOS TERMOS TERMOS ", data);
+        //  console.log("TERMOS TERMOS TERMOS TERMOS ", data);
       } catch (err) {
         setMessage("Erro ao carregar saudação.");
         console.error(err);
@@ -175,7 +175,7 @@ export const Sidebar = () => {
       const data = await res.json();
       setNewUser(data.aceitouTermosComunidade);
 
-      console.log("TERMOS TERMOS TERMOS TERMOS ", data);
+      //  console.log("TERMOS TERMOS TERMOS TERMOS ", data);
     } catch (err) {
       setMessage("Erro ao carregar saudação.");
       console.error(err);
@@ -204,7 +204,7 @@ export const Sidebar = () => {
       );
 
       const data = await res.json();
-      console.log(data);
+      //  console.log(data);
       if (data.message === "Termos de uso da comunidade aceitos com sucesso.") {
         setNewUser(true);
         router.push("/home/comunidades/postagens");

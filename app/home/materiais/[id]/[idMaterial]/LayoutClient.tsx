@@ -55,7 +55,7 @@ export default function LayoutClient({
         const data = await res.json();
         setFinalizado(data.material.finalizado);
 
-        console.log(data);
+        //  console.log(data);
         if (data.material.origem === "DOCUMENTO") {
           setDocumento(true);
         }
@@ -81,7 +81,7 @@ export default function LayoutClient({
       );
 
       const data = await res.json();
-      console.log(data);
+      //  console.log(data);
       if (
         data.message ===
         "Material concluído! Você ganhou +20 XP por participação."
@@ -110,33 +110,31 @@ export default function LayoutClient({
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   }
 
- useEffect(() => {
-   startTimeRef.current = Date.now();
-   console.log("✅ Entered material layout");
+  useEffect(() => {
+    startTimeRef.current = Date.now();
+    //  console.log("✅ Entered material layout");
 
-   return () => {
-     // ✅ triggers ONLY when the user leaves this section
-     const msSpent = Date.now() - startTimeRef.current;
-     const formatted = formatTime(msSpent);
-     console.log("⏳ Sending:", formatted);
+    return () => {
+      // ✅ triggers ONLY when the user leaves this section
+      const msSpent = Date.now() - startTimeRef.current;
+      const formatted = formatTime(msSpent);
+      //  console.log("⏳ Sending:", formatted);
 
-     fetch(
-       `${process.env.NEXT_PUBLIC_API_URL}/materiais/tempo-estudo/${idMaterial}`,
-       {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({ tempo: formatted }),
-         credentials: "include",
-         keepalive: true, // important for unload
-       }
-     )
-       .then((r) => r.text())
-       .then((t) => console.log("✅ Backend replied:", t))
-       .catch((err) => console.log("❌ Failed:", err));
-   };
- }, []);
-
-
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/materiais/tempo-estudo/${idMaterial}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tempo: formatted }),
+          credentials: "include",
+          keepalive: true, // important for unload
+        }
+      )
+        .then((r) => r.text())
+        .then((t) => console.log("✅ Backend replied:", t))
+        .catch((err) => console.log("❌ Failed:", err));
+    };
+  }, []);
 
   return (
     <>

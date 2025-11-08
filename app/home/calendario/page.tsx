@@ -195,17 +195,17 @@ export default function Materiais() {
     const dataTemp = data.split("-");
 
     if (data !== "--") {
-      console.log(data, "data");
+    //  console.log(data, "data");
       setData(dataTemp.join("/"));
     }
 
     if (Number(data.split("-")[0])) {
-      console.log("tem data", data);
+    //  console.log("tem data", data);
       setDataFormatada(
         `${data.split("-")[2]} de ${monthName} de ${data.split("-")[0]}`
       );
     } else {
-      console.log("Sem numero", data);
+    //  console.log("Sem numero", data);
     }
   };
 
@@ -285,11 +285,11 @@ export default function Materiais() {
   }, [lembreteInfo]);
 
   useEffect(() => {
-    console.log(lembreteInfo2, "lembrete aqui");
+  //  console.log(lembreteInfo2, "lembrete aqui");
   }, [lembreteInfo2]);
 
   useEffect(() => {
-    console.log(user);
+  //  console.log(user);
   }, [user]);
 
   useEffect(() => {
@@ -328,9 +328,9 @@ export default function Materiais() {
         ]);
 
         setLembreteInfo(anotacoesData);
-        console.log(anotacoesData, "Info1");
+      //  console.log(anotacoesData, "Info1");
         setLembreteInfo2(recentesData);
-        console.log(recentesData, "Info2");
+      //  console.log(recentesData, "Info2");
 
         if (anotacoesData.error || recentesData.error) {
           setMessage(anotacoesData.message || recentesData.message);
@@ -379,7 +379,7 @@ export default function Materiais() {
         );
 
         const results = await Promise.all(fetches);
-        console.log(results, "RESULTS!!");
+      //  console.log(results, "RESULTS!!");
 
         // combine all days into one array
         const allDias: DiaType[] = results.flatMap(
@@ -397,7 +397,7 @@ export default function Materiais() {
         );
 
         setTodasAnotacoes(allAnotacoes);
-        console.log(
+      //  console.log(
           allAnotacoes,
           "Todas as anotações (incluindo 6 dias extras)"
         );
@@ -411,7 +411,7 @@ export default function Materiais() {
   }, [selectedMonthYear, user]);
 
   useEffect(() => {
-    console.log(todasAnotacoes, "Todas");
+  //  console.log(todasAnotacoes, "Todas");
   }, [todasAnotacoes]);
 
   function closing() {
@@ -473,7 +473,7 @@ export default function Materiais() {
       notificar: notificar,
       usuarioId: user,
     };
-    console.log(calendario);
+  //  console.log(calendario);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/calendario`, {
@@ -484,7 +484,7 @@ export default function Materiais() {
       });
 
       const data = await res.json();
-      console.log(data, "Retorno da criação");
+    //  console.log(data, "Retorno da criação");
 
       if (!data.error) {
         closing();
@@ -547,7 +547,7 @@ export default function Materiais() {
       });
       setTodasAnotacoes(allAnotacoes);
 
-      console.log(
+    //  console.log(
         allAnotacoes,
         "Lembretes atualizados incluindo meses adjacentes"
       );
@@ -568,7 +568,7 @@ export default function Materiais() {
       );
 
       const data = await res.json();
-      console.log(data, "Data deletar");
+    //  console.log(data, "Data deletar");
 
       if (data.error) {
         setMessage(data.message);

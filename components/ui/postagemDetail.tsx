@@ -98,7 +98,7 @@ const PostagemDetail: React.FC<Props> = ({
         { method: "DELETE", credentials: "include" }
       );
       const deleteMaterialData = await deleteMaterialRes.json();
-      console.log(deleteMaterialData);
+      //  console.log(deleteMaterialData);
       if (
         deleteMaterialData.message !== "Material excluído da sala com sucesso."
       ) {
@@ -142,7 +142,7 @@ const PostagemDetail: React.FC<Props> = ({
       );
 
       const data = await res.json();
-      console.log("Favoritar Response:", data);
+      //  console.log("Favoritar Response:", data);
 
       if (
         data.message === "Post salvo com sucesso." ||
@@ -208,7 +208,7 @@ const PostagemDetail: React.FC<Props> = ({
       );
 
       const Data = await Res.json();
-      console.log(Data, "DATA ETAPA - 1");
+      //  console.log(Data, "DATA ETAPA - 1");
       if (Data.message !== "Denúncia registrada com sucesso.") {
         setMessage(Data.error);
         return;

@@ -134,7 +134,6 @@ interface Material {
   // add other fields if needed
 }
 
-
 type MelhorMateria = {
   nome: string;
   xp: number;
@@ -295,7 +294,7 @@ export const Chart = ({ selectedWeek }: { selectedWeek: number }) => {
         );
 
         const data = await res.json();
-        console.log("Metricas:", data);
+        //  console.log("Metricas:", data);
         setMetricasUser(data);
       } catch (err) {
         console.error(err);
@@ -312,7 +311,7 @@ export const Chart = ({ selectedWeek }: { selectedWeek: number }) => {
     if (metricasUser) {
       const data = buildQuestoesPorDiaLista(metricasUser.questoesPorDia);
       setQuestoesPorDiaLista(data); // ✅ now works
-      console.log("Questões por dia lista:", data);
+      //  console.log("Questões por dia lista:", data);
     }
   }, [metricasUser]);
 
@@ -392,7 +391,7 @@ export default function Charting() {
         );
 
         const data = await res.json();
-        console.log("Metricas:", data);
+        //  console.log("Metricas:", data);
         setMetricasUser(data);
       } catch (err) {
         console.error(err);
@@ -503,7 +502,7 @@ export function Metrica() {
         );
 
         const data = await res.json();
-        console.log("Metricas:", data);
+        //  console.log("Metricas:", data);
         setMetricasUser(data);
       } catch (err) {
         console.error(err);
@@ -526,7 +525,6 @@ type Sala = {
   assuntoId?: string | null;
   criadoEm?: string;
 };
-
 
 interface ComboboxDemoPropsMetricas {
   value: string;
@@ -587,8 +585,6 @@ export function ComboboxDemomMetricas({
     salasDeEstudo();
   }, []);
 
-
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -641,7 +637,6 @@ export function ComboboxDemomMetricas({
     </Popover>
   );
 }
-
 
 interface ComboboxDemoProps {
   value: string;
@@ -894,7 +889,10 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   );
 }
 
-export function ComboboxDemoMateriaIndividual({ value, onChange }: ComboboxDemoProps) {
+export function ComboboxDemoMateriaIndividual({
+  value,
+  onChange,
+}: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
 
@@ -1136,7 +1134,10 @@ export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   );
 }
 
-export function ComboboxDemoMateriaPostar({ value, onChange }: ComboboxDemoProps) {
+export function ComboboxDemoMateriaPostar({
+  value,
+  onChange,
+}: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
 
@@ -1377,7 +1378,6 @@ export function ComboboxDemoMaterial({
   );
 }
 
-
 export function CalendarioRepeticao({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);
@@ -1512,7 +1512,6 @@ export function CalendarioRepeticao({ value, onChange }: ComboboxDemoProps) {
     </Popover>
   );
 }
-
 
 interface CalendarioDuracaoProps {
   value: {

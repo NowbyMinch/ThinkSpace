@@ -220,7 +220,7 @@ export default function LayoutSalas({ children }: SalasProps) {
       if (recentesData.length > 0) {
         setRecentes(Array.isArray(recentesData) ? recentesData : []);
       }
-      console.log(recentesData, "recentesData ");
+    //  console.log(recentesData, "recentesData ");
 
       // const salasRecentes = await fetch(
       //   `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata.userId}/salas-recentes`,
@@ -280,7 +280,7 @@ export default function LayoutSalas({ children }: SalasProps) {
 
   useEffect(() => {
     setSalaID(pathname.split("/")[4]);
-    console.log(salaID);
+  //  console.log(salaID);
     fetchAllConst();
     if (
       pathname.startsWith("/home/comunidades/salas_de_estudo/") &&
@@ -387,14 +387,14 @@ export default function LayoutSalas({ children }: SalasProps) {
         setEditarNome(salaData?.nome);
         setEditarDescricao(salaData?.descricao);
         setTopicos(salaData?.topicos);
-        console.log(salaData.nome);
-        console.log(salaData.descricao);
+      //  console.log(salaData.nome);
+      //  console.log(salaData.descricao);
 
         setUserID(userIDdata.userId);
         if (recentesData.length > 0) {
           setRecentes(Array.isArray(recentesData) ? recentesData : []);
         }
-        console.log(recentesData, "recentesData ");
+      //  console.log(recentesData, "recentesData ");
 
         setFavorito(Array.isArray(favoritosData) ? favoritosData : []);
 
@@ -475,7 +475,7 @@ export default function LayoutSalas({ children }: SalasProps) {
       const curtidaData = await CurtidaCheck.json(); // parse the response
       setCurtidaCheck(curtidaData.curtidoPeloUsuario);
 
-      console.log("✅CURTIDA CHECK ", curtidaData);
+    //  console.log("✅CURTIDA CHECK ", curtidaData);
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -560,7 +560,7 @@ export default function LayoutSalas({ children }: SalasProps) {
 
   const seguir = async () => {
     if (sala?.id && userID) {
-      console.log(userID);
+    //  console.log(userID);
       const seguirRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${sala?.id}/seguir/${userID}`,
         {
@@ -570,7 +570,7 @@ export default function LayoutSalas({ children }: SalasProps) {
         }
       );
       const seguirData = await seguirRes.json();
-      console.log(seguirData);
+    //  console.log(seguirData);
       if (seguirData.error) {
         setMessage(seguirData.error);
       } else {
@@ -608,10 +608,6 @@ export default function LayoutSalas({ children }: SalasProps) {
     );
     const editarData = await editarRes.json();
 
-    console.log(
-      "editarData editarData editarData editarData editarData ",
-      editarData
-    );
 
     if (editarData.message === "Sala de estudo editada com sucesso.") {
       setEditar(false);
@@ -632,7 +628,7 @@ export default function LayoutSalas({ children }: SalasProps) {
         }
       );
       const excluirData = await excluirRes.json();
-      console.log(excluirData);
+    //  console.log(excluirData);
       if (excluirData.error) {
         setMessage(excluirData.error);
       } else {

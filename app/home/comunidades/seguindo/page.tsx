@@ -99,7 +99,7 @@ export default function SalasdeEstudo() {
         setUser(userData);
         const lista = Array.isArray(salasData) ? salasData : [];
         setSalas(lista);
-        console.log(salasData);
+        //  console.log(salasData);
 
         lista.forEach((s: Salas) => {
           if (Array.isArray(s.avataresUltimosUsuarios)) {

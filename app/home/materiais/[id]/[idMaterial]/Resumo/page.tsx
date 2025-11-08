@@ -1,98 +1,105 @@
 "use client";
-import {ChatMateriais} from "@/app/home/components/chat-materiais";
+import { ChatMateriais } from "@/app/home/components/chat-materiais";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { marked } from 'marked';
+import { marked } from "marked";
 import Loading from "@/app/home/components/loading";
 import { motion, AnimatePresence } from "framer-motion";
 
 // import { PageProps } from "../type";
-// { params }: PageProps 
-
+// { params }: PageProps
 
 export default function MaterialClient() {
-    const [ resumo, setResumo ] = useState("");
-    const [ origem, setOrigem ] = useState("");
-    const [ loading, setLoading ] = useState(true);
-    const [ appear, setAppear ] = useState(false);
-    const params = useParams();
-    const idMaterial = params?.idMaterial as string;
-    const html = resumo ? marked.parse(resumo) : '';
+  const [resumo, setResumo] = useState("");
+  const [origem, setOrigem] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [appear, setAppear] = useState(false);
+  const params = useParams();
+  const idMaterial = params?.idMaterial as string;
+  const html = resumo ? marked.parse(resumo) : "";
 
-    useEffect(() => {
-        const Origem = async () => {
-            try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materiais/${idMaterial}`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                const data = await res.json();
-                setOrigem(data.material.origem);
-            } catch (err) {
-                console.error(err);
-            }
-        };
+  useEffect(() => {
+    const Origem = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/materiais/${idMaterial}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        const data = await res.json();
+        setOrigem(data.material.origem);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-        Origem();
-    }, [idMaterial]);
-    useEffect(() => {
-        const Resumo = async () => {
-            if (!origem) return;
+    Origem();
+  }, [idMaterial]);
+  useEffect(() => {
+    const Resumo = async () => {
+      if (!origem) return;
 
-            try {
-                let url = "";
+      try {
+        let url = "";
 
-                if (origem === "TOPICOS") {
-                    console.log("Rodando topicos");
-                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos/${idMaterial}`;
-                } else if (origem === "ASSUNTO") {
-                    console.log("Rodando Assunto");
-                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto/${idMaterial}`;
-                } else {
-                    url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento/${idMaterial}`;
-                }
-
-                const res = await fetch(url, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-
-                const data = await res.json();
-                setResumo(data.resumoIA);
-                console.log(data);
-                
-            } catch (err) {
-                console.error(err);
-            } 
-        };
-
-        Resumo();
-    }, [origem, idMaterial]);
-    useEffect(() => {
-        if (resumo) {
-            if (resumo.length > 0){
-                setLoading(false);
-            }
+        if (origem === "TOPICOS") {
+          //  console.log("Rodando topicos");
+          url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-topicos/${idMaterial}`;
+        } else if (origem === "ASSUNTO") {
+          //  console.log("Rodando Assunto");
+          url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-assunto/${idMaterial}`;
+        } else {
+          url = `${process.env.NEXT_PUBLIC_API_URL}/materiais/resumo-documento/${idMaterial}`;
         }
-    }, [resumo]);
 
+        const res = await fetch(url, {
+          method: "GET",
+          credentials: "include",
+        });
 
-    if (!idMaterial) return null;
-    if (loading) return <Loading />;
+        const data = await res.json();
+        setResumo(data.resumoIA);
+        //  console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    return( 
-        <>  
-            <div className="relative w-full rounded-[35px] bg-white h-full flex flex-col items-center shadow-md border border-[#00000031] ">
-                <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]"> 
-                    <div className="  max-w-[95%] h-full py-2 my-1 flex flex-col overflow-y-auto items-center ">
-                        <div className=" w-[98%]">
-                            <p className="text-[16px] text-[#C2C2C2] w-full max-w-full text-center" >Este conteúdo foi sintetizado por IA e busca facilitar sua compreensão. Em caso de dúvida, consulte fontes complementares.</p>    
-                            <h1 className=" text-[25px] font-medium h-fit">Resumo <span className=" text-[#726BB6]">IA</span></h1>
-                            <div className=" h-[96%] flex flex-col gap-8  ">
-                                
-                                <p className="text-[18px] resumo" dangerouslySetInnerHTML={{ __html: html }} />
+    Resumo();
+  }, [origem, idMaterial]);
+  useEffect(() => {
+    if (resumo) {
+      if (resumo.length > 0) {
+        setLoading(false);
+      }
+    }
+  }, [resumo]);
 
-                                {/* <div className=" flex flex-col gap-4">
+  if (!idMaterial) return null;
+  if (loading) return <Loading />;
+
+  return (
+    <>
+      <div className="relative w-full rounded-[35px] bg-white h-full flex flex-col items-center shadow-md border border-[#00000031] ">
+        <div className=" w-full rounded-[35px] overflow-hidden bg-white h-full flex flex-col items-center shadow-md border border-[#00000031]">
+          <div className="  max-w-[95%] h-full py-2 my-1 flex flex-col overflow-y-auto items-center ">
+            <div className=" w-[98%]">
+              <p className="text-[16px] text-[#C2C2C2] w-full max-w-full text-center">
+                Este conteúdo foi sintetizado por IA e busca facilitar sua
+                compreensão. Em caso de dúvida, consulte fontes complementares.
+              </p>
+              <h1 className=" text-[25px] font-medium h-fit">
+                Resumo <span className=" text-[#726BB6]">IA</span>
+              </h1>
+              <div className=" h-[96%] flex flex-col gap-8  ">
+                <p
+                  className="text-[18px] resumo"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+
+                {/* <div className=" flex flex-col gap-4">
                                     <h1 className=" text-[35px] font-semibold">Resumo sobre Programação Orientada a Objetos (POO):</h1>
                                     <h2 className=" text-[25px] font-semibold">Introdução à Programação Orientada a Objetos (POO)</h2>
                                 </div>
@@ -126,24 +133,28 @@ export default function MaterialClient() {
                                         </ul>
                                     </div>
                                 </div> */}
-
-                            </div>
-                        </div>
-                    </div>
-                
-                    <motion.button 
-                    whileHover={{scale: 1.04}}
-                    whileTap={{scale: 0.96}}
-                    onClick={() => setAppear(!appear)}
-                    className="absolute bottom-2 right-2 shadow-md h-min rounded-full w-[65px] ">
-                        <img alt="Profile Picture" src="/IApicture.svg" className="rounded-full w-full bg-white" width={800} height={800} />
-                    </motion.button>
-
-                </div>
-                
-                <ChatMateriais appear={appear} idMaterial={idMaterial} />
-            
+              </div>
             </div>
-        </>
-    );
-};
+          </div>
+
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => setAppear(!appear)}
+            className="absolute bottom-2 right-2 shadow-md h-min rounded-full w-[65px] "
+          >
+            <img
+              alt="Profile Picture"
+              src="/IApicture.svg"
+              className="rounded-full w-full bg-white"
+              width={800}
+              height={800}
+            />
+          </motion.button>
+        </div>
+
+        <ChatMateriais appear={appear} idMaterial={idMaterial} />
+      </div>
+    </>
+  );
+}

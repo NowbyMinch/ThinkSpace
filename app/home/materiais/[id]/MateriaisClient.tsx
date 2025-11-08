@@ -164,8 +164,8 @@ export default function MateriaisClient({ id }: { id: string }) {
       if (num > 25) num = 25;
       setValue2(num);
     }
-    console.log("Value1", value);
-    console.log("Value2", value2);
+    //  console.log("Value1", value);
+    //  console.log("Value2", value2);
   };
 
   // Criar Material
@@ -202,8 +202,8 @@ export default function MateriaisClient({ id }: { id: string }) {
         }
       );
       const data = await res.json();
-      console.log("Data: ", data);
-      console.log("origemValor: ", origemValor);
+      //  console.log("Data: ", data);
+      //  console.log("origemValor: ", origemValor);
       setOrigem(origemValor);
       Tipo();
     } catch (err) {
@@ -213,7 +213,7 @@ export default function MateriaisClient({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    console.log("Origem: ", origem);
+    //  console.log("Origem: ", origem);
   }, [origem]);
 
   // Outros ----------------------------------
@@ -289,13 +289,13 @@ export default function MateriaisClient({ id }: { id: string }) {
         );
 
         const data = await res.json();
-        console.log(data);
+        //  console.log(data);
 
         const materiaisFiltrados = data.materiais.filter(
           (material: any) => material.materiaId === id
         );
-        console.log("data", data);
-        console.log("materiaisFiltrados", materiaisFiltrados);
+        //  console.log("data", data);
+        //  console.log("materiaisFiltrados", materiaisFiltrados);
         setMateriaisNome(materiaisFiltrados);
       } catch (err) {
         console.error(err);
@@ -315,7 +315,7 @@ export default function MateriaisClient({ id }: { id: string }) {
 
         const data = await res.json();
         setUserXP(data);
-        console.log(data);
+        //  console.log(data);
       } catch (err) {
         console.error(err);
       }
@@ -337,7 +337,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       });
 
       const data = await res.json();
-      console.log(data);
+      //  console.log(data);
 
       const materiaisFiltrados = data.materiais.filter(
         (material: any) => material.materiaId === id
@@ -360,7 +360,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       );
 
       const data = await res.json();
-      console.log(data);
+      //  console.log(data);
 
       const materiaisFiltrados = data.materiais.filter(
         (material: any) => material.materiaId === id
@@ -407,7 +407,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       );
 
       data = await materialRes.json();
-      console.log(" MATERIAL CRIADO:", data);
+      //  console.log(" MATERIAL CRIADO:", data);
 
       if (data.message !== "Dados básicos recebidos. Material criado.") {
         setMessage(data.message);
@@ -439,7 +439,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("RESUMO:", await resumoRes.json());
+      //  console.log("RESUMO:", await resumoRes.json());
 
       const flashcardsRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`,
@@ -450,7 +450,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("FLASHCARDS:", await flashcardsRes.json());
+      //  console.log("FLASHCARDS:", await flashcardsRes.json());
 
       const quizzesRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`,
@@ -461,7 +461,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("QUIZZES:", await quizzesRes.json());
+      //  console.log("QUIZZES:", await quizzesRes.json());
 
       // --- atualizar lista no estado ---
       setMateriaisNome((prev: any) => [...prev, data.material]);
@@ -481,7 +481,7 @@ export default function MateriaisClient({ id }: { id: string }) {
     let createdMaterialId: string | null = null;
     try {
       setLoading(true);
-      console.log("Tentando documento");
+      //  console.log("Tentando documento");
 
       let materialRes;
       let data;
@@ -498,7 +498,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       formData.append("quantidadeQuestoes", value.toString());
       formData.append("quantidadeFlashcards", value2.toString());
 
-      console.log("vai agora documento", formData);
+      //  console.log("vai agora documento", formData);
       materialRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/etapa-dados`,
         {
@@ -509,7 +509,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       );
 
       data = await materialRes.json();
-      console.log(" MATERIAL CRIADO:", data);
+      //  console.log(" MATERIAL CRIADO:", data);
       if (data.message !== "Dados básicos recebidos. Material criado.") {
         setMessage(data.message);
         return;
@@ -539,7 +539,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("RESUMO:", await resumoRes.json());
+      //  console.log("RESUMO:", await resumoRes.json());
 
       const flashcardsRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards-pdf`,
@@ -550,7 +550,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("FLASHCARDS:", await flashcardsRes.json());
+      //  console.log("FLASHCARDS:", await flashcardsRes.json());
 
       const quizzesRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes-pdf`,
@@ -561,7 +561,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("QUIZZES:", await quizzesRes.json());
+      //  console.log("QUIZZES:", await quizzesRes.json());
 
       // --- atualizar lista no estado ---
       setMateriaisNome((prev: any) => [...prev, data.material]);
@@ -603,7 +603,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       );
 
       data = await materialRes.json();
-      console.log(" MATERIAL CRIADO:", data);
+      //  console.log(" MATERIAL CRIADO:", data);
       if (data.message !== "Dados básicos recebidos. Material criado.") {
         setMessage(data.message);
         return;
@@ -634,7 +634,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("RESUMO:", await resumoRes.json());
+      //  console.log("RESUMO:", await resumoRes.json());
 
       const flashcardsRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/flashcards`,
@@ -645,7 +645,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("FLASHCARDS:", await flashcardsRes.json());
+      //  console.log("FLASHCARDS:", await flashcardsRes.json());
 
       const quizzesRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/materiais/quizzes`,
@@ -656,7 +656,7 @@ export default function MateriaisClient({ id }: { id: string }) {
           credentials: "include",
         }
       );
-      console.log("QUIZZES:", await quizzesRes.json());
+      //  console.log("QUIZZES:", await quizzesRes.json());
 
       // --- atualizar lista no estado ---
       setMateriaisNome((prev: any) => [...prev, data.material]);
@@ -682,7 +682,7 @@ export default function MateriaisClient({ id }: { id: string }) {
       );
 
       const data = await res.json();
-      console.log(data);
+      //  console.log(data);
       materiais();
     } catch (error) {
       console.error("Erro ao deletar o material.");
@@ -726,8 +726,8 @@ export default function MateriaisClient({ id }: { id: string }) {
   const Edicao = async () => {
     try {
       if (MudarMateria && materialID) {
-        console.log(MudarMateria, "MudarMateria");
-        console.log(materialID, "Material");
+        //  console.log(MudarMateria, "MudarMateria");
+        //  console.log(materialID, "Material");
 
         const payload = {
           materiaId: MudarMateria,
@@ -745,7 +745,7 @@ export default function MateriaisClient({ id }: { id: string }) {
 
         const data = await res.json();
         if (data.message === "Matéria do material atualizada com sucesso.") {
-          console.log(data);
+          //  console.log(data);
           const materiais = async () => {
             try {
               const res = await fetch(
@@ -757,13 +757,13 @@ export default function MateriaisClient({ id }: { id: string }) {
               );
 
               const data = await res.json();
-              console.log(data);
+              //  console.log(data);
 
               const materiaisFiltrados = data.materiais.filter(
                 (material: any) => material.materiaId === id
               );
-              console.log("data", data);
-              console.log("materiaisFiltrados", materiaisFiltrados);
+              //  console.log("data", data);
+              //  console.log("materiaisFiltrados", materiaisFiltrados);
               setMateriaisNome(materiaisFiltrados);
             } catch (err) {
               console.error(err);
@@ -793,7 +793,7 @@ export default function MateriaisClient({ id }: { id: string }) {
         );
 
         const data = await res.json();
-        console.log(data);
+        //  console.log(data);
 
         if (data.message === "Nome do material atualizado com sucesso.") {
           const materiais = async () => {
@@ -807,13 +807,13 @@ export default function MateriaisClient({ id }: { id: string }) {
               );
 
               const data = await res.json();
-              console.log(data);
+              //  console.log(data);
 
               const materiaisFiltrados = data.materiais.filter(
                 (material: any) => material.materiaId === id
               );
-              console.log("data", data);
-              console.log("materiaisFiltrados", materiaisFiltrados);
+              //  console.log("data", data);
+              //  console.log("materiaisFiltrados", materiaisFiltrados);
               setMateriaisNome(materiaisFiltrados);
             } catch (err) {
               console.error(err);
@@ -1089,8 +1089,8 @@ export default function MateriaisClient({ id }: { id: string }) {
                           if (origem === "DOCUMENTO") {
                             criarDocumento();
                           } else {
-                            console.log(origem);
-                            console.log("não é documento"); // <- now it will actually show something
+                            //  console.log(origem);
+                            //  console.log("não é documento"); // <- now it will actually show something
                           }
                         }}
                       >
@@ -1288,7 +1288,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                           if (origem === "TOPICOS") {
                             criarTopicos();
                           } else {
-                            console.log("não é topicos"); // <- now it will actually show something
+                            //  console.log("não é topicos"); // <- now it will actually show something
                           }
                         }}
                       >
@@ -1498,7 +1498,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                           if (origem === "ASSUNTO") {
                             criarAssunto();
                           } else {
-                            console.log("não é assunto"); // <- now it will actually show something
+                            //  console.log("não é assunto"); // <- now it will actually show something
                           }
                         }}
                       >
@@ -1648,9 +1648,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                     </div>
 
                     <div className="w-full flex flex-col gap-1">
-                      <h2 className="text-[20px] font-medium">
-                        Editar nome:
-                      </h2>
+                      <h2 className="text-[20px] font-medium">Editar nome:</h2>
                       <input
                         type="text"
                         id="nome_materia"

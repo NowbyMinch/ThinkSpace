@@ -100,7 +100,7 @@ export default function MaterialClient() {
           );
 
           const data = await res.json();
-          console.log("Flashcards", data);
+          //  console.log("Flashcards", data);
           setFlashcards(data);
         } else {
           const res = await fetch(
@@ -112,7 +112,7 @@ export default function MaterialClient() {
           );
 
           const data = await res.json();
-          console.log("Flashcards", data);
+          //  console.log("Flashcards", data);
           setFlashcards(data);
         }
       } catch (err) {
@@ -126,7 +126,7 @@ export default function MaterialClient() {
     if (flashcards.flashcards.length > 0) {
       setLoading(false);
     }
-    console.log(flashcards.flashcards.length);
+    //  console.log(flashcards.flashcards.length);
   }, [flashcards]);
 
   if (loading) return <Loading />;

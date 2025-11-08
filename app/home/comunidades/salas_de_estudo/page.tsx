@@ -48,11 +48,11 @@ export default function SalasdeEstudo() {
   const [open2, setOpen2] = useState(false);
   const [topicos, setTopicos] = useState<string[]>([]);
   const [topicoInput, setTopicoInput] = useState("");
-  
+
   const [nomeSala, setNomeSala] = useState("");
   const [descricao, setDescricao] = useState("");
   const [tipo, setTipo] = useState("");
-  
+
   const { searchTerm } = useContext(SearchContext);
   const filteredPosts = useMemo(() => {
     if (!searchTerm.trim()) return salas;
@@ -95,7 +95,6 @@ export default function SalasdeEstudo() {
       // ✅ Set states after everything is done
       setUser(userData);
       setSalas(salasData.salas);
-      
 
       // Extract data from /home/salas-estudo safely
     } catch (err) {
@@ -177,9 +176,9 @@ export default function SalasdeEstudo() {
       descricao: descricao,
       tipo: "PUBLICA",
       autorId: userIDdata1.userId,
-      topicos: topicos
+      topicos: topicos,
     };
-    console.log(payload);
+    //  console.log(payload);
 
     try {
       const criarSalaRes = await fetch(
@@ -193,7 +192,7 @@ export default function SalasdeEstudo() {
       );
 
       const criarSalaData = await criarSalaRes.json();
-      console.log(criarSalaData);
+      //  console.log(criarSalaData);
 
       if (criarSalaData.error) {
         setMessage(criarSalaData.error);
