@@ -99,8 +99,6 @@ export default function RegistrarInner() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //  console.log(form.dataNascimento);
-    //  console.log(form.dataNascimento.length);
     if (form.dataNascimento.length < 10) {
       setMessage("Data de nacimento inválida.");
       return;
@@ -294,6 +292,16 @@ export default function RegistrarInner() {
     //  console.log(savedForm);
     //  console.log(savedForm2);
     //  console.log(savedForm3);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      // This runs when leaving the page
+      if (typeof window !== "undefined") {
+        localStorage.clear();
+        console.log("LocalStorage cleared on leaving /registrar");
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -836,7 +844,7 @@ export default function RegistrarInner() {
                                     <motion.input
                                       whileHover={{ scale: 1.05 }}
                                       whileTap={{ scale: 0.95 }}
-                                      checked={form2.aceitouTermos}
+                                      defaultChecked={form2.aceitouTermos}
                                       onClick={() => {
                                         setForm2((prev) => ({
                                           ...prev,
