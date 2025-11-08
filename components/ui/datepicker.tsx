@@ -37,32 +37,8 @@ type CalendarioData = {
 };
 
 type DatePickerProps = {
-  onChange: (date: string) => void; // formato "YYYY-MM-DD"
+  onChange: (date: string | null ) => void; // formato "YYYY-MM-DD"
 };
-
-"use client";
-
-import {
-  addDays,
-  addMonths,
-  endOfMonth,
-  format,
-  isSameDay,
-  isSameMonth,
-  parse,
-  startOfMonth,
-  startOfWeek,
-  subMonths,
-  isValid,
-} from "date-fns";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
-
-type DatePickerProps = {
-  onChange?: (date: string | null) => void;
-};
-
 type CalendarioData = {
   [key: string]: any;
 };
