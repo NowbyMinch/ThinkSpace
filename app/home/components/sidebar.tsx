@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Backdrop3 } from "./backdrop";
 import { useRouter } from "next/navigation";
 import ErrorModal from "@/components/ui/ErrorModal";
+import { RefreshUserContext } from "@/app/context/RefreshUserContext";
 
 type UserData = {
   primeiroNome?: string;
@@ -151,7 +152,7 @@ export const Sidebar = () => {
     newToComunityGET();
   }, []);
 
-  const newToComunityGET = async () => {
+  const RefreshUser = async () => {
     const userIDRes1 = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
       {
@@ -449,511 +450,522 @@ export const Sidebar = () => {
         </>
       )}
 
-      <div className=" min-w-[80px]  h-[100vh] min-h-fit hidden lg:flex flex-col justify-center items-center ml-2 z-[100]">
-        <nav className="bg-white min-w-[80px] min-h-fit h-[98%] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
-          <div className=" h-[92%] max-h-[1000px] px-1 flex flex-col justify-between items-center overflow-hidden ">
-            <Link className="relative" href="/home">
+      <RefreshUserContext.Provider value={{ RefreshUser }}>
+        <div className=" min-w-[80px]  h-[100vh] min-h-fit hidden lg:flex flex-col justify-center items-center ml-2 z-[100]">
+          <nav className="bg-white min-w-[80px] min-h-fit h-[98%] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px] fixed ">
+            <div className=" h-[92%] max-h-[1000px] px-1 flex flex-col justify-between items-center overflow-hidden ">
+              <Link className="relative" href="/home">
+                <Tooltip
+                  closeDelay={0}
+                  content="Menu Principal"
+                  placement="right"
+                  className="w-fit text-[18px]"
+                  showArrow={true}
+                >
+                  <motion.div
+                    initial="initial"
+                    animate="initial"
+                    whileHover="hovered"
+                    whileTap={{ scale: 0.95 }}
+                    variants={{
+                      initial: { scale: 1 },
+                      hovered: { scale: 1.05 },
+                    }}
+                    className="w-[55px] h-[55px] mt-5 cursor-pointer relative"
+                  >
+                    {/* Show only the correct icon */}
+                    {pathname === "/home" ? (
+                      <>
+                        <motion.img
+                          src="/Light Bulb.png"
+                          alt="Logo"
+                          className="w-full absolute"
+                          variants={{
+                            initial: { scale: 1 },
+                            hovered: { scale: 1.15 },
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <motion.img
+                          src="/Light Bulb.png"
+                          alt="Logo"
+                          className="w-full absolute scale-100"
+                          variants={{
+                            initial: { scale: 0 },
+                            hovered: { scale: 1 },
+                          }}
+                        />
+                      </>
+                    )}
+                    <motion.img
+                      src="/Light Bulb-off.png"
+                      width={300}
+                      height={500}
+                      alt="Logo"
+                      className=" z-10 w-full absolute"
+                    />
+                  </motion.div>
+                </Tooltip>
+              </Link>
+
+              <div className="flex flex-col items-center gap-[18px]">
+                <Link href="/home/materiais" className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Materiais"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname === "/home/materiais"
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <NotebookPen
+                        className={`size-[24px] cursor-pointer ${pathname !== "/home/materiais" ? "text-black" : "text-white"}`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+
+                {/* href="/home/comunidades/postagens" */}
+                <div
+                  onClick={() => {
+                    if (newUser) {
+                      router.push("/home/comunidades/postagens");
+                    } else {
+                      setNewToComunityPop(true);
+                    }
+                  }}
+                  className=""
+                >
+                  <Tooltip
+                    closeDelay={0}
+                    content="Comunidades"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname.startsWith("/home/comunidades")
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <User
+                        className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </div>
+
+                <Link
+                  href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
+                  className=""
+                >
+                  <Tooltip
+                    closeDelay={0}
+                    content="Métricas"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname.endsWith("/metrica") &&
+                        pathname.startsWith("/home/users/")
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <ChartLine
+                        className={`size-[24px] cursor-pointer ${
+                          pathname.endsWith("/metrica") &&
+                          pathname.startsWith("/home/users/")
+                            ? "text-white"
+                            : "text-black"
+                        }`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+
+                <Link href={`/home/calendario`} className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Calendário"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname === "/home/calendario"
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <CalendarDays
+                        className={`size-[24px] cursor-pointer ${pathname !== "/home/calendario" ? "text-black" : "text-white"}`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+
+                <Link href={`/home/configuracoes/informacoes`} className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Configurações"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname == "/home/configuracoes/informacoes" ||
+                        pathname == "/home/configuracoes/notificacao" ||
+                        pathname == "/home/configuracoes/personalizacao" ||
+                        pathname == "/home/configuracoes/conta"
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <Cog
+                        className={`size-[24px] cursor-pointer ${
+                          pathname == "/home/configuracoes/informacoes" ||
+                          pathname == "/home/configuracoes/notificacao" ||
+                          pathname == "/home/configuracoes/personalizacao" ||
+                          pathname == "/home/configuracoes/conta"
+                            ? "text-white"
+                            : "text-black"
+                        }`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+              </div>
+
               <Tooltip
                 closeDelay={0}
-                content="Menu Principal"
+                content="Sair"
                 placement="right"
                 className="w-fit text-[18px]"
                 showArrow={true}
               >
-                <motion.div
-                  initial="initial"
-                  animate="initial"
-                  whileHover="hovered"
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  variants={{
-                    initial: { scale: 1 },
-                    hovered: { scale: 1.05 },
-                  }}
-                  className="w-[55px] h-[55px] mt-5 cursor-pointer relative"
+                  onClick={() => setLogoutPop(true)}
+                  id="side_pop"
+                  className="relative p-[10px] rounded-full "
                 >
-                  {/* Show only the correct icon */}
-                  {pathname === "/home" ? (
-                    <>
-                      <motion.img
-                        src="/Light Bulb.png"
-                        alt="Logo"
-                        className="w-full absolute"
-                        variants={{
-                          initial: { scale: 1 },
-                          hovered: { scale: 1.15 },
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <motion.img
-                        src="/Light Bulb.png"
-                        alt="Logo"
-                        className="w-full absolute scale-100"
-                        variants={{
-                          initial: { scale: 0 },
-                          hovered: { scale: 1 },
-                        }}
-                      />
-                    </>
-                  )}
-                  <motion.img
-                    src="/Light Bulb-off.png"
-                    width={300}
-                    height={500}
-                    alt="Logo"
-                    className=" z-10 w-full absolute"
-                  />
-                </motion.div>
+                  <LogOut className="size-[24px] cursor-pointer text-black " />
+                </motion.button>
               </Tooltip>
-            </Link>
-
-            <div className="flex flex-col items-center gap-[18px]">
-              <Link href="/home/materiais" className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Materiais"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname === "/home/materiais"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <NotebookPen
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/materiais" ? "text-black" : "text-white"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-
-              {/* href="/home/comunidades/postagens" */}
-              <div
-                onClick={() => {
-                  if (newUser) {
-                    router.push("/home/comunidades/postagens");
-                  } else {
-                    setNewToComunityPop(true);
-                  }
-                }}
-                className=""
-              >
-                <Tooltip
-                  closeDelay={0}
-                  content="Comunidades"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname.startsWith("/home/comunidades")
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <User
-                      className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </div>
-
-              <Link
-                href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
-                className=""
-              >
-                <Tooltip
-                  closeDelay={0}
-                  content="Métricas"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname.endsWith("/metrica") &&
-                      pathname.startsWith("/home/users/")
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <ChartLine
-                      className={`size-[24px] cursor-pointer ${
-                        pathname.endsWith("/metrica") &&
-                        pathname.startsWith("/home/users/")
-                          ? "text-white"
-                          : "text-black"
-                      }`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-
-              <Link href={`/home/calendario`} className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Calendário"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname === "/home/calendario"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <CalendarDays
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/calendario" ? "text-black" : "text-white"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-
-              <Link href={`/home/configuracoes/informacoes`} className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Configurações"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname == "/home/configuracoes/informacoes" ||
-                      pathname == "/home/configuracoes/notificacao" ||
-                      pathname == "/home/configuracoes/personalizacao" ||
-                      pathname == "/home/configuracoes/conta"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <Cog
-                      className={`size-[24px] cursor-pointer ${
-                        pathname == "/home/configuracoes/informacoes" ||
-                        pathname == "/home/configuracoes/notificacao" ||
-                        pathname == "/home/configuracoes/personalizacao" ||
-                        pathname == "/home/configuracoes/conta"
-                          ? "text-white"
-                          : "text-black"
-                      }`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
             </div>
-
-            <Tooltip
-              closeDelay={0}
-              content="Sair"
-              placement="right"
-              className="w-fit text-[18px]"
-              showArrow={true}
-            >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setLogoutPop(true)}
-                id="side_pop"
-                className="relative p-[10px] rounded-full "
-              >
-                <LogOut className="size-[24px] cursor-pointer text-black " />
-              </motion.button>
-            </Tooltip>
-          </div>
-        </nav>
-      </div>
-
-      <motion.div
-        ref={bottomBar}
-        className={`${visible ? "h-[85px] " : "left-[50%] translate-x-[-50%]"} w-[65px] left-[50%] translate-x-[-50%] fixed bottom-0 rounded-tl-[10px] rounded-tr-[10px] min-h-fit flex flex-col justify-center items-center z-[100] overflow-hidden `}
-      >
-        <div
-          className="bg-[#D9D9D9] w-[65px] h-[25px] rounded-tl-[10px] lg:hidden rounded-tr-[10px] mt-auto flex justify-center items-center cursor-pointer"
-          onClick={() => bar()}
-        >
-          <ChevronUp
-            className={` ${visible ? "rotate-[180deg]" : ""} transition-all ease-in-out duration-400 `}
-          />
+          </nav>
         </div>
 
-        <nav
-          className={`${visible ? "mb-[5px]" : "-mb-[75px]"} lg:hidden transition-all ease-in-out duration-400 bg-white w-full min-h-fit h-[70px] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px]`}
+        <motion.div
+          ref={bottomBar}
+          className={`${visible ? "h-[85px] " : "left-[50%] translate-x-[-50%]"} w-[65px] left-[50%] translate-x-[-50%] fixed bottom-0 rounded-tl-[10px] rounded-tr-[10px] min-h-fit flex flex-col justify-center items-center z-[100] overflow-hidden `}
         >
-          <div className=" h-full w-full flex justify-between px-5 items-center overflow-hidden ">
-            <Link className="relative" href="/home">
-              <Tooltip
-                closeDelay={0}
-                content="Menu Principal"
-                placement="right"
-                className="w-fit text-[18px] "
-                showArrow={true}
-              >
-                <motion.div
-                  initial="initial"
-                  animate="initial"
-                  whileHover="hovered"
-                  whileTap={{ scale: 0.95 }}
-                  variants={{
-                    initial: { scale: 1 },
-                    hovered: { scale: 1.05 },
+          <div
+            className="bg-[#D9D9D9] w-[65px] h-[25px] rounded-tl-[10px] lg:hidden rounded-tr-[10px] mt-auto flex justify-center items-center cursor-pointer"
+            onClick={() => bar()}
+          >
+            <ChevronUp
+              className={` ${visible ? "rotate-[180deg]" : ""} transition-all ease-in-out duration-400 `}
+            />
+          </div>
+
+          <nav
+            className={`${visible ? "mb-[5px]" : "-mb-[75px]"} lg:hidden transition-all ease-in-out duration-400 bg-white w-full min-h-fit h-[70px] flex flex-col items-center border border-[#00000031] shadow-md rounded-[70px]`}
+          >
+            <div className=" h-full w-full flex justify-between px-5 items-center overflow-hidden ">
+              <Link className="relative" href="/home">
+                <Tooltip
+                  closeDelay={0}
+                  content="Menu Principal"
+                  placement="right"
+                  className="w-fit text-[18px] "
+                  showArrow={true}
+                >
+                  <motion.div
+                    initial="initial"
+                    animate="initial"
+                    whileHover="hovered"
+                    whileTap={{ scale: 0.95 }}
+                    variants={{
+                      initial: { scale: 1 },
+                      hovered: { scale: 1.05 },
+                    }}
+                    className="w-[36px] h-[36px] mb-2 cursor-pointer relative"
+                  >
+                    {/* Show only the correct icon */}
+                    {pathname === "/home" ? (
+                      <>
+                        <motion.img
+                          src="/Light Bulb.png"
+                          alt="Logo"
+                          className="w-full absolute"
+                          variants={{
+                            initial: { scale: 1 },
+                            hovered: { scale: 1.15 },
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <motion.img
+                          src="/Light Bulb.png"
+                          alt="Logo"
+                          className="w-full absolute scale-100"
+                          variants={{
+                            initial: { scale: 0 },
+                            hovered: { scale: 1 },
+                          }}
+                        />
+                      </>
+                    )}
+                    <motion.img
+                      src="/Light Bulb-off.png"
+                      width={300}
+                      height={500}
+                      alt="Logo"
+                      className=" z-10 w-full absolute"
+                    />
+                  </motion.div>
+                </Tooltip>
+              </Link>
+
+              <div className="flex items-center  ">
+                <Link href="/home/materiais" className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Materiais"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname === "/home/materiais"
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <NotebookPen
+                        className={`size-[24px] cursor-pointer ${pathname !== "/home/materiais" ? "text-black" : "text-white"}`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+
+                <div
+                  onClick={() => {
+                    if (newUser) {
+                      router.push("/home/comunidades/postagens");
+                    } else {
+                      setNewToComunityPop(true);
+                    }
                   }}
-                  className="w-[36px] h-[36px] mb-2 cursor-pointer relative"
+                  className=""
                 >
-                  {/* Show only the correct icon */}
-                  {pathname === "/home" ? (
-                    <>
-                      <motion.img
-                        src="/Light Bulb.png"
-                        alt="Logo"
-                        className="w-full absolute"
-                        variants={{
-                          initial: { scale: 1 },
-                          hovered: { scale: 1.15 },
-                        }}
+                  <Tooltip
+                    closeDelay={0}
+                    content="Comunidades"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
+                  >
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname.startsWith("/home/comunidades")
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <User
+                        className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
                       />
-                    </>
-                  ) : (
-                    <>
-                      <motion.img
-                        src="/Light Bulb.png"
-                        alt="Logo"
-                        className="w-full absolute scale-100"
-                        variants={{
-                          initial: { scale: 0 },
-                          hovered: { scale: 1 },
-                        }}
-                      />
-                    </>
-                  )}
-                  <motion.img
-                    src="/Light Bulb-off.png"
-                    width={300}
-                    height={500}
-                    alt="Logo"
-                    className=" z-10 w-full absolute"
-                  />
-                </motion.div>
-              </Tooltip>
-            </Link>
+                    </motion.button>
+                  </Tooltip>
+                </div>
 
-            <div className="flex items-center  ">
-              <Link href="/home/materiais" className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Materiais"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
+                <Link
+                  href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
+                  className=""
                 >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname === "/home/materiais"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
+                  <Tooltip
+                    closeDelay={0}
+                    content="Métricas"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
                   >
-                    <NotebookPen
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/materiais" ? "text-black" : "text-white"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-
-              <Link href="/home/comunidades/postagens" className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Comunidades"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname.startsWith("/home/comunidades")
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <User
-                      className={`size-[24px] cursor-pointer ${pathname.startsWith("/home/comunidades") ? "text-white" : "text-black"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-
-              <Link
-                href={`${bannerData.relatorioUrl && `/home/${bannerData.relatorioUrl}`} `}
-                className=""
-              >
-                <Tooltip
-                  closeDelay={0}
-                  content="Métricas"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname.endsWith("/metrica") &&
-                      pathname.startsWith("/home/users/")
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
-                  >
-                    <ChartLine
-                      className={`size-[24px] cursor-pointer ${
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
                         pathname.endsWith("/metrica") &&
                         pathname.startsWith("/home/users/")
-                          ? "text-white"
-                          : "text-black"
-                      }`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <ChartLine
+                        className={`size-[24px] cursor-pointer ${
+                          pathname.endsWith("/metrica") &&
+                          pathname.startsWith("/home/users/")
+                            ? "text-white"
+                            : "text-black"
+                        }`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
 
-              <Link href={`/home/calendario`} className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Calendário"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname === "/home/calendario"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
+                <Link href={`/home/calendario`} className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Calendário"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
                   >
-                    <CalendarDays
-                      className={`size-[24px] cursor-pointer ${pathname !== "/home/calendario" ? "text-black" : "text-white"}`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
+                        pathname === "/home/calendario"
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <CalendarDays
+                        className={`size-[24px] cursor-pointer ${pathname !== "/home/calendario" ? "text-black" : "text-white"}`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
 
-              <Link href={`/home/configuracoes/informacoes`} className="">
-                <Tooltip
-                  closeDelay={0}
-                  content="Configurações"
-                  placement="right"
-                  className="w-fit text-[18px]"
-                  showArrow={true}
-                >
-                  <motion.button
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className={` ${
-                      pathname == "/home/configuracoes/informacoes" ||
-                      pathname == "/home/configuracoes/notificacao" ||
-                      pathname == "/home/configuracoes/personalizacao" ||
-                      pathname == "/home/configuracoes/conta"
-                        ? "bg-[#A39CEC]"
-                        : "bg-transparent"
-                    } relative p-[10px] rounded-full `}
+                <Link href={`/home/configuracoes/informacoes`} className="">
+                  <Tooltip
+                    closeDelay={0}
+                    content="Configurações"
+                    placement="right"
+                    className="w-fit text-[18px]"
+                    showArrow={true}
                   >
-                    <Cog
-                      className={`size-[24px] cursor-pointer ${
+                    <motion.button
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className={` ${
                         pathname == "/home/configuracoes/informacoes" ||
                         pathname == "/home/configuracoes/notificacao" ||
                         pathname == "/home/configuracoes/personalizacao" ||
                         pathname == "/home/configuracoes/conta"
-                          ? "text-white"
-                          : "text-black"
-                      }`}
-                    />
-                  </motion.button>
-                </Tooltip>
-              </Link>
-            </div>
+                          ? "bg-[#A39CEC]"
+                          : "bg-transparent"
+                      } relative p-[10px] rounded-full `}
+                    >
+                      <Cog
+                        className={`size-[24px] cursor-pointer ${
+                          pathname == "/home/configuracoes/informacoes" ||
+                          pathname == "/home/configuracoes/notificacao" ||
+                          pathname == "/home/configuracoes/personalizacao" ||
+                          pathname == "/home/configuracoes/conta"
+                            ? "text-white"
+                            : "text-black"
+                        }`}
+                      />
+                    </motion.button>
+                  </Tooltip>
+                </Link>
+              </div>
 
-            <Tooltip
-              closeDelay={0}
-              content="Sair"
-              placement="right"
-              className="w-fit text-[18px]"
-              showArrow={true}
-            >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setLogoutPop(true)}
-                id="side_pop"
-                className="relative p-[10px] rounded-full "
+              <Tooltip
+                closeDelay={0}
+                content="Sair"
+                placement="right"
+                className="w-fit text-[18px]"
+                showArrow={true}
               >
-                <LogOut className="size-[24px] cursor-pointer text-black " />
-              </motion.button>
-            </Tooltip>
-          </div>
-        </nav>
-      </motion.div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setLogoutPop(true)}
+                  id="side_pop"
+                  className="relative p-[10px] rounded-full "
+                >
+                  <LogOut className="size-[24px] cursor-pointer text-black " />
+                </motion.button>
+              </Tooltip>
+            </div>
+          </nav>
+        </motion.div>
+      </RefreshUserContext.Provider>
     </>
   );
 };

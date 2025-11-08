@@ -7,6 +7,7 @@ import {
   ComboboxDemoSettings2,
 } from "../../components/dropdown";
 import ErrorModal from "@/components/ui/ErrorModal";
+import { DatePickerConfiguracoes } from "@/components/ui/datepicker";
 
 type UserData = {
   primeiroNome?: string;
@@ -231,8 +232,9 @@ export default function Informacoes() {
                 dataNascimento: e.target.value,
               })
             }
-            className="rounded-[20px] border-[2px] border-[#0d0f224e] pl-2 w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
+            className="rounded-[20px] border-[2px] pl-2 border-[#0d0f224e] w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
+          <DatePickerConfiguracoes value={configuracoes.dataNascimento} onChange={() => {}} />
         </div>
 
         {/* Instituição */}
@@ -263,7 +265,7 @@ export default function Informacoes() {
         </div>
 
         {/* Escolaridade */}
-        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
+        <div className="flex flex-col justify-between lg:w-[50%] bg-red-500 max-w-[550px]">
           <h1 className="text-[20px] font-medium">Nível de escolaridade</h1>
           <ComboboxDemoSettings2
             value={configuracoes.escolaridade}

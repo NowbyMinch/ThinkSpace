@@ -9,6 +9,7 @@ import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import { useContext } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -82,6 +83,7 @@ import {
 import * as Icons from "lucide-react";
 import { avatar } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { RefreshUserContext } from "../context/RefreshUserContext";
 
 const icons = [
   // Educação e aprendizado
@@ -256,6 +258,7 @@ export default function HomePage() {
 
   function closing() {
     setTimeout(() => setPop(false), 10);
+    setNewToComunityPop(false);
   }
 
   function closingLink() {
@@ -263,6 +266,11 @@ export default function HomePage() {
     setLinkUtil2(false);
     setLinkUtil3(false);
   }
+
+  const handleGo = async () => {
+    await router.refresh(); // ✅ forces re-render with updated data
+    router.push("/home/comunidades/postagens");
+  };
 
   function opening2() {
     setPop2(true);
@@ -307,6 +315,8 @@ export default function HomePage() {
   const [ofensivaMensagem, setOfensivaMensagem] = useState("");
   const [totalEstudantes, setTotalEstudantes] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [newToComunityPop, setNewToComunityPop] = useState(false);
+  const [newUser, setNewUser] = useState(false);
 
   const [linkUtil1, setLinkUtil1] = useState(false);
   const [linkUtil2, setLinkUtil2] = useState(false);
@@ -317,17 +327,6 @@ export default function HomePage() {
   };
 
   const ReloadNotification = async () => {
-    // const userIDRes1 = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
-    //   {
-    //     method: "GET",
-    //     credentials: "include",
-    //   }
-    // );
-
-    // const userIDdata1 = await userIDRes1.json(); // parse the response
-    // setUserID(userIDdata1.userId); // set the state
-
     try {
       // Run all fetches in parallel
       const [notificacaoRes] = await Promise.all([
@@ -342,7 +341,6 @@ export default function HomePage() {
 
       // ✅ Set states after everything is done
       setNotificacao(notificacaoData);
-
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -445,7 +443,6 @@ export default function HomePage() {
         // Extract data from /home/salas-estudo safely
         // if (salasData) {
         // }
-
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -454,54 +451,87 @@ export default function HomePage() {
         setLoading(false);
       }
     };
-
     fetchAll();
+
+    const newToComunityGET = async () => {
+      const userIDRes1 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const userIDdata1 = await userIDRes1.json(); // parse the response
+      // setUserID(userIDdata1.userId); // set the state
+
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/status-termos-comunidade`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        const data = await res.json();
+        setNewUser(data.aceitouTermosComunidade);
+
+        //  console.log("TERMOS TERMOS TERMOS TERMOS ", data);
+      } catch (err) {
+        setMessage("Erro ao carregar saudação.");
+        console.error(err);
+      }
+    };
+    newToComunityGET();
   }, []);
 
-  //  useEffect(() => {
-  //    const fetchAll = async () => {
-  //      try {
-  //        // Run all fetches in parallel
-  //        const [userRes, salasRes] = await Promise.all([
-  //          fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
-  //            method: "GET",
-  //            credentials: "include",
-  //          }),
-  //          fetch(`${process.env.NEXT_PUBLIC_API_URL}/sala-estudo`, {
-  //            method: "GET",
-  //            credentials: "include",
-  //          }),
-  //        ]);
+  const { RefreshUser } = useContext(RefreshUserContext);
 
-  //        // Parse all JSONs in parallel
-  //        const [userData, salasData] = await Promise.all([
-  //          userRes.json(),
-  //          salasRes.json(),
-  //        ]);
+  const setNewToComunityState = async () => {
+    const userIDRes1 = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
 
-  //        // ✅ Set states after everything is done
-  //        setUser(userData);
-  //        setSalas(salasData.salas);
+    const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
 
-  //        // Extract data from /home/salas-estudo safely
-  //      } catch (err) {
-  //        console.error("Erro ao carregar dados:", err);
-  //        setMessage("Erro ao carregar dados.");
-  //      } finally {
-  //        // ✅ Stop loading only after all requests (success or error)
-  //        setLoading(false);
-  //      }
-  //    };
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/usuario/${userIDdata1.userId}/aceitar-termos-comunidade`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
-  //    fetchAll();
-  //  }, []);
+      const data = await res.json();
+      //  console.log(data);
+      if (data.message === "Termos de uso da comunidade aceitos com sucesso.") {
+        setNewUser(true);
+        window.location.reload();
+        setLoading(true);
+        router.push("/home/comunidades/postagens");
+      } else {
+        setMessage(data.message);
+      }
+    } catch (err) {
+      setMessage("Erro ao carregar saudação.");
+      console.error(err);
+    } finally {
+      setNewToComunityPop(false);
+    }
+  };
 
   useEffect(() => {
     if (materias && materias.length > 0 && salas && salas.length > 0) {
       setLoading(false);
     }
   }, [materias, salas]);
-
 
   if (loading) return <Loading />;
 
@@ -514,6 +544,136 @@ export default function HomePage() {
       )}
 
       <AnimatePresence initial={false}>
+        {newToComunityPop && (
+          <>
+            <motion.div
+              key={`denuncia-${message}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100]"
+            >
+              <div className="absolute inset-0" onClick={() => closing()} />
+
+              <motion.div
+                key="modal-wrapper"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="relative z-[1101] rounded-[40px] overflow-hidden shadow-md"
+                style={{ width: 700 }}
+              >
+                <div
+                  className="bg-white w-full max-h-[90vh] overflow-y-auto overflow-x-hidden"
+                  style={{
+                    WebkitOverflowScrolling: "touch",
+                    clipPath: "inset(0 round 40px)",
+                  }}
+                >
+                  <div
+                    id="white-box"
+                    className="p-7 gap-3 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                  >
+                    <img
+                      src="/Vector.svg"
+                      alt="Decoração"
+                      className="absolute bottom-0 right-[-180px] rotate-[260deg] w-[550px] -z-10"
+                    />
+
+                    <div className="flex justify-between items-center w-full">
+                      <h1 className="text-[35px] font-medium self-end leading-none">
+                        Bem vindo! 🌟
+                      </h1>
+                      {/* <div className="w-fit">
+                            <motion.div
+                              whileHover={{ scale: 1.08 }}
+                              whileTap={{ scale: 0.92 }}
+                              onClick={closing}
+                              className="cursor-pointer w-6 h-6"
+                            >
+                              <X className="w-full h-full" />
+                            </motion.div>
+                          </div> */}
+                    </div>
+                    <p className="text-[#5e5e5e] text-[20px] font-medium">
+                      Essa é a aba Comunidade — um espaço criado para tornar o
+                      aprendizado mais colaborativo, respeitoso e produtivo.
+                      Aqui, você pode criar salas personalizadas, interagir com
+                      colegas, compartilhar materiais e trocar experiências de
+                      estudo. Para que todos aproveitem esse ambiente de forma
+                      positiva e segura, é essencial seguir algumas regras de
+                      convivência:
+                    </p>
+                    <ul className="text-[#5e5e5e] text-[18px] font-medium list-disc list-outside pl-4">
+                      <li>
+                        Evite mensagens repetitivas, propagandas ou conteúdos
+                        falsos;
+                      </li>
+                      <li>
+                        Não compartilhe informações sem fonte confiável ou que
+                        possam induzir outros ao erro;
+                      </li>
+                      <li>
+                        Proibição de incentivo a comportamentos arriscados ou
+                        prejudiciais;
+                      </li>
+                      <li>
+                        Respeite todas as pessoas, independentemente de suas
+                        diferenças;
+                      </li>
+                      <li>
+                        Qualquer forma de intimidação, ataque pessoal ou
+                        humilhação é inaceitável;
+                      </li>
+                      <li>
+                        É estritamente proibido defender, apoiar ou incentivar
+                        atividades terroristas;
+                      </li>
+                      <li>
+                        Mantenha o ambiente adequado para todas as idades e fins
+                        educacionais;
+                      </li>
+                      <li>
+                        Não compartilhe imagens, vídeos ou textos com conteúdo
+                        violento ou repulsivo;
+                      </li>
+                      <li>
+                        Temas relacionados a suicídio, automutilação ou
+                        transtornos alimentares devem ser tratados com
+                        responsabilidade e nunca incentivados;
+                      </li>
+                      <li>
+                        Qualquer material ou menção a abuso infantil será
+                        imediatamente reportado.
+                      </li>
+                    </ul>
+                    <p className="text-[#5e5e5e] text-[20px] font-medium">
+                      Caso deseje rever essas e outras diretrizes, consulte
+                      nossos Termos de Uso disponíveis na plataforma. Juntos,
+                      podemos construir uma comunidade de aprendizado segura,
+                      acolhedora e inspiradora.
+                    </p>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ ease: "easeInOut" }}
+                      onClick={setNewToComunityState}
+                      className="self-center bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                    >
+                      Aceitar termos
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <div className="w-full absolute flex justify-center items-center">
+              <Backdrop3 onClick={() => closing()} />
+            </div>
+          </>
+        )}
+
         {pop && <Backdrop key={1} />}
         {pop2 && <Backdrop2 key={2} />}
         {linkUtil1 && (
@@ -1983,8 +2143,18 @@ export default function HomePage() {
 
                     <div className=" z-20 ml-auto mr-[4%] w-[45%] h-[61px] ">
                       <a className=" cursor-pointer rounded-full">
-                        <button className="banner_button bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5">
-                          Ir para salas
+                        <button
+                          onClick={() => {
+                            if (newUser) {
+                              router.push("/home/comunidades/postagens");
+                            } else {
+                              setNewToComunityPop(true);
+                            }
+                            RefreshUser();
+                          }}
+                          className="banner_button bg-[#1E2351] rounded-full text-white text-[18px] shadow-md leading-5"
+                        >
+                          Ir para aba de Comunidades
                         </button>
                       </a>
                     </div>
