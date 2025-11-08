@@ -8,6 +8,7 @@ import Loading from "../loading";
 import Loading2 from "@/components/ui/loading";
 import {
   ArrowLeft,
+  Bookmark,
   CalendarDays,
   ChevronDown,
   ChevronRight,
@@ -22,6 +23,8 @@ import {
 import path from "path";
 import { Backdrop3 } from "../components/backdrop";
 import PostagemDetail from "@/components/ui/postagemDetail";
+import { FavoritosContext } from "@/app/context/FavoritosContext";
+import { SearchContext } from "@/app/context/SearchContext";
 
 type UserData = {
   primeiroNome?: string;
@@ -100,14 +103,7 @@ type Recentes = {
   quantidadeEstudantes?: number; // if you want
 };
 
-export const FavoritosContext = createContext({
-  refreshFavoritos: () => {},
-});
-
-export const SearchContext = createContext({
-  searchTerm: "",
-  setSearchTerm: (value: string) => {},
-});
+// FavoritosContext is imported from "@/app/context/FavoritosContext"
 
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
@@ -665,6 +661,7 @@ export default function LayoutSalas({ children }: SalasProps) {
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const [appearFavoritos, setAppearFavoritos] = useState(false);
   return (
     <>
       {message && (
@@ -872,6 +869,14 @@ export default function LayoutSalas({ children }: SalasProps) {
                             </motion.div>
                           );
                         })}
+                      {favorito.length === 0 && (
+                        <div className="w-full h-fit rounded-[25px] border-2 border-[#CAC5FF] p-4 text-center">
+                          <span className="text-[25px] font-medium">
+                            Nenhuma postagem salva. Salve uma para aparecer
+                            aqui!
+                          </span>
+                        </div>
+                      )}
                     </motion.div>
                   </div>
                 </motion.div>
@@ -998,7 +1003,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                                     }
                                   }}
                                   placeholder="Adicionar tags"
-                                  className="shadow-md pl-5 text-[18px] w-full h-[50px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                                  className=" pl-5 text-[18px] w-full h-[50px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)] shadow-md"
                                 />
 
                                 <motion.button
@@ -1043,7 +1048,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                                         className="text-[rgba(0,0,0,0.34)]"
                                       />
 
-                                      <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                      <span className="text-white w-full block text-ellipsis overflow-hidden break-words ">
                                         {topico}
                                       </span>
                                     </motion.div>
@@ -1154,7 +1159,7 @@ export default function LayoutSalas({ children }: SalasProps) {
             ref={scrollRef}
             className="w-full h-screen flex justify-center items-start overflow-hidden"
           >
-            <div className="w-[1600px] max-w-[98%]  py-2 h-full gap-3 rounded-[35px] flex flex-row">
+            <div className="w-[1600px] max-w-[98%]  py-2 h-full gap-3 rounded-[35px] flex flex-row relative">
               <div className="w-full h-full overflow-hidden flex flex-col items-center gap-2 ">
                 {(pathname.startsWith("/home/comunidades/salas_de_estudo/") &&
                   pathname.endsWith("/postagens")) ||
@@ -1168,7 +1173,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                           pathname.endsWith("/postagens")) ||
                         pathname.endsWith("/materiais") ? (
                           <>
-                            <div className="flex w-full h-full rounded-[35px] bg-white flex-col items-center shadow-md overflow-y-auto overflow-x-hidden ">
+                            <div className="flex w-full h-full rounded-[35px] bg-white flex-col items-center  overflow-y-auto overflow-x-hidden ">
                               <div className="w-full">
                                 <div className="w-full h-[385px] bg-[#9767F8] relative">
                                   {!loading && (
@@ -1308,7 +1313,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                       )}
 
                       {!loading && (
-                        <div className=" h-[60px] flex gap-2 min-w-fit">
+                        <div className=" h-[60px] gap-2 min-w-fit sm:flex hidden">
                           <div className="text-end flex flex-col justify-center ">
                             <h1 className="font-medium leading-none text-[clamp(1.35rem,3vw,1.875rem)]">
                               {user.primeiroNome}
@@ -1332,7 +1337,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                             initial={{ scale: 0.95 }}
                             animate={{ scale: 1 }}
                             exit={{ scale: 0.95 }}
-                            className=" h-[60px] flex gap-2 min-w-fit"
+                            className=" h-[60px] sm:flex hidden gap-2 min-w-fit"
                           >
                             <div className="text-end flex flex-col  justify-between">
                               <h1 className="text-transparent bg-[#A39CEC] max-w-full rounded-full opacity-50 font-medium leading-none text-[clamp(1.35rem,3vw,1.875rem)]">
@@ -1349,6 +1354,15 @@ export default function LayoutSalas({ children }: SalasProps) {
                           </motion.div>
                         </AnimatePresence>
                       )}
+
+                      <div
+                        onClick={() => {
+                          setOpen(true);
+                        }}
+                        className=" min-w-14 min-h-14 border border-[#00000031] rounded-full bg-white sm:hidden flex justify-center items-center p-3"
+                      >
+                        <Bookmark className="text-[rgb(114,107,182)] stroke-2 w-full h-full" />
+                      </div>
                     </div>
                     <div className="h-full flex w-full max-w-[100dvw] rounded-[35px] max-h-full bg-white flex-col items-center shadow-md border border-[#00000031] overflow-hidden">
                       <AnimatePresence>
@@ -1409,7 +1423,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                 )}
               </div>
 
-              <div className="sm:flex hidden sm:max-w-[38%] md:max-w-[35%] lg:max-w-[30%] w-full sm:flex-col pt-4 gap-2 px-4 h-full bg-white rounded-[35px] h0 shadow-md overflow-hidden border border-[#00000031] overflow-y-auto overflow-x-hidden ">
+              <div className="sm:flex hidden sm:max-w-[38%] md:max-w-[35%] lg:max-w-[30%] w-full sm:flex-col pt-4 gap-2 px-4 h-full rounded-[35px] shadow-md overflow-hidden bg-white border border-[#00000031] overflow-y-auto overflow-x-hidden ">
                 {loading ? (
                   <Loading2 />
                 ) : (
@@ -1433,7 +1447,7 @@ export default function LayoutSalas({ children }: SalasProps) {
                               return (
                                 <span
                                   key={index}
-                                  className="text-[16px] px-3 w-fit rounded-full text-black"
+                                  className="text-[16px] font-medium px-3 w-fit rounded-full text-white"
                                   style={{
                                     backgroundColor:
                                       cor[

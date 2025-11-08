@@ -13,12 +13,14 @@ import {
   ArrowLeft,
   Trash,
   ArrowRight,
+  Ellipsis,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ComboboxDemoMateria,
+  ComboboxDemoMateriaIndividual,
   ComboboxDemoSettings,
 } from "../../components/dropdown";
 import ErrorModal from "@/components/ui/ErrorModal";
@@ -27,6 +29,7 @@ import { Backdrop3 } from "../../components/backdrop";
 import { useRouter } from "next/navigation";
 import { File } from "buffer";
 import { UserXP } from "../page";
+import PostagemDetailMateriais from "@/components/ui/postagemDetailMateriais";
 
 type materiaItem = {
   id?: string;
@@ -85,6 +88,7 @@ export default function MateriaisClient({ id }: { id: string }) {
   const [materiaDesignada, setMateriaDesignada] = useState("");
   const [deletar, setDeletar] = useState(false);
   const [pesquise, setPesquise] = useState("");
+  const [appear, setAppear] = useState(0);
 
   // Inputs e referências
   const [input, setInput] = useState("");
@@ -105,6 +109,10 @@ export default function MateriaisClient({ id }: { id: string }) {
   const [userXP, setUserXP] = useState<UserXP>();
   const [selectedFiltro, setSelectedFiltro] = useState<string | null>(null);
   const [terminado, setTerminado] = useState(false);
+  const [editar, setEditar] = useState(false);
+  const [editarNome, setEditarNome] = useState("");
+
+  const [materialID, setMaterialID] = useState("");
 
   const handleCheck = async (value: string) => {
     // Se clicar no mesmo filtro, desmarca e recarrega todos os materiais
@@ -683,11 +691,15 @@ export default function MateriaisClient({ id }: { id: string }) {
 
   function closing() {
     setOpen(false);
+    setMaterialID("");
+    setMudarMateria("");
     setOpenVar(false);
     setOpenVar2(false);
     setOpenVar3(false);
     setInput("");
     setQuery("");
+    setEditar(false);
+    setEditarNome("");
     setMateriaDesignada("");
     setTopicoInput("");
     setTopicos([]);
@@ -709,8 +721,119 @@ export default function MateriaisClient({ id }: { id: string }) {
     // setInput4("");
   }
 
-  if (loading) return <Loading />;
+  const [MudarMateria, setMudarMateria] = useState("");
 
+  const Edicao = async () => {
+    try {
+      if (MudarMateria && materialID) {
+        console.log(MudarMateria, "MudarMateria");
+        console.log(materialID, "Material");
+
+        const payload = {
+          materiaId: MudarMateria,
+        };
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/materiais/material/${materialID}/mudar-materia`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+          }
+        );
+
+        const data = await res.json();
+        if (data.message === "Matéria do material atualizada com sucesso.") {
+          console.log(data);
+          const materiais = async () => {
+            try {
+              const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/`,
+                {
+                  method: "GET",
+                  credentials: "include",
+                }
+              );
+
+              const data = await res.json();
+              console.log(data);
+
+              const materiaisFiltrados = data.materiais.filter(
+                (material: any) => material.materiaId === id
+              );
+              console.log("data", data);
+              console.log("materiaisFiltrados", materiaisFiltrados);
+              setMateriaisNome(materiaisFiltrados);
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          materiais();
+
+          closing();
+        } else {
+          setMessage(data.message);
+        }
+      }
+
+      if (editarNome) {
+        const payload = {
+          nomeDesignado: editarNome,
+        };
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/materiais/${materialID}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+          }
+        );
+
+        const data = await res.json();
+        console.log(data);
+
+        if (data.message === "Nome do material atualizado com sucesso.") {
+          const materiais = async () => {
+            try {
+              const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/materiais/`,
+                {
+                  method: "GET",
+                  credentials: "include",
+                }
+              );
+
+              const data = await res.json();
+              console.log(data);
+
+              const materiaisFiltrados = data.materiais.filter(
+                (material: any) => material.materiaId === id
+              );
+              console.log("data", data);
+              console.log("materiaisFiltrados", materiaisFiltrados);
+              setMateriaisNome(materiaisFiltrados);
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          materiais();
+
+          closing();
+        } else {
+          setMessage(data.message);
+        }
+      }
+
+      //  materiais();
+    } catch (error) {
+      console.error("Erro ao deletar o material.");
+    }
+  };
+
+  if (loading) return <Loading />;
   return (
     <>
       {message && (
@@ -1047,7 +1170,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                                   className="text-[rgba(0,0,0,0.34)]"
                                 />
 
-                                <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                <span className="text-white w-full block text-ellipsis overflow-hidden break-words ">
                                   {topico}
                                 </span>
                               </motion.div>
@@ -1259,7 +1382,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                                   className="text-[rgba(0,0,0,0.34)]"
                                 />
 
-                                <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                <span className="text-white w-full block text-ellipsis overflow-hidden break-words ">
                                   {topico}
                                 </span>
                               </motion.div>
@@ -1475,6 +1598,104 @@ export default function MateriaisClient({ id }: { id: string }) {
             </div>
           </>
         )}
+
+        {editar && (
+          <>
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 0.94 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="w-full h-full fixed left-0 right-0  flex justify-center overflow-hidden items-center z-[1100] "
+            >
+              <div
+                className="w-full h-full absolute"
+                onClick={() => closing()}
+              ></div>
+
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="w-[500px] max-h-[100vh] bg-white h-auto flex rounded-[40px] overflow-hidden z-[1100]"
+              >
+                <div
+                  id="white-box"
+                  className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                >
+                  <img
+                    src="/Vector.svg"
+                    alt="Decoração"
+                    className="absolute top-0 left-[-180px] rotate-90 w-[550px] -z-10"
+                  />
+
+                  <div className="w-full flex flex-col justify-center h-full gap-4">
+                    <div className="flex ">
+                      <div className=" flex flex-col justify-center items-center w-full text-[35px] font-medium">
+                        Editar Material:
+                      </div>
+                      <div className=" w-fit flex justify-center items-center">
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          onClick={closing}
+                          className="ml-auto cursor-pointer z-1000 w-6 h-6"
+                        >
+                          <X className="w-full h-full" />
+                        </motion.div>
+                      </div>
+                    </div>
+
+                    <div className="w-full flex flex-col gap-1">
+                      <h2 className="text-[20px] font-medium">
+                        Editar nome:
+                      </h2>
+                      <input
+                        type="text"
+                        id="nome_materia"
+                        placeholder="Pesquisar salas de estudo"
+                        value={editarNome}
+                        onChange={(e) => setEditarNome(e.target.value)}
+                        className="shadow-md pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+                      />
+                    </div>
+
+                    <div className="relative flex flex-col gap-1">
+                      <h2 className="text-[20px] font-medium">
+                        Matéria designada:
+                      </h2>
+
+                      <ComboboxDemoMateriaIndividual
+                        value={MudarMateria}
+                        onChange={(value) => {
+                          setMudarMateria(value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="w-full flex justify-center items-center">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ ease: "easeInOut" }}
+                        onClick={() => Edicao()}
+                        type="submit"
+                        className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                      >
+                        Editar
+                      </motion.button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <div className="w-full absolute flex justify-center items-center">
+              <Backdrop3 onClick={() => closing()} />
+            </div>
+          </>
+        )}
       </AnimatePresence>
 
       <div
@@ -1532,7 +1753,6 @@ export default function MateriaisClient({ id }: { id: string }) {
           {/*  ${materias && materias.length === 0 ? "": "grid-cols-[1fr_1fr]"} grid gap-[10px] max-h-[900px] pt-1 pb-3 overflow-y-auto px-2 */}
           <div className="w-[95%] max-w-[95%] h-full overflow-y-auto">
             <div className="w-full h-full flex overflow-y-auto overflow-x-hidden flex-col items-center">
-            
               {materiaisNome
                 .filter(
                   (material) =>
@@ -1543,63 +1763,89 @@ export default function MateriaisClient({ id }: { id: string }) {
                 )
                 .map((material, index) => {
                   return (
-                    <motion.a
-                      initial={{ scale: 0.8 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
+                    <div
                       key={material.id}
-                      href={`/home/materiais/${id}/${material.id}/Resumo`}
-                      id="materiais"
-                      className="grid grid-cols-[80px_1fr] px-2 py-1 w-full ml-[15px] mr-[15px] cursor-pointer rounded-[10px] hover:bg-[rgba(0,0,0,0.06)]"
+                      className="hover:bg-[rgba(0,0,0,0.06)] transition-all ease-in-out duration-200 w-full rounded-[10px] flex px-1"
                     >
-                      {index < 9 ? (
-                        <h1 className="text-[70px] font-bold text-[#A78CDC] w-fit leading-[90px]">
-                          0{index + 1}
-                        </h1>
-                      ) : (
-                        <h1 className="text-[70px] font-bold text-[#A78CDC] leading-[90px]">
-                          {index + 1}
-                        </h1>
-                      )}
-
-                      <motion.div
-                        whileHover="delete"
-                        className="mt-[18px] flex justify-between items-center  w-full min-w-0"
+                      <motion.a
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        href={`/home/materiais/${id}/${material.id}/Resumo`}
+                        id="materiais"
+                        className="flex py-1 px-1 w-full cursor-pointer gap-1 items-center "
                       >
-                        <div className="flex-1 min-w-0 ">
-                          <h2 className="text-[25px] font-medium leading-[30px] truncate text-ellipsis overflow-hidden whitespace-nowrap">
-                            {material.titulo}
-                          </h2>
-                          <h2 className="text-[18px] text-[#828181] truncate">
-                            Tempo de estudo:{" "}
-                            {material.tempoAtivo
-                              ? material.tempoAtivo < 60
-                                ? `${material.tempoAtivo} minuto${material.tempoAtivo > 1 ? "s" : ""}`
-                                : `${Math.floor(material.tempoAtivo / 60)}h ${material.tempoAtivo % 60}min`
-                              : "0 minuto"}
-                          </h2>
-                        </div>
+                        {index < 9 ? (
+                          <h1 className="text-[70px] w-[80px] font-bold text-[#A78CDC] leading-[90px]">
+                            0{index + 1}
+                          </h1>
+                        ) : (
+                          <h1 className="text-[70px] w-[80px] font-bold text-[#A78CDC] leading-[90px]">
+                            {index + 1}
+                          </h1>
+                        )}
 
-                        <div className="flex items-center ">
+                        <motion.div
+                          whileHover="delete"
+                          className="mt-[18px] w-full flex justify-between items-center min-w-0 "
+                        >
+                          <div className="flex-1 min-w-0 ">
+                            <h2 className="text-[25px] font-medium leading-[30px] truncate text-ellipsis overflow-hidden whitespace-nowrap">
+                              {material.titulo}
+                            </h2>
+                            <h2 className="text-[18px] text-[#828181] truncate">
+                              Tempo de estudo:{" "}
+                              {material.tempoAtivo
+                                ? material.tempoAtivo < 60
+                                  ? `${material.tempoAtivo} minuto${material.tempoAtivo > 1 ? "s" : ""}`
+                                  : `${Math.floor(material.tempoAtivo / 60)}h ${material.tempoAtivo % 60}min`
+                                : "0 minuto"}
+                            </h2>
+                          </div>
+                        </motion.div>
+                      </motion.a>
+                      <div className="flex items-center mr-2">
+                        <motion.div className="w-6 h-6 relative">
                           <motion.div
-                            // initial={{ scale: 0 }}
-                            // variants={{
-                            //   delete: { scale: 1 },
-                            // }}
-                            className="" 
-                            onClick={(e) => {
-                              e.preventDefault();
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full h-full cursor-pointer relative"
+                            onClick={() =>
+                              setAppear(appear === index + 1 ? 0 : index + 1)
+                            }
+                          >
+                            <Ellipsis
+                              className=" w-full h-full"
+                              stroke="currentColor"
+                            />
+                          </motion.div>
+                          <PostagemDetailMateriais
+                            message={material.id}
+                            onClose={() => {
+                              setAppear(0);
+                            }}
+                            onDeletar={() => {
                               setDeletar(true);
                               setDeletarId(material.id);
                             }}
-                          >
-                            <Trash className="size-8 text-red-500" />
-                          </motion.div>
-
-                          <ChevronRight className="size-10 " />
-                        </div>
-                      </motion.div>
-                    </motion.a>
+                            onEditar={() => {
+                              setMaterialID(material.id);
+                              setEditar(true);
+                            }}
+                            Mine={true}
+                            type="MateriaisEstudo"
+                            variation={1}
+                            last={
+                              index === 0
+                                ? materiaisNome.length + 1
+                                : materiaisNome.length
+                            }
+                            index={index + 1}
+                            appear={appear === index + 1}
+                          />
+                        </motion.div>
+                      </div>
+                    </div>
                   );
                 })}
             </div>
@@ -1628,7 +1874,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                       style={{
                         width: `${userXP ? (userXP?.xp / userXP?.maxXp) * 100 : 0}%`,
                       }}
-                      className={` h-2 rounded-[25px] bg-purple-600 `}
+                      className={` h-2 rounded-[25px]  `}
                     ></div>
                   </div>
                   <div className="flex justify-between ">

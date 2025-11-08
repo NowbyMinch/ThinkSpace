@@ -12,14 +12,14 @@ export default function Configurações({ children, }: { children: React.ReactNo
                     <div className=" h-[120px] ">
                         <h1 className="flex font-medium text-[30px]">Configurações</h1>
                         <div className="w-full mt-5 overflow-x-auto scrollbar-hide ">
-                            <div className=" flex justify-between min-w-[400px] lg:w-[70%] items-end ">
+                            <div className=" flex gap-16  min-w-[400px] lg:w-[70%] items-end ">
                                 <Link href="/home/configuracoes/informacoes">
 
                                     {(() => {
                                         if (pathname == "/home/configuracoes/informacoes") {
                                             return (
                                                 <>
-                                                    <h2 className=" text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Informações básicas</h2>
+                                                    <h2 className=" text-[20px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Informações básicas</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -30,12 +30,12 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                                 </>
                                             )
                                         }
-                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>
+                                        return <h2 className="text-[20px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Informações básicas</h2>
                                         }
                                     )()}
 
                                 </Link>
-                                
+{/*                                 
                                 <Link href="/home/configuracoes/personalizacao">
 
                                     {(() => {
@@ -58,8 +58,8 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         }
                                     )()}
 
-                                </Link>
-                                
+                                </Link> */}
+{/*                                 
                                 <Link href="/home/configuracoes/notificacao">
 
                                     {(() => {
@@ -82,7 +82,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         }
                                     )()}
 
-                                </Link>
+                                </Link> */}
                                 
                                 <Link href="/home/configuracoes/conta">
 
@@ -90,7 +90,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                         if (pathname == "/home/configuracoes/conta") {
                                             return (
                                                 <>
-                                                    <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Conta</h2>
+                                                    <h2 className="text-[20px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center">Conta</h2>
                                                     <AnimatePresence>
                                                         <motion.div 
                                                         initial={{scale: 0 }}
@@ -101,7 +101,7 @@ export default function Configurações({ children, }: { children: React.ReactNo
                                                 </>
                                             )
                                         }
-                                        return <h2 className="text-[18px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Conta</h2>
+                                        return <h2 className="text-[20px] lg:text-[20px] font-medium cursor-pointer relative flex justify-center text-[rgb(0,0,0,54%)]">Conta</h2>
                                         }
                                     )()}
 

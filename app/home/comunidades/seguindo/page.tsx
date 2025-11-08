@@ -155,7 +155,7 @@ export default function SalasdeEstudo() {
                   {(sala.topicos ?? []).slice(0, 5).map((topico, index) => (
                     <span
                       key={index}
-                      className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
+                      className="text-[16px] font-medium text-white px-3 rounded-full h-fit w-fit shadow-md truncate"
                       style={{
                         backgroundColor:
                           cor[Math.floor(Math.random() * cor.length)],

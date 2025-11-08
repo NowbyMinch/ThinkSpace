@@ -518,18 +518,12 @@ export function DatePicker2({ onChange }: DatePickerProps) {
   }, [inputValue2]);
 
   useEffect(() => {
-    if (parseInt(inputValue3) > (new Date().getFullYear() ?? 0)) {
-      if (new Date().getFullYear() !== undefined) {
-        // let raw = e.target.value.replace(/\D/g, ""); // remove non-numeric
-        setInputValue3(new Date().getFullYear().toString());
-      }
-    } else {
-      if (inputValue3.length === 4) {
-        ValueRef3.current?.blur();
-        setInputValue3(inputValue3.slice(0, 4));
-        if (parseInt(inputValue3) < 1901) {
-          setInputValue3("1900");
-        }
+    
+    if (inputValue3.length === 4) {
+      ValueRef3.current?.blur();
+      setInputValue3(inputValue3.slice(0, 4));
+      if (parseInt(inputValue3) < 1901) {
+        setInputValue3("1900");
       }
     }
   }, [inputValue3]);
@@ -539,10 +533,9 @@ export function DatePicker2({ onChange }: DatePickerProps) {
     onChange(date);
   }, [inputValue, inputValue2, inputValue3]);
 
-  const currentYear = new Date().getFullYear();
 
   const handleDateSelect = (date: Date) => {
-    if (date.getFullYear() < 1900 || date.getFullYear() > currentYear) return;
+    if (date.getFullYear() < 1900 ) return;
     // console.log(date);
     const formatted = format(date, "dd/MM/yyyy");
     setSelectedDate(date);

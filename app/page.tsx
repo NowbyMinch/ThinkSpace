@@ -864,38 +864,6 @@ export default function landingPage() {
           </div>
         </footer>
 
-        {/* <footer className="w-full h-[300px] flex justify-center items-center">
-                    <div className="w-[34%] h-[140px] flex justify-center  items-center">
-                        <Image width={300} height={500} src="/landingpage/logo1.png" className="h-full w-auto" alt="Logo"/>
-                    </div>
-
-                    <div className="w-[33%] flex flex-col justify-center items-center ">
-
-                        <div className=" flex justify-center items-center gap-4 ">
-                            <a href="/termos-de-uso">Termos de uso</a>
-                            <a href="/politica-de-privacidade">Política de privacidade</a>
-                            <a href="">Suporte</a>
-                        </div>
-                        
-                        <div className="w-full flex justify-center items-center gap-4 mt-2">
-                            <p>© 2023 ThinkSpace. Todos os direitos reservados.</p>
-                        </div>
-                    </div>
-
-                    <div className="w-[33%] flex flex-col ">
-                        <motion.a 
-                        href="https://www.instagram.com/thinkspace__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                        target="_blank" rel="noopener noreferrer"
-                        whileTap={{ scale: 0.98 }} 
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-
-                        className=" border-[2px] border-[#704FE6] p-3 w-fit rounded-full flex justify-center items-center">
-                            <Instagram className="text-[#EFEFEF] size-[40px] z-10 rounded-[15px]"/>
-                            <div className="w-[35px] rounded-[10px] h-[35px] bg-[#704FE6] absolute "></div>
-                        </motion.a>
-                    </div>
-                </footer> */}
       </div>
     </>
   );

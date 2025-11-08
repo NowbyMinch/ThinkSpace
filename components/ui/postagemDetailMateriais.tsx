@@ -1,4 +1,4 @@
-import { Bookmark, ShieldX, Trash, X } from "lucide-react";
+import { Bookmark, ShieldX, SquarePen, Trash, X } from "lucide-react";
 import React, { useEffect, useState, useContext, useRef, use } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,11 +14,14 @@ type Props = {
   index?: number;
   last?: number;
   type?: string;
+  variation?: number;
   onClose?: () => void;
+  onDeletar?: () => void;
+  onEditar?: () => void;
   onError?: (message: string) => void;
 };
 
-const PostagemDetail: React.FC<Props> = ({
+const PostagemDetailMateriais: React.FC<Props> = ({
   message,
   comentario,
   Mine,
@@ -26,6 +29,8 @@ const PostagemDetail: React.FC<Props> = ({
   index,
   last,
   type,
+  onEditar,
+  onDeletar,
   onClose,
   onError,
 }) => {
@@ -79,6 +84,39 @@ const PostagemDetail: React.FC<Props> = ({
 
   // ✅ DELETE POST
   const DeleteMaterial = async () => {
+    const userIDRes1 = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const userIDdata1 = await userIDRes1.json(); // parse the response
+    // setUserID(userIDdata1.userId); // set the state
+
+    try {
+      const deleteMaterialRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${pathname.split("/")[4]}/material/${message}/excluir/${userIDdata1.userId}`,
+        { method: "DELETE", credentials: "include" }
+      );
+      const deleteMaterialData = await deleteMaterialRes.json();
+      console.log(deleteMaterialData);
+      if (
+        deleteMaterialData.message !== "Material excluído da sala com sucesso."
+      ) {
+        setMessage(deleteMaterialData.message);
+      }
+
+      onClose?.();
+      if (pathname.split("/")[5] === message) router.back();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // ✅ DELETE POST
+  const MudarMaterial = async () => {
     const userIDRes1 = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
       {
@@ -218,10 +256,6 @@ const PostagemDetail: React.FC<Props> = ({
     // onClose?.();
   };
 
-  useEffect(() => {
-    console.log("Mine!", Mine, message);
-  }, [Mine]);
-
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -240,6 +274,7 @@ const PostagemDetail: React.FC<Props> = ({
       document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [onClose]);
+  
 
   return (
     <>
@@ -370,11 +405,11 @@ const PostagemDetail: React.FC<Props> = ({
           <>
             <motion.div
               key="modalCloseBox"
-              className="origin-top-left relative mr-[-11px] z-50 cursor-pointer"
+              className="origin-top-left relative mr-[-11px] z-[10000] cursor-pointer"
+              initial={{ scale: 1 }}
+              onClick={() => onClose?.()}
             >
-              <div
-                className={`w-5 h-5 absolute ${index !== last ? "-top-5 right-[13px]" : "-top-5 right-[13px]"} `}
-              ></div>
+              <div className="w-5 h-5 absolute -top-5 right-[13px]"></div>
             </motion.div>
 
             <motion.div
@@ -395,60 +430,24 @@ const PostagemDetail: React.FC<Props> = ({
                 } w-[160px] rounded-2xl bg-white shadow-md border-[1px] border-[rgba(0,0,0,0.26)]`}
               >
                 <div className="flex flex-col w-full text-base">
-                  {!comentario && (
+                  {type === "MateriaisEstudo" && (
                     <>
                       <button
-                        onClick={() => {
-                          setDenunciaOpen(true);
-                        }}
-                        className={`mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2  gap-2 items-center ${type === "Materiais" ? "hidden" : "flex"}`}
+                        onClick={() => onEditar?.()}
+                        className={`mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center`}
                       >
-                        <ShieldX /> Denunciar
+                        <SquarePen /> Editar
                       </button>
                     </>
                   )}
 
-                  {!comentario && (
+                  {Mine && type === "MateriaisEstudo" && (
                     <>
                       <hr
-                        className={`${type === "Materiais" ? "hidden" : "flex"} border-t-[2px] border-[#D7DDEA] mx-4 `}
+                        className={`border-t-[2px] border-[#D7DDEA] mx-4$ `}
                       />
-
                       <button
-                        onClick={() => {
-                          toggleFavorito();
-                          onClose?.();
-                        }}
-                        className={`mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center ${type === "Materiais" ? "hidden" : "flex"}`}
-                      >
-                        {isFavorito ? (
-                          <>
-                            <Bookmark fill="currentColor" /> Desfavoritar
-                          </>
-                        ) : (
-                          <>
-                            <Bookmark /> Favoritar
-                          </>
-                        )}
-                      </button>
-                    </>
-                  )}
-
-                  {Mine && (
-                    <>
-                      {!comentario && (
-                        <hr
-                          className={`border-t-[2px] border-[#D7DDEA] mx-4$ ${type === "Materiais" ? "hidden" : "flex"}`}
-                        />
-                      )}
-                      <button
-                        onClick={
-                          type === "Materiais"
-                            ? DeleteMaterial
-                            : comentario
-                              ? DeleteComentario
-                              : Delete
-                        }
+                        onClick={() => onDeletar?.()}
                         className={`mx-2 text-[#726BB6] text-[20px] px-2 w-[95%] py-2 flex gap-2 items-center`}
                       >
                         <Trash /> Excluir
@@ -465,4 +464,4 @@ const PostagemDetail: React.FC<Props> = ({
   );
 };
 
-export default PostagemDetail;
+export default PostagemDetailMateriais;

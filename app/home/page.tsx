@@ -261,6 +261,7 @@ export default function HomePage() {
   function closingLink() {
     setLinkUtil1(false);
     setLinkUtil2(false);
+    setLinkUtil3(false);
   }
 
   function opening2() {
@@ -309,6 +310,7 @@ export default function HomePage() {
 
   const [linkUtil1, setLinkUtil1] = useState(false);
   const [linkUtil2, setLinkUtil2] = useState(false);
+  const [linkUtil3, setLinkUtil3] = useState(false);
 
   const toggle = (index: number) => {
     setOpenIndex(index === openIndex ? null : index);
@@ -805,6 +807,162 @@ export default function HomePage() {
                       ritmo e com ferramentas que potencializam o aprendizado.
                     </p>
                   </div>
+                  <div className="w-[90%] self-center">
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      onClick={() => {
+                        setLinkUtil2(false);
+                        setLinkUtil3(true);
+                      }}
+                      className=" text-[#704FE6] text-[18px] w-fit p-[8px_20px] rounded-full border h-fit flex gap-4 items-center justify-center bg-[#A39CEC] cursor-pointer  "
+                    >
+                      <span className="line-clamp-2 break-words text-[#FFFFFF]">
+                        Próximo Link Útil
+                      </span>
+                      <div className="bg-[rgba(255,255,255,0.77)] p-3 rounded-full ">
+                        {" "}
+                        <ArrowRight className="text-[#A39CEC] size-5" />{" "}
+                      </div>
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+            <div className="w-full absolute flex justify-center items-center">
+              <Backdrop3 onClick={() => closingLink()} />
+            </div>
+          </>
+        )}
+
+        {linkUtil3 && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[1100] "
+            >
+              <div className="absolute inset-0" onClick={() => closingLink()} />
+
+              <motion.div
+                key="modal-wrapper"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="relative z-[1101] rounded-[40px] shadow-md bg-white h-[1400px] max-h-full overflow-hidden border-[10px] border-[#1E2351]"
+                style={{ width: 1200 }} // ou className w-[640px]
+              >
+                <div className="h-full w-full overflow-y-auto overflow-x-auto flex flex-col gap-8 pb-10">
+                  <div className="h-[420px] min-h-fit w-full bg-[rgba(74,58,242,0.08)] flex sm:flex-row flex-col overflow-hidden relative px-4 shadow-md">
+                    <img
+                      src="/homeVector.svg"
+                      alt="Decoração"
+                      className="absolute top-0 -right-3 rotate-[5deg] min-w-[60%] -z-10"
+                    />
+
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setLinkUtil3(false);
+                      }}
+                      className="absolute top-4 right-4 w-6 h-6"
+                    >
+                      <X className="w-full h-full" />
+                    </motion.button>
+                    <div className="self-center sm:hidden flex-col flex ">
+                      <h1 className="text-[#726BB6] text-[55px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[20px] font-medium max-w-[350px]">
+                        De que forma os flashcards e quizzes contribuem para a
+                        minha aprendizagem?
+                      </p>
+                    </div>
+
+                    <img
+                      src="/contribuem.svg"
+                      alt="Decoração"
+                      className="w-[380px] max-w-[50%] h-auto  sm:mx-0 mx-auto"
+                    />
+
+                    <div className="self-center sm:flex flex-col hidden ">
+                      <h1 className="text-[#726BB6] text-[60px] font-medium ">
+                        Links úteis
+                      </h1>
+                      <p className="text-[22px] font-medium max-w-[350px]">
+                        De que forma os flashcards e quizzes contribuem para a
+                        minha aprendizagem?
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-[90%] self-center min-h-fit text-[18px] text-[rgb(150,150,150)] font-medium">
+                    <p className="text-justify leading-relaxed">
+                      Os flashcards e quizzes da plataforma ThinkSpace foram
+                      desenvolvidos para tornar o aprendizado mais ativo,
+                      eficiente e duradouro, ajudando o estudante a fixar o
+                      conteúdo de forma prática e dinâmica.
+                    </p>
+                    <p className="text-justify leading-relaxed mt-4">
+                      Os flashcards funcionam como cartões de estudo que
+                      apresentam uma pergunta ou palavra-chave de um lado e a
+                      resposta do outro. Esse formato estimula o cérebro a
+                      buscar informações na memória — um processo conhecido como
+                      recuperação ativa (active recall) — que é comprovadamente
+                      um dos métodos mais eficazes para fixar o conhecimento.
+                      Além disso, o uso de revisões espaçadas (spaced
+                      repetition) potencializa o aprendizado, reforçando o
+                      conteúdo em intervalos estratégicos e melhorando a
+                      retenção de longo prazo.
+                    </p>
+                    <p className="text-justify leading-relaxed mt-4">
+                      De acordo com uma matéria publicada pela CNN Brasil
+                      (2023), o uso frequente de flashcards — entre três a cinco
+                      vezes por semana — melhora o foco e a retenção de
+                      conteúdos, principalmente quando há revisões constantes e
+                      repetição dos temas estudados. A reportagem destaca ainda
+                      que esse método simples é uma das técnicas de estudo mais
+                      eficazes reconhecidas por educadores e pesquisadores da
+                      área de aprendizagem.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Já os quizzes complementam os flashcards ao oferecer uma
+                      forma prática de testar o conhecimento adquirido. Eles
+                      permitem que o estudante avalie seu desempenho,
+                      identifique lacunas e compreenda quais assuntos precisam
+                      de mais atenção. Ao responder quizzes regularmente, o
+                      aluno reforça a memorização, treina o raciocínio rápido e
+                      transforma o estudo em um processo interativo, com
+                      resultados imediatos.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      No ThinkSpace, os quizzes são integrados ao conteúdo
+                      estudado por meio dos flashcards, criando um ciclo
+                      contínuo de aprendizado: o estudante revisa os temas com
+                      flashcards, testa o conhecimento com quizzes e, a partir
+                      dos resultados, reforça os pontos que ainda precisam ser
+                      aprimorados.
+                    </p>
+                    <p className="text-justify leading-relaxed mt-4">
+                      Essa combinação é poderosa porque transforma o estudo em
+                      uma experiência ativa, personalizada e mensurável. Em vez
+                      de apenas ler ou assistir a aulas, o aluno participa
+                      ativamente do processo, melhora a concentração e consolida
+                      o aprendizado de maneira eficiente.
+                    </p>
+
+                    <p className="text-justify leading-relaxed mt-4">
+                      Em resumo, os flashcards e quizzes do ThinkSpace são mais
+                      do que simples ferramentas — são aliados estratégicos na
+                      jornada de quem deseja aprender de forma inteligente,
+                      prática e com resultados reais.
+                    </p>
+                  </div>
                   {/* <div className="w-[90%] self-center">
                     <motion.button
                       whileTap={{ scale: 0.98 }}
@@ -1214,7 +1372,7 @@ export default function HomePage() {
                                                             }}
                                                             className={`min-w-4 min-h-4 border-3 rounded-full`}
                                                           ></div>
-                                                          <span className=" break-words whitespace-normal w-full">
+                                                          <span className=" break-all whitespace-normal w-full">
                                                             {nota.subtitulo}
                                                           </span>
                                                         </div>
@@ -1301,7 +1459,7 @@ export default function HomePage() {
                                                       </div>
                                                       <div className=" min-h-fit text-[15px] font-medium text-[#753527] pb-4 h-fit">
                                                         <div className="flex gap-1 items-center text-wrap ">
-                                                          <span className=" break-words whitespace-normal w-full">
+                                                          <span className=" break-all whitespace-normal w-full">
                                                             {nota.subtitulo}
                                                           </span>
                                                         </div>
@@ -1639,27 +1797,32 @@ export default function HomePage() {
                     </Card>
                   </CarouselItem>
 
-                  {/* <CarouselItem className="basis-full sm:basis-[49%] cursor-pointer">
+                  <CarouselItem
+                    onClick={() => {
+                      setLinkUtil3(true);
+                    }}
+                    className="basis-full sm:basis-[49%] cursor-pointer"
+                  >
                     <Card className="h-[320px] rounded-[25px] bg-[#1E2351] shadow-md border border-[#00000031] w-full">
                       <CardContent className="flex items-center justify-center h-full flex-col p-0">
                         <div className="w-[92%] h-[95%] ">
                           <div className="w-full h-[70%] rounded-tl-[25px] rounded-tr-[25px] bg-[#EFE7FF] flex justify-center object-cover">
                             <Image
-                              src="/trajetoria.svg"
+                              src="/contribuem.svg"
                               width={300}
                               height={500}
                               alt="Link Útil"
-                              className=" h-full w-full"
+                              className=" h-full w-full -mb-24"
                             />
                           </div>
                           <p className="text-white text-[18px]">
-                            Como os grupos de estudo podem te ajudar na sua
-                            trajetória acadêmica?
+                            De que forma os flashcards e quizzes contribuem para
+                            a minha aprendizagem?
                           </p>
                         </div>
                       </CardContent>
                     </Card>
-                  </CarouselItem> */}
+                  </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
@@ -1933,61 +2096,6 @@ export default function HomePage() {
                       );
                     }
                   })}
-
-                  {/* <div className="bg-white w-full h-[390px] rounded-[35px] shadow-md flex justify-center items-center mb-4 border border-[#00000031]">
-                    <div className="w-[90%] ">
-                      <div className="flex gap-[8px]">
-                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#9767F8] ">
-                          Idiomas
-                        </h2>
-                        <h2 className="text-[18px] pr-2 pl-2 text-white rounded-full bg-[#FF7664] ">
-                          Português
-                        </h2>
-                      </div>
-
-                      <div className="w-full leading-[55px]">
-                        <h1 className="font-medium text-[40px]">Gramaticando</h1>
-                        <Image width={300} height={500}
-                          src="/gramaticando.svg"
-                          alt="Sala de Estudo"
-                          className="w-full rounded-[25px] shadow-md"
-                        />
-                        <div className="w-full h-[1px] bg-[#1E2351] mt-3 mb-3 "></div>
-                      </div>
-
-                      <div className="flex items-center ">
-                        <div className="relative w-[160px] h-[50px] flex cursor-pointer">
-                          <Image width={300} height={500}
-                            src="/gramatiuser4.svg"
-                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[72px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/gramatiuser3.svg"
-                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[48px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/gramatiuser2.svg"
-                            className="diaOfensiva rounded-full absolute border-white border-[2px] left-[24px]"
-                            alt="Usuário"
-                          />
-                          <Image width={300} height={500}
-                            src="/gramatiuser1.svg"
-                            className="diaOfensiva rounded-full absolute border-white border-[2px]"
-                            alt="Usuário"
-                          />
-                        </div>
-
-                        <div className="flex justify-between  items-center h-[44px] w-full ">
-                          <h2 className="text-[20px]">+50 estudantes</h2>
-                          <button className="w-[120px] h-full rounded-full bg-blue-950 text-white text-[20px] shadow-md">
-                            Visitar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
                 </>
               )}
             </div>

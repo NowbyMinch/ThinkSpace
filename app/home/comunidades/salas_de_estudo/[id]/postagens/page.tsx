@@ -13,6 +13,8 @@ import { Ellipsis, Heart, MessageCircle, Router, X } from "lucide-react";
 import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
+import miniLoading from "@/app/miniLoading";
+import MiniLoading from "@/app/miniLoading";
 
 type UserData = { primeiroNome?: string; cargo?: string; foto?: string };
 type BannerData = {
@@ -318,7 +320,9 @@ export default function Materiais() {
     }
   };
 
+  const [carregando, setCarregando] = useState(false);
   const CriarPost = async () => {
+    setCarregando(true);
     try {
       // 🔹 Get user ID
       const userIDRes = await fetch(
@@ -358,6 +362,7 @@ export default function Materiais() {
     } catch (error) {
       console.error("Erro ao curtir:", error);
     } finally {
+      setCarregando(false);
       fetchAll();
       closing();
     }
@@ -468,7 +473,7 @@ export default function Materiais() {
             >
               <div
                 id="white-box"
-                className="p-4 gap-4 w-full rounded-[40px] overflow-hidden shadow-md flex flex-col items-center relative z-[1100]"
+                className="p-4 gap-4 w-full rounded-[40px] shadow-md flex flex-col items-center relative z-[1100]"
               >
                 <img
                   src="/Vector.svg"
@@ -501,8 +506,8 @@ export default function Materiais() {
                   >
                     <textarea
                       style={{ backgroundClip: "padding-box" }}
-                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] border-2 overflow-y-auto border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)] caret-black"
-                      placeholder="Escreva um comentário..."
+                      className="w-full pl-4 py-2 min-h-full h-full text-[18px] overflow-y-auto border-2 border-[rgba(0,0,0,0.19)] shadow-md rounded-[25px] outline-[rgba(151,103,248,0.6)] caret-black "
+                      placeholder="Escreva uma postagem..."
                       // value={newComentario}
                       value={postText}
                       onChange={(e) => {
@@ -510,7 +515,7 @@ export default function Materiais() {
                         //   setNewComentario(e.target.value)
                         const textarea = e.target;
                         textarea.style.height = "auto"; // reset height
-                        textarea.style.maxHeight = "200px";
+                        textarea.style.maxHeight = "450px";
                         textarea.style.height = textarea.scrollHeight + "px";
                       }}
                       rows={1}
@@ -521,11 +526,15 @@ export default function Materiais() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       transition={{ ease: "easeInOut" }}
-                      onClick={CriarPost}
+                      onClick={() => {
+                        if (!carregando) {
+                          CriarPost();
+                        }
+                      }}
                       type="submit"
-                      className=" bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                      className={` bg-[#9B79E0] text-white ${carregando ? "px-6" : "px-4"}  transition-all ease-in-out duration-300 py-2 shadow-md  rounded-full`}
                     >
-                      Postar
+                      {carregando ? <MiniLoading /> : "Postar"}
                     </motion.button>
                   </div>
                 </div>
@@ -550,7 +559,7 @@ export default function Materiais() {
             placeholder="Pesquisar salas de estudo"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)] shadow-md"
           />
           <motion.button
             whileHover={{ scale: 1.02 }}
@@ -673,26 +682,6 @@ export default function Materiais() {
                         index={index + 1}
                         appear={appear === index + 1}
                       />
-
-                      {/* <PostagemDetail
-                        message={post.id}
-                        onError={(message) => {
-                          setMessage(message);
-                        }}
-                        Mine={post.autor.id === userID}
-                        onClose={() => {
-                          setAppear(0);
-                          fetchAll();
-                        }}
-                        last={posts.length}
-                        index={index + 1}
-                        appear={appear === index + 1 && true}
-                      /> */}
-                      {/* <PostagemDetail
-                      message="a"
-                      onClose={() => {setAppear(0)}}
-                      last={posts.length}
-                    /> */}
                     </motion.div>
                   </div>
                 </div>

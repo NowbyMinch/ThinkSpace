@@ -13,7 +13,7 @@ import { Ellipsis, Heart, MessageCircle, Router } from "lucide-react";
 import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "../../components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchContext } from "../layout";
+import { SearchContext } from "@/app/context/SearchContext";
 
 type UserData = { primeiroNome?: string; cargo?: string; foto?: string };
 type BannerData = {

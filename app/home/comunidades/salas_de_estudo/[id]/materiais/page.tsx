@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
-import { Plus, SendHorizonal, X } from "lucide-react";
+import { Ellipsis, Plus, SendHorizonal, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import {
@@ -13,6 +13,7 @@ import {
   ComboboxDemoMateriaPostar,
 } from "@/app/home/components/dropdown";
 import { marked } from "marked";
+import PostagemDetail from "@/components/ui/postagemDetail";
 
 type UserData = {
   primeiroNome?: string;
@@ -113,11 +114,13 @@ export default function Materiais() {
   const [material, setMaterial] = useState<MaterialCompleto[]>([]);
   const [open2, setOpen2] = useState(false);
   const [materialID, setMaterialID] = useState("");
+  const [appear, setAppear] = useState(0);
+  const [userID, setUserID] = useState<string>("");
 
   const fetchAll = async () => {
     try {
       // Run all fetches in parallel
-      const [userRes, salasRes, materiaisRes] = await Promise.all([
+      const [userRes, salasRes, materiaisRes, userIDRes] = await Promise.all([
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
           method: "GET",
           credentials: "include",
@@ -133,19 +136,26 @@ export default function Materiais() {
             credentials: "include",
           }
         ),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+          method: "GET",
+          credentials: "include",
+        }),
       ]);
 
       // Parse all JSONs in parallel
-      const [userData, salasData, materiaisData] = await Promise.all([
-        userRes.json(),
-        salasRes.json(),
-        materiaisRes.json(),
-      ]);
+      const [userData, salasData, materiaisData, userIDData] =
+        await Promise.all([
+          userRes.json(),
+          salasRes.json(),
+          materiaisRes.json(),
+          userIDRes.json(),
+        ]);
 
       // ✅ Set states after everything is done
       setUser(userData);
       setSalas(salasData.salas);
       setMaterial(materiaisData);
+      setUserID(userIDData.userId);
 
       // Extract data from /home/salas-estudo safely
 
@@ -159,11 +169,27 @@ export default function Materiais() {
     }
   };
 
+  const RefreshMateriais = async () => {
+    const MateriaisRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/sala-estudo/sala/${pathname.split("/")[4]}/materiais`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    const MateriaisData = await MateriaisRes.json(); // parse the response
+    setMaterial(MateriaisData);
+    console.log(MateriaisData);
+
+    closing();
+  };
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
         // Run all fetches in parallel
-        const [userRes, salasRes, materiaisRes] = await Promise.all([
+        const [userRes, salasRes, materiaisRes, userIDRes] = await Promise.all([
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
             method: "GET",
             credentials: "include",
@@ -179,19 +205,26 @@ export default function Materiais() {
               credentials: "include",
             }
           ),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id`, {
+            method: "GET",
+            credentials: "include",
+          }),
         ]);
 
         // Parse all JSONs in parallel
-        const [userData, salasData, materiaisData] = await Promise.all([
-          userRes.json(),
-          salasRes.json(),
-          materiaisRes.json(),
-        ]);
+        const [userData, salasData, materiaisData, userIDData] =
+          await Promise.all([
+            userRes.json(),
+            salasRes.json(),
+            materiaisRes.json(),
+            userIDRes.json(),
+          ]);
 
         // ✅ Set states after everything is done
         setUser(userData);
         setSalas(salasData.salas);
         setMaterial(materiaisData);
+        setUserID(userIDData.userId);
 
         // Extract data from /home/salas-estudo safely
 
@@ -282,8 +315,13 @@ export default function Materiais() {
         credentials: "include",
       }
     );
+    if (!Res.ok) {
+      setMessage("Você já possui essa matéria em sua conta.")
+      return; // or throw
+    }
     const Data = Res.json();
     console.log(Data, "VINCULANDO UM MATERIAL");
+
 
     // router.push(
     //   `/home/materiais/${materiaDesignada}/${materialID}/Resumo`
@@ -397,7 +435,7 @@ export default function Materiais() {
                             }
                           }}
                           placeholder="Adicionar tags"
-                          className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                          className="pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)] shadow-md"
                         />
 
                         <motion.button
@@ -436,7 +474,7 @@ export default function Materiais() {
                                 className="text-[rgba(0,0,0,0.34)]"
                               />
 
-                              <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                              <span className="text-white w-full block text-ellipsis overflow-hidden break-words ">
                                 {topico}
                               </span>
                             </motion.div>
@@ -560,7 +598,7 @@ export default function Materiais() {
             placeholder="Pesquisar material"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)]"
+            className="pl-3 text-[18px] max-w-[650px] w-full py-2 border-2 border-[rgba(0,0,0,0.19)] h-[50px] rounded-full outline-[rgba(151,103,248,0.6)] shadow-md"
           />
           <motion.button
             whileHover={{ scale: 1.02 }}
@@ -593,7 +631,7 @@ export default function Materiais() {
                 >
                   <div className="flex flex-col w-full gap-3 h-fit">
                     <div className="w-full">
-                      <div className="flex gap-1 overflow-x-hidden">
+                      <div className="flex gap-1 overflow-x-hidden  w-full ">
                         <img
                           src={`${sala.autor?.foto}`}
                           className="rounded-full cursor-pointer transition-all w-12 h-12 shadow-md"
@@ -611,7 +649,7 @@ export default function Materiais() {
                                 <span
                                   key={index}
                                   style={{ backgroundColor: randomColor }}
-                                  className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate mr-1"
+                                  className="text-[16px] text-white px-3 rounded-full h-fit w-fit shadow-md truncate mr-1"
                                 >
                                   {tag}
                                 </span>
@@ -686,24 +724,54 @@ export default function Materiais() {
                         </motion.a>
                       </div> */}
 
-                      <motion.span className="text-[28px] leading-none">
-                        Prévia
-                      </motion.span>
+                      <div className="w-full flex justify-between items-center">
+                        <motion.span className="text-[28px] leading-none">
+                          Prévia
+                        </motion.span>
 
-                      {/* RESUMO: */}
-                      {/* <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
-                        <div className="text-[16px] mb-2">
-                          Resumo <span className="text-[#726BB6]">IA</span>
-                        </div>
-                        <p
-                          className="text-[16px] resumo2 break-words line-clamp-7"
-                          dangerouslySetInnerHTML={{ __html: html }}
-                        />
-                      </div> */}
+                        {sala?.autor?.id === userID && (
+                          <motion.div className="w-6 h-6 relative ">
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-full h-full cursor-pointer relative"
+                              onClick={() =>
+                                setAppear(appear === index + 1 ? 0 : index + 1)
+                              }
+                            >
+                              <Ellipsis
+                                className=" w-full h-full"
+                                stroke="currentColor"
+                              />
+                            </motion.div>
+                            <PostagemDetail
+                              message={sala.material.id}
+                              onError={(message) => {
+                                setMessage(message);
+                              }}
+                              type={"Materiais"}
+                              Mine={sala?.autor?.id === userID}
+                              onClose={() => {
+                                setAppear(0);
+                                RefreshMateriais();
+                              }}
+                              // last={
+                              //   material.filter((m) =>
+                              //     (m.material.titulo ?? "")
+                              //       .toLowerCase()
+                              //       .includes(searchTerm.toLowerCase())
+                              //   ).length
+                              // }
+                              index={index + 1}
+                              appear={appear === index + 1 && true}
+                            />
+                          </motion.div>
+                        )}
+                      </div>
 
                       {/* FLASHCARDS: */}
                       <div className="flex-1 w-full bg-white border border-[rgba(0,0,0,0.15)] rounded-tl-[35px] rounded-tr-[35px] p-4 overflow-y-auto overflow-x-hidden ">
-                        <div className="text-[16px] mb-2">
+                        <div className="text-[16px] mb-2 font-medium">
                           Resumo <span className="text-[#726BB6]">IA</span>
                         </div>
                         <p

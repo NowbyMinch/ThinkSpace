@@ -420,6 +420,8 @@ export default function Materiais() {
     setEditar(false);
     setSelected(null);
     setColor("");
+    setOpenIndex(null);
+    setOpenIndex2(null);
     setDataFormatada("");
     setData("");
     setHorario("");
@@ -679,7 +681,7 @@ export default function Materiais() {
 
                   <div className="w-full flex flex-col gap-4 ">
                     <div className="flex gap-3 text-[18px]">
-                      <div className="flex items-center gap-2">
+                      {/* <div className="flex items-center gap-2">
                         <Clock className="size-8 stroke-1" />
                         <IMaskInput
                           mask="h:m"
@@ -720,13 +722,8 @@ export default function Materiais() {
                     border-2 border-[rgba(0,0,0,0.19)] 
                     "
                         />
-                        {/* <input
-                          type="text"
-                          id="search_bar"
-                          placeholder="00:00"
-                          className="pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)] "
-                        /> */}
-                      </div>
+                        
+                      </div> */}
 
                       <div className="flex gap-2 items-center">
                         <motion.input
@@ -734,7 +731,7 @@ export default function Materiais() {
                           onChange={() => setNotificar(!notificar)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="w-5 h-5 accent-[#804EE5] cursor-pointer"
+                          className="w-5 h-5 accent-[#804EE5] cursor-pointer rounded-full" 
                         />
                         <span>Notificação</span>
                       </div>
@@ -766,7 +763,7 @@ export default function Materiais() {
                       </div>
                       <div className="w-full max-w-[35%] h-full flex flex-col">
                         <h2 className="text-[25px]">Cores:</h2>
-                        <div className="grid grid-cols-3 gap-2 mt-1 h-full w-full">
+                        <div className="grid grid-cols-3 gap-2 mt-1 h-full w-full max-h-[165px]">
                           {cores.map((corI, index) => {
                             const [nome, valor] = Object.entries(corI)[0];
                             return (
@@ -785,14 +782,14 @@ export default function Materiais() {
                       </div>
                     </div>
 
-                    <div className="w-full flex gap-2">
+                    {/* <div className="w-full flex gap-2">
                       <CalendarioDuracao
                         value={duracao}
                         onChange={(value) => {
                           setDuracao(value);
                         }}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="w-full flex justify-center py-2 min-h-[53px] ">
                       <motion.button
@@ -964,7 +961,7 @@ export default function Materiais() {
                                           }}
                                           className={`min-w-4 min-h-4 border-3 rounded-full`}
                                         ></div>
-                                        <span className=" break-words whitespace-normal w-full">
+                                        <span className=" break-all whitespace-normal w-full">
                                           {nota.subtitulo}
                                         </span>
                                       </div>
@@ -1244,7 +1241,7 @@ export default function Materiais() {
                                     }}
                                     className={`min-w-4 min-h-4 border-3 rounded-full`}
                                   ></div>
-                                  <span className=" break-words whitespace-normal w-full">
+                                  <span className=" break-all whitespace-normal w-full">
                                     {nota.subtitulo}
                                   </span>
                                 </div>

@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useContext, useMemo } from "react";
 import ErrorModal from "@/components/ui/ErrorModal";
 import Loading from "@/app/home/components/loading";
 import { Heading1, Plus, SendHorizonal, X } from "lucide-react";
-import { SearchContext } from "../layout";
+import { SearchContext } from "@/app/context/SearchContext";
 import { useRouter } from "next/navigation";
 import { Backdrop3 } from "../../components/backdrop";
 
@@ -321,7 +321,7 @@ export default function SalasdeEstudo() {
                                   }
                                 }}
                                 placeholder="Adicionar tags"
-                                className="shadow-md pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]"
+                                className="shadow-md pl-5 text-[20px] w-full h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)] "
                               />
 
                               <motion.button
@@ -366,7 +366,7 @@ export default function SalasdeEstudo() {
                                       className="text-[rgba(0,0,0,0.34)]"
                                     />
 
-                                    <span className=" w-full block text-ellipsis overflow-hidden break-words ">
+                                    <span className="text-white font-medium w-full block text-ellipsis overflow-hidden break-words ">
                                       {topico}
                                     </span>
                                   </motion.div>
@@ -465,7 +465,7 @@ export default function SalasdeEstudo() {
                 {(sala.topicos ?? []).slice(0, 5).map((topico, index) => (
                   <span
                     key={index}
-                    className="text-[16px] px-3 rounded-full h-fit w-fit shadow-md truncate"
+                    className="text-[16px] font-medium text-white px-3 rounded-full h-fit w-fit shadow-md truncate"
                     style={{
                       backgroundColor:
                         cor[Math.floor(Math.random() * cor.length)],

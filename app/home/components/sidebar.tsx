@@ -214,6 +214,8 @@ export const Sidebar = () => {
     } catch (err) {
       setMessage("Erro ao carregar saudação.");
       console.error(err);
+    } finally {
+      setNewToComunityPop(false);
     }
   };
 

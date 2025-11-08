@@ -875,6 +875,127 @@ export function ComboboxDemoSettings({ value, onChange }: ComboboxDemoProps) {
   );
 }
 
+export function ComboboxDemoMateriaIndividual({ value, onChange }: ComboboxDemoProps) {
+  const [open, setOpen] = useState(false);
+  const [materias, setMaterias] = useState<materiaItem[]>([]);
+
+  useEffect(() => {
+    // Função para buscar matérias
+    const materia = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/materias`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        setMaterias(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    materia();
+  }, []);
+
+  const frameworksMateria = materias.map((materia) => ({
+    value: materia.id,
+    label: materia.nome,
+  }));
+
+  // const [ user, setUser ] = useState<UserData>({});
+  // const [ escola, setEscola ] = useState("");
+  // let escolaridade = "";
+
+  //   useEffect(() => {
+  //     const user = async () => {
+  //         try{
+  //             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/identificacao`, {
+  //             method: 'GET',
+  //             credentials: 'include',
+  //             });
+
+  //             const data = await res.json();
+  //             setUser(data)
+  //         } catch (err) {
+  //             // setMessage("Erro ao carregar saudação.");
+  //             console.error(err);
+  //         }
+  //     }; user();
+
+  //     const e = async () => {
+  //       try{
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/configuracoes`, {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         });
+
+  //         const data = await res.json();
+  //         escolaridade = ((data.usuario.escolaridade).toLowerCase()).replace(/^\w/, (c: string) => c.toUpperCase());
+  //         setEscola(escolaridade);
+  //       } catch (err) {
+  //         // setMessage("Erro ao carregar saudação.");
+  //         console.error(err);
+  //       }
+  //     }; e();
+
+  //   }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild className="">
+        <Button
+          variant="outline"
+          role="combobox"
+          className={`pl-5 text-[18px] w-full max-w-[500px] h-[45px] border-2 border-[rgba(0,0,0,0.19)] rounded-[20px] outline-[rgba(151,103,248,0.6)]  `}
+        >
+          <span className="font-normal w-full block text-left rounded-[20px] overflow-hidden text-ellipsis whitespace-nowrap ">
+            {value ? (
+              <div className="">
+                {
+                  frameworksMateria.find(
+                    (framework) => framework.value === value
+                  )?.label as string
+                }
+              </div>
+            ) : (
+              <div className="text-[#9CA3AF]">Matéria designada</div>
+            )}
+          </span>
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="min-w-[200px] p-0 rounded-[20px] z-[1100] ">
+        <Command className="rounded-[20px]">
+          <CommandList className="rounded-[20px] ">
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup className="rounded-[20px]">
+              {frameworksMateria.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  className="text-[18px] "
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  {framework.label}
+                  <Check
+                    className={cn(
+                      "ml-auto ",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 export function ComboboxDemoMateria({ value, onChange }: ComboboxDemoProps) {
   const [open, setOpen] = useState(false);
   const [materias, setMaterias] = useState<materiaItem[]>([]);

@@ -14,6 +14,7 @@ import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "@/app/home/components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
 import { stringify } from "querystring";
+import MiniLoading from "@/app/miniLoading";
 
 type UserData = {
   primeiroNome?: string;
@@ -384,8 +385,11 @@ export default function Materiais() {
     setOpen(false);
     setImage(0);
   }
+  const [carregando, setCarregando] = useState(false);
 
   const Comentar = async (id: string) => {
+    setCarregando(true);
+
     try {
       // Get user ID
       const userIDRes = await fetch(
@@ -424,6 +428,8 @@ export default function Materiais() {
       setComentar(""); // reset textarea
     } catch (error) {
       console.error("Erro ao comentar:", error);
+    } finally {
+      setCarregando(false);
     }
   };
 
@@ -626,10 +632,14 @@ export default function Materiais() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ ease: "easeInOut" }}
-                onClick={() => Comentar(post.id)}
-                className="self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full"
+                onClick={() => {
+                  if (!carregando) {
+                    Comentar(post.id);
+                  }
+                }}
+                className={` ${carregando ? "min-w-[96.45px]" : ""} self-start bg-[#9B79E0] text-white px-4 py-2 shadow-md  rounded-full`}
               >
-                Comentar
+                {carregando ? <MiniLoading /> : "Comentar"}
               </motion.button>
             </form>
           )}
@@ -709,37 +719,40 @@ export default function Materiais() {
                         </div> */}
                       </div>
 
-                      <motion.div className="w-6 h-6  relative">
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="w-full h-full cursor-pointer relative"
-                          onClick={() =>
-                            setAppear2(appear2 === index + 1 ? 0 : index + 1)
-                          }
-                        >
-                          <Ellipsis
-                            className=" w-full h-full"
-                            stroke="currentColor"
+                      {(comentario.autor.id === userID ||
+                        post?.autor.id === userID) && (
+                        <motion.div className="w-6 h-6  relative">
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full h-full cursor-pointer relative"
+                            onClick={() =>
+                              setAppear2(appear2 === index + 1 ? 0 : index + 1)
+                            }
+                          >
+                            <Ellipsis
+                              className=" w-full h-full"
+                              stroke="currentColor"
+                            />
+                          </motion.div>
+
+                          <PostagemDetail
+                            message={comentario.id}
+                            Mine={
+                              comentario.autor.id === userID ||
+                              post?.autor.id === userID
+                            }
+                            onClose={() => {
+                              setAppear2(0);
+                              fetchAll();
+                            }}
+                            comentario={true}
+                            last={postComentarios.length}
+                            index={index + 1}
+                            appear={appear2 === index + 1 && true}
                           />
                         </motion.div>
-
-                        <PostagemDetail
-                          message={comentario.id}
-                          Mine={
-                            comentario.autor.id === userID ||
-                            post?.autor.id === userID
-                          }
-                          onClose={() => {
-                            setAppear2(0);
-                            fetchAll();
-                          }}
-                          comentario={true}
-                          last={postComentarios.length}
-                          index={index + 1}
-                          appear={appear2 === index + 1 && true}
-                        />
-                      </motion.div>
+                      )}
                     </div>
                   </div>
                 </div>
