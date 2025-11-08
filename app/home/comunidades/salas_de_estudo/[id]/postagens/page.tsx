@@ -321,6 +321,7 @@ export default function Materiais() {
   };
 
   const [carregando, setCarregando] = useState(false);
+
   const CriarPost = async () => {
     setCarregando(true);
     try {
@@ -352,20 +353,20 @@ export default function Materiais() {
       );
 
       const postarData = await postarRes.json();
-      //  console.log(postarData);
-      //  console.log(postText);
-      if (postarData.error) {
+
+      if (!postarData.error) {
+        setCarregando(false);
+        fetchAll();
+        closing();
+      } else {
         setMessage(postarData.error);
-        //  console.log(postarData.error);
+        setCarregando(false);
         return;
       }
+      
     } catch (error) {
       console.error("Erro ao curtir:", error);
-    } finally {
-      setCarregando(false);
-      fetchAll();
-      closing();
-    }
+    } 
   };
 
   const reloadPosts = async () => {
