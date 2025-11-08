@@ -100,16 +100,18 @@ export default function Informacoes() {
 
   // Update configuracoes after data is loaded
   useEffect(() => {
-    setConfiguracoes({
-      primeiroNome: usuario.primeiroNome ?? "",
-      sobrenome: usuario.sobrenome ?? "",
-      dataNascimento:
-        usuario.dataNascimento?.split("T")[0].replaceAll("-", "/") ?? "",
-      instituicao: instituicao ?? "",
-      cargo: user.cargo ?? "",
-      escolaridade: escola ?? "",
-    });
-  }, [usuario, user, instituicao, escola]);
+    if (!loading) {
+      setConfiguracoes((prev) => ({
+        ...prev,
+        primeiroNome: usuario.primeiroNome ?? "",
+        sobrenome: usuario.sobrenome ?? "",
+        dataNascimento: usuario.dataNascimento ?? "",
+        instituicao: instituicao ?? "",
+        cargo: user.cargo ?? "",
+        escolaridade: escola ?? "",
+      }));
+    }
+  }, [loading]);
 
   // Reload configuracoes from backend
   const reloadConfiguracoes = async () => {
@@ -132,24 +134,26 @@ export default function Informacoes() {
   // PATCH any changed fields
   const Check = async () => {
     try {
-      // Map configuracoes fields to backend PATCH endpoints
       const fieldEndpoints: Record<string, string> = {
         primeiroNome: "/configuracoes/primeiro-nome",
         sobrenome: "/configuracoes/sobrenome",
         dataNascimento: "/configuracoes/data-nascimento",
         instituicao: "/configuracoes/instituicao",
-        escolaridade: "/configuracoes/nivel-escolaridade", // keep local key "escolaridade"
+        escolaridade: "/configuracoes/nivel-escolaridade",
       };
 
-      // Iterate and PATCH only changed fieldss
+      let changedSomething = false;
+
       for (const key of Object.keys(fieldEndpoints)) {
         if ((configuracoes as any)[key] !== (usuario as any)[key]) {
+          changedSomething = true;
+
           const payload =
             key === "escolaridade"
               ? { nivelEscolaridade: (configuracoes as any)[key] }
               : { [key]: (configuracoes as any)[key] };
 
-          const res = await fetch(
+          await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}${fieldEndpoints[key]}`,
             {
               method: "PATCH",
@@ -158,14 +162,13 @@ export default function Informacoes() {
               body: JSON.stringify(payload),
             }
           );
-
-          const result = await res.json();
-          //  console.log(`Resultado do PATCH ${key}:`, result);
         }
       }
 
-      // Refresh usuario state after updates
-      await reloadConfiguracoes();
+      // ✅ only reload at the END
+      if (changedSomething) {
+        window.location.reload();
+      }
     } catch (err) {
       console.error("Erro ao atualizar configurações:", err);
       setMessage("Erro ao atualizar configurações");
@@ -223,18 +226,16 @@ export default function Informacoes() {
         {/* Data de Nascimento */}
         <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Data de Nascimento </h1>
-          <input
-            type="text"
+
+          <DatePickerConfiguracoes
             value={configuracoes.dataNascimento}
-            onChange={(e) =>
+            onChange={(value: string) =>
               setConfiguracoes({
                 ...configuracoes,
-                dataNascimento: e.target.value,
+                dataNascimento: value, // <-- value is "YYYY-MM-DD"
               })
             }
-            className="rounded-[20px] border-[2px] pl-2 border-[#0d0f224e] w-full max-w-[400px] text-[18px] h-[58px] outline-[#9767F8]"
           />
-          <DatePickerConfiguracoes value={configuracoes.dataNascimento} onChange={() => {}} />
         </div>
 
         {/* Instituição */}
@@ -265,7 +266,7 @@ export default function Informacoes() {
         </div>
 
         {/* Escolaridade */}
-        <div className="flex flex-col justify-between lg:w-[50%] bg-red-500 max-w-[550px]">
+        <div className="flex flex-col justify-between lg:w-[50%] max-w-[550px]">
           <h1 className="text-[20px] font-medium">Nível de escolaridade</h1>
           <ComboboxDemoSettings2
             value={configuracoes.escolaridade}

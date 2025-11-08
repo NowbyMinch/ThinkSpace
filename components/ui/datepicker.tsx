@@ -81,7 +81,6 @@ export function DatePicker({ onChange }: DatePickerProps) {
     onChange(`${year}-${month}-${day}`);
   }, []);
 
-
   const handleKeyUp = (
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>
@@ -185,20 +184,20 @@ export function DatePicker({ onChange }: DatePickerProps) {
   }, [inputValue3]);
 
   // ✅ SAVE WHEN USER TYPES A COMPLETE VALID DATE
- useEffect(() => {
-   if (
-     inputValue.length === 2 &&
-     inputValue2.length === 2 &&
-     inputValue3.length === 4
-   ) {
-     // ✅ Save each part safely
-     localStorage.setItem("saved_birth_day", inputValue);
-     localStorage.setItem("saved_birth_month", inputValue2);
-     localStorage.setItem("saved_birth_year", inputValue3);
+  useEffect(() => {
+    if (
+      inputValue.length === 2 &&
+      inputValue2.length === 2 &&
+      inputValue3.length === 4
+    ) {
+      // ✅ Save each part safely
+      localStorage.setItem("saved_birth_day", inputValue);
+      localStorage.setItem("saved_birth_month", inputValue2);
+      localStorage.setItem("saved_birth_year", inputValue3);
 
-     onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
-   }
- }, [inputValue, inputValue2, inputValue3]);
+      onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
+    }
+  }, [inputValue, inputValue2, inputValue3]);
 
   const currentYear = new Date().getFullYear();
 
@@ -223,9 +222,6 @@ export function DatePicker({ onChange }: DatePickerProps) {
 
     onChange(`${y}-${m}-${d}`);
   };
-
-
-  
 
   const generateCalendar = () => {
     const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
@@ -420,11 +416,14 @@ export function DatePicker({ onChange }: DatePickerProps) {
 }
 
 type DatePickerPropsConfiguracoes = {
-  value?: string;                 // ✅ incoming date "YYYY-MM-DD"
+  value?: string; // ✅ incoming date "YYYY-MM-DD"
   onChange: (date: string) => void;
 };
 
-export function DatePickerConfiguracoes({value, onChange }: DatePickerPropsConfiguracoes) {
+export function DatePickerConfiguracoes({
+  value,
+  onChange,
+}: DatePickerPropsConfiguracoes) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showPicker, setShowPicker] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -442,46 +441,33 @@ export function DatePickerConfiguracoes({value, onChange }: DatePickerPropsConfi
   useEffect(() => {
     if (!value) return;
 
-    // Expecting "YYYY-MM-DD"
-    const [y, m, d] = value.split("-");
+    // Accept both "YYYY-MM-DD" and full ISO "YYYY-MM-DDTHH:mm:...Z"
+    const isoDate = value.includes("T") ? value.split("T")[0] : value;
+    const parts = isoDate.split("-");
 
-    const safeDate = new Date(`${y}-${m}-${d}T12:00:00`);
-    if (isNaN(safeDate.getTime())) return;
+    // Validate
+    if (parts.length !== 3) return;
+    const [y, m, d] = parts;
 
-    setSelectedDate(safeDate);
-    setCalendarMonth(safeDate);
+    // basic checks
+    if (!/^\d{4}$/.test(y) || !/^\d{2}$/.test(m) || !/^\d{2}$/.test(d)) return;
 
+    // Set text inputs directly (no timezone conversion)
     setInputValue(d);
     setInputValue2(m);
     setInputValue3(y);
+
+    // Set calendar / selectedDate to a safe midday UTC date to avoid timezone shifts
+    const safeIso = `${isoDate}T12:00:00Z`;
+    const safeDate = new Date(safeIso);
+    if (!isNaN(safeDate.getTime())) {
+      setSelectedDate(safeDate);
+      setCalendarMonth(safeDate);
+    }
+
+    // Notify parent with normalized YYYY-MM-DD
+    onChange(`${y}-${m}-${d}`);
   }, [value]);
-
-  
-  // ✅ ✅ LOAD SAVED DATE ON MOUNT
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const day = localStorage.getItem("saved_birth_day");
-    const month = localStorage.getItem("saved_birth_month");
-    const year = localStorage.getItem("saved_birth_year");
-
-    // If nothing saved, skip
-    if (!day || !month || !year) return;
-
-    // ✅ Build safe date to avoid timezone shifting the day
-    const safeDate = new Date(`${year}-${month}-${day}T12:00:00`);
-
-    if (isNaN(safeDate.getTime())) return;
-
-    setSelectedDate(safeDate);
-    setCalendarMonth(safeDate);
-
-    setInputValue(day);
-    setInputValue2(month);
-    setInputValue3(year);
-
-    onChange(`${year}-${month}-${day}`);
-  }, []);
 
 
   const handleKeyUp = (
@@ -587,20 +573,20 @@ export function DatePickerConfiguracoes({value, onChange }: DatePickerPropsConfi
   }, [inputValue3]);
 
   // ✅ SAVE WHEN USER TYPES A COMPLETE VALID DATE
- useEffect(() => {
-   if (
-     inputValue.length === 2 &&
-     inputValue2.length === 2 &&
-     inputValue3.length === 4
-   ) {
-     // ✅ Save each part safely
-     localStorage.setItem("saved_birth_day", inputValue);
-     localStorage.setItem("saved_birth_month", inputValue2);
-     localStorage.setItem("saved_birth_year", inputValue3);
+  useEffect(() => {
+    if (
+      inputValue.length === 2 &&
+      inputValue2.length === 2 &&
+      inputValue3.length === 4
+    ) {
+      // ✅ Save each part safely
+      localStorage.setItem("saved_birth_day", inputValue);
+      localStorage.setItem("saved_birth_month", inputValue2);
+      localStorage.setItem("saved_birth_year", inputValue3);
 
-     onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
-   }
- }, [inputValue, inputValue2, inputValue3]);
+      onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
+    }
+  }, [inputValue, inputValue2, inputValue3]);
 
   const currentYear = new Date().getFullYear();
 
@@ -625,9 +611,6 @@ export function DatePickerConfiguracoes({value, onChange }: DatePickerPropsConfi
 
     onChange(`${y}-${m}-${d}`);
   };
-
-
-  
 
   const generateCalendar = () => {
     const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
@@ -662,10 +645,10 @@ export function DatePickerConfiguracoes({value, onChange }: DatePickerPropsConfi
   }, [inputValue, inputValue2, inputValue3]);
 
   return (
-    <div className="relative">
-      <div className="relative">
+    <div className="relative w-full max-w-[400px]">
+      <div className="relative  w-full ">
         <div
-          className={`${focused || focused2 || focused3 ? "border-[rgba(151,103,248,0.6)]" : "border-[#0d0f224e]"}  relative cursor-text p-3  w-full max-w-[400px] text-[18px] h-[58px] gap-1 flex rounded-[20px] border-2 `}
+          className={`${focused || focused2 || focused3 ? "border-[rgba(151,103,248,0.6)]" : "border-[#0d0f224e]"} relative cursor-text p-3  w-full max-w-[400px] text-[18px] h-[58px] gap-1 flex rounded-[20px] border-2 `}
         >
           <div className="relative text-gray-400 block w-[31px]">
             {!focused && !inputValue && (
