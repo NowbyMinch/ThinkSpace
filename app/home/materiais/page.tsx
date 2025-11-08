@@ -235,16 +235,9 @@ export default function Materiais() {
         setUserXP(rankingData);
 
         if (recentesData.materiasRecentes) {
-        //  console.log("RECENTES RECENTES", recentesData.materiasRecentes);
           setRecente(recentesData.materiasRecentes);
         }
 
-      //  console.log("All data loaded successfully:", {
-          materiaData,
-          userData,
-          recentesData,
-          rankingData,
-        });
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");

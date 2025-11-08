@@ -14,6 +14,7 @@ import PostagemDetail from "@/components/ui/postagemDetail";
 import { Backdrop3 } from "../../components/backdrop";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchContext } from "@/app/context/SearchContext";
+import { FavoritosContext } from "@/app/context/FavoritosContext";
 
 type UserData = { primeiroNome?: string; cargo?: string; foto?: string };
 type BannerData = {
@@ -85,6 +86,8 @@ export default function Postagens() {
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
+  const { refreshFavoritos } = useContext(FavoritosContext);
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
@@ -523,6 +526,7 @@ export default function Postagens() {
                       onClose={() => {
                         setAppear(0);
                         reloadPosts();
+                        refreshFavoritos();
                       }}
                       last={posts.length}
                       index={index + 1}

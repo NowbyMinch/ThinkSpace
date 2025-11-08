@@ -397,10 +397,7 @@ export default function Materiais() {
         );
 
         setTodasAnotacoes(allAnotacoes);
-      //  console.log(
-          allAnotacoes,
-          "Todas as anotações (incluindo 6 dias extras)"
-        );
+     
       } catch (err) {
         console.error("Erro ao buscar anotações:", err);
         setMessage("Erro ao carregar anotações.");
@@ -547,10 +544,7 @@ export default function Materiais() {
       });
       setTodasAnotacoes(allAnotacoes);
 
-    //  console.log(
-        allAnotacoes,
-        "Lembretes atualizados incluindo meses adjacentes"
-      );
+   
     } catch (err) {
       setMessage("Erro ao carregar anotações.");
       console.error(err);
