@@ -383,21 +383,25 @@ export default function Métricas() {
                         <React.Fragment key={index}>
                           <div
                             key={index}
-                            className="mt-2 w-full h-14 flex items-center justify-between "
+                            className="mt-2 w-full h-14 gap-1 flex items-center justify-between "
                           >
                             <div className="flex items-center gap-2 min-w-[194px]  ">
-                              <img
-                                width={300}
-                                height={500}
-                                src={rank.usuario.foto ?? ""}
-                                alt="Perfil do usuário"
-                                className="w-12 h-12 rounded-full"
-                              />
-                              <h2 className="text-[20px] font-bold whitespace-nowrap ">
+                              <div className="flex justify-center items-center gap-[6px]">
+                                <span className="w-fit font-medium text-[25px]">{index + 1}</span>
+
+                                <img
+                                  width={300}
+                                  height={500}
+                                  src={rank.usuario.foto ?? ""}
+                                  alt="Perfil do usuário"
+                                  className="min-w-12 min-h-12 w-12 h-12 rounded-full"
+                                />
+                              </div>
+                              <h2 className="text-[20px] font-bold truncate ">
                                 {rank?.usuario?.nomeCompleto ?? ""}
                               </h2>
                             </div>
-                            <div className="flex  items-center justify-end ">
+                            <div className="flex text-nowrap items-center justify-end ">
                               {/* <h2>@GrandeDudinha</h2> */}
                               <h2 className="text-[20px] font-bold">
                                 {rank?.xp ?? ""} XP

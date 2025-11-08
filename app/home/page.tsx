@@ -316,14 +316,6 @@ export default function HomePage() {
     setOpenIndex(index === openIndex ? null : index);
   };
 
-  useEffect(() => {
-    console.log("Salas updated:", salas);
-  }, [salas]);
-
-  useEffect(() => {
-    console.log("Notificação:", notificacao);
-  }, [notificacao]);
-
   const ReloadNotification = async () => {
     // const userIDRes1 = await fetch(
     //   `${process.env.NEXT_PUBLIC_API_URL}/users/id`,
@@ -351,7 +343,6 @@ export default function HomePage() {
       // ✅ Set states after everything is done
       setNotificacao(notificacaoData);
 
-      console.log("✅ All data successfully loaded");
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setMessage("Erro ao carregar dados.");
@@ -439,7 +430,6 @@ export default function HomePage() {
 
         // ✅ Set states after everything is done
         setMaterias(materiaData);
-        console.log(materiaData, "materiaRes");
         setBannerData(bannerData);
         setUser(userData);
         setCalendario(calendarioData);
@@ -456,7 +446,6 @@ export default function HomePage() {
         // if (salasData) {
         // }
 
-        console.log("✅ All data successfully loaded");
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setMessage("Erro ao carregar dados.");
@@ -513,9 +502,6 @@ export default function HomePage() {
     }
   }, [materias, salas]);
 
-  useEffect(() => {
-    console.log("UseEffect ofensiva: ", ofensiva);
-  }, [ofensiva]);
 
   if (loading) return <Loading />;
 

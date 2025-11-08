@@ -60,8 +60,10 @@ const PostagemDetailMateriais: React.FC<Props> = ({
         { credentials: "include" }
       ).then((res) => res.json());
 
-      const found = favoritos.some((p: any) => p.id === message);
-      setIsFavorito(found);
+     if (favoritos.message !== "Nenhum material ou mensagem foi salvo.") {
+       const found = favoritos.some((p: any) => p.id === message);
+       setIsFavorito(found);
+     }
     };
 
     loadFavorito();

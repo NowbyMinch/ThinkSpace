@@ -519,12 +519,12 @@ export function Metrica() {
 type Sala = {
   id: string;
   nome: string;
-  descricao: string;
-  topicos: string[];
-  banner: string;
-  moderadorId: string;
-  assuntoId: string | null;
-  criadoEm: string;
+  descricao?: string;
+  topicos?: string[];
+  banner?: string;
+  moderadorId?: string;
+  assuntoId?: string | null;
+  criadoEm?: string;
 };
 
 
@@ -561,14 +561,33 @@ export function ComboboxDemomMetricas({
           }
         );
 
-        const data = await res.json();
+        let data: Sala[] = await res.json();
+
+        // ✅ Force insert default sala if not exists
+        const defaultSala = {
+          id: "6ee65165-65ca-4e4f-9980-07ca5b13b97c",
+          nome: "ThinkSpace",
+        };
+
+        const exists = data.some((s) => s.id === defaultSala.id);
+
+        if (!exists) {
+          data = [defaultSala, ...data];
+        }
+
         setSalas(data);
+
+        // ✅ set instantly as selected on load
+        onChange(defaultSala.nome, defaultSala.id);
       } catch (err) {
         console.error(err);
       }
     };
+
     salasDeEstudo();
   }, []);
+
+
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
