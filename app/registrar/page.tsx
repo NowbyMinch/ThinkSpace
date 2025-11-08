@@ -299,7 +299,6 @@ export default function RegistrarInner() {
       // This runs when leaving the page
       if (typeof window !== "undefined") {
         localStorage.clear();
-        console.log("LocalStorage cleared on leaving /registrar");
       }
     };
   }, []);
@@ -323,6 +322,40 @@ export default function RegistrarInner() {
   useEffect(() => {
     localStorage.setItem("formFunc", JSON.stringify(formFunc));
   }, [formFunc]);
+
+  const Login = async () => {
+    // read whatever was saved
+    const saved = localStorage.getItem("form");
+
+    // if nothing saved
+    if (!saved) {
+      router.push("/login");
+      return;
+    }
+
+    // convert text into object
+    const dataSaved = JSON.parse(saved);
+
+    // send email + senha for login
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: dataSaved.email,
+        senha: dataSaved.senha,
+      }),
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+    if (data.message === "Login realizado com sucesso") {
+      router.push("/home");
+    } else {
+      setMessage(data.message);
+    }
+  };
 
   return (
     <>
@@ -1090,7 +1123,8 @@ export default function RegistrarInner() {
                                 <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                                   <div className="flex flex-col items-center gap-4 w-full h-full ">
                                     <h2 className="text-gray-700 break-words text-center text-[18px]">
-                                      Digite o seu código de verificação:
+                                      Digite o código de verificação enviado
+                                      para seu email:
                                     </h2>
                                     <div className="flex gap-1 max-w-[765px] h-full ">
                                       {[...Array(5)].map((_, i) => (
@@ -1240,9 +1274,12 @@ export default function RegistrarInner() {
                         <motion.button
                           whileHover={{ scale: 1.01 }}
                           whileTap={{ scale: 0.99 }}
+                          onClick={() => {
+                            Login();
+                          }}
                           className="bg-[#9767F8] w-[55%] py-2 rounded-full text-white text-[18px]"
                         >
-                          <a href="/login">Retornar ao login</a>
+                          Entrar
                         </motion.button>
                       </div>
                     </motion.div>

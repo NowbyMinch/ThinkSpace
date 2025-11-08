@@ -545,7 +545,7 @@ export default function Conta() {
                             <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                               <div className="flex flex-col items-center gap-4 w-full h-full ">
                                 <h2 className="text-gray-700 break-words text-center text-[18px]">
-                                  Digite o seu código de verificação:
+                                  Digite o código de verificação enviado para seu email:
                                 </h2>
                                 <div className="flex gap-1 max-w-[765px] h-full ">
                                   {[...Array(5)].map((_, i) => (
@@ -774,7 +774,7 @@ export default function Conta() {
                             <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                               <div className="flex flex-col items-center gap-4 w-full h-full ">
                                 <h2 className="text-gray-700 break-words text-center text-[18px]">
-                                  Digite o seu código de verificação:
+                                  o código de verificação enviado para seu email:
                                 </h2>
                                 <div className="flex gap-1 max-w-[765px] h-full ">
                                   {[...Array(5)].map((_, i) => (

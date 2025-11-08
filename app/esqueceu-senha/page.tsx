@@ -301,7 +301,7 @@ export default function EsqueceuSenha() {
                       <div className="fourthbox flex flex-col gap-4 h-[300px] max-h-[90%] ">
                         <div className="flex flex-col items-center gap-4 w-full h-full">
                           <h2 className="text-gray-700 text-[18px]">
-                            Digite o seu código de verificação:
+                            Digite o código de verificação enviado para seu email:
                           </h2>
                           <div className="flex gap-1 max-w-[765px]  ">
                             {[...Array(5)].map((_, i) => (

@@ -59,27 +59,28 @@ export function DatePicker({ onChange }: DatePickerProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const saved = localStorage.getItem("saved_birth_date");
-    if (!saved) return;
+    const day = localStorage.getItem("saved_birth_day");
+    const month = localStorage.getItem("saved_birth_month");
+    const year = localStorage.getItem("saved_birth_year");
 
-    const restored = new Date(saved);
-    if (isNaN(restored.getTime())) return;
+    // If nothing saved, skip
+    if (!day || !month || !year) return;
 
-    setSelectedDate(restored);
-    setCalendarMonth(restored);
+    // ✅ Build safe date to avoid timezone shifting the day
+    const safeDate = new Date(`${year}-${month}-${day}T12:00:00`);
 
-    // set input fields
-    const day = restored.getDate().toString().padStart(2, "0");
-    const month = (restored.getMonth() + 1).toString().padStart(2, "0");
-    const year = restored.getFullYear().toString();
+    if (isNaN(safeDate.getTime())) return;
+
+    setSelectedDate(safeDate);
+    setCalendarMonth(safeDate);
 
     setInputValue(day);
     setInputValue2(month);
     setInputValue3(year);
 
-    // send date to parent
-    onChange(restored.toISOString().split("T")[0]);
+    onChange(`${year}-${month}-${day}`);
   }, []);
+
 
   const handleKeyUp = (
     index: number,
@@ -184,21 +185,20 @@ export function DatePicker({ onChange }: DatePickerProps) {
   }, [inputValue3]);
 
   // ✅ SAVE WHEN USER TYPES A COMPLETE VALID DATE
-  useEffect(() => {
-    let date = inputValue3 + "-" + inputValue2 + "-" + inputValue;
-    onChange(date);
+ useEffect(() => {
+   if (
+     inputValue.length === 2 &&
+     inputValue2.length === 2 &&
+     inputValue3.length === 4
+   ) {
+     // ✅ Save each part safely
+     localStorage.setItem("saved_birth_day", inputValue);
+     localStorage.setItem("saved_birth_month", inputValue2);
+     localStorage.setItem("saved_birth_year", inputValue3);
 
-    if (
-      inputValue.length === 2 &&
-      inputValue2.length === 2 &&
-      inputValue3.length === 4
-    ) {
-      const typed = new Date(date);
-      if (!isNaN(typed.getTime())) {
-        localStorage.setItem("saved_birth_date", typed.toString());
-      }
-    }
-  }, [inputValue, inputValue2, inputValue3]);
+     onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
+   }
+ }, [inputValue, inputValue2, inputValue3]);
 
   const currentYear = new Date().getFullYear();
 
@@ -212,11 +212,20 @@ export function DatePicker({ onChange }: DatePickerProps) {
     setInputValue3(formatted.slice(6, 10));
     setCalendarMonth(date);
     setShowPicker(false);
-    onChange(date.toISOString().split("T")[0]);
 
-    // ✅ SAVE DATE FROM CALENDAR
-    localStorage.setItem("saved_birth_date", date.toString());
+    const d = formatted.slice(0, 2);
+    const m = formatted.slice(3, 5);
+    const y = formatted.slice(6, 10);
+
+    localStorage.setItem("saved_birth_day", d);
+    localStorage.setItem("saved_birth_month", m);
+    localStorage.setItem("saved_birth_year", y);
+
+    onChange(`${y}-${m}-${d}`);
   };
+
+
+  
 
   const generateCalendar = () => {
     const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
