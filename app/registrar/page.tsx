@@ -289,9 +289,6 @@ export default function RegistrarInner() {
     if (savedFunc) setFormFunc(JSON.parse(savedFunc));
     if (savedCat) setCategoria(JSON.parse(savedCat));
     if (savedStep) setSubStep(Number(savedStep));
-    //  console.log(savedForm);
-    //  console.log(savedForm2);
-    //  console.log(savedForm3);
   }, []);
 
   useEffect(() => {

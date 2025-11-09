@@ -436,7 +436,7 @@ export default function Postagens() {
                         className="cursor-pointer font-medium"
                       >
                         {" "}
-                        {post.sala.nome}
+                        {post ? post.sala.nome : ""}
                       </span>
                     </span>
                   </div>

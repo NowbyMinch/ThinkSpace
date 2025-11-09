@@ -511,7 +511,7 @@ export default function Materiais() {
                         }}
                         className="cursor-pointer font-medium"
                       >
-                        {post.sala.nome}
+                        {post ? post.sala.nome : ""}
                       </span>
                       {/* <span className="font-medium"> Badminton</span> */}
                     </div>
