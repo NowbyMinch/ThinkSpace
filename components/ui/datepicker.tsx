@@ -81,6 +81,7 @@ export function DatePicker({ onChange }: DatePickerProps) {
     onChange(`${year}-${month}-${day}`);
   }, []);
 
+
   const handleKeyUp = (
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>
@@ -184,20 +185,20 @@ export function DatePicker({ onChange }: DatePickerProps) {
   }, [inputValue3]);
 
   // ✅ SAVE WHEN USER TYPES A COMPLETE VALID DATE
-  useEffect(() => {
-    if (
-      inputValue.length === 2 &&
-      inputValue2.length === 2 &&
-      inputValue3.length === 4
-    ) {
-      // ✅ Save each part safely
-      localStorage.setItem("saved_birth_day", inputValue);
-      localStorage.setItem("saved_birth_month", inputValue2);
-      localStorage.setItem("saved_birth_year", inputValue3);
+ useEffect(() => {
+   if (
+     inputValue.length === 2 &&
+     inputValue2.length === 2 &&
+     inputValue3.length === 4
+   ) {
+     // ✅ Save each part safely
+     localStorage.setItem("saved_birth_day", inputValue);
+     localStorage.setItem("saved_birth_month", inputValue2);
+     localStorage.setItem("saved_birth_year", inputValue3);
 
-      onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
-    }
-  }, [inputValue, inputValue2, inputValue3]);
+     onChange(`${inputValue3}-${inputValue2}-${inputValue}`);
+   }
+ }, [inputValue, inputValue2, inputValue3]);
 
   const currentYear = new Date().getFullYear();
 
@@ -222,6 +223,9 @@ export function DatePicker({ onChange }: DatePickerProps) {
 
     onChange(`${y}-${m}-${d}`);
   };
+
+
+  
 
   const generateCalendar = () => {
     const start = startOfWeek(startOfMonth(calendarMonth), { weekStartsOn: 0 });
