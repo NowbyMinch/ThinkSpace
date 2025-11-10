@@ -1872,7 +1872,7 @@ export default function MateriaisClient({ id }: { id: string }) {
                       style={{
                         width: `${userXP ? (userXP?.xp / userXP?.maxXp) * 100 : 0}%`,
                       }}
-                      className={` h-2 rounded-[25px]  `}
+                      className={` h-2 rounded-[25px] bg-purple-600 `}
                     ></div>
                   </div>
                   <div className="flex justify-between ">
