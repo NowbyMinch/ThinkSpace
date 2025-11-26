@@ -1740,7 +1740,8 @@ export default function MateriaisClient({ id }: { id: string }) {
               <motion.button
                 whileTap={{ scale: 0.99 }}
                 whileHover={{ scale: 1.01 }}
-                onClick={() => setOpen(true)}
+                // onClick={() => setOpen(true)}
+                onClick={() => setMessage("O serviço está temporariamente indisponível.")}
                 className="min-w-fit h-fit bg-[#9B79E0] border border-[#716BAF] py-2 px-2 whitespace-nowrap rounded-full text-white text-[18px] z-[900]"
               >
                 Criar novo
