@@ -54,11 +54,6 @@ type Sala = {
   usuarioSegue: boolean;
 };
 
-type SalasProps = {
-  children: React.ReactNode;
-  searchTerm: string;
-};
-
 export type Autor = {
   foto: string;
   id: string;
@@ -107,7 +102,12 @@ type Recentes = {
 
 const cor = ["#8B81F3", "#CAC5FF", "#FFA6F1", "#FFACA1"];
 
-export default function LayoutSalas({ children }: SalasProps) {
+type SalasProps = {
+  children: React.ReactNode;
+  searchTerm: string;
+};
+
+export default function LayoutSalas({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const scrollRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
