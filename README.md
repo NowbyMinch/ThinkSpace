@@ -58,4 +58,4 @@ Validado por uma banca técnica nacional, o projeto conquistou o **2º lugar na 
 ---
 
 ## 📩 Contato
-Guilherme Monteiro Ramos - [LinkedIn](SEU_LINK_AQUI) | [E-mail](mailto:guilhermemr2011j@gmail.com)
+Guilherme Monteiro Ramos - [LinkedIn](http://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemr2011j@gmail.com)
