@@ -1,28 +1,61 @@
-# 🚀 ThinkSpace - Plataforma Educacional Gamificada
+# ThinkSpace - Front-end Core & Product Design
 
-> **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Ciências Exatas e da Terra) e credenciado para a **FICP (MG)**.
+> **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
+> ** Diferencial:** Engenharia de interface escalável, integração com IA e arquitetura social.
 
-O **ThinkSpace** é uma plataforma educacional de alto impacto que une gamificação e inteligência artificial para democratizar e otimizar o aprendizado. Desenvolvida como um produto digital completo, a aplicação permite a criação de materiais personalizados (Flashcards, Quizzes e Resumos) via IA e a colaboração em comunidades temáticas.
-
----
-
-## 👨‍💻 Meu Papel no Projeto (Co-idealizador & Líder de Front-end)
-
-Neste projeto colaborativo, atuei como um dos três idealizadores originais, sendo responsável pela concepção estratégica do produto e por toda a camada de interação e integração técnica.
-
-* **Ideação & Estratégia de Produto:** Concebi toda a dinâmica de comunidades, salas de estudo e funcionalidades sociais, focando em engajamento e retenção.
-* **Desenvolvimento Front-end Integral:** Arquitetura e codificação de toda a interface utilizando **React, Next.js e TypeScript**.
-* **Desenvolvimento Multiplataforma:** Implementação de layouts 100% responsivos, garantindo uma experiência consistente em **Desktop, Tablets e Mobile**.
-* **Integração de Sistemas (Full Stack Focus):** Responsável por conectar o Front-end ao Back-end via **APIs REST**, gerenciando autenticação, consumo de endpoints e o fluxo de dados em tempo real.
-* **UI/UX Design:** Aplicação de conceitos de usabilidade, hierarquia visual e design system para garantir uma navegação intuitiva.
+O **ThinkSpace** é uma plataforma educacional de alta complexidade que une gamificação e IA. Como **Co-idealizador e Líder de Front-end**, atuei na concepção estratégica do produto e na arquitetura completa da camada de cliente, focando em performance, lógica científica e usabilidade multiplataforma.
 
 ---
 
-## 🔥 Funcionalidades Principais
+## Engenharia e Execução Técnica (Foco em Contratação)
 
-### 🧠 Estudo Inteligente com IA
-* **Geração de Conteúdo:** Criação automática de até 25 flashcards, 25 questões de quiz e resumos completos a partir de PDFs, tópicos ou assuntos gerais.
-* **Customização:** O usuário define a densidade do material de acordo com sua necessidade de estudo.
+### 1. Arquitetura e Componentização
+* **Atomic Design:** Estruturação de componentes reutilizáveis e escaláveis para garantir a consistência visual e facilitar a manutenção do sistema.
+* **Gerenciamento de Estado Complexo:** Implementação de fluxos de dados dinâmicos para garantir que as interações de gamificação e métricas sejam atualizadas em tempo real, sem a necessidade de refresh (UX Fluida).
+* **Roteamento Dinâmico:** Utilização do **Next.js App Router** para criação de rotas dinâmicas e otimizadas para Salas de Estudo e perfis de usuários.
 
-### 👥 Comunidade & Colaboração
-* **Salas de Estudo:**
+### 2. Integração E2E (End-to-End) & IA
+* **Consumo de APIs REST:** Implementação de uma camada de serviços robusta utilizando **Interceptors** para tratamento global de erros, gerenciamento de tokens e autenticação.
+* **Pipeline de IA:** Desenvolvimento da lógica de upload de documentos e estratégia de **polling/tratamento de dados** para exibição assíncrona de Flashcards e Quizzes gerados via IA.
+* **Segurança e Fluxo:** Integração de fluxos de autenticação protegidos (Middlewares) e proteção de rotas privadas no lado do cliente.
+
+### 3. Ideação e Estratégia de Produto (Product-Minded)
+* **Concepção da Comunidade:** Idealizei do zero todo o módulo de rede social e colaboração, criando a lógica de salas temáticas, compartilhamento de materiais e engajamento.
+* **Multiplataforma por Design:** Codificação de layouts adaptáveis (Mobile-first) com foco em usabilidade, garantindo performance consistente em qualquer dispositivo.
+* **Social Engine:** Desenvolvimento do sistema de Feed, incluindo interações de curtidas, comentários e salvamento com feedback visual instantâneo (**Optimistic Updates**).
+
+---
+
+## Funcionalidades Implementadas
+
+* 🤖 **AI Studio:** Interface avançada para geração de materiais via documentos, tópicos ou assuntos.
+* 👥 **Community Hub:** Sistema de busca, salas temáticas e descoberta de conteúdos globais.
+* 📊 **Analytics Dashboard:** Componentes gráficos para visualização de desempenho e rankings internos.
+* 📅 **Planner & Notificações:** Sistema visual de pendências com filtros de categoria e alertas em tempo real.
+
+---
+
+## Stack Tecnológica
+
+* **Core:** Next.js (App Router), TypeScript, React.js.
+* **Estilização:** Tailwind CSS (Design System).
+* **Comunicação:** Axios (Interceptors) / Fetch API.
+* **Deploy & CI/CD:** Vercel.
+
+---
+
+## Impacto e Reconhecimento
+Validado por uma banca técnica nacional, o projeto conquistou o **2º lugar na FEMIC Jovem (Ciências Exatas e da Terra)**. O destaque foi a maturidade da arquitetura front-end e a inovação no módulo de comunidade, provando capacidade de entrega de soluções complexas, escaláveis e prontas para o usuário final.
+
+---
+
+## Como Executar
+
+1. Clone o repositório: `git clone https://github.com/seu-usuario/thinkspace-frontend`
+2. Instale as dependências: `npm install`
+3. Configure o `.env.local` e rode: `npm run dev`
+
+---
+
+## 📩 Contato
+Guilherme Monteiro Ramos - [LinkedIn](SEU_LINK_AQUI) | [E-mail](mailto:guilhermemr2011j@gmail.com)
