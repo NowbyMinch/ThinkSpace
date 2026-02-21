@@ -3,7 +3,9 @@
 > **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
 > ** Diferencial:** Engenharia de interface escalável, integração com IA e arquitetura social.
 
-O **ThinkSpace** é uma plataforma educacional de alta complexidade que une gamificação e IA. Como **Co-idealizador e Líder de Front-end**, atuei na concepção estratégica do produto e na arquitetura completa da camada de cliente, focando em performance, lógica científica e usabilidade multiplataforma.
+O **ThinkSpace** é uma plataforma educacional de alta complexidade que une gamificação e IA, desenvolvida para transformar a forma como estudantes organizam, produzem e compartilham materiais de estudo. Concebida como um produto digital completo, integra estudo individual, colaboração em comunidade e geração inteligente de conteúdo com IA em um único ecossistema.
+
+A solução reúne planejamento acadêmico, interação social e recursos de Inteligência Artificial, proporcionando uma experiência de aprendizado personalizada, dinâmica e orientada a desempenho. Como **Co-idealizador e Líder de Front-end**, atuei na concepção estratégica do produto e na arquitetura completa da camada de cliente, focando em performance, lógica científica e usabilidade multiplataforma.
 
 ---
 
