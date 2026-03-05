@@ -13,6 +13,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
+import ErrorModal from "@/components/ui/ErrorModal";
 
 interface AccordionItem {
   title: string;
@@ -43,6 +44,7 @@ export default function landingPage() {
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [message, setMessage] = useState<string | null>("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +86,10 @@ export default function landingPage() {
 
   return (
     <>
+      {message && (
+        <ErrorModal message={message} onClose={() => setMessage(null)} />
+      )}
+
       <div className=" z-[0] relative overflow-x-hidden p-0 m-0">
         <header
           id="header"
@@ -153,7 +159,7 @@ export default function landingPage() {
                   <button className="text-[18px] ">Entrar</button>
                 </Link>
 
-                <Link href="/registrar" className="">
+                {/* <Link href="/registrar" className="">
                   <motion.button
                     whileTap={{ scale: 0.99 }}
                     whileHover={{ scale: 1.01 }}
@@ -166,7 +172,20 @@ export default function landingPage() {
                       <MoveUpRight className="text-white size-5" />{" "}
                     </div>
                   </motion.button>
-                </Link>
+                </Link> */}
+                <motion.button
+                  onClick={() => setMessage("No momento a plataforma não se encontra em atividade. Fique atento para novidades!")}
+                  whileTap={{ scale: 0.99 }}
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="text-[18px] p-[5px_10px] leading-none text-nowrap rounded-full border-[2px] h-fit flex gap-4 items-center justify-center border-[rgba(18,18,18,0.24)] cursor-pointer hover:border-[#A78CDC]"
+                >
+                  Registre-se
+                  <div className="bg-[#A39CEC] p-2 rounded-full">
+                    {" "}
+                    <MoveUpRight className="text-white size-5" />{" "}
+                  </div>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -863,7 +882,6 @@ export default function landingPage() {
             </div>
           </div>
         </footer>
-
       </div>
     </>
   );

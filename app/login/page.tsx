@@ -124,19 +124,36 @@ export default function LoginPage() {
                         )}
                       </motion.button>
                     </div>
-                    <a
+                    {/* <a
                       href="/esqueceu-senha"
                       className=" text-[#3881AF] w-fit text-[15px] "
                     >
                       Esqueceu a senha?
-                    </a>
+                    </a> */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setMessage(
+                          "No momento a plataforma não se encontra em atividade. Fique atento para novidades!",
+                        )
+                      }
+                      className=" text-[#3881AF] w-fit text-[15px] "
+                    >
+                      Esqueceu a senha?
+                    </button>
                   </div>
 
                   <motion.button
                     whileTap={{ scale: 0.99 }}
                     whileHover={{ scale: 1.01 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    type="submit"
+                    // type="submit"
+                    type="button"
+                    onClick={() =>
+                      setMessage(
+                        "No momento a plataforma não se encontra em atividade. Fique atento para novidades!",
+                      )
+                    }
                     className="loginbotao bg-[#804EE5] py-[10px] text-white text-[18px] rounded-[25px] shadow-md"
                   >
                     Entrar
@@ -144,10 +161,21 @@ export default function LoginPage() {
                 </form>
                 <h2 className="text-[15px] w-full text-center">
                   Não tem uma conta?{" "}
-                  <a href="/registrar" className="text-[#3881AF]">
+                  {/* <a href="/registrar" className="text-[#3881AF]">
                     {" "}
                     Registre-se
-                  </a>
+                  </a> */}
+                  <button
+                    onClick={() =>
+                      setMessage(
+                        "No momento a plataforma não se encontra em atividade. Fique atento para novidades!",
+                      )
+                    }
+                    className="text-[#3881AF]"
+                  >
+                    {" "}
+                    Registre-se
+                  </button>
                 </h2>
               </div>
             </motion.div>
