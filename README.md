@@ -15,30 +15,35 @@ O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artifi
 
 ## 🏗 Engenharia e Complexidade Técnica
 
-### 1. Arquitetura de Salas de Estudo (Micro-comunidades)
-Idealizei e implementei a lógica de organização descentralizada da plataforma:
-* **Espaços Colaborativos:** Qualquer usuário pode criar e gerenciar **Salas de Estudo** temáticas (ex: Geometria, Neurociência). 
-* **Fluxo de Conteúdo Híbrido:** Dentro de cada sala, implementei um sistema de postagens duplo: mensagens para interação direta/dúvidas e compartilhamento de **Materiais Inteligentes prontos** (Flashcards, Quizzes e Resumos), permitindo o consumo imediato por outros membros.
-* **Escalabilidade de Interface:** Gerenciamento de rotas dinâmicas e estados complexos para garantir que cada sala funcione como um ambiente independente e colaborativo.
+### 1. Engine de IA Contextual & Geração de Materiais
+A implementação de IA no ThinkSpace transforma inputs brutos em ferramentas pedagógicas estruturadas:
 
-### 2. Engine de IA Contextual & Tutor Integrado
-* **AI Tutor Chat:** Implementei um chat contextual dentro de cada material gerado. O usuário pode tirar dúvidas específicas sobre o conteúdo, exigindo um gerenciamento de estado persistente.
-* **Geração Multimodal:** O sistema cria materiais a partir de **PDFs, temas globais ou tópicos específicos**. Desenvolvi toda a lógica de feedback visual (Skeletons/Spinners) para o processamento assíncrono desses dados.
-* **AI Guard (Moderação):** Colaborei na lógica de filtragem via IA para garantir que as interações nas salas de estudo sejam estritamente educativas e seguras.
+* **Outputs Pedagógicos Gerados:** A IA processa o contexto (PDFs, Temas ou Tópicos) e organiza a saída em três formatos prontos para o estudo:
+    * **Flashcards:** Pares de pergunta e resposta otimizados para memorização ativa.
+    * **Quizzes:** Testes de múltipla escolha para validação imediata do conhecimento.
+    * **Resumos:** Sínteses estruturadas dos pontos fundamentais do conteúdo.
+* **AI Tutor Chat (Interação Direta):** Implementei um chat contextual dentro de cada material gerado. O usuário pode tirar dúvidas específicas sobre o conteúdo que acabou de ser criado, exigindo gerenciamento de estado persistente e contexto delimitado.
+* **AI Guard (Moderação de Conteúdo):** Colaborei na lógica de filtragem via IA para as interações sociais, garantindo que postagens e mensagens sejam estritamente educativas e seguras.
+* **UX Assíncrona:** Desenvolvi toda a lógica de feedback visual (Skeletons/Spinners) para lidar com o tempo de processamento das LLMs, garantindo que o usuário tenha uma experiência fluida mesmo durante operações pesadas.
 
-### 3. Analytics & Organização de Dados
-* **Taxonomia de Estudos:** Organização em **Matérias** que agrupam materiais gerados, facilitando a navegação do usuário.
-* **Dashboard de Performance:** Processamento de métricas como taxas de acerto/erro e rendimento semanal, transformando dados brutos em visualizações de progresso acadêmico.
+### 2. Arquitetura de Salas de Estudo (Micro-comunidades)
+Idealizei e implementei a lógica de organização descentralizada:
+* **Espaços Colaborativos:** Qualquer usuário pode criar **Salas de Estudo** temáticas (ex: "Cálculo I" ou "Geometria").
+* **Fluxo de Conteúdo Híbrido:** Dentro das salas, usuários podem realizar postagens de texto para dúvidas ou compartilhar **materiais inteligentes completos** (com seus flashcards e quizzes), permitindo que outros membros estudem instantaneamente.
+* **Organização Hierárquica:** Os materiais são organizados por **Matérias**, criando uma taxonomia clara que facilita a gestão do conhecimento a longo prazo.
+
+### 3. Analytics & Performance
+* **Dashboard de Progresso:** Implementação de lógicas para processar e exibir porcentagens de acerto/erro, tarefas diárias realizadas e rendimento semanal através de componentes de visualização de dados.
 
 ---
 
 ## ✨ Funcionalidades em Destaque
 
-* 🏫 **Study Rooms:** Crie ou entre em salas temáticas para colaborar e compartilhar materiais.
-* 🤖 **AI Tutor Chat:** Tire dúvidas específicas dentro do próprio material de estudo.
-* 📝 **AI Material Factory:** Flashcards e Quizzes gerados via PDF, temas ou tópicos.
+* 🏫 **Study Rooms:** Crie salas, tire dúvidas e compartilhe materiais prontos para o estudo.
+* 🤖 **AI Studio:** Geração multimodal de materiais via PDF, temas globais ou tópicos específicos.
+* 💬 **Contextual Chat:** Um tutor de IA dedicado para cada material gerado.
 * 🛡️ **AI Moderation:** Ambiente seguro com filtragem automática de postagens.
-* 📈 **Performance Tracking:** Dashboards completos de evolução semanal.
+* 📈 **Smart Tracking:** Acompanhamento detalhado da sua evolução acadêmica.
 
 ---
 
@@ -62,5 +67,11 @@ Idealizei e implementei a lógica de organização descentralizada da plataforma
 
 ---
 
+## 🎓 Formação & Fundamentos
+* **FATEC Indaiatuba:** Tecnólogo em Desenvolvimento de Software Multiplataforma.
+* **CS50 (Harvard):** Certificação em fundamentos de Ciência da Computação e Algoritmos.
+
+---
+
 ## 📬 Contato
-Guilherme Monteiro Ramos - [LinkedIn](http://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemonteiroramos2007@gmail.com)
+Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemonteiroramos2007@gmail.com)
