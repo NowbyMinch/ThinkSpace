@@ -6,30 +6,29 @@
   <img src="https://img.shields.io/badge/Next.js_14-000000?style=for-the-badge&logo=nextdotjs"/>
 </p>
 
-> [cite_start]**🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra)[cite: 49, 50].
+> **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
 > **🚀 Foco Técnico:** IA Generativa Contextual, Arquitetura de Micro-comunidades e Gestão de Produtividade Acadêmica.
 
-[cite_start]O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico[cite: 59, 63]. [cite_start]Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade[cite: 64, 67, 68].
+O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico. Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade.
 
 ---
 
 ## 🏗 Engenharia e Complexidade Técnica
 
 ### 1. Engine de IA Contextual & Geração de Materiais
-[cite_start]A implementação de IA no ThinkSpace transforma inputs brutos (PDFs, Temas ou Tópicos específicos) em ferramentas pedagógicas estruturadas[cite: 60, 69]:
+A implementação de IA no ThinkSpace transforma inputs brutos (PDFs, Temas ou Tópicos específicos) em ferramentas pedagógicas estruturadas:
 * **Outputs Estruturados:** Geração automática de **Flashcards** para memorização, **Quizzes** para autoavaliação e **Resumos** para revisão rápida.
-* **AI Tutor Chat:** Interface de chat contextual integrada a cada material, permitindo que o usuário tire dúvidas em tempo real sobre o conteúdo específico gerado.
-* [cite_start]**AI Guard (Moderação):** Camada de segurança via IA para filtrar postagens e garantir um ambiente de estudo seguro e produtivo[cite: 69].
+* **AI Tutor Chat:** Interface de chat contextual integrada a cada material, permitindo que o usuário tire dúvidas em tempo real sobre o conteúdo específico gerado através de uma interface de conversão persistente.
+* **AI Guard (Moderação):** Camada de segurança via IA para filtrar postagens e garantir um ambiente de estudo seguro, livre de conteúdos inadequados.
 
 ### 2. Gestão de Tempo e Notificações (Calendário Inteligente)
 Desenvolvi um ecossistema de produtividade para organização de rotinas:
 * **Lembretes Personalizados:** Interface de calendário que permite a criação de eventos com tópicos de estudo e descrições detalhadas.
 * **Sistema de Notificações Internas:** Implementação de lógica de agendamento onde o usuário define data e hora para ser alertado, com notificações em tempo real exibidas na dashboard inicial da plataforma.
-* **Visualização de Pendências:** Organização visual de tarefas que auxilia o usuário a manter o foco nos prazos acadêmicos.
 
 ### 3. Arquitetura de Salas de Estudo (Micro-comunidades)
-* [cite_start]**Espaços Colaborativos:** Criação de salas temáticas (ex: Geometria) para troca de mensagens e compartilhamento de materiais inteligentes prontos[cite: 68].
-* **Hierarquia de Dados:** Organização por **Matérias**, garantindo uma taxonomia clara para o aprendizado a longo prazo.
+* **Espaços Colaborativos:** Criação de salas temáticas (ex: Geometria) para troca de mensagens e compartilhamento de materiais inteligentes prontos para estudo imediato.
+* **Hierarquia de Dados:** Organização por **Matérias**, garantindo uma taxonomia clara que facilita a gestão do conhecimento.
 
 ### 4. Analytics & Performance
 * **Dashboard de Progresso:** Processamento de dados de performance (taxas de acerto/erro) e visualização de rendimento semanal através de componentes de visualização de dados.
@@ -38,10 +37,10 @@ Desenvolvi um ecossistema de produtividade para organização de rotinas:
 
 ## ✨ Funcionalidades em Destaque
 
-* [cite_start]🤖 **AI Material Factory:** Criação de materiais via PDF, temas ou tópicos[cite: 66, 69].
+* 🤖 **AI Material Factory:** Criação de materiais via PDF, temas ou tópicos.
 * 💬 **AI Tutor Chat:** Tutor dedicado para tirar dúvidas dentro do próprio material.
 * 📅 **Smart Planner:** Calendário com lembretes agendados e notificações internas.
-* [cite_start]🏫 **Study Rooms:** Salas temáticas para colaboração e compartilhamento de conteúdos[cite: 68].
+* 🏫 **Study Rooms:** Salas temáticas para colaboração e compartilhamento de conteúdos.
 * 📈 **Performance Tracking:** Acompanhamento detalhado da evolução acadêmica.
 
 ---
@@ -66,5 +65,11 @@ Desenvolvi um ecossistema de produtividade para organização de rotinas:
 
 ---
 
+## 🎓 Formação & Fundamentos
+* **FATEC Indaiatuba:** Tecnólogo em Desenvolvimento de Software Multiplataforma.
+* **CS50 (Harvard):** Base sólida em Ciência da Computação, Algoritmos e Estrutura de Dados.
+
+---
+
 ## 📬 Contato
-[cite_start]Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) [cite: 6] | [cite_start][E-mail](mailto:guilhermemonteiroramos2007@gmail.com) [cite: 4]
+Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemonteiroramos2007@gmail.com)
