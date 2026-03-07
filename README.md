@@ -67,11 +67,5 @@ Idealizei e implementei a lógica de organização descentralizada:
 
 ---
 
-## 🎓 Formação & Fundamentos
-* **FATEC Indaiatuba:** Tecnólogo em Desenvolvimento de Software Multiplataforma.
-* **CS50 (Harvard):** Certificação em fundamentos de Ciência da Computação e Algoritmos.
-
----
-
 ## 📬 Contato
 Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemonteiroramos2007@gmail.com)
