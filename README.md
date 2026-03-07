@@ -6,44 +6,43 @@
   <img src="https://img.shields.io/badge/Next.js_14-000000?style=for-the-badge&logo=nextdotjs"/>
 </p>
 
-> **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
-> **🚀 Foco Técnico:** IA Generativa Contextual, Arquitetura de Micro-comunidades e Engenharia de Software Educacional.
+> [cite_start]**🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra)[cite: 49, 50].
+> **🚀 Foco Técnico:** IA Generativa Contextual, Arquitetura de Micro-comunidades e Gestão de Produtividade Acadêmica.
 
-O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico. Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade.
+[cite_start]O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico[cite: 59, 63]. [cite_start]Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade[cite: 64, 67, 68].
 
 ---
 
 ## 🏗 Engenharia e Complexidade Técnica
 
 ### 1. Engine de IA Contextual & Geração de Materiais
-A implementação de IA no ThinkSpace transforma inputs brutos em ferramentas pedagógicas estruturadas:
+[cite_start]A implementação de IA no ThinkSpace transforma inputs brutos (PDFs, Temas ou Tópicos específicos) em ferramentas pedagógicas estruturadas[cite: 60, 69]:
+* **Outputs Estruturados:** Geração automática de **Flashcards** para memorização, **Quizzes** para autoavaliação e **Resumos** para revisão rápida.
+* **AI Tutor Chat:** Interface de chat contextual integrada a cada material, permitindo que o usuário tire dúvidas em tempo real sobre o conteúdo específico gerado.
+* [cite_start]**AI Guard (Moderação):** Camada de segurança via IA para filtrar postagens e garantir um ambiente de estudo seguro e produtivo[cite: 69].
 
-* **Outputs Pedagógicos Gerados:** A IA processa o contexto (PDFs, Temas ou Tópicos) e organiza a saída em três formatos prontos para o estudo:
-    * **Flashcards:** Pares de pergunta e resposta otimizados para memorização ativa.
-    * **Quizzes:** Testes de múltipla escolha para validação imediata do conhecimento.
-    * **Resumos:** Sínteses estruturadas dos pontos fundamentais do conteúdo.
-* **AI Tutor Chat (Interação Direta):** Implementei um chat contextual dentro de cada material gerado. O usuário pode tirar dúvidas específicas sobre o conteúdo que acabou de ser criado, exigindo gerenciamento de estado persistente e contexto delimitado.
-* **AI Guard (Moderação de Conteúdo):** Colaborei na lógica de filtragem via IA para as interações sociais, garantindo que postagens e mensagens sejam estritamente educativas e seguras.
-* **UX Assíncrona:** Desenvolvi toda a lógica de feedback visual (Skeletons/Spinners) para lidar com o tempo de processamento das LLMs, garantindo que o usuário tenha uma experiência fluida mesmo durante operações pesadas.
+### 2. Gestão de Tempo e Notificações (Calendário Inteligente)
+Desenvolvi um ecossistema de produtividade para organização de rotinas:
+* **Lembretes Personalizados:** Interface de calendário que permite a criação de eventos com tópicos de estudo e descrições detalhadas.
+* **Sistema de Notificações Internas:** Implementação de lógica de agendamento onde o usuário define data e hora para ser alertado, com notificações em tempo real exibidas na dashboard inicial da plataforma.
+* **Visualização de Pendências:** Organização visual de tarefas que auxilia o usuário a manter o foco nos prazos acadêmicos.
 
-### 2. Arquitetura de Salas de Estudo (Micro-comunidades)
-Idealizei e implementei a lógica de organização descentralizada:
-* **Espaços Colaborativos:** Qualquer usuário pode criar **Salas de Estudo** temáticas (ex: "Cálculo I" ou "Geometria").
-* **Fluxo de Conteúdo Híbrido:** Dentro das salas, usuários podem realizar postagens de texto para dúvidas ou compartilhar **materiais inteligentes completos** (com seus flashcards e quizzes), permitindo que outros membros estudem instantaneamente.
-* **Organização Hierárquica:** Os materiais são organizados por **Matérias**, criando uma taxonomia clara que facilita a gestão do conhecimento a longo prazo.
+### 3. Arquitetura de Salas de Estudo (Micro-comunidades)
+* [cite_start]**Espaços Colaborativos:** Criação de salas temáticas (ex: Geometria) para troca de mensagens e compartilhamento de materiais inteligentes prontos[cite: 68].
+* **Hierarquia de Dados:** Organização por **Matérias**, garantindo uma taxonomia clara para o aprendizado a longo prazo.
 
-### 3. Analytics & Performance
-* **Dashboard de Progresso:** Implementação de lógicas para processar e exibir porcentagens de acerto/erro, tarefas diárias realizadas e rendimento semanal através de componentes de visualização de dados.
+### 4. Analytics & Performance
+* **Dashboard de Progresso:** Processamento de dados de performance (taxas de acerto/erro) e visualização de rendimento semanal através de componentes de visualização de dados.
 
 ---
 
 ## ✨ Funcionalidades em Destaque
 
-* 🏫 **Study Rooms:** Crie salas, tire dúvidas e compartilhe materiais prontos para o estudo.
-* 🤖 **AI Studio:** Geração multimodal de materiais via PDF, temas globais ou tópicos específicos.
-* 💬 **Contextual Chat:** Um tutor de IA dedicado para cada material gerado.
-* 🛡️ **AI Moderation:** Ambiente seguro com filtragem automática de postagens.
-* 📈 **Smart Tracking:** Acompanhamento detalhado da sua evolução acadêmica.
+* [cite_start]🤖 **AI Material Factory:** Criação de materiais via PDF, temas ou tópicos[cite: 66, 69].
+* 💬 **AI Tutor Chat:** Tutor dedicado para tirar dúvidas dentro do próprio material.
+* 📅 **Smart Planner:** Calendário com lembretes agendados e notificações internas.
+* [cite_start]🏫 **Study Rooms:** Salas temáticas para colaboração e compartilhamento de conteúdos[cite: 68].
+* 📈 **Performance Tracking:** Acompanhamento detalhado da evolução acadêmica.
 
 ---
 
@@ -68,4 +67,4 @@ Idealizei e implementei a lógica de organização descentralizada:
 ---
 
 ## 📬 Contato
-Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) | [E-mail](mailto:guilhermemonteiroramos2007@gmail.com)
+[cite_start]Guilherme Monteiro Ramos - [LinkedIn](https://www.linkedin.com/in/guilherme-monteiro-7a1359247) [cite: 6] | [cite_start][E-mail](mailto:guilhermemonteiroramos2007@gmail.com) [cite: 4]
