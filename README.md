@@ -7,7 +7,7 @@
 </p>
 
 > **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
-> **🚀 Foco Técnico:** IA Contextual, interfaces orientadas a dados e sistemas sociais complexos.
+> **🚀 Foco Técnico:** IA Generativa Contextual, Arquitetura de Micro-comunidades e Engenharia de Software Educacional.
 
 O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico. Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade.
 
@@ -15,32 +15,30 @@ O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artifi
 
 ## 🏗 Engenharia e Complexidade Técnica
 
-### 1. Ecossistema de IA Contextual & Chat Integrado
-O diferencial da plataforma é a capacidade de interagir diretamente com o conhecimento gerado:
-* **AI Tutor (In-Material Chat):** Implementei um sistema de chat dentro de cada material de estudo. O usuário pode tirar dúvidas em tempo real sobre o conteúdo específico gerado, exigindo uma integração refinada de prompts contextuais e interface de chat persistente.
-* **Geração Adaptativa:** Gerenciamento de fluxos para transformar documentos PDF em Flashcards, Quizzes e Resumos, tratando estados de carregamento assíncrono e garantindo uma experiência sem travamentos.
+### 1. Arquitetura de Salas de Estudo (Micro-comunidades)
+Idealizei e implementei a lógica de organização descentralizada da plataforma:
+* **Espaços Colaborativos:** Qualquer usuário pode criar e gerenciar **Salas de Estudo** temáticas (ex: Geometria, Neurociência). 
+* **Fluxo de Conteúdo Híbrido:** Dentro de cada sala, implementei um sistema de postagens duplo: mensagens para interação direta/dúvidas e compartilhamento de **Materiais Inteligentes prontos** (Flashcards, Quizzes e Resumos), permitindo o consumo imediato por outros membros.
+* **Escalabilidade de Interface:** Gerenciamento de rotas dinâmicas e estados complexos para garantir que cada sala funcione como um ambiente independente e colaborativo.
 
-### 2. Analytics & Data Visualization
-Transformei dados brutos de interação em insights acadêmicos:
-* **Métricas de Rendimento:** Lógica para processar e exibir porcentagens de acerto/erro, tarefas diárias e desempenho por matéria.
-* **Dashboards Dinâmicos:** Manipulação de estados complexos para renderizar gráficos de produtividade semanal e rankings de engajamento na comunidade.
+### 2. Engine de IA Contextual & Tutor Integrado
+* **AI Tutor Chat:** Implementei um chat contextual dentro de cada material gerado. O usuário pode tirar dúvidas específicas sobre o conteúdo, exigindo um gerenciamento de estado persistente.
+* **Geração Multimodal:** O sistema cria materiais a partir de **PDFs, temas globais ou tópicos específicos**. Desenvolvi toda a lógica de feedback visual (Skeletons/Spinners) para o processamento assíncrono desses dados.
+* **AI Guard (Moderação):** Colaborei na lógica de filtragem via IA para garantir que as interações nas salas de estudo sejam estritamente educativas e seguras.
 
-### 3. Motor Social e Colaboração (Community Engine)
-Idealizei e codifiquei o ecossistema social:
-* **Interações em Tempo Real:** Sistema de Feed social com suporte a postagens de materiais gerados, curtidas, comentários e salvamento de arquivos organizados por tópicos.
-* **UX Reativa:** Uso de padrões que garantem que o feedback das interações sociais seja instantâneo para o usuário.
-
-### 4. Calendário e Notificações
-* **Gestão de Prazos:** Interface de agenda com categorização visual por disciplina e sistema de notificações para lembretes de estudo.
+### 3. Analytics & Organização de Dados
+* **Taxonomia de Estudos:** Organização em **Matérias** que agrupam materiais gerados, facilitando a navegação do usuário.
+* **Dashboard de Performance:** Processamento de métricas como taxas de acerto/erro e rendimento semanal, transformando dados brutos em visualizações de progresso acadêmico.
 
 ---
 
 ## ✨ Funcionalidades em Destaque
 
-* 🤖 **AI Tutor Chat:** Tire dúvidas específicas dentro do próprio material de estudo gerado.
-* 📝 **AI Factory:** Criação de flashcards e quizzes a partir de PDFs ou temas.
-* 🌍 **Knowledge Sharing:** Compartilhe materiais com a comunidade e colabore em salas temáticas.
-* 📊 **Smart Tracking:** Monitoramento semanal de produtividade e taxas de acerto.
+* 🏫 **Study Rooms:** Crie ou entre em salas temáticas para colaborar e compartilhar materiais.
+* 🤖 **AI Tutor Chat:** Tire dúvidas específicas dentro do próprio material de estudo.
+* 📝 **AI Material Factory:** Flashcards e Quizzes gerados via PDF, temas ou tópicos.
+* 🛡️ **AI Moderation:** Ambiente seguro com filtragem automática de postagens.
+* 📈 **Performance Tracking:** Dashboards completos de evolução semanal.
 
 ---
 
@@ -61,12 +59,6 @@ Idealizei e codifiquei o ecossistema social:
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel"/>
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git"/>
 </p>
-
----
-
-## 🎓 Educação & Fundamentos
-* **FATEC Indaiatuba:** Desenvolvimento de Software Multiplataforma.
-* **CS50 (Harvard):** Base sólida em lógica, algoritmos e estruturas de dados.
 
 ---
 
