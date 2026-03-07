@@ -28,9 +28,8 @@ A implementação de IA no ThinkSpace transforma inputs brutos em ferramentas pe
 
 ### 2. Gestão de Tempo e Notificações (Calendário Inteligente)
 Desenvolvi um ecossistema de produtividade para organização de rotinas e combate à procrastinação:
-* **Lembretes Personalizados:** Interface de calendário funcional que permite a criação de eventos vinculados a tópicos de estudo e descrições personalizadas.
-* **Sistema de Notificações In-App:** Implementação de lógica de agendamento onde o usuário define o momento exato do alerta. As notificações são processadas e exibidas na dashboard inicial, garantindo que prazos acadêmicos não sejam perdidos.
-* **Persistência de Agendamentos:** Gerenciamento de estados para exibição dinâmica de alertas futuros, mantendo o usuário orientado sobre suas próximas sessões de estudo.
+* **Lembretes Personalizados:** Demonstração visual completa dos lembretes agendados. Ao clicar em um dia específico, o usuário acessa todos os lembretes daquela data com suas respectivas descrições e anotações detalhadas.
+* **Sistema de Notificações In-App:** Sistema de alertas que aparecem via pop-up na página inicial ao passar o mouse sobre o ícone de notificações. As notificações de lembretes são programadas para aparecer apenas quando o dia escolhido é atingido.
 
 ### 3. Arquitetura de Salas de Estudo (Micro-comunidades)
 Idealizei e implementei a lógica de organização descentralizada da plataforma:
@@ -40,7 +39,7 @@ Idealizei e implementei a lógica de organização descentralizada da plataforma
 
 ### 4. Analytics & Data Visualization
 Transformei dados brutos de interação em insights acadêmicos:
-* **Métricas de Rendimento:** Lógica para processar e exibir porcentagens de acerto/erro, tarefas diárias realizadas e rendimento semanal através de componentes de visualização de dados.
+* **Métricas de Rendimento:** Lógica para processar e exibir porcentagens de acerto/erro, tarefas diárias realizadas, rendimento semanal através de componentes de visualização de dados em gráfico e um ranking as melhores matérias do usuário ordenadas por XP ganho em cada uma ao realizar os quizzes nos materiais de estudo gerados.
 
 ---
 
