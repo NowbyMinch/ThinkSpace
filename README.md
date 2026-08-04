@@ -9,7 +9,7 @@
 > **🏆 Projeto Premiado:** 2º lugar nacional na **FEMIC Jovem** (Categoria: Ciências Exatas e da Terra).
 > **🚀 Foco Técnico:** IA Generativa Contextual, Arquitetura de Micro-comunidades e Gestão de Produtividade Acadêmica.
 
-O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico. Como **Co-idealizador e Líder de Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade.
+O **ThinkSpace** é uma plataforma colaborativa que utiliza Inteligência Artificial para otimizar o aprendizado acadêmico. Como **Idealizador, Cocriador e Desenvolvedor Front-end**, fui responsável por toda a implementação técnica da interface e pela integração com os serviços de backend, além de colaborar na definição do design e idealizar o conceito de comunidade.
 
 ---
 
